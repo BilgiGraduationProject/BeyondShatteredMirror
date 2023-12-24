@@ -20,7 +20,8 @@ namespace Runtime.Managers
 
         private void Start()
         {
-            OnGameStatusChanged(gameState);
+            // Don't need this. I already use on StartPanel - Play button
+            //OnGameStatusChanged(gameState);
         }
 
         private void OnEnable()
@@ -45,6 +46,7 @@ namespace Runtime.Managers
                     PlayerSignals.Instance.onIsPlayerReadyToAttack?.Invoke(true);
                     break;
                 case GameStateEnum.Cutscene:
+                    InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
                     break;
                 case GameStateEnum.StopPlayer:
                     CoreGameSignals.Instance.onIsInputReady?.Invoke(false);

@@ -1,6 +1,7 @@
 ﻿using System;
 using Runtime.Enums.Enemy;
 using Runtime.Enums.Player;
+using Runtime.Interfaces;
 using Runtime.Signals;
 using UnityEngine;
 
@@ -20,8 +21,6 @@ namespace Runtime.Controllers.Player
         private readonly string _enemyBody = "EnemyBody";
 
         #endregion
-        
-
 
         private void OnTriggerEnter(Collider other)
         {
@@ -35,7 +34,6 @@ namespace Runtime.Controllers.Player
                     case PlayerBodyType.LeftHand:
                         EnemySignals.Instance.onChangeEnemyAnimationState?.Invoke(EnemyAnimationState.FaceHit);
                         break;
-                    
                 }
             }
 
@@ -60,8 +58,12 @@ namespace Runtime.Controllers.Player
                         EnemySignals.Instance.onChangeEnemyAnimationState?.Invoke(EnemyAnimationState.PunchBodyHit);
                         EnemySignals.Instance.onAddEnemyToForce?.Invoke(2);
                         break;
-                    
                 }
+            }
+
+            if (other.TryGetComponent(out ICollectable collectible))
+            {
+                collectible.OnCollect();
             }
         }
     }

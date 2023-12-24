@@ -46,6 +46,7 @@ namespace Runtime.Controllers.UI
             // TODO: Daha sonrası için kamerayı o an açıp açamayacağını da kontrol et.
             if (Input.GetKeyDown(KeyCode.C) && _viewingPhoto)
             { 
+                StopCoroutine(CaptureShot());
                 RemovePhoto();
                 CaptureTime();
             }
@@ -83,8 +84,8 @@ namespace Runtime.Controllers.UI
         
         IEnumerator CaptureShot()
         {
-            cameraViewfinder.SetActive(false);
             _viewingPhoto = true;
+            cameraViewfinder.SetActive(false);
             yield return new WaitForEndOfFrame();
             Rect regionToRead = new Rect(0, 0, Screen.width, Screen.height);
             _screenCapture.ReadPixels(regionToRead, 0, 0);
