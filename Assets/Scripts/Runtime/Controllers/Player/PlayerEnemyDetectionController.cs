@@ -1,0 +1,71 @@
+using System;
+using DG.Tweening;
+using Runtime.Data.ValueObject;
+using Runtime.Enums.GameManager;
+using Runtime.Enums.Player;
+using Runtime.Keys.Input;
+using Runtime.Signals;
+using UnityEngine;
+
+namespace Runtime.Controllers.Player
+{
+    public class PlayerEnemyDetectionController : MonoBehaviour
+    {
+        #region Self Variables
+
+        #region Serialized Variables
+
+        [SerializeField] private PlayerFightController playerFightController;
+        
+        #endregion
+
+        #region Private Variables
+
+        private Camera _camera;
+        private PlayerData _playerData;
+        private InputParams _inputParams;
+
+        private GameObject _enemyTransform;
+        private bool _isEnemyAlive;
+        
+        #endregion
+
+        #endregion
+        internal void GetPlayerData(PlayerData playerData) => _playerData = playerData;
+        internal void GetCameraTransform(Camera cameraTransform) => _camera = cameraTransform;
+        internal void OnUpdateParams(InputParams inputParams) => _inputParams = inputParams;
+
+        private void FixedUpdate()
+        {
+            transform.forward = _camera.transform.forward;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Enemy"))
+            {
+                _enemyTransform = other.gameObject.transform.parent.gameObject;
+                Debug.LogWarning("Enemy is not null");
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Enemy"))
+            {
+                _enemyTransform = null;
+                Debug.LogWarning("Enemy is null");
+            }
+        }
+
+        public void OnPlayerPressedAttackButton()
+        {
+           playerFightController.AttackCheck(_enemyTransform);
+        }
+
+        public void OnPlayerPressedCounterButton()
+        {
+            
+        }
+    }
+}
