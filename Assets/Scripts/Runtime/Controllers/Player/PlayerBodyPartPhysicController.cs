@@ -1,4 +1,6 @@
 ﻿using System;
+using Runtime.Data.UnityObject;
+using Runtime.Data.ValueObject;
 using Runtime.Enums.Enemy;
 using Runtime.Enums.Player;
 using Runtime.Interfaces;
@@ -7,7 +9,7 @@ using UnityEngine;
 
 namespace Runtime.Controllers.Player
 {
-    public class PlayerPhysicController : MonoBehaviour
+    public class PlayerBodyPartPhysicController : MonoBehaviour
     {
         #region Self Variables
 
@@ -19,44 +21,41 @@ namespace Runtime.Controllers.Player
 
         private readonly string _enemyHead = "EnemyHead";
         private readonly string _enemyBody = "EnemyBody";
-
         #endregion
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(_enemyHead))
             {
+                
                 switch (playerBodyType)
                 {
                     case PlayerBodyType.RightHand:
-                       EnemySignals.Instance.onChangeEnemyAnimationState?.Invoke(EnemyAnimationState.FaceHit);
+                       EnemySignals.Instance.onPlayerBodyCollidedWithEnemey?.Invoke(EnemyAnimationState.FaceHit,other.transform.root.gameObject);
                         break;
                     case PlayerBodyType.LeftHand:
-                        EnemySignals.Instance.onChangeEnemyAnimationState?.Invoke(EnemyAnimationState.FaceHit);
+                        EnemySignals.Instance.onPlayerBodyCollidedWithEnemey?.Invoke(EnemyAnimationState.FaceHit,other.transform.root.gameObject);
                         break;
                 }
             }
 
             else if (other.CompareTag(_enemyBody))
             {
-                Debug.LogWarning("Executed");
+                
                 switch (playerBodyType)
                 {
                     case PlayerBodyType.RightFoot:
-                        EnemySignals.Instance.onChangeEnemyAnimationState?.Invoke(EnemyAnimationState.KickBodyHit);
-                        EnemySignals.Instance.onAddEnemyToForce?.Invoke(5);
+                       
+                        EnemySignals.Instance.onPlayerBodyCollidedWithEnemey?.Invoke(EnemyAnimationState.KickBodyHit,other.transform.root.gameObject);
                         break;
                     case PlayerBodyType.LeftFoot:
-                        EnemySignals.Instance.onChangeEnemyAnimationState?.Invoke(EnemyAnimationState.KickBodyHit);
-                        EnemySignals.Instance.onAddEnemyToForce?.Invoke(5);
+                        EnemySignals.Instance.onPlayerBodyCollidedWithEnemey?.Invoke(EnemyAnimationState.KickBodyHit,other.transform.root.gameObject);
                         break;
                     case PlayerBodyType.RightHand:
-                        EnemySignals.Instance.onChangeEnemyAnimationState?.Invoke(EnemyAnimationState.PunchBodyHit);
-                        EnemySignals.Instance.onAddEnemyToForce?.Invoke(2);
+                        EnemySignals.Instance.onPlayerBodyCollidedWithEnemey?.Invoke(EnemyAnimationState.PunchBodyHit,other.transform.root.gameObject);
                         break;
                     case PlayerBodyType.LeftHand:
-                        EnemySignals.Instance.onChangeEnemyAnimationState?.Invoke(EnemyAnimationState.PunchBodyHit);
-                        EnemySignals.Instance.onAddEnemyToForce?.Invoke(2);
+                        EnemySignals.Instance.onPlayerBodyCollidedWithEnemey?.Invoke(EnemyAnimationState.PunchBodyHit,other.transform.root.gameObject);
                         break;
                 }
             }
@@ -66,5 +65,7 @@ namespace Runtime.Controllers.Player
                 collectible.OnCollect();
             }
         }
+        
+      
     }
 }

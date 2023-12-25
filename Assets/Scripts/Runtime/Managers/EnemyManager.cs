@@ -7,6 +7,7 @@ using Runtime.Enums.Enemy;
 using Runtime.Enums.Player;
 using Runtime.Signals;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Runtime.Managers
@@ -18,7 +19,7 @@ namespace Runtime.Managers
         #region Serialized Variables
 
         [SerializeField] private EnemyAnimationController enemyAnimationController;
-        [SerializeField] private EnemyController enemyController;
+        [FormerlySerializedAs("enemyController")] [SerializeField] private EnemyHealthController enemyHealthController;
         [SerializeField] private EnemyType enemyType;
         [SerializeField] private Rigidbody enemyRigidbody;
 
@@ -27,6 +28,7 @@ namespace Runtime.Managers
         #region Private Variables
 
         private EnemyData _enemyData;
+        private bool _isEnemyDead;
 
         #endregion
 
@@ -39,7 +41,7 @@ namespace Runtime.Managers
             SendEnemyDataToControllers();
         }
 
-        private void SendEnemyDataToControllers() => enemyController.GetEnemyData(_enemyData);
+        private void SendEnemyDataToControllers() => enemyHealthController.GetEnemyData(_enemyData);
        
 
         private EnemyData GetEnemyData() => Resources.Load<CD_Enemy>("Data/CD_Enemy").Data[(int)enemyType];
@@ -54,21 +56,46 @@ namespace Runtime.Managers
         {
             EnemySignals.Instance.onChangeEnemyAnimationState += enemyAnimationController.ChangeEnemyAnimationState;
             EnemySignals.Instance.onCheckEnemyHealth += OnCheckEnemyHealth;
-            EnemySignals.Instance.onAddEnemyToForce += OnAddForceToEnemy;
-        
-
+            EnemySignals.Instance.onPlayerBodyCollidedWithEnemey += OnDamageEnemy;
+            
         }
-        
 
-        private void OnAddForceToEnemy(float force)
+        private void OnDamageEnemy(EnemyAnimationState hitType, GameObject enemyObj)
         {
-            enemyRigidbody.AddForce(transform.forward * -force, ForceMode.Impulse);
+            if(gameObject.GetInstanceID() != enemyObj.GetInstanceID()) return;
+            if (_isEnemyDead) return;
+            enemyAnimationController.ChangeEnemyAnimationState(hitType);
+            enemyHealthController.AddDamageToEnemy(hitType);
+            AddForceToEnemy(hitType);
+            if (enemyHealthController.GetEnemyHealth() <= 0)
+            {
+                enemyAnimationController.ChangeEnemyAnimationState(EnemyAnimationState.Dead);
+                _isEnemyDead = true;
+            }
         }
+
+        private void AddForceToEnemy(EnemyAnimationState hitType)
+        {
+            switch (hitType)
+            {
+                case EnemyAnimationState.FaceHit:
+                    enemyRigidbody.AddForce(transform.forward * -_enemyData.FaceForce, ForceMode.VelocityChange);
+                    break;
+                case EnemyAnimationState.KickBodyHit:
+                    enemyRigidbody.AddForce(transform.forward * -_enemyData.KickForce, ForceMode.VelocityChange);
+                    break;
+                case EnemyAnimationState.PunchBodyHit:
+                    enemyRigidbody.AddForce(transform.forward * -_enemyData.FaceForce, ForceMode.VelocityChange);
+                    break;
+                    
+            }
+        }
+
 
         private void OnCheckEnemyHealth(GameObject enemyObj)
         {
             if (enemyObj.GetInstanceID() != gameObject.GetInstanceID()) return;
-            EnemySignals.Instance.onGetEnemyHealth?.Invoke(enemyController.GetEnemyHealth());
+            EnemySignals.Instance.onGetEnemyHealth?.Invoke(enemyHealthController.GetEnemyHealth());
         }
 
 
@@ -76,7 +103,6 @@ namespace Runtime.Managers
         {
             EnemySignals.Instance.onChangeEnemyAnimationState -= enemyAnimationController.ChangeEnemyAnimationState;
             EnemySignals.Instance.onCheckEnemyHealth -= OnCheckEnemyHealth;
-            EnemySignals.Instance.onAddEnemyToForce -= OnAddForceToEnemy;
         }
 
         private void OnDisable()

@@ -65,30 +65,29 @@ namespace Runtime.Controllers.Player
             {
                 var randomRange = Random.Range(0, Enum.GetValues(typeof(PlayerCloseAttackAnimationState)).Length);
                 var playerCloseAttack = Enum.GetNames(typeof(PlayerCloseAttackAnimationState));
-                AttackType(playerCloseAttack[randomRange], .2f, null, 0);
+                AttackType(playerCloseAttack[randomRange],  null, 0);
             }
 
             else if(targetDistance > 3)
             {
                 var randomRange = Random.Range(0, Enum.GetValues(typeof(PlayerFarAttackAnimationState)).Length);
                 var playerFarAttack = Enum.GetNames(typeof(PlayerFarAttackAnimationState));
-                AttackType(playerFarAttack[randomRange],2,enemyTransform,.65f);
+                AttackType(playerFarAttack[randomRange],enemyTransform,.65f);
             }
             
             else if (targetDistance < 3)
             {
                 var randomRange = Random.Range(0, Enum.GetValues(typeof(PlayerCloseAttackAnimationState)).Length);
                 var playerCloseAttack = Enum.GetNames(typeof(PlayerCloseAttackAnimationState));
-                AttackType(playerCloseAttack[randomRange], .2f, enemyTransform, 1f);
+                AttackType(playerCloseAttack[randomRange], enemyTransform, 1f);
             }
             
         }
 
-        private void AttackType(string playerAnimationType, float coolDown, GameObject enemyTarget, float movementDuration)
+        private void AttackType(string playerAnimationType, GameObject enemyTarget, float movementDuration)
         {
             PlayerSignals.Instance.onTriggerAttackAnimationState?.Invoke(playerAnimationType);
-
-
+            
             MoveTowardsToTarget(enemyTarget, movementDuration);
             
           

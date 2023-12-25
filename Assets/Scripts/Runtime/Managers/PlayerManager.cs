@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using Runtime.Controllers.Player;
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
@@ -70,7 +71,7 @@ namespace Runtime.Managers
             InputSignals.Instance.onPlayerPressedAttackButton += playerEnemyDetectionController.OnPlayerPressedAttackButton;
             InputSignals.Instance.onPlayerPressedCounterButton += playerEnemyDetectionController.OnPlayerPressedCounterButton;
             
-            EnemySignals.Instance.onGetEnemyHealth += playerFightController.OnGetEnemyHealth;
+            EnemySignals.Instance.onGetEnemyHealth += OnGetEnemyHealth;
             
             PlayerSignals.Instance.onChangePlayerAnimationState += playerAnimationController.OnChangePlayerAnimationState;
             PlayerSignals.Instance.onTriggerAttackAnimationState +=
@@ -80,7 +81,10 @@ namespace Runtime.Managers
 
         }
 
-       
+        private void OnGetEnemyHealth(float enemyHealth)
+        {
+            playerFightController.OnGetEnemyHealth(enemyHealth);
+        }
 
 
         #region Movement
@@ -123,7 +127,7 @@ namespace Runtime.Managers
             InputSignals.Instance.onPlayerPressedAttackButton -= playerEnemyDetectionController.OnPlayerPressedAttackButton;
             InputSignals.Instance.onPlayerPressedCounterButton -= playerEnemyDetectionController.OnPlayerPressedCounterButton;
 
-            EnemySignals.Instance.onGetEnemyHealth -= playerFightController.OnGetEnemyHealth;
+            EnemySignals.Instance.onGetEnemyHealth -= OnGetEnemyHealth;
             
             PlayerSignals.Instance.onChangePlayerAnimationState -= playerAnimationController.OnChangePlayerAnimationState;
             PlayerSignals.Instance.onTriggerAttackAnimationState -=

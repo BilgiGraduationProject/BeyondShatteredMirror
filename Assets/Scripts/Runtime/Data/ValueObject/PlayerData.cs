@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Runtime.Data.ValueObject
 {
@@ -9,5 +10,8 @@ namespace Runtime.Data.ValueObject
         public float RotationSpeed;
         public float RollForce;
         public float CameraRayDistance;
+
+
+       
     }
 }

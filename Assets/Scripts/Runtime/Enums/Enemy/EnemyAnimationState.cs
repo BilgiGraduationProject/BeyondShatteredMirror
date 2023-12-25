@@ -5,6 +5,7 @@ namespace Runtime.Enums.Enemy
         PunchBodyHit,
         FaceHit,
         KickBodyHit,
+        Dead
         
     }
 }
