@@ -5,6 +5,9 @@ using UnityEngine;
 using DG.Tweening;
 using MoreMountains.Tools;
 using Runtime.Enums.GameManager;
+using Unity.VisualScripting;
+using UnityEngine.Video;
+using Debug = System.Diagnostics.Debug;
 
 namespace Runtime.Controllers.UI
 {
@@ -15,12 +18,6 @@ namespace Runtime.Controllers.UI
         #region Serialized Variables
 
         [SerializeField] private List<GameObject> layers = new List<GameObject>();
-
-        #endregion
-
-        #region Private Variables
-        
-        private List<UIPanelTypes> _previousPanels = new List<UIPanelTypes>(3);
 
         #endregion
 
@@ -50,9 +47,9 @@ namespace Runtime.Controllers.UI
 
         private void OnCloseAllPanels()
         {
+            InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
             foreach (var layer in layers)
             {
-                InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
                 for (int i = 0; i < layer.transform.childCount; i++)
                 {
                     Destroy(layer.transform.GetChild(i).gameObject);
@@ -67,24 +64,35 @@ namespace Runtime.Controllers.UI
             {
                 for (int i = 0; i < layers[layerValue].transform.childCount; i++)
                 {
-                    Destroy(layers[layerValue].transform.GetChild(i).gameObject);
-                    // if(layerValue is 0) return;
-                    // layers[layerValue].transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.OutBounce).OnComplete(() =>
-                    // {
-                    //     Destroy(layers[layerValue].transform.GetChild(i).gameObject);
-                    // });
+                    //Destroy(layers[layerValue].transform.GetChild(i).gameObject);
+                    GameObject myObj = layers[layerValue].transform.GetChild(i).gameObject;
+                    
+                    // TODO: This part is for testing purposes only. Change it later with animation.
+                    if(layerValue is 0) return;
+                    myObj.transform.localScale = Vector3.one;
+                    myObj.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.OutQuart).OnComplete(() =>
+                    {
+                        Destroy(myObj);
+                    });
                 }
             }
         }
 
         private void OnOpenPanel(UIPanelTypes panel, short layerValue)
         {
-           CoreUISignals.Instance.onClosePanel?.Invoke(layerValue);
-           InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
-           GameObject go = Instantiate(Resources.Load<GameObject>($"Prefabs/UIPanels/{panel}Panel"), layers[layerValue].transform);
-           if (layerValue is 0) return;
-           go.transform.localScale = Vector3.zero;
-           go.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
+            if (layers[layerValue].transform.childCount > 0 && layerValue is not 0) // This helps to close the previous panel
+            {
+                OnClosePanel(layerValue);
+                return;
+            }
+            
+            //CoreUISignals.Instance.onClosePanel?.Invoke(layerValue);
+            InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
+            GameObject go = Instantiate(Resources.Load<GameObject>($"Prefabs/UIPanels/{panel}Panel"), layers[layerValue].transform);
+            
+            if (layerValue is 0) return;
+            go.transform.localScale = Vector3.zero;
+            go.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
         }
 
         private void Start()

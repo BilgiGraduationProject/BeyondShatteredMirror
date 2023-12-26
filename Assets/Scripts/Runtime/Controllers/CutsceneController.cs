@@ -32,7 +32,11 @@ namespace Runtime.Controllers
         private void Awake()
         {
             blackwBG.SetActive(false);
-            foreach (var go in cutsceneList) go.SetActive(false);
+            foreach (var go in cutsceneList)
+            {
+                go.GetComponent<VideoPlayer>().Prepare();
+                go.SetActive(false);
+            }
         }
         
         #region SubscribeEvents and UnsubscribeEvents

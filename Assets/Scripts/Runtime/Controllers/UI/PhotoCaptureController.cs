@@ -56,14 +56,9 @@ namespace Runtime.Controllers.UI
                 StartCoroutine(CaptureShot());
             }
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.I))
             {
                 CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
-            }
-            
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                CoreUISignals.Instance.onClosePanel?.Invoke(1);
             }
         }
 
