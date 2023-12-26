@@ -1,9 +1,6 @@
-﻿using System;
-using Runtime.Data.UnityObject;
-using Runtime.Data.ValueObject;
+﻿
 using Runtime.Enums.Enemy;
 using Runtime.Enums.Player;
-using Runtime.Interfaces;
 using Runtime.Signals;
 using UnityEngine;
 
@@ -60,10 +57,7 @@ namespace Runtime.Controllers.Player
                 }
             }
 
-            if (other.TryGetComponent(out ICollectable collectible))
-            {
-                collectible.OnCollect();
-            }
+            
         }
         
       

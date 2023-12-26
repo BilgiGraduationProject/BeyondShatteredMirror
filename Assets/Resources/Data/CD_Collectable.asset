@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de87c7a2cf554321a2a3b95003479298, type: 3}
-  m_Name: CD_Pool
+  m_Script: {fileID: 11500000, guid: 8d1b68b10992489d90370d8dcd83d745, type: 3}
+  m_Name: CD_Collectable
   m_EditorClassIdentifier: 
   Data:
-  - ObjName: Cube
-    ObjPrefab: {fileID: 100000, guid: 71c1a7d31ae1f5148bd68555e9baee05, type: 3}
-    ObjectCount: 10
-  - ObjName: Souls
-    ObjPrefab: {fileID: 0}
-    ObjectCount: 0
+  - CollectableType: 0
+    CollectableDropAmount: 0
+    CollectableList:
+    - {fileID: 0}
+  - CollectableType: 1
+    CollectableDropAmount: 0
+    CollectableList:
+    - {fileID: 0}

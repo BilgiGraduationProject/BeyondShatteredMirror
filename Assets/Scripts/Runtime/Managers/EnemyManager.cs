@@ -19,7 +19,8 @@ namespace Runtime.Managers
         #region Serialized Variables
 
         [SerializeField] private EnemyAnimationController enemyAnimationController;
-        [FormerlySerializedAs("enemyController")] [SerializeField] private EnemyHealthController enemyHealthController;
+         [SerializeField] private EnemyHealthController enemyHealthController;
+         [SerializeField] private EnemyMeshController enemyMeshController;
         [SerializeField] private EnemyType enemyType;
         [SerializeField] private Rigidbody enemyRigidbody;
 
@@ -70,6 +71,8 @@ namespace Runtime.Managers
             if (enemyHealthController.GetEnemyHealth() <= 0)
             {
                 enemyAnimationController.ChangeEnemyAnimationState(EnemyAnimationState.Dead);
+                EnemySignals.Instance.onEnemyDied?.Invoke(transform);
+                enemyMeshController.PlaySoulParticle();
                 _isEnemyDead = true;
             }
         }

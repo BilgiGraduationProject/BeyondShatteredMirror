@@ -16,5 +16,6 @@ namespace Runtime.Signals
         public UnityAction<float> onGetEnemyHealth = delegate {  };
         public UnityAction<float> onAddEnemyToForce = delegate {  };
         public UnityAction<EnemyAnimationState,GameObject> onPlayerBodyCollidedWithEnemey = delegate {  };
+        public UnityAction<Transform> onEnemyDied = delegate {  };
     }
 }
