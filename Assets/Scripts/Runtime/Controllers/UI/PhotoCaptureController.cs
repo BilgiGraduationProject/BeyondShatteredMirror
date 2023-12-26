@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.IO;
-using Cinemachine;
 using Runtime.Enums.Camera;
 using Runtime.Enums.GameManager;
 using Runtime.Enums.UI;
 using Runtime.Signals;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +16,7 @@ namespace Runtime.Controllers.UI
         #region Serializable Variables
         
         [Header("Photo Taker")]
-        [SerializeField] private Image photoDisplayArea;
+        [SerializeField] private RawImage photoDisplayArea;
         [SerializeField] private GameObject photoFrame;
         [SerializeField] private GameObject cameraViewfinder;
         
@@ -95,14 +93,14 @@ namespace Runtime.Controllers.UI
             _photoSprite = Sprite.Create(_screenCapture, new Rect(0, 0, _screenCapture.width, _screenCapture.height), new Vector2(0.5f, 0.5f), 100f);
             ScreenCapture.CaptureScreenshotAsTexture();
             SavePhoto();
-            photoDisplayArea.sprite = _photoSprite;
+            photoDisplayArea.texture = _photoSprite.texture;
             photoFrame.SetActive(true);
         }
     
         void SavePhoto()
         {
             byte[] bytes = _screenCapture.EncodeToPNG(); // Convert Texture2D to PNG byte array
-        
+            
             // Create a folder path inside Resources directory
             string folderPath = Path.Combine(Application.dataPath, "Resources/CapturePhotos");
             if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
@@ -118,32 +116,11 @@ namespace Runtime.Controllers.UI
             File.WriteAllBytes(filePath, bytes); // Save the PNG byte array to a file
 
             // Refresh the assets to make sure it appears in the project window
-            UnityEditor.AssetDatabase.Refresh();
-        
+            //UnityEditor.AssetDatabase.Refresh();
+            
             print("Capture worked");
-            
-            // Helps to convert Texture2D to Sprite
-            Texture2D texture2D = Resources.Load<Texture2D>("CapturePhotos" + _fileName);
-            
-            TextureImporter textureImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(texture2D)) as TextureImporter;
-            if (textureImporter is not null) textureImporter.textureType = TextureImporterType.Sprite;
-            if (textureImporter is not null) textureImporter.isReadable = true;
-            AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(texture2D), ImportAssetOptions.ForceUpdate);
         }
 
-        IEnumerator TextureToSprite()
-        {
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForSeconds(2f);
-            Texture2D texture2D = Resources.Load<Texture2D>("CapturePhotos" + _fileName);
-            
-            TextureImporter textureImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(texture2D)) as TextureImporter;
-            Debug.Log(AssetDatabase.GetAssetPath(texture2D));
-            if (textureImporter is not null) textureImporter.textureType = TextureImporterType.Sprite;
-            if (textureImporter is not null) textureImporter.isReadable = true;
-            AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(texture2D), ImportAssetOptions.ForceUpdate);
-        } // Kasmaları azaltmaya yardım edebilir.
-        
         private void RemovePhoto()
         {
             _viewingPhoto = false;

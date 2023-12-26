@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using System.Collections.Generic;
 using Runtime.Signals;
 using Runtime.Enums.GameManager;
 using DG.Tweening;
-using UnityEngine.UI;
 
 namespace Runtime.Controllers
 {

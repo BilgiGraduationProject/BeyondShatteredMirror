@@ -3,11 +3,7 @@ using Runtime.Enums.UI;
 using Runtime.Signals;
 using UnityEngine;
 using DG.Tweening;
-using MoreMountains.Tools;
 using Runtime.Enums.GameManager;
-using Unity.VisualScripting;
-using UnityEngine.Video;
-using Debug = System.Diagnostics.Debug;
 
 namespace Runtime.Controllers.UI
 {

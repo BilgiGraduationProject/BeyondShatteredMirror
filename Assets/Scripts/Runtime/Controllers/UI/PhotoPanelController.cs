@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,8 +18,7 @@ namespace Runtime.Controllers.UI
         #region Private Variables
 
         private Texture2D[] _photoTextureArray;
-        private Sprite[] _photoSpriteArray;
-        private List<Sprite> _photoSpriteList = new List<Sprite>();
+        private List<Texture2D> _photoTextureList = new List<Texture2D>();
         
         #endregion
 
@@ -39,21 +37,21 @@ namespace Runtime.Controllers.UI
 
         private void AddPhotosToPanel()
         {
-            _photoSpriteArray = Resources.LoadAll<Sprite>("CapturePhotos");
+            _photoTextureArray = Resources.LoadAll<Texture2D>("CapturePhotos");
 
-            foreach (var photo in _photoSpriteArray)
+            foreach (var photo in _photoTextureArray)
             {
-                _photoSpriteList.Add(photo);
+                _photoTextureList.Add(photo);
             }
         }
 
         private void CreatePhotoObjects()
         {
-            foreach (var photo in _photoSpriteList)
+            foreach (var photo in _photoTextureList)
             {
                 GameObject photoObject = Instantiate(photoObjectPrefab, photoObjectParent.transform);
                 //photoObject.GetComponent<Image>().sprite = photo;
-                photoObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = photo;
+                photoObject.transform.GetChild(0).transform.GetChild(0).GetComponent<RawImage>().texture = photo;
             }
         }
     }
