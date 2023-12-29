@@ -8,8 +8,8 @@ namespace Runtime.Signals
 {
     public class PoolSignals : MonoSingleton<PoolSignals>
     {
-        public Func<PoolType,GameObject> onGetPoolObject = delegate { return null; };
+        //public Func<PoolType,Transform, GameObject> onGetPoolObject = (_, _) => null;
+        public Func<PoolType,Transform, GameObject> onGetPoolObject = delegate { return null; };
         public UnityAction<GameObject,PoolType> onSendPool = delegate {  };
-        
     }
 }

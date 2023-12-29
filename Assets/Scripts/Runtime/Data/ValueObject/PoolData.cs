@@ -9,6 +9,5 @@ namespace Runtime.Data.ValueObject
         public string ObjName;
         public GameObject ObjPrefab;
         public int ObjectCount;
-
     }
 }

@@ -19,8 +19,6 @@ namespace Runtime.Managers
 
         [SerializeField] private Transform collectableHolder;
         
-        
-
         #endregion
 
         #region Private Variables
@@ -30,9 +28,6 @@ namespace Runtime.Managers
         private CollectableCreateHolderCommand _collectableCreateHolderCommand;
         private readonly string _pathOfData = "Data/CD_Collectable";
         
-
-        
-
         #endregion
 
         #endregion
@@ -51,7 +46,6 @@ namespace Runtime.Managers
         }
         
         private CD_Collectable GetCollectableData() => Resources.Load<CD_Collectable>(_pathOfData);
-        
 
         private void OnEnable()
         {
@@ -65,20 +59,30 @@ namespace Runtime.Managers
 
         private void OnEnemyDied(Transform enemyTransform)
         {
-            for (int i = 0; i < _collectableData.Data[(int)CollectableEnum.Soul].CollectableDropAmount; i++)
-            {
-                var soul = PoolSignals.Instance.onGetPoolObject?.Invoke(PoolType.Soul);
-                soul.transform.parent = collectableHolder.GetChild((int)CollectableEnum.Soul);
-            }
+            SaveLoadManager.Instance.ArithmeticalData(SaveDataValues.TotalKill, 1);
+            print(SaveDataValues.TotalKill + " Count: " + SaveLoadManager.Instance.LoadData<object>(SaveDataValues.TotalKill));
             
+            var soul = PoolSignals.Instance.onGetPoolObject?.Invoke(PoolType.Soul, enemyTransform);
+            //soul.transform.parent = collectableHolder.GetChild((int)CollectableEnum.Soul);
+            soul.transform.GetComponent<ParticleSystem>().Play();
+            
+            SaveLoadManager.Instance.ArithmeticalData(SaveDataValues.Soul, 
+                _collectableData.Data[(int)CollectableEnum.Soul].CollectableDropAmount);
+            print(SaveDataValues.Soul + " Count: " + SaveLoadManager.Instance.LoadData<object>(SaveDataValues.Soul));
+            
+            // for (int i = 0; i < _collectableData.Data[(int)CollectableEnum.Soul].CollectableDropAmount; i++)
+            // {
+            //     var soul = PoolSignals.Instance.onGetPoolObject?.Invoke(PoolType.Soul, enemyTransform);
+            //     soul.transform.parent = collectableHolder.GetChild((int)CollectableEnum.Soul);
+            //     soul.transform.GetComponent<ParticleSystem>().Play();
+            //     print(soul.transform.GetComponent<ParticleSystem>().isPlaying);
+            // }
         }
-
 
         private void UnSubscribeEvents()
         {
             EnemySignals.Instance.onEnemyDied -= OnEnemyDied;
         }
-
 
         private void OnDisable()
         {
@@ -90,6 +94,5 @@ namespace Runtime.Managers
     public class Collectible
     {
         private float colls;
-
     }
 }

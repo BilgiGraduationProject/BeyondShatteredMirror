@@ -72,7 +72,7 @@ namespace Runtime.Managers
             {
                 enemyAnimationController.ChangeEnemyAnimationState(EnemyAnimationState.Dead);
                 EnemySignals.Instance.onEnemyDied?.Invoke(transform);
-                enemyMeshController.PlaySoulParticle();
+                //enemyMeshController.PlaySoulParticle();
                 _isEnemyDead = true;
             }
         }

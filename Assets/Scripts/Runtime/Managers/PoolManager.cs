@@ -19,6 +19,7 @@ namespace Runtime.Managers
         [SerializeField] private Transform poolHolder;
 
         #endregion
+        
         #region Private Variables
 
         private CD_Pool _poolData;
@@ -27,12 +28,10 @@ namespace Runtime.Managers
         private PoolResetCommand _poolResetCommand;
         private List<GameObject> _emptyList = new List<GameObject>();
         private readonly string _poolDataPath = "Data/CD_Pool";
-
-
+        
         #endregion
 
         #endregion
-
 
         private void Awake()
         {
@@ -59,7 +58,6 @@ namespace Runtime.Managers
             _poolResetCommand.Execute();
         }
 
-
         private void OnEnable()
         {
             SubscribeEvents();
@@ -67,37 +65,39 @@ namespace Runtime.Managers
 
         private void SubscribeEvents()
         {
-            PoolSignals.Instance.onSendPool += OnSendPool;
             PoolSignals.Instance.onGetPoolObject += OnGetPoolObject;
+            PoolSignals.Instance.onSendPool += OnSendPool;
         }
-
-        private void OnSendPool(GameObject poolObj, PoolType poolType)
-        {
-            poolObj.transform.parent = poolHolder.GetChild((int)poolType);
-            poolObj.transform.localPosition = Vector3.zero;
-        }
-
-        private GameObject OnGetPoolObject(PoolType poolType)
+        
+        private GameObject OnGetPoolObject(PoolType poolType, Transform target)
         {
             var parent = poolHolder.transform.GetChild((int)poolType);
 
             if (parent.childCount > 0)
             {
                 var obj = parent.transform.GetChild(0).gameObject;
+                obj.transform.position = target.position;
+                obj.SetActive(true);
                 return obj;
             }
             else
             {
-                var obj = Instantiate(_poolData.Data[(int)poolType].ObjPrefab, Vector3.zero,Quaternion.identity, poolHolder.GetChild((int)poolType));
+                var obj = Instantiate(_poolData.Data[(int)poolType].ObjPrefab, target.position,Quaternion.identity, poolHolder.GetChild((int)poolType));
                 return obj;
             }
-
         }
 
+        private void OnSendPool(GameObject poolObj, PoolType poolType)
+        {
+            poolObj.SetActive(false);
+            poolObj.transform.parent = poolHolder.GetChild((int)poolType);
+            poolObj.transform.localPosition = Vector3.zero;
+        }
+        
         private void UnSubscribeEvents()
         {
-            PoolSignals.Instance.onSendPool -= OnSendPool;
             PoolSignals.Instance.onGetPoolObject -= OnGetPoolObject;
+            PoolSignals.Instance.onSendPool -= OnSendPool;
         }
 
         private void OnDisable()

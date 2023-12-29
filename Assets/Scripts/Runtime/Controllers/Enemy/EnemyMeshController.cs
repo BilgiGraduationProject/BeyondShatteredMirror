@@ -16,7 +16,7 @@ namespace Runtime.Controllers.Enemy
 
         public void PlaySoulParticle()
         {
-            soulParticle.Play();
+            //soulParticle.Play();
         }
     }
 }

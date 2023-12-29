@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Runtime.Controllers.UI
 {
-    public class PhotoPanelController : MonoBehaviour
+    public class InventoryPanelController : MonoBehaviour
     {
         #region Self Variables
         
