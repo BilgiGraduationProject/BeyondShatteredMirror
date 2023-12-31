@@ -72,7 +72,7 @@ namespace Runtime.Controllers.Player
             {
                 var randomRange = Random.Range(0, Enum.GetValues(typeof(PlayerFarAttackAnimationState)).Length);
                 var playerFarAttack = Enum.GetNames(typeof(PlayerFarAttackAnimationState));
-                AttackType(playerFarAttack[randomRange],enemyTransform,.65f);
+                AttackType(playerFarAttack[randomRange],enemyTransform,1f);
             }
             
             else if (targetDistance < 3)

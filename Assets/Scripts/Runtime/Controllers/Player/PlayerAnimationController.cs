@@ -68,6 +68,11 @@ namespace Runtime.Controllers.Player
              PlayerSignals.Instance.onIsPlayerReadyToAttack?.Invoke(true) ;
              
          }
+
+         void ChangePlayerDirection()
+         {
+             
+         }
         #endregion
 
 

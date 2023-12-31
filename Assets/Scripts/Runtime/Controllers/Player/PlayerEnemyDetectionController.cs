@@ -45,6 +45,7 @@ namespace Runtime.Controllers.Player
             if (other.CompareTag("Enemy"))
             {
                 _enemyTransform = other.gameObject.transform.parent.gameObject;
+                EnemySignals.Instance.onShowEnemyHealthBar?.Invoke(_enemyTransform);
                 Debug.LogWarning("Enemy is not null");
             }
         }
@@ -53,8 +54,10 @@ namespace Runtime.Controllers.Player
         {
             if (other.CompareTag("Enemy"))
             {
+                EnemySignals.Instance.onHideEnemyHealthBar?.Invoke(other.gameObject.transform.parent.gameObject);
                 _enemyTransform = null;
                 Debug.LogWarning("Enemy is null");
+                
             }
         }
 

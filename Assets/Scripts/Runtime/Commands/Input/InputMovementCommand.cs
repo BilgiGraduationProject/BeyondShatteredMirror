@@ -26,8 +26,8 @@ namespace Runtime.Commands.Input
                 
                     if (UnityEngine.Input.GetButton(_vertical) || UnityEngine.Input.GetButton(_horizontal))
                     {
-                        _axisX = UnityEngine.Input.GetAxis(_horizontal);
-                        _axisZ = UnityEngine.Input.GetAxis(_vertical);
+                        _axisX = UnityEngine.Input.GetAxisRaw(_horizontal);
+                        _axisZ = UnityEngine.Input.GetAxisRaw(_vertical);
 
                         InputSignals.Instance.onPlayerPressedMovementButton?.Invoke(new InputParams()
                         {

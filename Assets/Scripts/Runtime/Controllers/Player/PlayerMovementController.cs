@@ -61,7 +61,7 @@ namespace Runtime.Controllers.Player
             if (moveDirection != Vector3.zero)
             {
                 var newRotateDirection = new Vector3(moveDirection.x, 0, moveDirection.z);
-                transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(newRotateDirection), _playerData.RotationSpeed * 1);
+                transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(newRotateDirection), _playerData.RotationSpeed * Time.deltaTime);
                 playerRb.velocity = transform.forward * _playerData.PlayerSpeed;
                 playerAnimationController.OnGetPlayerSpeed(playerRb.velocity.magnitude);
             }

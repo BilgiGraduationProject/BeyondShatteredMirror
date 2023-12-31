@@ -58,7 +58,21 @@ namespace Runtime.Managers
             EnemySignals.Instance.onChangeEnemyAnimationState += enemyAnimationController.ChangeEnemyAnimationState;
             EnemySignals.Instance.onCheckEnemyHealth += OnCheckEnemyHealth;
             EnemySignals.Instance.onPlayerBodyCollidedWithEnemey += OnDamageEnemy;
+            EnemySignals.Instance.onShowEnemyHealthBar += OnShowEnemyHealthBar;
+            EnemySignals.Instance.onHideEnemyHealthBar += OnHideEnemyHealthBar;
             
+        }
+
+        private void OnHideEnemyHealthBar(GameObject enemyObj)
+        {
+            if(gameObject.GetInstanceID() != enemyObj.GetInstanceID()) return;
+            enemyHealthController.HideEnemyHealthBar();
+        }
+
+        private void OnShowEnemyHealthBar(GameObject enemyObj)
+        {
+            if(gameObject.GetInstanceID() != enemyObj.GetInstanceID()) return;
+            enemyHealthController.ShowEnemyHealthBar();
         }
 
         private void OnDamageEnemy(EnemyAnimationState hitType, GameObject enemyObj)
@@ -72,7 +86,6 @@ namespace Runtime.Managers
             {
                 enemyAnimationController.ChangeEnemyAnimationState(EnemyAnimationState.Dead);
                 EnemySignals.Instance.onEnemyDied?.Invoke(transform);
-                //enemyMeshController.PlaySoulParticle();
                 _isEnemyDead = true;
             }
         }
@@ -106,6 +119,9 @@ namespace Runtime.Managers
         {
             EnemySignals.Instance.onChangeEnemyAnimationState -= enemyAnimationController.ChangeEnemyAnimationState;
             EnemySignals.Instance.onCheckEnemyHealth -= OnCheckEnemyHealth;
+            EnemySignals.Instance.onPlayerBodyCollidedWithEnemey -= OnDamageEnemy;
+            EnemySignals.Instance.onShowEnemyHealthBar -= OnShowEnemyHealthBar;
+            EnemySignals.Instance.onHideEnemyHealthBar -= OnHideEnemyHealthBar;
         }
 
         private void OnDisable()

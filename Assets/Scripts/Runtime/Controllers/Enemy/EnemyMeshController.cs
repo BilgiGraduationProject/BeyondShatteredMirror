@@ -8,15 +8,12 @@ namespace Runtime.Controllers.Enemy
 
         #region Serialized Variables
 
-        [SerializeField] private ParticleSystem soulParticle;
+      
 
         #endregion
 
         #endregion
 
-        public void PlaySoulParticle()
-        {
-            //soulParticle.Play();
-        }
+        
     }
 }

@@ -15,7 +15,8 @@ namespace Runtime.Controllers.Enemy
 
         #region Serialized Variables
 
-        [SerializeField] private CapsuleCollider enemyBoxCollider;
+        [SerializeField] private GameObject enemyHealthHolder;
+        [SerializeField] private Transform enemyHealthBar;
 
         #endregion
 
@@ -23,6 +24,7 @@ namespace Runtime.Controllers.Enemy
 
         private EnemyData _enemyData;
         private float _enemyHealth;
+        private GameObject _enemyObj;
         #endregion
 
         #endregion
@@ -51,11 +53,31 @@ namespace Runtime.Controllers.Enemy
                     break;
                 
             }
+
+            if (_enemyHealth > 0)
+            {
+                enemyHealthBar.localScale = new Vector3(_enemyHealth / 100, 1f);
+            }
+            else
+            {
+                enemyHealthBar.localScale = new Vector3(0, 1f, 1f);
+                enemyHealthHolder.SetActive(false);
+            }
             
-            
-            
-            
+
+
+
+
         }
-        
+
+        internal void ShowEnemyHealthBar()
+        {
+            enemyHealthHolder.SetActive(true);
+        }
+
+        internal void HideEnemyHealthBar()
+        {
+            enemyHealthHolder.SetActive(false);
+        }
     }
 }
