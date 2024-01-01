@@ -76,6 +76,7 @@ namespace Runtime.Managers
                 default:
                     throw new ArgumentException("Unsupported type", nameof(value));
             }
+            print(LoadData<object>(dataName));
         }
         
         public T LoadData<T>(string dataName)

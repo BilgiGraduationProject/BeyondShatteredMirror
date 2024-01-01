@@ -5,6 +5,7 @@ namespace Runtime.Enums.UI
         Start,
         Inventory,
         Settings,
+        Shop,
         Quit,
         
     }
