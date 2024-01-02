@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Runtime.Managers;
+using Runtime.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +41,7 @@ namespace Runtime.Controllers.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            transform.DOScale(new Vector3(1.15f, 1.15f, 1.15f), 0.3f)
+            transform.DOScale(new Vector3().SetFloat(1.15f), 0.3f)
                 .SetEase(Ease.Flash);
         }
 

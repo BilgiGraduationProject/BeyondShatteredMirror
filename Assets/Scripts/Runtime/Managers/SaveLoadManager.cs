@@ -1,4 +1,5 @@
 ﻿using System;
+using Runtime.Utilities;
 using UnityEngine;
 
 namespace Runtime.Managers
@@ -76,7 +77,7 @@ namespace Runtime.Managers
                 default:
                     throw new ArgumentException("Unsupported type", nameof(value));
             }
-            print(LoadData<object>(dataName));
+            print(LoadData<object>(dataName).ColoredObj(Color.gray));
         }
         
         public T LoadData<T>(string dataName)

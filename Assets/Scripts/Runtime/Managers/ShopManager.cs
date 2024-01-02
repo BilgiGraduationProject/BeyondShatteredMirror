@@ -6,6 +6,7 @@ using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
 using Runtime.Enums.UI;
 using Runtime.Signals;
+using Runtime.Utilities;
 using UnityEngine;
 
 namespace Runtime.Managers
@@ -29,7 +30,7 @@ namespace Runtime.Managers
         #endregion
         
         #region Self Variables
-
+        
         #region Private Variables
 
         private const string _pathOfData = "Data/ItemDatas";
@@ -69,10 +70,7 @@ namespace Runtime.Managers
                 .ToList());
         }
 
-        public List<ItemData> SendItemDatasToControllers()
-        {
-            return _itemDatas;
-        }
+        public List<ItemData> SendItemDatasToControllers() => _itemDatas;
 
         private void Update()
         {
@@ -87,17 +85,17 @@ namespace Runtime.Managers
             if(_itemDatas is null) return;
             if(_itemDatas.Count < itemIndex) return;
             
-            Debug.Log("Purchased item: " + _itemDatas[itemIndex].Name);
-
-            if (CanAfford(_itemDatas[itemIndex].Price))
-            {
-                ConfirmPurchase(itemObject ,_itemDatas[itemIndex].Price);
-            }
-            else
-            {
-                ErrorPurchase(itemObject);
-            }
+            if (CanAfford(_itemDatas[itemIndex].Price)) ConfirmPurchase(itemObject, itemIndex);
+            else ErrorPurchase(itemObject);
         }
+        
+        private bool IsPassesCommon(ItemData data) // It is not necessary for now. Maybe it will be usable in the future.
+            => data switch
+            {
+                { Name: "Shield"} => true,
+                { Price: >= 0 } and {Price: <= 2000 } => true,
+                _ => false
+            };
         
         private bool CanAfford(int itemPrice)
         {
@@ -105,12 +103,18 @@ namespace Runtime.Managers
             return itemPrice <= currentSoul;
         }
         
-        private void ConfirmPurchase(GameObject itemObject ,int cost)
+        private void ConfirmPurchase(GameObject itemObject, int itemIndex)
         {
-            SaveLoadManager.Instance.ArithmeticalData(SaveDataValues.Soul, -cost);
-            itemObject.transform.DOScale(new Vector3(1.25f, 1.25f, 1.25f), 0.5f)
-                .SetEase(Ease.InOutBack);
-            print("ConfirmPurchase");
+            SaveLoadManager.Instance.ArithmeticalData(SaveDataValues.Soul, -_itemDatas[itemIndex].Price);
+            SaveLoadManager.Instance.ArithmeticalData(_itemDatas[itemIndex].Name, +1);
+            itemObject.transform.DOScale(new Vector3().SetFloat(1.25f), 0.5f)
+                .SetEase(Ease.InOutBack)
+                .OnComplete(() =>
+                {
+                    itemObject.transform.DOScale(Vector3.one, 0.3f)
+                        .SetEase(Ease.InOutBack);
+                });
+            print("ConfirmPurchase".ColoredText(Color.green));
         }
         
         private void CancelPurchase()
@@ -120,13 +124,8 @@ namespace Runtime.Managers
         
         private void ErrorPurchase(GameObject itemObject)
         {
-            print("ErrorPurchase");
+            print("ErrorPurchase".ColoredText(Color.red));
             itemObject.transform.DOShakePosition(0.5f, 20f);
-        }
-        
-        private void AddItemToInventory()
-        {
-            print("AddItemToInventory");
         }
     }
 }
