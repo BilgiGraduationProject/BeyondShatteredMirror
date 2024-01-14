@@ -6,6 +6,7 @@ using Runtime.Enums.Player;
 using Runtime.Keys.Input;
 using Runtime.Signals;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Controllers.Player
 {
@@ -14,8 +15,6 @@ namespace Runtime.Controllers.Player
         #region Self Variables
 
         #region Serialized Variables
-
-        [SerializeField] private PlayerFightController playerFightController;
         
         #endregion
 
@@ -61,14 +60,12 @@ namespace Runtime.Controllers.Player
             }
         }
 
-        public void OnPlayerPressedAttackButton()
+        internal GameObject GetEnemyTransform()
         {
-           playerFightController.AttackCheck(_enemyTransform);
-        }
+            Debug.LogWarning(_enemyTransform);
+            return _enemyTransform;
+        } 
 
-        public void OnPlayerPressedCounterButton()
-        {
-            
-        }
+
     }
 }

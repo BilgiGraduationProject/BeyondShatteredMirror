@@ -2,6 +2,7 @@
 using Runtime.Commands.Input;
 using Runtime.Enums.GameManager;
 using Runtime.Signals;
+using Sirenix.OdinInspector.Editor;
 using UnityEngine;
 
 
@@ -33,7 +34,9 @@ namespace Runtime.Managers
         private readonly string _roll = "Roll";
         private readonly string _crouch = "Left Control";
         private readonly string _attack = "Attack";
-        private readonly string _counter = "Counter";
+        private readonly string _mouseRightButton = "Counter";
+        private readonly string _pistol = "Pistol";
+        private readonly string _punch = "Punch";
 
         #endregion
         
@@ -117,10 +120,24 @@ namespace Runtime.Managers
               InputSignals.Instance.onPlayerPressedAttackButton?.Invoke();
            }
 
-           if (Input.GetButtonDown(_counter))
+           if (Input.GetButtonDown(_mouseRightButton))
            {
-               Debug.LogWarning("Executed Dodge");
-               InputSignals.Instance.onPlayerPressedCounterButton?.Invoke();
+               InputSignals.Instance.onPlayerPressedMouseButtonRight?.Invoke();
+           }
+
+           if (Input.GetButtonUp(_mouseRightButton))
+           {
+               InputSignals.Instance.onPlayerReleasedMouseButtonRight?.Invoke();
+           }
+
+           if (Input.GetButtonDown(_pistol))
+           {
+               CoreGameSignals.Instance.onChangeGameFightState?.Invoke(GameFightStateEnum.Pistol);
+           }
+
+           if (Input.GetButtonDown(_punch))
+           {
+               CoreGameSignals.Instance.onChangeGameFightState?.Invoke(GameFightStateEnum.Punch);
            }
            
             

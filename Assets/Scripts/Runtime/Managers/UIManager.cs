@@ -43,7 +43,7 @@ namespace Runtime.Managers
 
         public void OnSettings()
         {
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.StopPlayer);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.CancelPlayerMovement);
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Settings, 1);
         }
     }

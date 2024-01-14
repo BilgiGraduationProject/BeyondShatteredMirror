@@ -71,13 +71,13 @@ namespace Runtime.Controllers
             cutsceneList[0].SetActive(true);
             cutsceneList[0].GetComponent<VideoPlayer>().Play();
             cutsceneList[0].GetComponent<VideoPlayer>().loopPointReached += OnCutsceneFinished;
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.StopPlayer);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.CancelPlayerMovement);
         }
 
         private void OnOpenCutscene(int index)
         {
             _lastIndex = index;
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.StopPlayer);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.CancelPlayerMovement);
             blackwBG.SetActive(false);
             cutsceneList[index].SetActive(true);
             cutsceneList[index].GetComponent<VideoPlayer>().Play();
@@ -107,7 +107,7 @@ namespace Runtime.Controllers
                 {
                     blackwBG.GetComponent<CanvasGroup>().alpha = 1;
                     blackwBG.SetActive(false);
-                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.StartPlayer);
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.ActivatePlayerMovement);
                 });
             });
         }

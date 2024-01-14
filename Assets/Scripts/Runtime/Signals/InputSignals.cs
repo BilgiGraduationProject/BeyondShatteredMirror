@@ -16,8 +16,9 @@ namespace Runtime.Signals
         public UnityAction onPlayerPressedRollButton = delegate {  };
         public UnityAction<bool> onPlayerIsAvailableForRoll = delegate {  };
         public UnityAction onPlayerPressedAttackButton = delegate {  };
-        public UnityAction onPlayerPressedCounterButton = delegate {  };
+        public UnityAction onPlayerPressedMouseButtonRight = delegate {  };
         public UnityAction<bool> onChangeMouseVisibility = delegate {  };
+        public UnityAction onPlayerReleasedMouseButtonRight = delegate {  };
         
     
         

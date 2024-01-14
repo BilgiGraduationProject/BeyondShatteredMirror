@@ -4,9 +4,10 @@ namespace Runtime.Enums.GameManager
     {
         GameStart,
         Cutscene,
-        StopPlayer,
-        StartPlayer,
+        CancelPlayerMovement,
+        ActivatePlayerMovement,
         Quit,
+       
         
         
     }

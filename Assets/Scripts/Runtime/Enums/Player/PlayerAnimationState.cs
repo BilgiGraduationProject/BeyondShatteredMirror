@@ -4,10 +4,16 @@ namespace Runtime.Enums.Player
     {
         isWalking,
         isRunning,
+        isPistol,
         isCrouching,
         isCrouchRunning,
         isRolling,
-        isAttacking
+        isAttacking,
+        PistolTakeOut,
+        PistolTakeIn,
+        isShooting,
+        
+        
         
         
     }

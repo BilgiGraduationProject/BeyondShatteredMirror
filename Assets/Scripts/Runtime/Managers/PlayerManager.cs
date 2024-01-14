@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Runtime.Controllers.Player;
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
+using Runtime.Enums.GameManager;
 using Runtime.Enums.Player;
 using Runtime.Keys.Input;
 using Runtime.Signals;
@@ -20,13 +21,14 @@ namespace Runtime.Managers
         [SerializeField] private PlayerMovementController playerMovementController;
         [SerializeField] private PlayerAnimationController playerAnimationController;
         [SerializeField] private PlayerEnemyDetectionController playerEnemyDetectionController;
-        [SerializeField] private PlayerFightController playerFightController;
+        
         #endregion
 
         #region Private Variables
         private PlayerData _playerData;
         private readonly string _playerDataPath = "Data/CD_Player";
         private Camera _camera;
+        private bool _isPistolTakeOut;
         #endregion
 
         #endregion
@@ -68,24 +70,17 @@ namespace Runtime.Managers
             InputSignals.Instance.onPlayerReleaseRunButton += OnPlayerReleaseRunButton;
             InputSignals.Instance.onPlayerPressedCrouchButton += playerAnimationController.OnPlayerPressCrouchButton;
             InputSignals.Instance.onPlayerPressedRollButton += playerMovementController.OnPlayerPressedRollButton;
-            InputSignals.Instance.onPlayerPressedAttackButton += playerEnemyDetectionController.OnPlayerPressedAttackButton;
-            InputSignals.Instance.onPlayerPressedCounterButton += playerEnemyDetectionController.OnPlayerPressedCounterButton;
             
-            EnemySignals.Instance.onGetEnemyHealth += OnGetEnemyHealth;
             
             PlayerSignals.Instance.onChangePlayerAnimationState += playerAnimationController.OnChangePlayerAnimationState;
-            PlayerSignals.Instance.onTriggerAttackAnimationState +=
+            PlayerSignals.Instance.onTriggerPlayerAnimationState +=
                 playerAnimationController.OnTriggerAttackAnimationState;
-            PlayerSignals.Instance.onIsPlayerReadyToAttack += playerFightController.OnIsPlayerReadyToAttack;
+            PlayerSignals.Instance.onChangeAnimationLayerWeight += playerAnimationController.OnChangeAnimationLayerWeight;
+            
 
 
         }
-
-        private void OnGetEnemyHealth(float enemyHealth)
-        {
-            playerFightController.OnGetEnemyHealth(enemyHealth);
-        }
-
+        
 
         #region Movement
 
@@ -117,6 +112,7 @@ namespace Runtime.Managers
         
         private void UnSubscribeEvents()
         {
+            
             CoreGameSignals.Instance.onIsPlayerReadyToMove -= OnIsPlayerReadyToMove;
             
             InputSignals.Instance.onPlayerPressedMovementButton -= OnInputPressedForMovement;
@@ -124,16 +120,11 @@ namespace Runtime.Managers
             InputSignals.Instance.onPlayerReleaseRunButton -= OnPlayerReleaseRunButton;
             InputSignals.Instance.onPlayerPressedCrouchButton -= playerAnimationController.OnPlayerPressCrouchButton;
             InputSignals.Instance.onPlayerPressedRollButton -= playerMovementController.OnPlayerPressedRollButton;
-            InputSignals.Instance.onPlayerPressedAttackButton -= playerEnemyDetectionController.OnPlayerPressedAttackButton;
-            InputSignals.Instance.onPlayerPressedCounterButton -= playerEnemyDetectionController.OnPlayerPressedCounterButton;
-
-            EnemySignals.Instance.onGetEnemyHealth -= OnGetEnemyHealth;
             
             PlayerSignals.Instance.onChangePlayerAnimationState -= playerAnimationController.OnChangePlayerAnimationState;
-            PlayerSignals.Instance.onTriggerAttackAnimationState -=
+            PlayerSignals.Instance.onTriggerPlayerAnimationState -=
                 playerAnimationController.OnTriggerAttackAnimationState;
-            PlayerSignals.Instance.onIsPlayerReadyToAttack -= playerFightController.OnIsPlayerReadyToAttack;
-            
+            PlayerSignals.Instance.onChangeAnimationLayerWeight -= playerAnimationController.OnChangeAnimationLayerWeight;
         }
 
         private void OnDisable()
