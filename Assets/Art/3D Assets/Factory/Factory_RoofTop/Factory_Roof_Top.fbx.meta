@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7aad7ff971cd2497c99a74ee5055dce0
+guid: a2bbaee81be844971b8c5079f092adfd
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,18 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Factory_Wall_UV_AlbedoTransparency
-    second: {fileID: 2800000, guid: 208f78bb3a98441e8936513f696492a6, type: 3}
+      name: Factory_Roof_Top_Roof_AlbedoTransparency
+    second: {fileID: 2800000, guid: 8870b9e90478f4a84b1476955c2b1bb1, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Factory_Wall_UV_MetallicSmoothness
-    second: {fileID: 2800000, guid: 0324086adad944c988bc24e9fafecc46, type: 3}
+      name: Factory_Roof_Top_Roof_MetallicSmoothness
+    second: {fileID: 2800000, guid: 18cf95974e0864effba2791edd1584f0, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Factory_Wall_UV_Normal
-    second: {fileID: 2800000, guid: 68ce6b4be6ea7409cb0475cf73ecea46, type: 3}
+      name: Factory_Roof_Top_Roof_Normal
+    second: {fileID: 2800000, guid: f8071a88e04134095941f7afbaba6184, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -52,7 +52,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
