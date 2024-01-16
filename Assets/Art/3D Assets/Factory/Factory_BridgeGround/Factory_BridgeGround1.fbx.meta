@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6848f995c764940e1b4647744b1d8762
+guid: b2dd0ceb02c2b448a8e9df0df725dc81
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,18 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Factory_RoomBase1_Material.001_AlbedoTransparency
-    second: {fileID: 2800000, guid: c397f21d05e7a45cb86fc8b55390048b, type: 3}
+      name: Factory_UpperFloor_UV_AlbedoTransparency
+    second: {fileID: 2800000, guid: 6111c38761981406aa224caa5935990f, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Factory_RoomBase1_Material.001_MetallicSmoothness
-    second: {fileID: 2800000, guid: 950ed675cf57a4995ac4c851b5c8f7be, type: 3}
+      name: Factory_UpperFloor_UV_MetallicSmoothness
+    second: {fileID: 2800000, guid: 41e0c4ed22c974f4f91ec5c9114ad0e7, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Factory_RoomBase1_Material.001_Normal
-    second: {fileID: 2800000, guid: 89ba3f9cdc15940ab9205b6f29378529, type: 3}
+      name: Factory_UpperFloor_UV_Normal
+    second: {fileID: 2800000, guid: 8cdde4c9845944f2b8c774646c4fe148, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -52,7 +52,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
