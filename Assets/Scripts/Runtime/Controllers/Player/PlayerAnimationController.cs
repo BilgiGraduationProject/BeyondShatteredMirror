@@ -20,6 +20,11 @@ namespace Runtime.Controllers.Player
         private float _playerSpeed;
         private readonly string _speed = "Speed";
 
+        [Header("Animation Layers")] 
+        [SerializeField] private Transform holster;
+        [SerializeField] private Transform rightHand;
+        [SerializeField] private Transform pistol;
+
         #endregion
 
         #endregion
@@ -106,9 +111,20 @@ namespace Runtime.Controllers.Player
              
          }
 
+         void AnimEventPistolHolsterPosition()
+         {
+             pistol.SetParent(rightHand,false);
+         }
+
+         void AnimEventPistolUnHolsterPosition()
+         {
+             pistol.SetParent(holster,false);
+         }
+
          void AnimEventPistolTakeOut()
          {
             OnChangeAnimationLayerWeight((int)PlayerAnimationLayerEnum.Pistol,1,0);
+           
             AnimEventActivatePlayerMovement();
             
          }

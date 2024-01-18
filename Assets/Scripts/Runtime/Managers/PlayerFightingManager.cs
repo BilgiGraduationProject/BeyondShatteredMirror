@@ -15,7 +15,6 @@ namespace Runtime.Managers
         [SerializeField] private PlayerPunchController playerPunchController;
         [SerializeField] private PlayerGunController playerGunController;
         [SerializeField] private PlayerEnemyDetectionController playerEnemyDetectionController;
-        
 
         #endregion
 
