@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Runtime.Enums.Camera;
 using Runtime.Enums.GameManager;
@@ -96,7 +97,7 @@ namespace Runtime.Controllers.UI
             photoDisplayArea.texture = _photoSprite.texture;
             photoFrame.SetActive(true);
         }
-    
+        
         void SavePhoto()
         {
             byte[] bytes = _screenCapture.EncodeToPNG(); // Convert Texture2D to PNG byte array

@@ -63,6 +63,10 @@ namespace Runtime.Controllers
             {
                 CoreUISignals.Instance.onOpenCutscene?.Invoke(0);
             }
+            else if (Input.GetKeyDown(KeyCode.B))
+            {
+                CoreUISignals.Instance.onOpenCutscene?.Invoke(1);
+            }
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
