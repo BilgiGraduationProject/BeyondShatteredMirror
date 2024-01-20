@@ -23,7 +23,7 @@ namespace Runtime.Managers
         private void Start()
         {
             // Don't need this. I already use on StartPanel - Play button
-            //OnGameStatusChanged(gameState);
+            OnGameStatusChanged(gameState);
         }
 
         private void OnEnable()

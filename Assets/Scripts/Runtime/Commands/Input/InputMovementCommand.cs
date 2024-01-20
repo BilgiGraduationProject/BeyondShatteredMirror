@@ -28,6 +28,7 @@ namespace Runtime.Commands.Input
                     {
                         _axisX = UnityEngine.Input.GetAxisRaw(_horizontal);
                         _axisZ = UnityEngine.Input.GetAxisRaw(_vertical);
+                        Debug.LogWarning("Movement");
 
                         InputSignals.Instance.onPlayerPressedMovementButton?.Invoke(new InputParams()
                         {
