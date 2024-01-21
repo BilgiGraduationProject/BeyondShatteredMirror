@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using Runtime.Signals;
 using Runtime.Enums.GameManager;
 using DG.Tweening;
+using Runtime.Data.UnityObject;
+using Runtime.Data.ValueObject;
+using Runtime.Utilities;
 
 namespace Runtime.Controllers
 {
@@ -15,6 +18,7 @@ namespace Runtime.Controllers
         #region Serializable Variables
         
         [SerializeField] private GameObject blackwBG;
+        [SerializeField] private VideoPlayer videoPlayer;
         [SerializeField] private List<GameObject> cutsceneList = new List<GameObject>();
         
         #endregion
@@ -22,6 +26,7 @@ namespace Runtime.Controllers
         #region Private Variables
     
         private int _lastIndex;
+        private string _fullPath;
 
         #endregion
 
@@ -36,7 +41,7 @@ namespace Runtime.Controllers
                 go.SetActive(false);
             }
         }
-        
+
         #region SubscribeEvents and UnsubscribeEvents
 
         private void OnEnable() => SubscribeEvents();
@@ -61,33 +66,61 @@ namespace Runtime.Controllers
             // TODO: This part is for testing purposes only. Change it later with collision or something else.
             if (Input.GetKeyDown(KeyCode.N))
             {
-                CoreUISignals.Instance.onOpenCutscene?.Invoke(0);
+                CoreUISignals.Instance.onOpenCutscene?.Invoke(0); // This method helps to load cutscene video.
             }
             else if (Input.GetKeyDown(KeyCode.B))
             {
                 CoreUISignals.Instance.onOpenCutscene?.Invoke(1);
             }
+            else if (Input.GetKeyDown(KeyCode.V))
+            {
+                CoreUISignals.Instance.onOpenCutscene?.Invoke(2);
+            }
         }
-
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-        {
-            blackwBG.SetActive(false);
-            cutsceneList[0].SetActive(true);
-            cutsceneList[0].GetComponent<VideoPlayer>().Play();
-            cutsceneList[0].GetComponent<VideoPlayer>().loopPointReached += OnCutsceneFinished;
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.CancelPlayerMovement);
-        }
-
+        
         private void OnOpenCutscene(int index)
         {
-            _lastIndex = index;
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.CancelPlayerMovement);
-            blackwBG.SetActive(false);
-            cutsceneList[index].SetActive(true);
-            cutsceneList[index].GetComponent<VideoPlayer>().Play();
-            cutsceneList[index].GetComponent<CanvasGroup>().alpha = 0;
-            cutsceneList[index].GetComponent<CanvasGroup>().DOFade(1f, .75f).SetEase(Ease.OutQuad);
-            cutsceneList[index].GetComponent<VideoPlayer>().loopPointReached += OnCutsceneFinished;
+            LoadVideoClip(index);
+
+            // _lastIndex = index;
+            // CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.CancelPlayerMovement);
+            // blackwBG.SetActive(false);
+            // cutsceneList[index].SetActive(true);
+            // cutsceneList[index].GetComponent<VideoPlayer>().Play();
+            // cutsceneList[index].GetComponent<CanvasGroup>().alpha = 0;
+            // cutsceneList[index].GetComponent<CanvasGroup>().DOFade(1f, .75f).SetEase(Ease.OutQuad);
+            // cutsceneList[index].GetComponent<VideoPlayer>().loopPointReached += OnCutsceneFinished;
+        }
+        
+        private void LoadVideoClip(int index)
+        {
+            try
+            {
+                _fullPath = System.IO.Path.Combine(Application.streamingAssetsPath, $"Cutscenes/Cutscene{index}.mp4");
+
+                if (!System.IO.File.Exists(_fullPath))
+                {
+                    throw new System.IO.FileNotFoundException($"Cutscene{index}.mp4 couldn't found.");
+                }
+                
+                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.CancelPlayerMovement);
+                
+                videoPlayer.gameObject.SetActive(true);
+                videoPlayer.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+                videoPlayer.gameObject.GetComponent<CanvasGroup>().DOFade(1f, .75f).SetEase(Ease.OutQuad);
+                videoPlayer.gameObject.GetComponent<VideoPlayer>().loopPointReached += OnCutsceneCompleted;
+                
+                videoPlayer.url = _fullPath;
+                videoPlayer.Prepare();
+                
+                Debug.Log("Video is playing.".ColoredText(Color.green));
+            }
+            catch (System.Exception ex)
+            {
+                Debug.Log($"While uploading an error occurs: {ex.Message}".ColoredText(Color.blue));
+                videoPlayer.gameObject.SetActive(false);
+                videoPlayer.GetComponent<CanvasGroup>().alpha = 1;
+            }
         }
         
         private void OnCutsceneFinished(VideoPlayer videoPlayer)
@@ -111,6 +144,25 @@ namespace Runtime.Controllers
                 {
                     blackwBG.GetComponent<CanvasGroup>().alpha = 1;
                     blackwBG.SetActive(false);
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.ActivatePlayerMovement);
+                });
+            });
+        }
+        
+        private void OnCutsceneCompleted(VideoPlayer videoPlayerr)
+        {
+            videoPlayerr.loopPointReached -= OnCutsceneCompleted;
+            blackwBG.SetActive(true);
+            
+            videoPlayer.GetComponent<CanvasGroup>().DOFade(0f, 3).SetEase(Ease.OutQuad).OnComplete(() =>
+            {
+                videoPlayer.gameObject.SetActive(false);
+                videoPlayer.GetComponent<CanvasGroup>().alpha = 1;
+                videoPlayer.GetComponent<VideoPlayer>().Prepare(); // Unnecessary line of code.
+                blackwBG.GetComponent<CanvasGroup>().DOFade(0f, 3f).SetEase(Ease.OutQuad).OnComplete(() =>
+                {
+                    blackwBG.SetActive(false);
+                    blackwBG.GetComponent<CanvasGroup>().alpha = 1;
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.ActivatePlayerMovement);
                 });
             });

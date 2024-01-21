@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using DG.Tweening;
 using Runtime.Utilities;
+using UnityEngine.Video;
 
 namespace Runtime.Controllers.UI
 {
@@ -15,7 +16,8 @@ namespace Runtime.Controllers.UI
 
         [SerializeField] private List<EventTrigger> buttons = new List<EventTrigger>();
         [SerializeField] private GameObject buttonBackground;
-
+        [SerializeField] private VideoPlayer backgroundVideoPlayer;
+        
         #endregion
 
         #region Private 
@@ -28,6 +30,7 @@ namespace Runtime.Controllers.UI
 
         private void Awake()
         {
+            backgroundVideoPlayer.Prepare();
             foreach (var eventTrigger in buttons) AddPointerEnterAndExit(eventTrigger);
         }
 

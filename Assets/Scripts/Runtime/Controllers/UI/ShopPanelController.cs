@@ -45,8 +45,8 @@ namespace Runtime.Controllers.UI
             foreach (var item in _itemData)
             {
                 var itemObject = Instantiate(shopItemPrefab, shopItemParent.transform);
-                itemObject.GetComponent<Item>().SetItem(item.Name, item.Description, item.Thumbnail, item.Price); 
-                itemObject.GetComponent<Item>().SetItemIndex(index++);
+                itemObject.GetComponent<ShopItem>().SetItem(item.Name, item.Description, item.Thumbnail, item.Price); 
+                itemObject.GetComponent<ShopItem>().SetItemIndex(index++);
                 // itemObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.Name;
                 // itemObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = item.Description;
                 // itemObject.transform.GetChild(2).GetComponent<Image>().sprite = item.Thumbnail;

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using Runtime.Enums.Camera;
 using Runtime.Enums.GameManager;
@@ -93,7 +92,9 @@ namespace Runtime.Controllers.UI
         {
             _photoSprite = Sprite.Create(_screenCapture, new Rect(0, 0, _screenCapture.width, _screenCapture.height), new Vector2(0.5f, 0.5f), 100f);
             ScreenCapture.CaptureScreenshotAsTexture();
-            SavePhoto();
+            //SavePhoto();
+            //SavePhotoES3();
+            SavePhotoAsync();
             photoDisplayArea.texture = _photoSprite.texture;
             photoFrame.SetActive(true);
         }
@@ -119,6 +120,71 @@ namespace Runtime.Controllers.UI
             // Refresh the assets to make sure it appears in the project window
             //UnityEditor.AssetDatabase.Refresh();
             
+            print("Capture worked");
+        }
+        
+        async void SavePhotoAsync()
+        {
+            // Resize the Texture2D before converting it to PNG
+            _screenCapture = Resize(_screenCapture, _screenCapture.width / 2, _screenCapture.height / 2);
+
+            byte[] bytes = _screenCapture.EncodeToPNG(); // Convert Texture2D to PNG byte array
+
+            // Create a folder path inside Resources directory
+            string folderPath = Path.Combine(Application.dataPath, "Resources/CapturePhotos");
+            if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+            // Generate a unique file name using a timestamp
+            string fileName = "/photo_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
+            _fileName = fileName.Substring(0, fileName.LastIndexOf("."));
+
+            // Combine folder path and file name
+            string filePath = Path.Combine(Application.dataPath, folderPath + fileName); // Path to save the image
+
+            // Save the PNG byte array to the file
+            await using (FileStream sourceStream = new FileStream(filePath,
+                       FileMode.OpenOrCreate, FileAccess.Write, FileShare.None,
+                       bufferSize: 4096, useAsync: true))
+            {
+                await sourceStream.WriteAsync(bytes, 0, bytes.Length);
+            };
+
+            print("Capture worked");
+        }
+        
+        Texture2D Resize(Texture2D source, int newWidth, int newHeight)
+        {
+            source.filterMode = FilterMode.Bilinear;
+            RenderTexture rt = RenderTexture.GetTemporary(newWidth, newHeight);
+            rt.filterMode = FilterMode.Bilinear;
+            RenderTexture.active = rt;
+            Graphics.Blit(source, rt);
+            Texture2D nTex = new Texture2D(newWidth, newHeight);
+            nTex.ReadPixels(new Rect(0, 0, newWidth, newHeight), 0, 0);
+            nTex.Apply();
+            RenderTexture.active = null;
+            return nTex;
+        }
+        
+        void SavePhotoES3()
+        {
+            // Convert Texture2D to PNG byte array
+            byte[] bytes = _screenCapture.EncodeToPNG();
+
+            // Create a folder path inside Resources directory
+            string folderPath = Path.Combine(Application.dataPath, "Resources/CapturePhotos");
+            if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+            // Generate a unique file name using a timestamp
+            string fileName = "/photo_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
+            _fileName = fileName.Substring(0, fileName.LastIndexOf("."));
+
+            // Combine folder path and file name
+            string filePath = Path.Combine(Application.dataPath, folderPath + fileName); // Path to save the image
+
+            // Save the byte array to the file using ES3
+            ES3.Save<byte[]>(filePath, bytes);
+
             print("Capture worked");
         }
 

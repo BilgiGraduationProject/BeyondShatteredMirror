@@ -44,7 +44,7 @@ namespace Runtime.Controllers.UI
         
         #region Private Variables
 
-        private Texture2D[] _pcaptureTextureArray;
+        private Texture2D[] _captureTextureArray;
         private List<Texture2D> _captureData = new List<Texture2D>();
         private List<ItemData> _itemData = new List<ItemData>();
         
@@ -74,9 +74,9 @@ namespace Runtime.Controllers.UI
         
         private void GetCaptureDatas()
         {
-            _pcaptureTextureArray = Resources.LoadAll<Texture2D>("CapturePhotos");
+            _captureTextureArray = Resources.LoadAll<Texture2D>("CapturePhotos");
 
-            foreach (var photo in _pcaptureTextureArray)
+            foreach (var photo in _captureTextureArray)
             {
                 _captureData.Add(photo);
             }
