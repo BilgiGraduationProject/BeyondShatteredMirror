@@ -1,10 +1,7 @@
-
 using Runtime.Commands.Input;
 using Runtime.Enums.GameManager;
 using Runtime.Signals;
-using Sirenix.OdinInspector.Editor;
 using UnityEngine;
-
 
 namespace Runtime.Managers
 {
@@ -45,8 +42,6 @@ namespace Runtime.Managers
         private void Awake()
         {
             Init();
-            
-            
         }
         private void Init()
         {
@@ -66,8 +61,6 @@ namespace Runtime.Managers
             CoreGameSignals.Instance.onIsInputReady += OnIsInputReady;
             InputSignals.Instance.onPlayerIsAvailableForRoll += OnIsAvailebleForRoll; 
             InputSignals.Instance.onChangeMouseVisibility += OnChangeMouseVisibility;
-            
-            
         }
 
         private void OnChangeMouseVisibility(bool condition)
@@ -83,11 +76,9 @@ namespace Runtime.Managers
                 Cursor.visible = false;
             }
         }
-
-
+        
         private void OnIsAvailebleForRoll(bool condition) => _isRoll = condition;
-       
-
+        
         private void OnIsInputReady(bool condition)
         {
             _isInputReady = condition;
@@ -139,12 +130,6 @@ namespace Runtime.Managers
            {
                CoreGameSignals.Instance.onChangeGameFightState?.Invoke(GameFightStateEnum.Punch);
            }
-           
-            
         }
-
-        
-
-        
     }
 }
