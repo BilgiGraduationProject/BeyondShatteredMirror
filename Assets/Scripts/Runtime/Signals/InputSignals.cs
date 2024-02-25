@@ -9,16 +9,15 @@ namespace Runtime.Signals
 {
     public class InputSignals : MonoSingleton<InputSignals>
     { 
-        public UnityAction<InputParams> onPlayerPressedMovementButton = delegate {  };
-        public UnityAction onPlayerPressedRunButton = delegate {  };
-        public UnityAction onPlayerReleaseRunButton = delegate {  };
-        public UnityAction onPlayerPressedCrouchButton = delegate {  };
-        public UnityAction onPlayerPressedRollButton = delegate {  };
-        public UnityAction<bool> onPlayerIsAvailableForRoll = delegate {  };
-        public UnityAction onPlayerPressedAttackButton = delegate {  };
-        public UnityAction onPlayerPressedMouseButtonRight = delegate {  };
+      
         public UnityAction<bool> onChangeMouseVisibility = delegate {  };
-        public UnityAction onPlayerReleasedMouseButtonRight = delegate {  };
+        public UnityAction<InputParams> onSendInputParams = delegate {  };
+        public UnityAction<bool> onIsInputReadyToUse = delegate {  };
+        public UnityAction<bool> onPlayerPressedLeftControlButton = delegate {  };
+        public UnityAction<bool> onPlayerPressedLeftShiftButton = delegate {  };
+        public UnityAction onPlayerPressedSpaceButton = delegate {  };
+        public UnityAction<bool> onIsPlayerReadyToMove = delegate {  };
+      
         
     
         

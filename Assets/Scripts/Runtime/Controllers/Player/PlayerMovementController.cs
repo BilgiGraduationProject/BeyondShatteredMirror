@@ -1,4 +1,6 @@
 
+using System;
+using System.Collections;
 using DG.Tweening;
 using Runtime.Data.ValueObject;
 using Runtime.Enums.Player;
@@ -23,72 +25,54 @@ namespace Runtime.Controllers.Player
         private PlayerData _playerData;
         private InputParams _inputParams;
         private Transform _cameraTransform;
-        private float _currentMoveSpeed;
         private bool _isReadyToMove;
+     
         #endregion
 
         #endregion
         internal void GetPlayerData(PlayerData playerData) => _playerData = playerData;
-        internal void OnUpdateParams(InputParams inputParam) => _inputParams = inputParam;
+        internal void GetInputParams(InputParams inputParams) => _inputParams = inputParams;
         internal void GetCameraTransform(Camera cameraTransform) => _cameraTransform = cameraTransform.transform;
-
-        internal void OnIsPlayerReadyToMove(bool isReadyToMove)
-        {
-            _isReadyToMove = isReadyToMove;
-            if (!_isReadyToMove)
-            {
-              StopPlayer();
-            }
-        }
-        internal void OnPlayerReleaseRunButton() => _playerData.PlayerSpeed = _currentMoveSpeed;
         
-        internal void OnPlayerPressedRunButton()
+        internal void OnPlayerReadyToMove(bool condition)
         {
-            _currentMoveSpeed = _playerData.PlayerSpeed;
-            _playerData.PlayerSpeed += _playerData.PlayerSpeed * 2;
-        }
-        
-        private void FixedUpdate ()
-        {
-            if (!_isReadyToMove) return;
-            var moveDirection =  _inputParams.Vertical * _cameraTransform.forward +  _inputParams.Horizontal * _cameraTransform.right;
-            moveDirection.Normalize();
-            CharacterMove(moveDirection);
-        }
-
-        private void CharacterMove(Vector3 moveDirection)
-        {
-            if (moveDirection != Vector3.zero)
-            {
-                var newRotateDirection = new Vector3(moveDirection.x, 0, moveDirection.z);
-                transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(newRotateDirection), _playerData.RotationSpeed * Time.deltaTime);
-                playerRb.velocity = transform.forward * _playerData.PlayerSpeed;
-                playerAnimationController.OnGetPlayerSpeed(playerRb.velocity.magnitude);
-            }
-        }
-        
-        private void StopPlayer()
-        {
+            _isReadyToMove = condition;
+            if (_isReadyToMove) return;
+            playerAnimationController.GetPlayerSpeed(0);
             playerRb.velocity = Vector3.zero;
-            playerRb.angularVelocity = Vector3.zero;
-            playerAnimationController.OnGetPlayerSpeed(playerRb.velocity.magnitude);
         }
         
-        internal void OnPlayerPressedRollButton()
+        private void FixedUpdate()
         {
-            if (_isReadyToMove)
+            MovePlayer();
+        }
+
+        private void MovePlayer()
+        {
+           
+            if (!_isReadyToMove) return;
+            var moveDirection = (_cameraTransform.forward * _inputParams.Vertical + _cameraTransform.right * _inputParams.Horizontal);
+            if (moveDirection == Vector3.zero) return;
+            var playerRotateDirection = new Vector3(moveDirection.x,0, moveDirection.z);
+            transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(playerRotateDirection),_playerData.RotationSpeed * Time.fixedDeltaTime);
+            playerRb.velocity = transform.forward * _playerData.PlayerSpeed;
+            playerAnimationController.GetPlayerSpeed(playerRb.velocity.magnitude);
+            
+        }
+
+        internal void OnPlayerPressedLeftShiftButton(bool condition)
+        {
+            if (condition)
             {
-                PlayerSignals.Instance.onChangePlayerAnimationState?.Invoke(PlayerAnimationState.isRolling,true);
+                _playerData.PlayerSpeed *= _playerData.PlayerSpeedMultiplier;
             }
             else
             {
-                PlayerSignals.Instance.onChangePlayerAnimationState?.Invoke(PlayerAnimationState.isRolling,true);
-                playerRb.AddForce(transform.forward * _playerData.RollForce, ForceMode.Force);
+                _playerData.PlayerSpeed /= _playerData.PlayerSpeedMultiplier;
             }
-            
-             
         }
-        
+      
+
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.blue;
@@ -102,8 +86,24 @@ namespace Runtime.Controllers.Player
             Gizmos.DrawLine(playerRb.transform.position,playerRb.transform.forward * 2);
         }
 
-      
 
+        internal void OnPlayerPressedSpaceButton()
+        {
+            
+            
+            
+            transform.DORotateQuaternion(Quaternion.LookRotation(_cameraTransform.forward), 0.2f).SetEase(Ease.Flash).OnComplete(() =>
+            {
+                playerAnimationController.OnPlayerPressedSpaceButton();
+            });
+
+
+
+
+
+
+
+        }
     }
      
   

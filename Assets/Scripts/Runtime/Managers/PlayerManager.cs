@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using Runtime.Controllers.Player;
 using Runtime.Data.UnityObject;
@@ -20,7 +21,6 @@ namespace Runtime.Managers
 
         [SerializeField] private PlayerMovementController playerMovementController;
         [SerializeField] private PlayerAnimationController playerAnimationController;
-        [SerializeField] private PlayerEnemyDetectionController playerEnemyDetectionController;
         
         #endregion
 
@@ -28,7 +28,6 @@ namespace Runtime.Managers
         private PlayerData _playerData;
         private readonly string _playerDataPath = "Data/CD_Player";
         private Camera _camera;
-        private bool _isPistolTakeOut;
         #endregion
 
         #endregion
@@ -44,17 +43,19 @@ namespace Runtime.Managers
         private void SendCameraTransformToMovementController(Camera cameraTransform)
         {
             playerMovementController.GetCameraTransform(cameraTransform);
-            playerEnemyDetectionController.GetCameraTransform(cameraTransform);
         }
 
 
         private void SendPlayerDataToControllers()
         {
-            playerEnemyDetectionController.GetPlayerData(_playerData);
             playerMovementController.GetPlayerData(_playerData);
         }
 
         private PlayerData GetPlayerData() => Resources.Load<CD_Player>(_playerDataPath).Data;
+        private void OnGetInputParams(InputParams inputParams) => playerMovementController.GetInputParams(inputParams);
+        private void OnGetPlayerSpeed(float speed) => playerAnimationController.GetPlayerSpeed(speed);
+        
+        
 
         private void OnEnable()
         {
@@ -63,73 +64,51 @@ namespace Runtime.Managers
 
         private void SubscribeEvents()
         {
-            CoreGameSignals.Instance.onIsPlayerReadyToMove += OnIsPlayerReadyToMove;
-            
-            InputSignals.Instance.onPlayerPressedMovementButton += OnInputPressedForMovement;
-            InputSignals.Instance.onPlayerPressedRunButton += OnPlayerPressedRunButton;
-            InputSignals.Instance.onPlayerReleaseRunButton += OnPlayerReleaseRunButton;
-            InputSignals.Instance.onPlayerPressedCrouchButton += playerAnimationController.OnPlayerPressCrouchButton;
-            InputSignals.Instance.onPlayerPressedRollButton += playerMovementController.OnPlayerPressedRollButton;
-            
-            
-            PlayerSignals.Instance.onChangePlayerAnimationState += playerAnimationController.OnChangePlayerAnimationState;
-            PlayerSignals.Instance.onTriggerPlayerAnimationState +=
-                playerAnimationController.OnTriggerAttackAnimationState;
-            PlayerSignals.Instance.onChangeAnimationLayerWeight += playerAnimationController.OnChangeAnimationLayerWeight;
-            
+            InputSignals.Instance.onIsPlayerReadyToMove += playerMovementController.OnPlayerReadyToMove;
+            InputSignals.Instance.onSendInputParams += OnGetInputParams;
+            InputSignals.Instance.onPlayerPressedLeftControlButton += OnPlayerPressedLeftControlButton;
+            InputSignals.Instance.onPlayerPressedLeftShiftButton += OnPlayerPressedLeftShiftButton;
+            InputSignals.Instance.onPlayerPressedSpaceButton += OnPlayerPressedSpaceButton;
+            PlayerSignals.Instance.onGetPlayerSpeed += OnGetPlayerSpeed;
 
 
         }
-        
 
-        #region Movement
-
-        private void OnIsPlayerReadyToMove(bool condition)
+        private void OnPlayerPressedSpaceButton()
         {
-            playerMovementController.OnIsPlayerReadyToMove(condition);
-        }
-        private void OnInputPressedForMovement(InputParams inputParams)
-        {
-            playerMovementController.OnUpdateParams(inputParams);
-            playerEnemyDetectionController.OnUpdateParams(inputParams);
+            
+            playerMovementController.OnPlayerPressedSpaceButton();
         }
 
-        #endregion
-        
 
-        #region Running
-        private void OnPlayerReleaseRunButton()
+        private void OnPlayerPressedLeftShiftButton(bool condition)
         {
-            playerMovementController.OnPlayerReleaseRunButton();
+            playerMovementController.OnPlayerPressedLeftShiftButton(condition);
         }
 
-        private void OnPlayerPressedRunButton()
+        private void OnPlayerPressedLeftControlButton(bool condition)
         {
-            playerMovementController.OnPlayerPressedRunButton();
+            playerAnimationController.OnPlayerPressedLeftControlButton(condition);
         }
-      
-        #endregion
-        
+
+
         private void UnSubscribeEvents()
         {
-            
-            CoreGameSignals.Instance.onIsPlayerReadyToMove -= OnIsPlayerReadyToMove;
-            
-            InputSignals.Instance.onPlayerPressedMovementButton -= OnInputPressedForMovement;
-            InputSignals.Instance.onPlayerPressedRunButton -= OnPlayerPressedRunButton;
-            InputSignals.Instance.onPlayerReleaseRunButton -= OnPlayerReleaseRunButton;
-            InputSignals.Instance.onPlayerPressedCrouchButton -= playerAnimationController.OnPlayerPressCrouchButton;
-            InputSignals.Instance.onPlayerPressedRollButton -= playerMovementController.OnPlayerPressedRollButton;
-            
-            PlayerSignals.Instance.onChangePlayerAnimationState -= playerAnimationController.OnChangePlayerAnimationState;
-            PlayerSignals.Instance.onTriggerPlayerAnimationState -=
-                playerAnimationController.OnTriggerAttackAnimationState;
-            PlayerSignals.Instance.onChangeAnimationLayerWeight -= playerAnimationController.OnChangeAnimationLayerWeight;
+            InputSignals.Instance.onSendInputParams -= OnGetInputParams;
+            InputSignals.Instance.onPlayerPressedLeftControlButton -= OnPlayerPressedLeftControlButton;
+            InputSignals.Instance.onPlayerPressedLeftShiftButton -= OnPlayerPressedLeftShiftButton;
+            InputSignals.Instance.onPlayerPressedSpaceButton -= playerAnimationController.OnPlayerPressedSpaceButton;
+            PlayerSignals.Instance.onGetPlayerSpeed -= OnGetPlayerSpeed;
+           
         }
 
         private void OnDisable()
         {
             UnSubscribeEvents();
         }
+        
+        
+       
+       
     }
 }

@@ -10,8 +10,9 @@ namespace Runtime.Data.ValueObject
         public float RotationSpeed;
         public float RollForce;
         public float CameraRayDistance;
+        public float PlayerSpeedMultiplier;
 
 
-       
+        
     }
 }

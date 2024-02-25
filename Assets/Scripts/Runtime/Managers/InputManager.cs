@@ -1,6 +1,10 @@
+
+using System.Collections;
+using DG.Tweening;
 using Runtime.Commands.Input;
-using Runtime.Enums.GameManager;
+using Runtime.Keys.Input;
 using Runtime.Signals;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Runtime.Managers
@@ -10,58 +14,67 @@ namespace Runtime.Managers
         #region Self Variables
 
         #region Private Variables
-        
-        private InputMovementCommand _inputMovementCommand;
-        private InputRunCommand _inputRunCommand;
-        private InputCrouchCommand _inputCrouchCommand;
-        private InputRollCommand _inputRollCommand;
+
+
+
+
+        [Header("Variables")] 
+        [Header("Movement")]
+        private float _verticalInput;
+        private float _horizontalInput;
+        private bool _isInput;
+        private bool _isCrouch;
+        [Header(("Cancel Movement"))] 
+        private bool _isInputReadyToUse = true;
+
+
+        [Header("Input Keys")] 
+        private readonly string horizontal = "Horizontal";
+        private readonly string vertical = "Vertical";
+        private readonly string leftControl = "Left Control";
+        private readonly string leftShift = "Left Shift";
+        private readonly string space = "Space";
+
+
+        [Header("Commands")]
+        private MovementInputCommand _movementInputCommand;
+        private CrouchInputCommand _crouchInputCommand;
+        private RunInputCommand _runInputCommand;
+        private SpaceInputCommand _spaceInputCommand;
 
         
-        [Header("Variables")]
-        private bool _isReadyToMove;
-        private bool _isInputReady = true;
-        private float _axisX, _axisZ;
-        private bool _isRoll = true;
-        
-        
-        [Header("Input Keys")]
-        private readonly string _horizontal = "Horizontal";
-        private readonly string _vertical = "Vertical";
-        private readonly string _leftShift = "Left Shift";
-        private readonly string _roll = "Roll";
-        private readonly string _crouch = "Left Control";
-        private readonly string _attack = "Attack";
-        private readonly string _mouseRightButton = "Counter";
-        private readonly string _pistol = "Pistol";
-        private readonly string _punch = "Punch";
 
         #endregion
-        
+
         #endregion
+
 
         private void Awake()
         {
             Init();
         }
+
         private void Init()
         {
-            _inputMovementCommand = new InputMovementCommand(ref _axisX,ref _axisZ, _horizontal, _vertical);
-            _inputRunCommand = new InputRunCommand(_leftShift);
-            _inputCrouchCommand = new InputCrouchCommand(_crouch);
-            _inputRollCommand = new InputRollCommand(_roll);
+            _movementInputCommand = new MovementInputCommand(ref _verticalInput,ref _horizontalInput,  horizontal, vertical);
+            _crouchInputCommand = new CrouchInputCommand(leftControl);
+            _runInputCommand = new RunInputCommand(leftShift);
+            _spaceInputCommand = new SpaceInputCommand(space);
         }
+
         private void OnEnable()
         {
             SubscribeEvents();
         }
-        
+
         private void SubscribeEvents()
         {
-            CoreGameSignals.Instance.onIsPlayerReadyToMove += OnIsPlayerReadyToMove;
-            CoreGameSignals.Instance.onIsInputReady += OnIsInputReady;
-            InputSignals.Instance.onPlayerIsAvailableForRoll += OnIsAvailebleForRoll; 
             InputSignals.Instance.onChangeMouseVisibility += OnChangeMouseVisibility;
+            InputSignals.Instance.onIsInputReadyToUse += OnIsInputReadyToUse;
         }
+
+        private void OnIsInputReadyToUse(bool condition) => _isInputReadyToUse = condition;
+        
 
         private void OnChangeMouseVisibility(bool condition)
         {
@@ -76,22 +89,13 @@ namespace Runtime.Managers
                 Cursor.visible = false;
             }
         }
-        
-        private void OnIsAvailebleForRoll(bool condition) => _isRoll = condition;
-        
-        private void OnIsInputReady(bool condition)
-        {
-            _isInputReady = condition;
-            CoreGameSignals.Instance.onIsPlayerReadyToMove?.Invoke(condition);
-        }
 
-        private void OnIsPlayerReadyToMove(bool condition) => _isReadyToMove = condition;
-        
+
+
         private void UnSubscribeEvents()
         {
-            CoreGameSignals.Instance.onIsPlayerReadyToMove -= OnIsPlayerReadyToMove;
-            CoreGameSignals.Instance.onIsInputReady -= OnIsInputReady;
             InputSignals.Instance.onChangeMouseVisibility -= OnChangeMouseVisibility;
+            InputSignals.Instance.onIsInputReadyToUse -= OnIsInputReadyToUse;
         }
 
         private void OnDisable()
@@ -101,35 +105,28 @@ namespace Runtime.Managers
 
         private void Update()
         {
-           _inputMovementCommand.Execute(_isReadyToMove,_isInputReady);
-           _inputRunCommand.Execute();
-           _inputCrouchCommand.Execute();
-           _inputRollCommand.Execute(_isRoll);
+            if (!_isInputReadyToUse) return;
+            _movementInputCommand.Execute(ref _isInput);
+            _crouchInputCommand.Execute(ref _isCrouch);
+            _runInputCommand.Execute();
+            _spaceInputCommand.Execute();
+           
 
-           if (Input.GetButtonDown(_attack))
-           {
-              InputSignals.Instance.onPlayerPressedAttackButton?.Invoke();
-           }
 
-           if (Input.GetButtonDown(_mouseRightButton))
-           {
-               InputSignals.Instance.onPlayerPressedMouseButtonRight?.Invoke();
-           }
+                
 
-           if (Input.GetButtonUp(_mouseRightButton))
-           {
-               InputSignals.Instance.onPlayerReleasedMouseButtonRight?.Invoke();
-           }
-
-           if (Input.GetButtonDown(_pistol))
-           {
-               CoreGameSignals.Instance.onChangeGameFightState?.Invoke(GameFightStateEnum.Pistol);
-           }
-
-           if (Input.GetButtonDown(_punch))
-           {
-               CoreGameSignals.Instance.onChangeGameFightState?.Invoke(GameFightStateEnum.Punch);
-           }
         }
+                
+
+       
+
+
+
+
+
+        }
+
+       
     }
-}
+
+
