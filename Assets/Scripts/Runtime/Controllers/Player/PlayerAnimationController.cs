@@ -59,7 +59,12 @@ namespace Runtime.Controllers.Player
 
         #endregion
 
-        
+
+        public void OnPlayerPressedRightMouseButton(bool condition)
+        {
+            _playerAnimator.SetBool("Fight", condition);
+            Debug.LogWarning("Animator");
+        }
     }
     
 }

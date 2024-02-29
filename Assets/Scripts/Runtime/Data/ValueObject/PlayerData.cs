@@ -8,7 +8,8 @@ namespace Runtime.Data.ValueObject
     {
         public float PlayerSpeed;
         public float RotationSpeed;
-        public float RollForce;
+        public float RollDistance;
+        public float RollTime;
         public float CameraRayDistance;
         public float PlayerSpeedMultiplier;
 

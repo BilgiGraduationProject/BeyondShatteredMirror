@@ -17,6 +17,7 @@ namespace Runtime.Signals
         public UnityAction<bool> onPlayerPressedLeftShiftButton = delegate {  };
         public UnityAction onPlayerPressedSpaceButton = delegate {  };
         public UnityAction<bool> onIsPlayerReadyToMove = delegate {  };
+        public UnityAction<bool> onPlayerPressedRightMouseButton = delegate {  };
       
         
     

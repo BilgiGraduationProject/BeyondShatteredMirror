@@ -69,9 +69,15 @@ namespace Runtime.Managers
             InputSignals.Instance.onPlayerPressedLeftControlButton += OnPlayerPressedLeftControlButton;
             InputSignals.Instance.onPlayerPressedLeftShiftButton += OnPlayerPressedLeftShiftButton;
             InputSignals.Instance.onPlayerPressedSpaceButton += OnPlayerPressedSpaceButton;
+            InputSignals.Instance.onPlayerPressedRightMouseButton += OnPlayerPressedRightMouseButton;
             PlayerSignals.Instance.onGetPlayerSpeed += OnGetPlayerSpeed;
 
 
+        }
+
+        private void OnPlayerPressedRightMouseButton(bool arg0)
+        {
+            playerAnimationController.OnPlayerPressedRightMouseButton(arg0);
         }
 
         private void OnPlayerPressedSpaceButton()

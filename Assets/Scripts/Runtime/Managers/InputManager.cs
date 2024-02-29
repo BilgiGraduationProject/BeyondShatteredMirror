@@ -110,21 +110,21 @@ namespace Runtime.Managers
             _crouchInputCommand.Execute(ref _isCrouch);
             _runInputCommand.Execute();
             _spaceInputCommand.Execute();
+            if (Input.GetMouseButtonDown(0))
+            {
+                InputSignals.Instance.onPlayerPressedRightMouseButton?.Invoke(true);
+                
+
+            }
            
 
 
                 
 
         }
-                
 
-       
-
-
-
-
-
-        }
+        
+    }
 
        
     }
