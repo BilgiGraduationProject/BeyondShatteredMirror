@@ -1,6 +1,7 @@
 ﻿using System;
 using Runtime.Utilities;
 using UnityEngine;
+using System.Threading.Tasks;
 
 namespace Runtime.Managers
 {
@@ -100,6 +101,23 @@ namespace Runtime.Managers
                 else
                 {
                     ES3.Save(dataName, default(T));
+                }
+            }
+            return default(T);
+        }
+        
+        public async Task<T> LoadDataAsync<T>(string dataName)
+        {
+            if (ES3.FileExists(DEFAULT_PATH))
+            {
+                if(ES3.KeyExists(dataName))
+                {
+                    // Assuming ES3.Load is the method that reads from the disk
+                    return await Task.Run(() => ES3.Load<T>(dataName));
+                }
+                else
+                {
+                    await Task.Run(() => ES3.Save(dataName, default(T)));
                 }
             }
             return default(T);

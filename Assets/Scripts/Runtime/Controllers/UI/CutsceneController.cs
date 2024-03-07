@@ -35,11 +35,11 @@ namespace Runtime.Controllers
         private void Awake()
         {
             blackwBG.SetActive(false);
-            foreach (var go in cutsceneList)
-            {
-                go.GetComponent<VideoPlayer>().Prepare();
-                go.SetActive(false);
-            }
+            // foreach (var go in cutsceneList)
+            // {
+            //     go.GetComponent<VideoPlayer>().Prepare();
+            //     go.SetActive(false);
+            // }
         }
 
         #region SubscribeEvents and UnsubscribeEvents
@@ -64,15 +64,15 @@ namespace Runtime.Controllers
         private void Update()
         {
             // TODO: This part is for testing purposes only. Change it later with collision or something else.
-            if (Input.GetKeyDown(KeyCode.N))
+            if (Input.GetKeyDown(KeyCode.V))
             {
                 CoreUISignals.Instance.onOpenCutscene?.Invoke(0); // This method helps to load cutscene video.
             }
-            else if (Input.GetKeyDown(KeyCode.B))
+            if (Input.GetKeyDown(KeyCode.B))
             {
                 CoreUISignals.Instance.onOpenCutscene?.Invoke(1);
             }
-            else if (Input.GetKeyDown(KeyCode.V))
+            if (Input.GetKeyDown(KeyCode.N))
             {
                 CoreUISignals.Instance.onOpenCutscene?.Invoke(2);
             }

@@ -45,6 +45,7 @@ namespace Runtime.Controllers.UI
             if (Input.GetKeyDown(KeyCode.C) && _viewingPhoto)
             { 
                 StopCoroutine(CaptureShot());
+                //StopCoroutine(CaptureScreenshotAndSave());
                 RemovePhoto();
                 CaptureTime();
             }
@@ -52,6 +53,7 @@ namespace Runtime.Controllers.UI
             if (Input.GetMouseButtonDown(0) && !_viewingPhoto)
             {
                 StartCoroutine(CaptureShot());
+                //StartCoroutine(CaptureScreenshotAndSave());
             }
 
             if (Input.GetKeyDown(KeyCode.I))
@@ -92,15 +94,16 @@ namespace Runtime.Controllers.UI
         {
             _photoSprite = Sprite.Create(_screenCapture, new Rect(0, 0, _screenCapture.width, _screenCapture.height), new Vector2(0.5f, 0.5f), 100f);
             ScreenCapture.CaptureScreenshotAsTexture();
-            //SavePhoto();
-            //SavePhotoES3();
-            SavePhotoAsync();
+            SavePhoto();
+            //SavePhotoAsync();
             photoDisplayArea.texture = _photoSprite.texture;
             photoFrame.SetActive(true);
         }
         
         void SavePhoto()
         {
+            //_screenCapture = Resize(_screenCapture, _screenCapture.width / 3, _screenCapture.height / 3);
+            
             byte[] bytes = _screenCapture.EncodeToPNG(); // Convert Texture2D to PNG byte array
             
             // Create a folder path inside Resources directory
@@ -126,7 +129,7 @@ namespace Runtime.Controllers.UI
         async void SavePhotoAsync()
         {
             // Resize the Texture2D before converting it to PNG
-            _screenCapture = Resize(_screenCapture, _screenCapture.width / 2, _screenCapture.height / 2);
+            _screenCapture = Resize(_screenCapture, _screenCapture.width / 3, _screenCapture.height / 3);
 
             byte[] bytes = _screenCapture.EncodeToPNG(); // Convert Texture2D to PNG byte array
 
@@ -164,28 +167,6 @@ namespace Runtime.Controllers.UI
             nTex.Apply();
             RenderTexture.active = null;
             return nTex;
-        }
-        
-        void SavePhotoES3()
-        {
-            // Convert Texture2D to PNG byte array
-            byte[] bytes = _screenCapture.EncodeToPNG();
-
-            // Create a folder path inside Resources directory
-            string folderPath = Path.Combine(Application.dataPath, "Resources/CapturePhotos");
-            if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
-
-            // Generate a unique file name using a timestamp
-            string fileName = "/photo_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
-            _fileName = fileName.Substring(0, fileName.LastIndexOf("."));
-
-            // Combine folder path and file name
-            string filePath = Path.Combine(Application.dataPath, folderPath + fileName); // Path to save the image
-
-            // Save the byte array to the file using ES3
-            ES3.Save<byte[]>(filePath, bytes);
-
-            print("Capture worked");
         }
 
         private void RemovePhoto()

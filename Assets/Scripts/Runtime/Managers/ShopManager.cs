@@ -78,6 +78,11 @@ namespace Runtime.Managers
             {
                 CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Shop, 1);
             }
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Pause, 1);
+            }
         }
         
         public void PurchaseItem(int itemIndex, GameObject itemObject)

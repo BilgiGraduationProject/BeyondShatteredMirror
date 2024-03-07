@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Runtime.Managers;
 using Runtime.Utilities;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using TMPro;
+using Runtime.Signals;
 
 namespace Runtime.Controllers.UI
 {
@@ -31,10 +34,13 @@ namespace Runtime.Controllers.UI
         [Header("Description Area Settings")]
         [SerializeField] private TextMeshProUGUI descriptionText;
         
-        [Header("Items Area Settings")]
-        [Header("Item Objects Area Settings")]
-        [SerializeField] private Transform itemObjectParent;
-        [SerializeField] private GameObject itemObjectPrefab;
+        [Header("Buttons Area Settings")]
+        [SerializeField] private List<EventTrigger> buttons = new List<EventTrigger>();
+        
+        [Header("Shop Items Area Settings")]
+        [Header("Shop Item Objects Area Settings")]
+        [SerializeField] private Transform shopItemObjectParent;
+        [SerializeField] private GameObject shopItemObjectPrefab;
         
         [Header("Capture Objects Area Settings")]
         [SerializeField] private Transform captureObjectParent;
@@ -45,10 +51,10 @@ namespace Runtime.Controllers.UI
         #region Private Variables
 
         private Texture2D[] _captureTextureArray;
+        private List<ItemData> _shopItemData = new List<ItemData>();
         private List<Texture2D> _captureData = new List<Texture2D>();
-        private List<ItemData> _itemData = new List<ItemData>();
         
-        private List<GameObject> _itemObjects = new List<GameObject>();
+        private List<GameObject> _shopItemObjects = new List<GameObject>();
         
         #endregion
 
@@ -57,19 +63,38 @@ namespace Runtime.Controllers.UI
         private void Awake()
         {
             //if(_photoSpriteList.Count > 0) _photoSpriteList.Clear();
-            GetItemDatas();
+            GetShopItemDatas();
             GetCaptureDatas();
+            Initialize();
         }
 
         private void Start()
         {
-            GetItemObjects();
+            GetShopItemObjects();
             GetCaptureObjects();
         }
 
-        private void GetItemDatas()
+        private void Initialize()
         {
-            _itemData = ShopManager.Instance.SendItemDatasToControllers();
+            AddCallback(buttons[0], EventTriggerType.PointerEnter, OnPointerEnter);
+        }
+        
+        private void AddCallback(EventTrigger button, EventTriggerType eventType, UnityAction<BaseEventData> callback)
+        {
+            var entry = new EventTrigger.Entry();
+            entry.eventID = eventType;
+            entry.callback.AddListener(callback);
+            button.triggers.Add(entry);
+        }
+        
+        private void OnPointerEnter(BaseEventData data)
+        {
+            CoreUISignals.Instance.onClosePanel?.Invoke(1);
+        }
+
+        private void GetShopItemDatas()
+        {
+            _shopItemData = ShopManager.Instance.SendItemDatasToControllers();
         }
         
         private void GetCaptureDatas()
@@ -82,15 +107,17 @@ namespace Runtime.Controllers.UI
             }
         }
         
-        private void GetItemObjects()
+        private void GetShopItemObjects()
         {
-            foreach (var item in _itemData)
+            if(_shopItemData.Count is 0) return;
+            
+            foreach (var item in _shopItemData)
             {
                 if (ES3.KeyExists(item.Name))
                 {
                     print(item.Name + " : " + SaveLoadManager.Instance.LoadData<int>(item.Name));
-                    GameObject itemObject = Instantiate(itemObjectPrefab, itemObjectParent);
-                    _itemObjects.Add(itemObject);
+                    GameObject itemObject = Instantiate(shopItemObjectPrefab, shopItemObjectParent);
+                    _shopItemObjects.Add(itemObject);
                     itemObject.GetComponent<Toggle>().onValueChanged.AddListener((value) =>
                     {
                         DisableItemsToggle();
@@ -108,13 +135,15 @@ namespace Runtime.Controllers.UI
             }
             
             //Selected first one
-            _itemObjects[0].transform.GetChild(0).GetComponent<Outline>().enabled = true;
-            selectedImage.sprite = _itemData[0].Thumbnail;
-            descriptionText.text = _itemData[0].Description;
+            _shopItemObjects[0].transform.GetChild(0).GetComponent<Outline>().enabled = true;
+            selectedImage.sprite = _shopItemData[0].Thumbnail;
+            descriptionText.text = _shopItemData[0].Description;
         }
 
         private void GetCaptureObjects()
         {
+            if(_captureData.Count is 0) return;
+            
             foreach (var photo in _captureData)
             {
                 GameObject photoObject = Instantiate(captureObjectPrefab, captureObjectParent);
@@ -125,7 +154,7 @@ namespace Runtime.Controllers.UI
 
         private void DisableItemsToggle()
         {
-            _itemObjects.ForEach(item =>
+            _shopItemObjects.ForEach(item =>
             {
                 item.transform.GetChild(0).GetComponent<Outline>().enabled = false;
                 item.GetComponent<Toggle>().isOn = false;

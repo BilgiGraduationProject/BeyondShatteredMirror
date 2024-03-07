@@ -4,7 +4,9 @@ namespace Runtime.Enums.UI
     {
         Start,
         Inventory,
+        Ingame,
         Settings,
+        Pause,
         Shop,
         Quit,
         
