@@ -1,10 +1,12 @@
 
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Runtime.Controllers.Player;
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
 using Runtime.Enums.GameManager;
+using Runtime.Enums.Playable;
 using Runtime.Enums.Player;
 using Runtime.Keys.Input;
 using Runtime.Signals;
@@ -22,12 +24,14 @@ namespace Runtime.Managers
         [SerializeField] private PlayerMovementController playerMovementController;
         [SerializeField] private PlayerAnimationController playerAnimationController;
         
+        
         #endregion
 
         #region Private Variables
         private PlayerData _playerData;
         private readonly string _playerDataPath = "Data/CD_Player";
         private Camera _camera;
+        private CD_CutScenePositionHolder _cutScenePositionHolderData;
         #endregion
 
         #endregion
@@ -36,9 +40,14 @@ namespace Runtime.Managers
         {
             if (Camera.main != null) _camera = Camera.main;
             _playerData = GetPlayerData();
+           _cutScenePositionHolderData = GetCutScenePositionHolderData();
             SendPlayerDataToControllers();
             SendCameraTransformToMovementController(_camera);
         }
+
+        private static CD_CutScenePositionHolder GetCutScenePositionHolderData() => Resources
+            .Load<CD_CutScenePositionHolder>("Data/CD_CutScenePositionHolder");
+       
 
         private void SendCameraTransformToMovementController(Camera cameraTransform)
         {
@@ -71,9 +80,23 @@ namespace Runtime.Managers
             InputSignals.Instance.onPlayerPressedSpaceButton += OnPlayerPressedSpaceButton;
             InputSignals.Instance.onPlayerPressedRightMouseButton += OnPlayerPressedRightMouseButton;
             PlayerSignals.Instance.onGetPlayerSpeed += OnGetPlayerSpeed;
+            PlayerSignals.Instance.onSetPlayerToCutScenePosition += OnSetPlayerToCutScenePosition;
+            
 
 
         }
+
+        private void OnSetPlayerToCutScenePosition(PlayableEnum playableEnum)
+        {
+            Debug.LogWarning("Executed");
+            var position = _cutScenePositionHolderData.cutSceneHolders[(int)playableEnum].cutScenePosition;
+            transform.position = new Vector3(position
+                .x,position.y, position.z);
+           
+        }
+
+       
+
 
         private void OnPlayerPressedRightMouseButton(bool arg0)
         {
@@ -100,11 +123,14 @@ namespace Runtime.Managers
 
         private void UnSubscribeEvents()
         {
+            InputSignals.Instance.onIsPlayerReadyToMove -= playerMovementController.OnPlayerReadyToMove;
             InputSignals.Instance.onSendInputParams -= OnGetInputParams;
             InputSignals.Instance.onPlayerPressedLeftControlButton -= OnPlayerPressedLeftControlButton;
             InputSignals.Instance.onPlayerPressedLeftShiftButton -= OnPlayerPressedLeftShiftButton;
-            InputSignals.Instance.onPlayerPressedSpaceButton -= playerAnimationController.OnPlayerPressedSpaceButton;
+            InputSignals.Instance.onPlayerPressedSpaceButton -= OnPlayerPressedSpaceButton;
+            InputSignals.Instance.onPlayerPressedRightMouseButton -= OnPlayerPressedRightMouseButton;
             PlayerSignals.Instance.onGetPlayerSpeed -= OnGetPlayerSpeed;
+            PlayerSignals.Instance.onSetPlayerToCutScenePosition -= OnSetPlayerToCutScenePosition;
            
         }
 

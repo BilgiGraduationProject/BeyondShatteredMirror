@@ -54,8 +54,16 @@ namespace Runtime.Controllers.Player
 
         #region Animation Event
 
-        void AnimEventCancelPlayerMovement() => InputSignals.Instance.onIsInputReadyToUse?.Invoke(false);
-        void AnimEventActivatePlayerMovement() => InputSignals.Instance.onIsInputReadyToUse?.Invoke(true);
+        public void AnimEventCancelPlayerMovement()
+        {
+            Debug.LogWarning("Cancel Anim");
+            InputSignals.Instance.onIsInputReadyToUse?.Invoke(false);
+        }
+
+        public void AnimEventActivatePlayerMovement()
+        {
+            InputSignals.Instance.onIsInputReadyToUse?.Invoke(true);
+        }
 
         #endregion
 
@@ -63,7 +71,7 @@ namespace Runtime.Controllers.Player
         public void OnPlayerPressedRightMouseButton(bool condition)
         {
             _playerAnimator.SetBool("Fight", condition);
-            Debug.LogWarning("Animator");
+            
         }
     }
     

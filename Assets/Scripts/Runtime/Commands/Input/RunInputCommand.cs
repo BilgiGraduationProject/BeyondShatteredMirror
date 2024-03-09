@@ -11,7 +11,7 @@ namespace Runtime.Commands.Input
             _leftShift = leftShift;
         }
 
-        public void Execute()
+        public void Execute(bool isRun)
         {
             if (UnityEngine.Input.GetButtonDown(_leftShift))
             {
@@ -22,6 +22,8 @@ namespace Runtime.Commands.Input
             {
                 InputSignals.Instance.onPlayerPressedLeftShiftButton?.Invoke(false);
             }
+
+           
         }
     }
 }

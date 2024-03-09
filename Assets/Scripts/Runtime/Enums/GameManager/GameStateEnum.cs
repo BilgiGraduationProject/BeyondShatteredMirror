@@ -2,10 +2,11 @@ namespace Runtime.Enums.GameManager
 {
     public enum GameStateEnum
     {
-        GameStart,
+        Game,
+        OutGame,
         Cutscene,
-        CancelPlayerMovement,
-        ActivatePlayerMovement,
+        Settings,
+        Camera,
         Quit,
        
         

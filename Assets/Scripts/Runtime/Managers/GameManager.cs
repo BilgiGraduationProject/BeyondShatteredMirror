@@ -18,12 +18,7 @@ namespace Runtime.Managers
         #endregion
 
         #endregion
-
-        private void Start()
-        {
-            // Don't need this. I already use on StartPanel - Play button
-            OnGameStatusChanged(gameState);
-        }
+        
 
         private void OnEnable()
         {
@@ -42,18 +37,27 @@ namespace Runtime.Managers
             gameState = type;
             switch (gameState)
             {
-                case GameStateEnum.GameStart:
+                case GameStateEnum.Game:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
+                    InputSignals.Instance.onIsInputReadyToUse?.Invoke(true);
+                  
                     break;
                 case GameStateEnum.Cutscene:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
-                    break;
-                case GameStateEnum.CancelPlayerMovement:
-                    break;
-                case GameStateEnum.ActivatePlayerMovement:
+                    InputSignals.Instance.onIsInputReadyToUse?.Invoke(false);
+                 
                     break;
                 case GameStateEnum.Quit:
                     
+                    break;
+                case GameStateEnum.Settings:
+                    InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
+                    InputSignals.Instance.onIsInputReadyToUse?.Invoke(false);
+                    break;
+                
+                case GameStateEnum.Camera:
+                    InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
+                    InputSignals.Instance.onIsInputReadyToUse?.Invoke(false);
                     break;
               
             }

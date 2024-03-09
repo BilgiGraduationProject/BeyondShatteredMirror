@@ -30,7 +30,7 @@ namespace Runtime.Managers
 
         public void OnStart()
         {
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.GameStart);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
             // TODO: Add more shows to beatify the game start.
             CoreUISignals.Instance.onCloseAllPanels?.Invoke();
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Ingame, 0);
@@ -44,7 +44,7 @@ namespace Runtime.Managers
 
         public void OnSettings()
         {
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.CancelPlayerMovement);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Settings);
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Settings, 2);
         }
     }

@@ -24,6 +24,7 @@ namespace Runtime.Managers
         private float _horizontalInput;
         private bool _isInput;
         private bool _isCrouch;
+        private bool _isRun;
         [Header(("Cancel Movement"))] 
         private bool _isInputReadyToUse = true;
 
@@ -73,8 +74,13 @@ namespace Runtime.Managers
             InputSignals.Instance.onIsInputReadyToUse += OnIsInputReadyToUse;
         }
 
-        private void OnIsInputReadyToUse(bool condition) => _isInputReadyToUse = condition;
-        
+        private void OnIsInputReadyToUse(bool condition)
+        {
+            _isInputReadyToUse = condition;
+            InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(condition);
+           
+        }
+
 
         private void OnChangeMouseVisibility(bool condition)
         {
@@ -105,10 +111,10 @@ namespace Runtime.Managers
 
         private void Update()
         {
+            _runInputCommand.Execute(_isRun);
             if (!_isInputReadyToUse) return;
             _movementInputCommand.Execute(ref _isInput);
             _crouchInputCommand.Execute(ref _isCrouch);
-            _runInputCommand.Execute();
             _spaceInputCommand.Execute();
             if (Input.GetMouseButtonDown(0))
             {

@@ -8,6 +8,7 @@ using Runtime.Keys.Input;
 using Runtime.Signals;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Playables;
 
 namespace Runtime.Controllers.Player
 {
@@ -45,6 +46,9 @@ namespace Runtime.Controllers.Player
         private void FixedUpdate()
         {
             MovePlayer();
+            
+            
+
         }
 
         private void MovePlayer()
@@ -89,7 +93,8 @@ namespace Runtime.Controllers.Player
 
         internal void OnPlayerPressedSpaceButton()
         {
-            transform.DORotateQuaternion(Quaternion.LookRotation(_cameraTransform.forward), 0.2f).SetEase(Ease.Flash).OnComplete(() =>
+            var newLookDirection = Quaternion.Euler(0,_cameraTransform.eulerAngles.y,0);
+            transform.DORotateQuaternion(newLookDirection, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
             {
                 playerAnimationController.OnPlayerPressedSpaceButton();
                 transform.DOMove(transform.position + transform.forward * _playerData.RollDistance, _playerData.RollTime)

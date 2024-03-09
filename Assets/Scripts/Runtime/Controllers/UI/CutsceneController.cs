@@ -103,7 +103,7 @@ namespace Runtime.Controllers
                     throw new System.IO.FileNotFoundException($"Cutscene{index}.mp4 couldn't found.");
                 }
                 
-                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.CancelPlayerMovement);
+                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Camera);
                 
                 videoPlayer.gameObject.SetActive(true);
                 videoPlayer.gameObject.GetComponent<CanvasGroup>().alpha = 0;
@@ -144,7 +144,7 @@ namespace Runtime.Controllers
                 {
                     blackwBG.GetComponent<CanvasGroup>().alpha = 1;
                     blackwBG.SetActive(false);
-                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.ActivatePlayerMovement);
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                 });
             });
         }
@@ -163,7 +163,7 @@ namespace Runtime.Controllers
                 {
                     blackwBG.SetActive(false);
                     blackwBG.GetComponent<CanvasGroup>().alpha = 1;
-                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.ActivatePlayerMovement);
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                 });
             });
         }

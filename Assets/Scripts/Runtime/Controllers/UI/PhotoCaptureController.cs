@@ -74,7 +74,7 @@ namespace Runtime.Controllers.UI
             CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Play);
             _photoSprite = null;
             photoFrame.SetActive(false);
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.ActivatePlayerMovement);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
         }
         
         IEnumerator CaptureShot()

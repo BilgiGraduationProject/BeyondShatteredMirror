@@ -1,3 +1,4 @@
+using Runtime.Enums.Playable;
 using Runtime.Enums.Player;
 using Runtime.Extentions;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace Runtime.Signals
     public class PlayerSignals : MonoSingleton<PlayerSignals>
     {
        public UnityAction<float> onGetPlayerSpeed = delegate {  };
+       public UnityAction<PlayableEnum> onSetPlayerToCutScenePosition = delegate {  };
       
       
         
