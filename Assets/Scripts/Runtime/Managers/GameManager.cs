@@ -38,6 +38,7 @@ namespace Runtime.Managers
             switch (gameState)
             {
                 case GameStateEnum.Game:
+                    InputSignals.Instance.onIsInputReadyToUse?.Invoke(true);
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
                     InputSignals.Instance.onIsInputReadyToUse?.Invoke(true);
                   

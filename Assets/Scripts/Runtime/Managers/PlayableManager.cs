@@ -35,7 +35,7 @@ namespace Runtime.Managers
 
         private void Start()
         {
-            OnSetUpCutScene(PlayableEnum.LayingSeize,DirectorWrapMode.None);
+            //OnSetUpCutScene(PlayableEnum.LayingSeize,DirectorWrapMode.None);
         }
 
 

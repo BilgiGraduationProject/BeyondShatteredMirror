@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Runtime.Enums.UI;
 using Runtime.Signals;
@@ -143,6 +144,36 @@ namespace Runtime.Controllers.UI
             {
                 layers[layerValue - 1].transform.GetChild(0).gameObject.SetActive(value);
             }
+            
+            if(!value) return;
+            
+            // Switch case for UIPanelTypes
+            if (layers[layerValue - 1].transform.childCount > 0)
+            {
+                string panelName = layers[layerValue - 1].transform.GetChild(0).name.Replace("Panel(Clone)", "").Trim();
+                print(panelName);
+                UIPanelTypes panel = (UIPanelTypes)Enum.Parse(typeof(UIPanelTypes), panelName);
+                print(panel);
+                switch (panel)
+                {
+                    case UIPanelTypes.Ingame:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                        break;
+                    case UIPanelTypes.Start:
+                    case UIPanelTypes.Inventory:
+                    case UIPanelTypes.Settings:
+                    case UIPanelTypes.Pause:
+                    case UIPanelTypes.Shop:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Settings);
+                        break;
+                    case UIPanelTypes.Quit:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Quit);
+                        break;
+                    default:
+                        Debug.LogError("Invalid UIPanelTypes value");
+                        break;
+                }
+            }
         }
 
         private void CloseCurrentLayer(int layerValue)
@@ -228,6 +259,27 @@ namespace Runtime.Controllers.UI
 
             // Open the new panel
             OpenNewPanel(panel, layerValue);
+            
+            // Switch case for UIPanelTypes
+            switch (panel)
+            {
+                case UIPanelTypes.Ingame:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                    break;
+                case UIPanelTypes.Start:
+                case UIPanelTypes.Inventory:
+                case UIPanelTypes.Settings:
+                case UIPanelTypes.Pause:
+                case UIPanelTypes.Shop:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Settings);
+                    break;
+                case UIPanelTypes.Quit:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Quit);
+                    break;
+                default:
+                    Debug.LogError("Invalid UIPanelTypes value");
+                    break;
+            }
         }
         
         private bool IsPanelOpenInLayer(int layerValue)

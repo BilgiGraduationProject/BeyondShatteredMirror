@@ -3,6 +3,8 @@ using Runtime.Enums.GameManager;
 using Runtime.Signals;
 using UnityEngine;
 using Runtime.Enums.UI;
+using UnityEngine.Playables;
+using Runtime.Enums.Playable;
 
 namespace Runtime.Managers
 {
@@ -34,7 +36,8 @@ namespace Runtime.Managers
             // TODO: Add more shows to beatify the game start.
             CoreUISignals.Instance.onCloseAllPanels?.Invoke();
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Ingame, 0);
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+            //CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+            PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.LayingSeize,DirectorWrapMode.None);
         }
 
         public void OnQuit()
