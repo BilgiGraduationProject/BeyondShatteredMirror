@@ -245,7 +245,7 @@ namespace Runtime.Controllers.UI
 
         private void Start()
         {
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Settings);
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 0);
         }
 

@@ -2,6 +2,7 @@ using System;
 using Cinemachine;
 using Runtime.Enums.Camera;
 using Runtime.Signals;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Runtime.Managers
@@ -14,6 +15,7 @@ namespace Runtime.Managers
 
         [SerializeField] private CinemachineStateDrivenCamera _stateDrivenCamera;
         [SerializeField] private Animator cameraAnimator;
+       
 
 
         #endregion
@@ -46,7 +48,12 @@ namespace Runtime.Managers
         {
             CameraSignals.Instance.onChangeCameraState += OnChangeCameraState;
             CameraSignals.Instance.onSetCinemachineTarget += OnSetCameraTarget;
+            
+
         }
+
+       
+
 
         private void OnSetCameraTarget()
         {

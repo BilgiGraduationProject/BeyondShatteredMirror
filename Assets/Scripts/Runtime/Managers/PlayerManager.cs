@@ -90,8 +90,6 @@ namespace Runtime.Managers
         {
             Debug.LogWarning("Executed");
             var position = _cutScenePositionHolderData.cutSceneHolders[(int)playableEnum].cutScenePosition;
-            transform.position = new Vector3(position
-                .x,position.y, position.z);
            
         }
 

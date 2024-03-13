@@ -78,6 +78,7 @@ namespace Runtime.Managers
         {
             _isInputReadyToUse = condition;
             InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(condition);
+            Debug.LogWarning(condition);
            
         }
 
