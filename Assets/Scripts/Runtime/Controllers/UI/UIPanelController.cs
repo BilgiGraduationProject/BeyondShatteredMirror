@@ -4,6 +4,7 @@ using Runtime.Signals;
 using UnityEngine;
 using DG.Tweening;
 using Runtime.Enums.GameManager;
+using Runtime.Managers;
 using Runtime.Utilities;
 using UnityEngine.Rendering;
 
@@ -30,6 +31,8 @@ namespace Runtime.Controllers.UI
             CoreUISignals.Instance.onOpenPanel += OnOpenPanel;
             CoreUISignals.Instance.onClosePanel += OnClosePanel;
             CoreUISignals.Instance.onCloseAllPanels += OnCloseAllPanels;
+            CoreUISignals.Instance.onEnableAllPanels += OnEnableAllPanels;
+            CoreUISignals.Instance.onDisableAllPanels += OnDisableAllPanels;
         }
         
         private void UnSubscribeEvents()
@@ -37,12 +40,36 @@ namespace Runtime.Controllers.UI
             CoreUISignals.Instance.onOpenPanel -= OnOpenPanel;
             CoreUISignals.Instance.onClosePanel -= OnClosePanel;
             CoreUISignals.Instance.onCloseAllPanels -= OnCloseAllPanels;
+            CoreUISignals.Instance.onEnableAllPanels -= OnEnableAllPanels;
+            CoreUISignals.Instance.onDisableAllPanels -= OnDisableAllPanels;
         }
 
         private void OnDisable() => UnSubscribeEvents();
         
         #endregion
 
+        private void OnDisableAllPanels()
+        {
+            foreach (var layer in layers)
+            {
+                for (int i = 0; i < layer.transform.childCount; i++)
+                {
+                    layer.transform.GetChild(i).gameObject.SetActive(false);
+                }
+            }
+        }
+
+        private void OnEnableAllPanels()
+        {
+            foreach (var layer in layers)
+            {
+                for (int i = 0; i < layer.transform.childCount; i++)
+                {
+                    layer.transform.GetChild(i).gameObject.SetActive(true);
+                }
+            }
+        }
+        
         private void OnCloseAllPanels()
         {
             InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
@@ -181,6 +208,10 @@ namespace Runtime.Controllers.UI
         
         private void OnOpenPanel(UIPanelTypes panel, short layerValue)
         {
+            // GameManager gameManager = FindObjectOfType<GameManager>();
+            //
+            // if(gameManager.gameState is GameStateEnum.Cutscene && layerValue > 0) return;
+            
             // Check if there is already a panel open in a higher layer
             if (IsPanelOpenInHigherLayer(layerValue))
             {

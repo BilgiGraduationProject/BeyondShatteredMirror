@@ -9,7 +9,8 @@ namespace Runtime.Signals
         public UnityAction<UIPanelTypes,short> onOpenPanel = delegate {  };
         public UnityAction<int> onClosePanel = delegate{  };
         public UnityAction onCloseAllPanels = delegate {  };
+        public UnityAction onEnableAllPanels = delegate {  };
+        public UnityAction onDisableAllPanels = delegate {  };
         public UnityAction<int> onOpenCutscene = delegate {  };
-        
     }
 }

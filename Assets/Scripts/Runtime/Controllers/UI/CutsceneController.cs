@@ -64,15 +64,15 @@ namespace Runtime.Controllers
         private void Update()
         {
             // TODO: This part is for testing purposes only. Change it later with collision or something else.
-            if (Input.GetKeyDown(KeyCode.V))
+            if (Input.GetKeyDown(KeyCode.Alpha0))
             {
                 CoreUISignals.Instance.onOpenCutscene?.Invoke(0); // This method helps to load cutscene video.
             }
-            if (Input.GetKeyDown(KeyCode.B))
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 CoreUISignals.Instance.onOpenCutscene?.Invoke(1);
             }
-            if (Input.GetKeyDown(KeyCode.N))
+            if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 CoreUISignals.Instance.onOpenCutscene?.Invoke(2);
             }
@@ -103,7 +103,8 @@ namespace Runtime.Controllers
                     throw new System.IO.FileNotFoundException($"Cutscene{index}.mp4 couldn't found.");
                 }
                 
-                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Camera);
+                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
+                CoreUISignals.Instance.onDisableAllPanels?.Invoke();
                 
                 videoPlayer.gameObject.SetActive(true);
                 videoPlayer.gameObject.GetComponent<CanvasGroup>().alpha = 0;
@@ -154,16 +155,17 @@ namespace Runtime.Controllers
             videoPlayerr.loopPointReached -= OnCutsceneCompleted;
             blackwBG.SetActive(true);
             
-            videoPlayer.GetComponent<CanvasGroup>().DOFade(0f, 3).SetEase(Ease.OutQuad).OnComplete(() =>
+            videoPlayer.GetComponent<CanvasGroup>().DOFade(0f, 2f).SetEase(Ease.OutQuad).OnComplete(() =>
             {
                 videoPlayer.gameObject.SetActive(false);
                 videoPlayer.GetComponent<CanvasGroup>().alpha = 1;
                 videoPlayer.GetComponent<VideoPlayer>().Prepare(); // Unnecessary line of code.
-                blackwBG.GetComponent<CanvasGroup>().DOFade(0f, 3f).SetEase(Ease.OutQuad).OnComplete(() =>
+                blackwBG.GetComponent<CanvasGroup>().DOFade(0f, 1f).SetEase(Ease.OutQuad).OnComplete(() =>
                 {
                     blackwBG.SetActive(false);
                     blackwBG.GetComponent<CanvasGroup>().alpha = 1;
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                    CoreUISignals.Instance.onEnableAllPanels?.Invoke();
                 });
             });
         }
