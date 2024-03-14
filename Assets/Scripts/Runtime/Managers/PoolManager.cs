@@ -67,8 +67,13 @@ namespace Runtime.Managers
         {
             PoolSignals.Instance.onGetPoolObject += OnGetPoolObject;
             PoolSignals.Instance.onSendPool += OnSendPool;
+            PoolSignals.Instance.onGetLevelHolderTransform += OnGetLeveLHolderTransform;
+            PoolSignals.Instance.onGetLevelHolderPoolObject += OnGetLevelHolderPoolObject;
         }
+
+        private Transform OnGetLeveLHolderTransform() => levelHolder.transform;
         
+
         private GameObject OnGetPoolObject(PoolType poolType, Transform target)
         {
             var parent = poolHolder.transform.GetChild((int)poolType);
@@ -76,13 +81,37 @@ namespace Runtime.Managers
             if (parent.childCount > 0)
             {
                 var obj = parent.transform.GetChild(0).gameObject;
-                obj.transform.position = target.position;
+                obj.transform.parent = target;
                 obj.SetActive(true);
                 return obj;
             }
             else
             {
                 var obj = Instantiate(_poolData.Data[(int)poolType].ObjPrefab, target.position,Quaternion.identity, poolHolder.GetChild((int)poolType));
+                return obj;
+            }
+        }
+
+
+        private GameObject OnGetLevelHolderPoolObject(PoolType poolType, Transform target)
+        {
+            var parent = poolHolder.transform.GetChild((int)poolType);
+            if (target.childCount > 0)
+            {
+                var obj = target.transform.GetChild(0).gameObject;
+                Destroy(obj);
+                var newObj = parent.transform.GetChild(0).gameObject;
+                newObj.transform.parent = target;
+                newObj.SetActive(true);
+                return newObj;
+
+            }
+
+            else
+            {
+                var obj = parent.transform.GetChild(0).gameObject;
+                obj.transform.parent = target;
+                obj.SetActive(true);
                 return obj;
             }
         }
@@ -98,6 +127,8 @@ namespace Runtime.Managers
         {
             PoolSignals.Instance.onGetPoolObject -= OnGetPoolObject;
             PoolSignals.Instance.onSendPool -= OnSendPool;
+            PoolSignals.Instance.onGetLevelHolderTransform -= OnGetLeveLHolderTransform;
+            PoolSignals.Instance.onGetLevelHolderPoolObject -= OnGetLevelHolderPoolObject;
         }
 
         private void OnDisable()

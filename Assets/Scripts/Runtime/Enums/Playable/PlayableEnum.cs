@@ -5,5 +5,9 @@
       
         LayingSeize,
         StandUp,
+        Mirror,
+        Factory,
+        House,
+        
     }
 }

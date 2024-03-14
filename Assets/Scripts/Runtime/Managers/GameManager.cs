@@ -40,7 +40,6 @@ namespace Runtime.Managers
                 case GameStateEnum.Game:
                     InputSignals.Instance.onIsInputReadyToUse?.Invoke(true);
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
-                    InputSignals.Instance.onIsInputReadyToUse?.Invoke(true);
                   
                     break;
                 case GameStateEnum.Cutscene:

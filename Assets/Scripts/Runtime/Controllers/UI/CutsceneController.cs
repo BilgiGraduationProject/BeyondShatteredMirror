@@ -7,7 +7,10 @@ using Runtime.Enums.GameManager;
 using DG.Tweening;
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
+using Runtime.Enums.Playable;
+using Runtime.Enums.Pool;
 using Runtime.Utilities;
+using UnityEngine.Playables;
 
 namespace Runtime.Controllers
 {
@@ -27,6 +30,7 @@ namespace Runtime.Controllers
     
         private int _lastIndex;
         private string _fullPath;
+        private int _index;
 
         #endregion
 
@@ -81,6 +85,7 @@ namespace Runtime.Controllers
         private void OnOpenCutscene(int index)
         {
             LoadVideoClip(index);
+            _index = index - 1;
 
             // _lastIndex = index;
             // CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.CancelPlayerMovement);
@@ -108,7 +113,15 @@ namespace Runtime.Controllers
                 
                 videoPlayer.gameObject.SetActive(true);
                 videoPlayer.gameObject.GetComponent<CanvasGroup>().alpha = 0;
-                videoPlayer.gameObject.GetComponent<CanvasGroup>().DOFade(1f, .75f).SetEase(Ease.OutQuad);
+                if (_index is 0)
+                {
+                    videoPlayer.gameObject.GetComponent<CanvasGroup>().DOFade(1f, 0).SetEase(Ease.OutQuad);
+                }
+                else
+                {
+                    videoPlayer.gameObject.GetComponent<CanvasGroup>().DOFade(1f, 0.75f).SetEase(Ease.OutQuad);
+                }
+                
                 videoPlayer.gameObject.GetComponent<VideoPlayer>().loopPointReached += OnCutsceneCompleted;
                 
                 videoPlayer.url = _fullPath;
@@ -145,15 +158,27 @@ namespace Runtime.Controllers
                 {
                     blackwBG.GetComponent<CanvasGroup>().alpha = 1;
                     blackwBG.SetActive(false);
-                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                    
                 });
             });
         }
         
         private void OnCutsceneCompleted(VideoPlayer videoPlayerr)
         {
+            
             videoPlayerr.loopPointReached -= OnCutsceneCompleted;
             blackwBG.SetActive(true);
+            switch (_index)
+            {
+                case 0:
+                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke((int)PlayableEnum.LayingSeize);
+                    break;
+                case 1:
+                    PoolSignals.Instance.onGetLevelHolderPoolObject?.Invoke(PoolType.House, PoolSignals.Instance.onGetLevelHolderTransform?.Invoke());
+                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke((int)PlayableEnum.House);
+                    break;
+                
+            }
             
             videoPlayer.GetComponent<CanvasGroup>().DOFade(0f, 2f).SetEase(Ease.OutQuad).OnComplete(() =>
             {
@@ -164,8 +189,9 @@ namespace Runtime.Controllers
                 {
                     blackwBG.SetActive(false);
                     blackwBG.GetComponent<CanvasGroup>().alpha = 1;
-                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                     CoreUISignals.Instance.onEnableAllPanels?.Invoke();
+                    
+                    
                 });
             });
         }

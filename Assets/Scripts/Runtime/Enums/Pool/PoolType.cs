@@ -4,6 +4,9 @@ namespace Runtime.Enums.Pool
     {
         Enemy,
         Soul,
+        Factory,
+        Bathroom,
+        House
         
     }
 }

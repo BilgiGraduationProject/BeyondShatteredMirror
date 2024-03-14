@@ -157,7 +157,8 @@ namespace Runtime.Controllers.UI
                 switch (panel)
                 {
                     case UIPanelTypes.Ingame:
-                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                        // TODO: Sorun Burdan Kaynaklanıyor Olabilir
+                        // CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                         break;
                     case UIPanelTypes.Start:
                     case UIPanelTypes.Inventory:

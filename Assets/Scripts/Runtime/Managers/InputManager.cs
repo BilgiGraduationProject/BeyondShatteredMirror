@@ -2,6 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 using Runtime.Commands.Input;
+using Runtime.Enums.Playable;
 using Runtime.Keys.Input;
 using Runtime.Signals;
 using Unity.VisualScripting;
@@ -25,8 +26,10 @@ namespace Runtime.Managers
         private bool _isInput;
         private bool _isCrouch;
         private bool _isRun;
+        private bool _isCutSceneInputReadyToUse;
+        private int _playableEnumIndex;
         [Header(("Cancel Movement"))] 
-        private bool _isInputReadyToUse = true;
+        private bool _isInputReadyToUse;
 
 
         [Header("Input Keys")] 
@@ -72,13 +75,20 @@ namespace Runtime.Managers
         {
             InputSignals.Instance.onChangeMouseVisibility += OnChangeMouseVisibility;
             InputSignals.Instance.onIsInputReadyToUse += OnIsInputReadyToUse;
+            PlayableSignals.Instance.onSendInputManagerToReadyForInput += OnSendInputManagerToReadyForInput;
+        }
+
+        private void OnSendInputManagerToReadyForInput(bool condition, int playableEnum)
+        {
+            _isCutSceneInputReadyToUse = condition;
+            _playableEnumIndex = playableEnum;
         }
 
         private void OnIsInputReadyToUse(bool condition)
         {
+            Debug.LogWarning(condition);
             _isInputReadyToUse = condition;
             InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(condition);
-            Debug.LogWarning(condition);
            
         }
 
@@ -103,6 +113,7 @@ namespace Runtime.Managers
         {
             InputSignals.Instance.onChangeMouseVisibility -= OnChangeMouseVisibility;
             InputSignals.Instance.onIsInputReadyToUse -= OnIsInputReadyToUse;
+            PlayableSignals.Instance.onSendInputManagerToReadyForInput -= OnSendInputManagerToReadyForInput;
         }
 
         private void OnDisable()
@@ -113,6 +124,25 @@ namespace Runtime.Managers
         private void Update()
         {
             _runInputCommand.Execute(_isRun);
+            if (_isCutSceneInputReadyToUse)
+            {
+                if (Input.GetButtonDown(horizontal) || Input.GetButtonDown(vertical))
+                {
+                    switch (_playableEnumIndex)
+                    {
+                        case (int)PlayableEnum.LayingSeize:
+                            PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke((int)PlayableEnum.StandUp);
+                            _isCutSceneInputReadyToUse = false;
+                            break;
+                        case (int)PlayableEnum.Factory:
+                            PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke((int)PlayableEnum.StandUp);
+                            _isCutSceneInputReadyToUse = false;
+                            break;
+                        
+                    }
+                }
+                    
+            }
             if (!_isInputReadyToUse) return;
             _movementInputCommand.Execute(ref _isInput);
             _crouchInputCommand.Execute(ref _isCrouch);

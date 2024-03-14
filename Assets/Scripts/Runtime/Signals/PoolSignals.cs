@@ -11,5 +11,7 @@ namespace Runtime.Signals
         //public Func<PoolType,Transform, GameObject> onGetPoolObject = (_, _) => null;
         public Func<PoolType,Transform, GameObject> onGetPoolObject = delegate { return null; };
         public UnityAction<GameObject,PoolType> onSendPool = delegate {  };
+        public Func<Transform> onGetLevelHolderTransform = delegate { return null; };
+        public Func<PoolType,Transform,GameObject> onGetLevelHolderPoolObject = delegate { return null; };
     }
 }

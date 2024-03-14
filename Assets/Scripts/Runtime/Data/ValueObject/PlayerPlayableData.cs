@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace Runtime.Data.ValueObject
@@ -7,6 +8,7 @@ namespace Runtime.Data.ValueObject
     [Serializable]
     public struct PlayerPlayableData
     {
-        public List<PlayableAsset> playerPlayableAssets;
+        public PlayableAsset playerPlayableAssets;
+        public DirectorWrapMode directorWrapMode;
     }
 }

@@ -6,6 +6,7 @@ using Runtime.Data.ValueObject;
 using Runtime.Enums.Camera;
 using Runtime.Enums.GameManager;
 using Runtime.Enums.Playable;
+using Runtime.Enums.Pool;
 using Runtime.Signals;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace Runtime.Managers
     public class PlayableManager : MonoBehaviour
     {
         [SerializeField] private PlayableDirector playableDirector;
-        private PlayerPlayableData _playerPlayable;
+        private CD_PlayerPlayable _playerPlayable;
 
 
         private void Awake()
@@ -24,12 +25,11 @@ namespace Runtime.Managers
             Init();
             
            
-           
         }
 
         private void Init()
         {
-           _playerPlayable = GetPlayable();
+            _playerPlayable = GetPlayable();
 
         }
 
@@ -39,7 +39,7 @@ namespace Runtime.Managers
         }
 
 
-        private PlayerPlayableData GetPlayable() => Resources.Load<CD_PlayerPlayable>("Data/CD_PlayerPlayable").PlayerPlayable;
+        private CD_PlayerPlayable GetPlayable() => Resources.Load<CD_PlayerPlayable>("Data/CD_PlayerPlayable");
         
 
         public void OnEnable()
@@ -62,15 +62,14 @@ namespace Runtime.Managers
 
         
 
-        private void OnSetUpCutScene(PlayableEnum playableEnum,DirectorWrapMode directorMode)
+        private void OnSetUpCutScene(int playableEnum)
         {
-            PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(playableEnum);
-            var assets = _playerPlayable.playerPlayableAssets[(int)playableEnum];
+            Debug.LogWarning("Executed CutScene");
+            var assets = _playerPlayable.PlayerPlayable[playableEnum].playerPlayableAssets;
+            var directorMode = _playerPlayable.PlayerPlayable[playableEnum].directorWrapMode;
             CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.CutScene);
-            if (assets is null)
-            {
-                
-            }
+            if (assets is null) return;
+           
             var playableBindings = assets.outputs.ToArray();
 
             foreach (var binding in playableBindings)
@@ -79,13 +78,28 @@ namespace Runtime.Managers
                 playableDirector.SetGenericBinding(playableDirector, binding.sourceObject);
                 playableDirector.Play();
                 CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
-                playableDirector.extrapolationMode = directorMode;
+                 playableDirector.extrapolationMode = directorMode;
 
             }
 
-            if (directorMode is DirectorWrapMode.Hold) return;
-            StartCoroutine(OnCutSceneFinished((float)playableDirector.duration));
-           
+            StartCoroutine(directorMode is DirectorWrapMode.Hold
+                ? OnHoldCutScene((float)playableDirector.duration,playableEnum)
+                : OnCutSceneFinished((float)playableDirector.duration));
+        }
+
+        private IEnumerator OnHoldCutScene(float playableDirectorDuration,int playableEnum)
+        {
+            yield return new WaitForSeconds(playableDirectorDuration);
+            switch (playableEnum)
+            {
+                case (int)PlayableEnum.LayingSeize:
+                    PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true,playableEnum);
+                    break;
+                case (int)PlayableEnum.Mirror:
+                    PoolSignals.Instance.onGetLevelHolderPoolObject?.Invoke(PoolType.Factory,PoolSignals.Instance.onGetLevelHolderTransform?.Invoke());
+                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke((int)PlayableEnum.Factory);
+                    break;
+            }
         }
 
         private IEnumerator OnCutSceneFinished(float playableDirectorDuration)

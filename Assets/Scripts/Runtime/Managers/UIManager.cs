@@ -5,6 +5,7 @@ using UnityEngine;
 using Runtime.Enums.UI;
 using UnityEngine.Playables;
 using Runtime.Enums.Playable;
+using Runtime.Enums.Pool;
 
 namespace Runtime.Managers
 {
@@ -37,7 +38,7 @@ namespace Runtime.Managers
             CoreUISignals.Instance.onCloseAllPanels?.Invoke();
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Ingame, 0);
             //CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
-            PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.LayingSeize,DirectorWrapMode.None);
+            CoreUISignals.Instance.onOpenCutscene?.Invoke(1);
         }
 
         public void OnQuit()
