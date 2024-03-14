@@ -76,7 +76,7 @@ namespace Runtime.Controllers.UI
 
         private void Initialize()
         {
-            AddCallback(buttons[0], EventTriggerType.PointerEnter, OnPointerEnter);
+            AddCallback(buttons[0], EventTriggerType.PointerDown, OnPointerClick);
         }
         
         private void AddCallback(EventTrigger button, EventTriggerType eventType, UnityAction<BaseEventData> callback)
@@ -87,7 +87,7 @@ namespace Runtime.Controllers.UI
             button.triggers.Add(entry);
         }
         
-        private void OnPointerEnter(BaseEventData data)
+        private void OnPointerClick(BaseEventData data)
         {
             CoreUISignals.Instance.onClosePanel?.Invoke(1);
         }

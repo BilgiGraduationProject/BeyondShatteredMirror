@@ -158,7 +158,7 @@ namespace Runtime.Controllers.UI
                 {
                     case UIPanelTypes.Ingame:
                         // TODO: Sorun Burdan Kaynaklanıyor Olabilir
-                        // CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                         break;
                     case UIPanelTypes.Start:
                     case UIPanelTypes.Inventory:
@@ -339,6 +339,11 @@ namespace Runtime.Controllers.UI
             {
                 // Close the topmost panel
                 CloseTopmostPanel();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
             }
         }
         
