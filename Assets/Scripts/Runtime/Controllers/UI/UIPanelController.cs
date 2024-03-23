@@ -158,17 +158,17 @@ namespace Runtime.Controllers.UI
                 {
                     case UIPanelTypes.Ingame:
                         // TODO: Sorun Burdan Kaynaklanıyor Olabilir
-                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                        
                         break;
                     case UIPanelTypes.Start:
                     case UIPanelTypes.Inventory:
                     case UIPanelTypes.Settings:
                     case UIPanelTypes.Pause:
                     case UIPanelTypes.Shop:
-                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Settings);
+                       
                         break;
                     case UIPanelTypes.Quit:
-                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Quit);
+                       
                         break;
                     default:
                         Debug.LogError("Invalid UIPanelTypes value");
@@ -265,20 +265,19 @@ namespace Runtime.Controllers.UI
             switch (panel)
             {
                 case UIPanelTypes.Ingame:
-                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                     break;
                 case UIPanelTypes.Start:
                 case UIPanelTypes.Inventory:
                 case UIPanelTypes.Settings:
                 case UIPanelTypes.Pause:
                 case UIPanelTypes.Shop:
-                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Settings);
+                    
                     break;
                 case UIPanelTypes.Quit:
-                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Quit);
+                    
                     break;
                 default:
-                    Debug.LogError("Invalid UIPanelTypes value");
+                    
                     break;
             }
         }
@@ -329,7 +328,7 @@ namespace Runtime.Controllers.UI
 
         private void Start()
         {
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Settings);
+            
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 0);
         }
 
@@ -343,7 +342,7 @@ namespace Runtime.Controllers.UI
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+               
             }
         }
         

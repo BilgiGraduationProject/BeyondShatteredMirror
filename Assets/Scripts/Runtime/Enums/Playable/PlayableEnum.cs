@@ -3,11 +3,11 @@
     public enum PlayableEnum
     {
       
-        LayingSeize,
+        BathroomLayingSeize,
         StandUp,
-        Mirror,
-        Factory,
-        House,
+        StandFrontOfMirror,
+        EnteredFactory,
+        EnteredHouse,
         
     }
 }

@@ -64,17 +64,17 @@ namespace Runtime.Controllers.UI
 
         private void CaptureTime()
         {
-            CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Capture);
+            
             cameraViewfinder.SetActive(true);
             //CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.StopPlayer);
         }
 
         private void UnCaptureTime()
         {
-            CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Play);
+            
             _photoSprite = null;
             photoFrame.SetActive(false);
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+           
         }
         
         IEnumerator CaptureShot()

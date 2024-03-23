@@ -43,13 +43,13 @@ namespace Runtime.Managers
 
         public void OnQuit()
         {
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Quit);
+            
             Application.Quit();
         }
 
         public void OnSettings()
         {
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Settings);
+           
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Settings, 2);
         }
     }

@@ -11,13 +11,13 @@ namespace Runtime.Controllers.Player
         {
             if (other.CompareTag("Mirror"))
             {
-               PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke((int)PlayableEnum.Mirror);
                 other.CompareTag("Untagged");
             }
 
             if (other.CompareTag("House"))
             {
                 CoreUISignals.Instance.onOpenCutscene?.Invoke((2));
+                other.CompareTag("Untagged");
             }
         }
     }

@@ -13,12 +13,21 @@ MonoBehaviour:
   m_Name: CD_PlayerPlayable
   m_EditorClassIdentifier: 
   PlayerPlayable:
-  - playerPlayableAssets: {fileID: 11400000, guid: 826f83a6850538043a55305a15ad90e7,
+  - playableEnum: 0
+    playerPlayableAssets: {fileID: 11400000, guid: 826f83a6850538043a55305a15ad90e7,
       type: 2}
     directorWrapMode: 0
-  - playerPlayableAssets: {fileID: 11400000, guid: 092eaa8219d815c4dbd0919d5b42d101,
+  - playableEnum: 1
+    playerPlayableAssets: {fileID: 11400000, guid: 092eaa8219d815c4dbd0919d5b42d101,
       type: 2}
     directorWrapMode: 2
-  - playerPlayableAssets: {fileID: 11400000, guid: bf25549d0c055f14ab140345675a2fd8,
+  - playableEnum: 2
+    playerPlayableAssets: {fileID: 11400000, guid: bf25549d0c055f14ab140345675a2fd8,
       type: 2}
+    directorWrapMode: 0
+  - playableEnum: 3
+    playerPlayableAssets: {fileID: 0}
+    directorWrapMode: 0
+  - playableEnum: 4
+    playerPlayableAssets: {fileID: 0}
     directorWrapMode: 0

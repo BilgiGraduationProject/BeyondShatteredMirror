@@ -7,8 +7,8 @@ namespace Runtime.Signals
 {
     public class PlayableSignals : MonoSingleton<PlayableSignals>
     {
-        public UnityAction<int> onSetUpCutScene = delegate {  };
-        public UnityAction<bool,int> onSendInputManagerToReadyForInput = delegate {  };
+        public UnityAction<PlayableEnum> onSetUpCutScene = delegate {  };
+        public UnityAction<bool,PlayableEnum> onSendInputManagerToReadyForInput = delegate {  };
       
         
         

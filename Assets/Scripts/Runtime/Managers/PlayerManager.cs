@@ -23,7 +23,7 @@ namespace Runtime.Managers
 
         [SerializeField] private PlayerMovementController playerMovementController;
         [SerializeField] private PlayerAnimationController playerAnimationController;
-        [SerializeField] private Transform playerTrannsform;
+        [SerializeField] private Transform playerTransform;
         
         
         #endregion
@@ -87,44 +87,18 @@ namespace Runtime.Managers
 
         }
 
-        private void OnSetPlayerToCutScenePosition(int playableEnum)
+        private void OnSetPlayerToCutScenePosition(PlayableEnum playableEnum)
         {
-            switch (playableEnum)
-            {
-                case (int)PlayableEnum.StandUp:
-                    PlayableSignals.Instance.onSetUpCutScene?.Invoke(playableEnum);
-                    break;
-                case (int)PlayableEnum.Factory:
-                {
-                    Debug.LogWarning("Factory Started");
-                    var position = _cutScenePositionHolderData.cutSceneHolders[playableEnum].cutScenePosition;
-                    var rotation = _cutScenePositionHolderData.cutSceneHolders[playableEnum].cutSceneRotation;
-                    playerTrannsform.DOMove(position, 1f);
-                    playerTrannsform.DORotate(rotation, 1f);
-                    PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true,(int)PlayableEnum.Factory);
-                    break;
-                }
-                case (int)PlayableEnum.House:
-                {
-                    var position = _cutScenePositionHolderData.cutSceneHolders[playableEnum].cutScenePosition;
-                    var rotation = _cutScenePositionHolderData.cutSceneHolders[playableEnum].cutSceneRotation;
-                    playerTrannsform.DOMove(position, 1f);
-                    playerTrannsform.DORotate(rotation, 1f);
-                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
-                    break;
-                }
-                default:
-                {
-                    var position = _cutScenePositionHolderData.cutSceneHolders[playableEnum].cutScenePosition;
-                    var rotation = _cutScenePositionHolderData.cutSceneHolders[playableEnum].cutSceneRotation;
-                    playerTrannsform.DOMove(position, 1f);
-                    playerTrannsform.DORotate(rotation, 1f).OnComplete(() =>
-                    {
-                        PlayableSignals.Instance.onSetUpCutScene?.Invoke(playableEnum);
-                    });
-                    break;
-                }
-            }
+            var position = _cutScenePositionHolderData.cutSceneHolders[(int)playableEnum].cutScenePosition;
+            var rotation = _cutScenePositionHolderData.cutSceneHolders[(int)playableEnum].cutSceneRotation;
+           
+        }
+
+
+        private void SetPlayerToCutScenePosition(Transform position, float duration, Vector3 rotation)
+        {
+            playerTransform.DOMove(position.position, duration);
+            playerTransform.DORotate(rotation, duration);
         }
 
        

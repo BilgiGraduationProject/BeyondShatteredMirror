@@ -9,7 +9,7 @@ namespace Runtime.Signals
     public class PlayerSignals : MonoSingleton<PlayerSignals>
     {
        public UnityAction<float> onGetPlayerSpeed = delegate {  };
-       public UnityAction<int> onSetPlayerToCutScenePosition = delegate {  };
+       public UnityAction<PlayableEnum> onSetPlayerToCutScenePosition = delegate {  };
       
       
         

@@ -55,7 +55,7 @@ namespace Runtime.Managers
                     InputSignals.Instance.onIsInputReadyToUse?.Invoke(false);
                     break;
                 
-                case GameStateEnum.Camera:
+                case GameStateEnum.UI:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
                     InputSignals.Instance.onIsInputReadyToUse?.Invoke(false);
                     break;

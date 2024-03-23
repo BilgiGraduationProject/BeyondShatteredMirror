@@ -108,7 +108,7 @@ namespace Runtime.Controllers
                     throw new System.IO.FileNotFoundException($"Cutscene{index}.mp4 couldn't found.");
                 }
                 
-                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
+                //CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
                 CoreUISignals.Instance.onDisableAllPanels?.Invoke();
                 
                 videoPlayer.gameObject.SetActive(true);
@@ -171,11 +171,9 @@ namespace Runtime.Controllers
             switch (_index)
             {
                 case 0:
-                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke((int)PlayableEnum.LayingSeize);
                     break;
                 case 1:
-                    PoolSignals.Instance.onGetLevelHolderPoolObject?.Invoke(PoolType.House, PoolSignals.Instance.onGetLevelHolderTransform?.Invoke());
-                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke((int)PlayableEnum.House);
+                   
                     break;
                 
             }

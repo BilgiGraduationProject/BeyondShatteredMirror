@@ -9,7 +9,7 @@ namespace Runtime.Data.ValueObject
     public struct CutScenePositionHolderData
     {
         public PlayableEnum playableEnum;
-        public Vector3 cutScenePosition;
+        public Transform cutScenePosition;
         public Vector3 cutSceneRotation;
 
     }

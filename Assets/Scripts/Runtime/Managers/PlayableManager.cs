@@ -62,52 +62,43 @@ namespace Runtime.Managers
 
         
 
-        private void OnSetUpCutScene(int playableEnum)
+        private void OnSetUpCutScene(PlayableEnum playableEnum)
         {
-            Debug.LogWarning("Executed CutScene");
-            var assets = _playerPlayable.PlayerPlayable[playableEnum].playerPlayableAssets;
-            var directorMode = _playerPlayable.PlayerPlayable[playableEnum].directorWrapMode;
-            CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.CutScene);
-            if (assets is null) return;
            
+            var assets = _playerPlayable.PlayerPlayable[(int)playableEnum].playerPlayableAssets;
+            var directorMode = _playerPlayable.PlayerPlayable[(int)playableEnum].directorWrapMode;
+            
+            if (assets is null) return;
+            
+            CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.CutScene);
             var playableBindings = assets.outputs.ToArray();
-
+            
             foreach (var binding in playableBindings)
             {
                 playableDirector.playableAsset = assets;
                 playableDirector.SetGenericBinding(playableDirector, binding.sourceObject);
                 playableDirector.Play();
-                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
                  playableDirector.extrapolationMode = directorMode;
 
             }
 
             StartCoroutine(directorMode is DirectorWrapMode.Hold
-                ? OnHoldCutScene((float)playableDirector.duration,playableEnum)
+                ? OnHoldCutScene((float)playableDirector.duration,(int)playableEnum)
                 : OnCutSceneFinished((float)playableDirector.duration));
         }
 
         private IEnumerator OnHoldCutScene(float playableDirectorDuration,int playableEnum)
         {
             yield return new WaitForSeconds(playableDirectorDuration);
-            switch (playableEnum)
-            {
-                case (int)PlayableEnum.LayingSeize:
-                    PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true,playableEnum);
-                    break;
-                case (int)PlayableEnum.Mirror:
-                    PoolSignals.Instance.onGetLevelHolderPoolObject?.Invoke(PoolType.Factory,PoolSignals.Instance.onGetLevelHolderTransform?.Invoke());
-                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke((int)PlayableEnum.Factory);
-                    break;
-            }
+            
         }
 
         private IEnumerator OnCutSceneFinished(float playableDirectorDuration)
         {
             yield return new WaitForSeconds(playableDirectorDuration);
             CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Play);
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
-            Debug.LogWarning("How many time is executed");
+             CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+            
         }
 
 

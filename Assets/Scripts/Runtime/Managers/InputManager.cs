@@ -27,9 +27,9 @@ namespace Runtime.Managers
         private bool _isCrouch;
         private bool _isRun;
         private bool _isCutSceneInputReadyToUse;
-        private int _playableEnumIndex;
+        private PlayableEnum _playableEnumIndex;
         [Header(("Cancel Movement"))] 
-        private bool _isInputReadyToUse;
+        private bool _isInputReadyToUse = true;
 
 
         [Header("Input Keys")] 
@@ -78,7 +78,7 @@ namespace Runtime.Managers
             PlayableSignals.Instance.onSendInputManagerToReadyForInput += OnSendInputManagerToReadyForInput;
         }
 
-        private void OnSendInputManagerToReadyForInput(bool condition, int playableEnum)
+        private void OnSendInputManagerToReadyForInput(bool condition, PlayableEnum playableEnum)
         {
             _isCutSceneInputReadyToUse = condition;
             _playableEnumIndex = playableEnum;
@@ -130,14 +130,7 @@ namespace Runtime.Managers
                 {
                     switch (_playableEnumIndex)
                     {
-                        case (int)PlayableEnum.LayingSeize:
-                            PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke((int)PlayableEnum.StandUp);
-                            _isCutSceneInputReadyToUse = false;
-                            break;
-                        case (int)PlayableEnum.Factory:
-                            PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke((int)PlayableEnum.StandUp);
-                            _isCutSceneInputReadyToUse = false;
-                            break;
+                        
                         
                     }
                 }
