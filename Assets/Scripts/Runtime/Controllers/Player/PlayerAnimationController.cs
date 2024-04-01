@@ -40,39 +40,53 @@ namespace Runtime.Controllers.Player
         }
         
         
-
-        internal void OnPlayerPressedLeftControlButton(bool condition)
+        internal void OnSetBoolAnimation(PlayerAnimationState playerEnum, bool condition)
         {
-            _playerAnimator.SetBool("Crouch", condition);
+            _playerAnimator.SetBool(playerEnum.ToString(), condition);
+        }
+
+        internal void OnSetTriggerAnimation(PlayerAnimationState playerEnum)
+        {
+            _playerAnimator.SetTrigger(playerEnum.ToString());
         }
         
-        internal void OnPlayerPressedSpaceButton()
+        internal void OnSetCombatCount(float combatCount)
         {
-            _playerAnimator.SetTrigger("Roll");
+            _playerAnimator.SetFloat(PlayerAnimationState.PunchCount.ToString(),combatCount);
         }
-
 
         #region Animation Event
 
         public void AnimEventCancelPlayerMovement()
         {
             Debug.LogWarning("Cancel Anim");
-            InputSignals.Instance.onIsInputReadyToUse?.Invoke(false);
+            InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
         }
 
         public void AnimEventActivatePlayerMovement()
         {
-            InputSignals.Instance.onIsInputReadyToUse?.Invoke(true);
+            InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(true);
         }
+
+
+        public void AnimEventCancelPlayerCombat()
+        {
+            InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
+            InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
+        }
+
+        public void AnimEventActivatePlayerCombat()
+        {
+            InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
+            InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(true);
+            PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Attack, false);
+        }
+        
 
         #endregion
 
 
-        public void OnPlayerPressedRightMouseButton(bool condition)
-        {
-            _playerAnimator.SetBool("Fight", condition);
-            
-        }
+        
     }
     
 }

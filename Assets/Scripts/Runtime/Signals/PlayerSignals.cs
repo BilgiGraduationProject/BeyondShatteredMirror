@@ -10,7 +10,12 @@ namespace Runtime.Signals
     {
        public UnityAction<float> onGetPlayerSpeed = delegate {  };
        public UnityAction<PlayableEnum> onSetPlayerToCutScenePosition = delegate {  };
+       public UnityAction<PlayerAnimationState,bool> onSetAnimationBool = delegate {  };
+       public UnityAction<PlayerAnimationState> onSetAnimationTrigger = delegate {  };
+       public UnityAction<float> onSetCombatCount = delegate {  };
       
+       
+       public UnityAction<Transform> onPlayerCollidedWithObstacle = delegate {  };
       
         
     }

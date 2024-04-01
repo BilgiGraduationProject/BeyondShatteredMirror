@@ -11,8 +11,9 @@ namespace Runtime.Commands.Input
             _space = space;
         }
 
-        public void Execute()
+        public void Execute( bool isCrouch,bool isInput)
         {
+            if (isCrouch && !isInput) return;
             if (UnityEngine.Input.GetButtonDown(_space))
             {
                 InputSignals.Instance.onPlayerPressedSpaceButton?.Invoke();

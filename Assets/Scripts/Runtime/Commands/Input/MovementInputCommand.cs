@@ -1,6 +1,7 @@
 ﻿using Runtime.Keys.Input;
 using Runtime.Managers;
 using Runtime.Signals;
+using UnityEngine;
 
 namespace Runtime.Commands.Input
 {
@@ -10,7 +11,9 @@ namespace Runtime.Commands.Input
         private float _horizontalInput;
         private readonly string _horizontal;
         private readonly string _vertical;
-        public MovementInputCommand(ref float verticalInput, ref float horizontalInput, string horizontal, string vertical)
+       
+        public MovementInputCommand(ref float verticalInput, ref float horizontalInput, string horizontal,
+            string vertical)
         {
             _verticalInput = verticalInput;
             _horizontalInput = horizontalInput;
@@ -18,8 +21,9 @@ namespace Runtime.Commands.Input
             _vertical = vertical;
         }
 
-        public void Execute(ref bool isInput)
+        public void Execute( ref bool isInput, ref bool isButtonReady,bool isMovementInputReadyToUse )
         {
+            if (!isMovementInputReadyToUse) return;
             if (isInput)
             {
                 
@@ -43,16 +47,19 @@ namespace Runtime.Commands.Input
                         Vertical = 0,
                     });
                     isInput = false;
+                    isButtonReady = false;
                     
                    InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(isInput);
                 }
             }
             
-            if(UnityEngine.Input.GetButtonDown(_horizontal) || UnityEngine.Input.GetButtonDown(_vertical))
+            if(UnityEngine.Input.GetButton(_horizontal) || UnityEngine.Input.GetButton(_vertical))
             {
+                if (isButtonReady) return;
                 isInput = true;
                 InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(isInput);
-                
+                isButtonReady = true;
+
             }
         }
     }

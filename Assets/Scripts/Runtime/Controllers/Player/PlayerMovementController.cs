@@ -2,6 +2,8 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Runtime.Data.ValueObject;
 using Runtime.Enums.Player;
 using Runtime.Keys.Input;
@@ -26,8 +28,9 @@ namespace Runtime.Controllers.Player
         private PlayerData _playerData;
         private InputParams _inputParams;
         private Transform _cameraTransform;
-        private bool _isReadyToMove;
-     
+        private bool _isReadyToMove = true;
+        private TweenerCore<Vector3,Vector3,VectorOptions> _dotWeenRoll;
+       
         #endregion
 
         #endregion
@@ -39,7 +42,7 @@ namespace Runtime.Controllers.Player
         {
             _isReadyToMove = condition;
             if (_isReadyToMove) return;
-            playerAnimationController.GetPlayerSpeed(0);
+            PlayerSignals.Instance.onGetPlayerSpeed?.Invoke(0);
             playerRb.velocity = Vector3.zero;
         }
         
@@ -60,7 +63,7 @@ namespace Runtime.Controllers.Player
             var playerRotateDirection = new Vector3(moveDirection.x,0, moveDirection.z);
             transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(playerRotateDirection),_playerData.RotationSpeed * Time.fixedDeltaTime);
             playerRb.velocity = transform.forward * _playerData.PlayerSpeed;
-            playerAnimationController.GetPlayerSpeed(playerRb.velocity.magnitude);
+            PlayerSignals.Instance.onGetPlayerSpeed?.Invoke(playerRb.velocity.magnitude);
             
         }
 
@@ -96,17 +99,19 @@ namespace Runtime.Controllers.Player
             var newLookDirection = Quaternion.Euler(0,_cameraTransform.eulerAngles.y,0);
             transform.DORotateQuaternion(newLookDirection, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
             {
-                playerAnimationController.OnPlayerPressedSpaceButton();
-                transform.DOMove(transform.position + transform.forward * _playerData.RollDistance, _playerData.RollTime)
-                    .SetEase(Ease.Flash);
+                PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Roll);
+              _dotWeenRoll =   transform.DOMove(transform.position + transform.forward * _playerData.RollDistance, _playerData.RollTime)
+                     .SetEase(Ease.Flash);
+              
+                
             });
 
+        }
 
 
-
-
-
-
+        public void OnPlayerCollidedWithObstacle(Transform arg0)
+        {
+            _dotWeenRoll.Kill();
         }
     }
      

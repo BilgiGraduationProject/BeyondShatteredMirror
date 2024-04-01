@@ -97,7 +97,7 @@ namespace Runtime.Managers
         {
             yield return new WaitForSeconds(playableDirectorDuration);
             CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Play);
-             CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+            // CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
             
         }
 

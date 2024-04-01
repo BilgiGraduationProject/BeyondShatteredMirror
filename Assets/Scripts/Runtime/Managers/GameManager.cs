@@ -38,13 +38,13 @@ namespace Runtime.Managers
             switch (gameState)
             {
                 case GameStateEnum.Game:
-                    InputSignals.Instance.onIsInputReadyToUse?.Invoke(true);
+                    InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(true);
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
                   
                     break;
                 case GameStateEnum.Cutscene:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
-                    InputSignals.Instance.onIsInputReadyToUse?.Invoke(false);
+                    InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
                  
                     break;
                 case GameStateEnum.Quit:
@@ -52,12 +52,12 @@ namespace Runtime.Managers
                     break;
                 case GameStateEnum.Settings:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
-                    InputSignals.Instance.onIsInputReadyToUse?.Invoke(false);
+                    InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
                     break;
                 
                 case GameStateEnum.UI:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
-                    InputSignals.Instance.onIsInputReadyToUse?.Invoke(false);
+                    InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
                     break;
               
             }

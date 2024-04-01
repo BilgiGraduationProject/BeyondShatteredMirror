@@ -11,9 +11,9 @@ namespace Runtime.Commands.Input
             _leftControl = leftControl;
         }
 
-        public void Execute(ref bool isCrouch)
+        public void Execute(ref bool isCrouch, bool isMovementInputIsReadyToUse)
         {
-            if (!UnityEngine.Input.GetButtonDown(_leftControl)) return;
+            if (!UnityEngine.Input.GetButtonDown(_leftControl) || !isMovementInputIsReadyToUse) return;
             isCrouch = !isCrouch;
             InputSignals.Instance.onPlayerPressedLeftControlButton.Invoke(isCrouch);
             

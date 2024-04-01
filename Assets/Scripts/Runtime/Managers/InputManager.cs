@@ -3,6 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using Runtime.Commands.Input;
 using Runtime.Enums.Playable;
+using Runtime.Enums.Player;
 using Runtime.Keys.Input;
 using Runtime.Signals;
 using Unity.VisualScripting;
@@ -24,12 +25,21 @@ namespace Runtime.Managers
         private float _verticalInput;
         private float _horizontalInput;
         private bool _isInput;
+        private bool _isCanTouchButton;
+       
+        private PlayableEnum _playableEnumIndex;
+        [Header(("Cancel Movement"))] 
+        private bool _isMovementInputIsReadyToUse = true;
+        [Header(("Combat"))]
+        private int _combatCount;
+        private Coroutine _combatCoroutine;
+        private bool _isCombat = true;
+        [Header("Actions")]
+        
         private bool _isCrouch;
         private bool _isRun;
         private bool _isCutSceneInputReadyToUse;
-        private PlayableEnum _playableEnumIndex;
-        [Header(("Cancel Movement"))] 
-        private bool _isInputReadyToUse = true;
+        
 
 
         [Header("Input Keys")] 
@@ -38,6 +48,7 @@ namespace Runtime.Managers
         private readonly string leftControl = "Left Control";
         private readonly string leftShift = "Left Shift";
         private readonly string space = "Space";
+        private readonly string leftMouseButton = "LeftMouseButton";
 
 
         [Header("Commands")]
@@ -45,6 +56,7 @@ namespace Runtime.Managers
         private CrouchInputCommand _crouchInputCommand;
         private RunInputCommand _runInputCommand;
         private SpaceInputCommand _spaceInputCommand;
+        private MeeleCombatCommand _meeleCombatCommand;
 
         
 
@@ -64,6 +76,8 @@ namespace Runtime.Managers
             _crouchInputCommand = new CrouchInputCommand(leftControl);
             _runInputCommand = new RunInputCommand(leftShift);
             _spaceInputCommand = new SpaceInputCommand(space);
+            _meeleCombatCommand = new MeeleCombatCommand(leftMouseButton,this,ref _combatCoroutine);
+            
         }
 
         private void OnEnable()
@@ -74,9 +88,13 @@ namespace Runtime.Managers
         private void SubscribeEvents()
         {
             InputSignals.Instance.onChangeMouseVisibility += OnChangeMouseVisibility;
-            InputSignals.Instance.onIsInputReadyToUse += OnIsInputReadyToUse;
+            InputSignals.Instance.onIsMovementInputReadyToUse += OnIsInputReadyToUse;
+            InputSignals.Instance.onIsReadyForCombat += OnIsReadyForCombat;
             PlayableSignals.Instance.onSendInputManagerToReadyForInput += OnSendInputManagerToReadyForInput;
         }
+
+        private void OnIsReadyForCombat(bool condition) => _isCombat = condition;
+        
 
         private void OnSendInputManagerToReadyForInput(bool condition, PlayableEnum playableEnum)
         {
@@ -86,8 +104,8 @@ namespace Runtime.Managers
 
         private void OnIsInputReadyToUse(bool condition)
         {
-            Debug.LogWarning(condition);
-            _isInputReadyToUse = condition;
+            
+            _isMovementInputIsReadyToUse = condition;
             InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(condition);
            
         }
@@ -112,7 +130,8 @@ namespace Runtime.Managers
         private void UnSubscribeEvents()
         {
             InputSignals.Instance.onChangeMouseVisibility -= OnChangeMouseVisibility;
-            InputSignals.Instance.onIsInputReadyToUse -= OnIsInputReadyToUse;
+            InputSignals.Instance.onIsMovementInputReadyToUse -= OnIsInputReadyToUse;
+            InputSignals.Instance.onIsReadyForCombat -= OnIsReadyForCombat;
             PlayableSignals.Instance.onSendInputManagerToReadyForInput -= OnSendInputManagerToReadyForInput;
         }
 
@@ -136,24 +155,30 @@ namespace Runtime.Managers
                 }
                     
             }
-            if (!_isInputReadyToUse) return;
-            _movementInputCommand.Execute(ref _isInput);
-            _crouchInputCommand.Execute(ref _isCrouch);
-            _spaceInputCommand.Execute();
-            if (Input.GetMouseButtonDown(0))
-            {
-                InputSignals.Instance.onPlayerPressedRightMouseButton?.Invoke(true);
-                
 
-            }
-           
+            // They have _isInputReady unless they are true.
+            _movementInputCommand.Execute(ref _isInput,ref _isCanTouchButton,_isMovementInputIsReadyToUse);
+            _crouchInputCommand.Execute(ref _isCrouch,_isMovementInputIsReadyToUse);
+            _spaceInputCommand.Execute(_isCrouch,_isMovementInputIsReadyToUse);
+            // -------------------------------------------------
+            
+            _meeleCombatCommand.Execute(ref _combatCount,_isCombat);
+            
 
 
-                
+
 
         }
 
-        
+        internal IEnumerator CancelPlayerCombat()
+        {
+            Debug.LogWarning("Cancel Player Combat");
+            
+            yield return new WaitForSeconds(3f);
+            _combatCount = 0;
+            yield return new WaitForSeconds(10f);
+            PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Combat, false);
+        }
     }
 
        
