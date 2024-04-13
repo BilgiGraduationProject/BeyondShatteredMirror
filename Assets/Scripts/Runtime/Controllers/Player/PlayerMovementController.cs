@@ -28,7 +28,7 @@ namespace Runtime.Controllers.Player
         private PlayerData _playerData;
         private InputParams _inputParams;
         private Transform _cameraTransform;
-        private bool _isReadyToMove = true;
+        private bool _isReadyToMove;
         private TweenerCore<Vector3,Vector3,VectorOptions> _dotWeenRoll;
        
         #endregion

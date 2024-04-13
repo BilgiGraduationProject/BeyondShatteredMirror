@@ -59,7 +59,6 @@ namespace Runtime.Controllers.Player
 
         public void AnimEventCancelPlayerMovement()
         {
-            Debug.LogWarning("Cancel Anim");
             InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
         }
 

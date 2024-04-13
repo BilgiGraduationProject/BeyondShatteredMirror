@@ -4,24 +4,39 @@ namespace Runtime.Controllers.Player
 {
     public class PlayerHitDetectionController : MonoBehaviour
     {
-        public Transform player; // Reference to the player GameObject
+        #region Self Variables
+
+        #region Private Variables
+
+        private Camera camera;
+
+        #endregion
+
+
+        #region Self Variables
+
+        
+
+        #endregion
+
+        #endregion
         public float maxDistance = 100f; // Maximum distance for raycasting
 
         private void FixedUpdate()
         {
             // Calculate direction from enemy to player
-            Vector3 direction = player.position - transform.position;
-
-            // Raycast from enemy towards player
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit))
+            if (Physics.Raycast(ray, out hit, maxDistance))
             {
-                if(hit.collider.CompareTag("Enemy"))
-                {
-                    Debug.Log("Player hit");
-                }
+                Debug.LogWarning(hit.collider.name);
             }
-            Debug.DrawRay(transform.position, transform.forward * maxDistance, Color.red);
+            Debug.DrawLine(ray.origin, hit.point, Color.yellow);
+        }
+
+        public void GetCameraTransform(Camera cameraTrans)
+        {
+            camera = cameraTrans;
         }
     }
 }

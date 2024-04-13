@@ -52,15 +52,19 @@ namespace Runtime.Commands.Input
                    InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(isInput);
                 }
             }
-            
-            if(UnityEngine.Input.GetButton(_horizontal) || UnityEngine.Input.GetButton(_vertical))
+            else
             {
-                if (isButtonReady) return;
-                isInput = true;
-                InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(isInput);
-                isButtonReady = true;
+                if(UnityEngine.Input.GetButton(_horizontal) || UnityEngine.Input.GetButton(_vertical))
+                {
+                    if (isButtonReady) return;
+                    isInput = true;
+                    InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(isInput);
+                    isButtonReady = true;
 
+                }
             }
+            
+            
         }
     }
 }

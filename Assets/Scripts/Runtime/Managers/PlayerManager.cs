@@ -23,6 +23,7 @@ namespace Runtime.Managers
 
         [SerializeField] private PlayerMovementController playerMovementController;
         [SerializeField] private PlayerAnimationController playerAnimationController;
+        [SerializeField] private PlayerHitDetectionController playerHitDetectionController;
         [SerializeField] private Transform playerTransform;
         
         
@@ -53,6 +54,7 @@ namespace Runtime.Managers
         private void SendCameraTransformToMovementController(Camera cameraTransform)
         {
             playerMovementController.GetCameraTransform(cameraTransform);
+            playerHitDetectionController.GetCameraTransform(cameraTransform);
         }
 
 

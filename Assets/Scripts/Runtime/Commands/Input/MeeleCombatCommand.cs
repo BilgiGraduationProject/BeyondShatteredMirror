@@ -41,7 +41,6 @@ namespace Runtime.Commands.Input
             }
             else if (UnityEngine.Input.GetMouseButtonUp(0))
             {
-                Debug.LogWarning("Cancel Combat");
                 _combatCoroutine = _inputManager.StartCoroutine(_inputManager.CancelPlayerCombat());
             }
 

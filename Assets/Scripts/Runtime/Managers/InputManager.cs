@@ -172,7 +172,6 @@ namespace Runtime.Managers
 
         internal IEnumerator CancelPlayerCombat()
         {
-            Debug.LogWarning("Cancel Player Combat");
             
             yield return new WaitForSeconds(3f);
             _combatCount = 0;
