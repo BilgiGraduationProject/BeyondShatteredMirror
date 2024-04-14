@@ -12,5 +12,7 @@ namespace Runtime.Signals
         public UnityAction onEnableAllPanels = delegate {  };
         public UnityAction onDisableAllPanels = delegate {  };
         public UnityAction<int> onOpenCutscene = delegate {  };
+        
+        public UnityAction<SFXTypes> onPlaySFX = delegate {  };
     }
 }
