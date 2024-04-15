@@ -1,6 +1,7 @@
 using System;
 using Runtime.Enums.UI;
 using Runtime.Managers;
+using Runtime.Signals;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -81,16 +82,22 @@ namespace Runtime.Handler.UI
         {
             switch (subscriptionType)
             {
+                case UIEventSubscriptionTypes.OnDefault:
+                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+                    break;
                 case UIEventSubscriptionTypes.OnStart:
                     print("OnStart");
+                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
                     _uiManager.OnStart();
                     break;
                 case UIEventSubscriptionTypes.OnSettings:
                     print("OnSettings");
+                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
                     _uiManager.OnSettings();
                     break;
                 case UIEventSubscriptionTypes.OnQuit:
                     print("OnQuit");
+                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonClose);
                     _uiManager.OnQuit();
                     break;
             }
