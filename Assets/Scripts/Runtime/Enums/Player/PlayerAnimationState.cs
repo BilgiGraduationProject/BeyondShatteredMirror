@@ -6,7 +6,8 @@ namespace Runtime.Enums.Player
        Roll,
        Combat,
        PunchCount,
-       Attack
+       Attack,
+       PickUp,
        
         
         

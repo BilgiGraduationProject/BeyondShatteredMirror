@@ -80,6 +80,23 @@ namespace Runtime.Controllers.Player
             InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(true);
             PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Attack, false);
         }
+
+        public void AnimEventStartTakeItem()
+        {
+            PlayerSignals.Instance.onCanPlayerInteractWithSomething?.Invoke(true);
+        }
+
+
+        public void AnimEventTakeItem()
+        {
+            PlayerSignals.Instance.onTakeInteractableObject?.Invoke();
+        }
+        
+        
+        public void AnimEventEndTakeItem()
+        {
+            PlayerSignals.Instance.onCanPlayerInteractWithSomething?.Invoke(false);
+        }
         
 
         #endregion

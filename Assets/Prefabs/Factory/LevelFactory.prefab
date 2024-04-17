@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 778364091956881450}
   m_Layer: 0
   m_Name: Cube.040 (6)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 320924306847892052}
   m_Layer: 0
   m_Name: Factory_Korkuluk (26)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -758,7 +758,7 @@ GameObject:
   - component: {fileID: 4538138336007687452}
   m_Layer: 0
   m_Name: Factory_Korkuluk (20)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1029,7 +1029,7 @@ GameObject:
   - component: {fileID: 9096878586187412978}
   m_Layer: 0
   m_Name: Factory_Korkuluk (10)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1134,7 +1134,7 @@ GameObject:
   - component: {fileID: 823716587070804787}
   m_Layer: 0
   m_Name: wood_pallet_low (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1239,7 +1239,7 @@ GameObject:
   - component: {fileID: 8271318193210172373}
   m_Layer: 6
   m_Name: Factory_Wall_3 (6)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1344,7 +1344,7 @@ GameObject:
   - component: {fileID: 5765392511529147195}
   m_Layer: 0
   m_Name: Cylinder.008 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1449,7 +1449,7 @@ GameObject:
   - component: {fileID: 1917160806070311555}
   m_Layer: 0
   m_Name: Factory_Korkuluk (51)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1689,7 +1689,7 @@ GameObject:
   - component: {fileID: 8168844139172644697}
   m_Layer: 0
   m_Name: Cylinder.005
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1770,6 +1770,7 @@ GameObject:
   - component: {fileID: 6930605736518964411}
   - component: {fileID: 2573291330767535134}
   - component: {fileID: 5398063289727097500}
+  - component: {fileID: 8788816891533976834}
   m_Layer: 0
   m_Name: Trashbag (1)
   m_TagString: Untagged
@@ -1842,6 +1843,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8788816891533976834
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510594019494578959}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.79933697, y: 0.91969335, z: 1.0599614}
+  m_Center: {x: -0.031919774, y: 0.01131145, z: -0.05555002}
 --- !u!1 &535960176800172151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,7 +1930,7 @@ GameObject:
   - component: {fileID: 6543341852032085964}
   m_Layer: 0
   m_Name: Factory_EnteringWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2134,7 +2156,7 @@ GameObject:
   - component: {fileID: 8965269259286153230}
   m_Layer: 0
   m_Name: Box3 (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2239,7 +2261,7 @@ GameObject:
   - component: {fileID: 2229883801404247092}
   m_Layer: 0
   m_Name: Factory_Korkuluk (28)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2554,7 +2576,7 @@ GameObject:
   - component: {fileID: 1969197052813415252}
   m_Layer: 0
   m_Name: Factory_Korkuluk (77)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2659,7 +2681,7 @@ GameObject:
   - component: {fileID: 8270998458288154555}
   m_Layer: 0
   m_Name: Factory_Korkuluk (21)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2847,7 +2869,7 @@ GameObject:
   - component: {fileID: 7769230005749078572}
   m_Layer: 0
   m_Name: Factory_Korkuluk (23)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2951,7 +2973,7 @@ GameObject:
   - component: {fileID: 2199103737034891295}
   m_Layer: 0
   m_Name: Cube.043
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3035,7 +3057,7 @@ GameObject:
   - component: {fileID: 4441179379393506230}
   m_Layer: 0
   m_Name: Factory_Korkuluk (66)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3140,7 +3162,7 @@ GameObject:
   - component: {fileID: 3499693361437990135}
   m_Layer: 0
   m_Name: Factory_Korkuluk (72)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3486,7 +3508,7 @@ GameObject:
   - component: {fileID: 690315260765743265}
   m_Layer: 0
   m_Name: Factory_Barrel (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3814,7 +3836,7 @@ GameObject:
   - component: {fileID: 1632849218919173678}
   m_Layer: 0
   m_Name: wood_pallet_low (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3918,7 +3940,7 @@ GameObject:
   - component: {fileID: 161221691348768639}
   m_Layer: 0
   m_Name: Factory_RoomBase1 (7)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4038,6 +4060,7 @@ GameObject:
   - component: {fileID: 4688765970844440807}
   - component: {fileID: 311461186540570355}
   - component: {fileID: 5112324143185870817}
+  - component: {fileID: 8847549113368700032}
   m_Layer: 0
   m_Name: SofaModel_Abandoned
   m_TagString: Untagged
@@ -4110,6 +4133,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8847549113368700032
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170781022809388022}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.12678069, y: 0.10944647, z: 0.12458827}
+  m_Center: {x: 0.000000008931551, y: -0.0013086031, z: 0.06229412}
 --- !u!1 &1275652562243389783
 GameObject:
   m_ObjectHideFlags: 0
@@ -4167,7 +4211,7 @@ GameObject:
   - component: {fileID: 7012036954769709864}
   m_Layer: 0
   m_Name: Factory_Korkuluk (80)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4430,7 +4474,7 @@ GameObject:
   - component: {fileID: 6222008141748820568}
   m_Layer: 6
   m_Name: Factory_Wall_3 (5)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4640,7 +4684,7 @@ GameObject:
   - component: {fileID: 5862569464913810545}
   m_Layer: 0
   m_Name: Box2 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4745,7 +4789,7 @@ GameObject:
   - component: {fileID: 557017677198979874}
   m_Layer: 0
   m_Name: Plane.033
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5017,7 +5061,7 @@ GameObject:
   - component: {fileID: 1996709909576831422}
   m_Layer: 0
   m_Name: Factory_ConstBlock (23)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5174,7 +5218,7 @@ GameObject:
   - component: {fileID: 1703032741216518397}
   m_Layer: 0
   m_Name: Factory_EnteringWall (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5264,7 +5308,7 @@ GameObject:
   - component: {fileID: 2003839146271424530}
   m_Layer: 0
   m_Name: Factory_Korkuluk (74)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5369,7 +5413,7 @@ GameObject:
   - component: {fileID: 1941626984872844597}
   m_Layer: 0
   m_Name: Factory_Korkuluk (14)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5474,7 +5518,7 @@ GameObject:
   - component: {fileID: 8633259217779476294}
   m_Layer: 0
   m_Name: Box3
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5579,7 +5623,7 @@ GameObject:
   - component: {fileID: 7325707420077364746}
   m_Layer: 0
   m_Name: Factory_ConstBlock (25)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5799,7 +5843,7 @@ GameObject:
   - component: {fileID: 9064841405562575246}
   m_Layer: 0
   m_Name: Cube.040
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5904,7 +5948,7 @@ GameObject:
   - component: {fileID: 224186097743486635}
   m_Layer: 0
   m_Name: Cylinder.009
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6062,7 +6106,7 @@ GameObject:
   - component: {fileID: 5468613400460049804}
   m_Layer: 0
   m_Name: Cylinder.009 (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6220,7 +6264,7 @@ GameObject:
   - component: {fileID: 8028870575574877799}
   m_Layer: 0
   m_Name: Factory_ConstBlock (19)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6588,7 +6632,7 @@ GameObject:
   - component: {fileID: 7716271147472815124}
   m_Layer: 0
   m_Name: Cylinder.008 (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7069,7 +7113,7 @@ GameObject:
   - component: {fileID: 990630033205961469}
   m_Layer: 0
   m_Name: Cube.040 (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7174,7 +7218,7 @@ GameObject:
   - component: {fileID: 1631337587951416512}
   m_Layer: 0
   m_Name: Factory_Korkuluk (25)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7385,7 +7429,7 @@ GameObject:
   - component: {fileID: 7871256303500719223}
   m_Layer: 0
   m_Name: Factory_Korkuluk (42)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7618,6 +7662,7 @@ GameObject:
   - component: {fileID: 1886858531709274423}
   - component: {fileID: 5818497618517715592}
   - component: {fileID: 9206535623430011489}
+  - component: {fileID: 6842178292158610987}
   m_Layer: 0
   m_Name: Mattress
   m_TagString: Untagged
@@ -7690,6 +7735,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6842178292158610987
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2181068565795912095}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.026250979, y: 0.00231836, z: 0.049164917}
+  m_Center: {x: 0, y: 0.01551426, z: -5.5117724e-17}
 --- !u!1 &2190693436070865962
 GameObject:
   m_ObjectHideFlags: 0
@@ -7787,7 +7853,7 @@ GameObject:
   - component: {fileID: 7850129714338525195}
   m_Layer: 0
   m_Name: Factory_Korkuluk (55)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8032,7 +8098,7 @@ GameObject:
   - component: {fileID: 3298629751760809663}
   m_Layer: 6
   m_Name: RollingShutter
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8137,7 +8203,7 @@ GameObject:
   - component: {fileID: 2267073558913148127}
   m_Layer: 0
   m_Name: Factory_Korkuluk (76)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8242,7 +8308,7 @@ GameObject:
   - component: {fileID: 6845069843433478826}
   m_Layer: 0
   m_Name: Factory_Korkuluk (9)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8346,7 +8412,7 @@ GameObject:
   - component: {fileID: 5529254683852588087}
   m_Layer: 0
   m_Name: FactoryDoor_Wall2
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8430,7 +8496,7 @@ GameObject:
   - component: {fileID: 3411725397458414876}
   m_Layer: 0
   m_Name: Cylinder.008 (4)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8535,7 +8601,7 @@ GameObject:
   - component: {fileID: 5635088412970526425}
   m_Layer: 0
   m_Name: Factory_Korkuluk (11)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8640,7 +8706,7 @@ GameObject:
   - component: {fileID: 1890628959462806463}
   m_Layer: 0
   m_Name: Plane.033 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8798,7 +8864,7 @@ GameObject:
   - component: {fileID: 8838440531377504515}
   m_Layer: 0
   m_Name: Factory_Korkuluk (79)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8935,7 +9001,7 @@ GameObject:
   - component: {fileID: 810781943290691885}
   m_Layer: 0
   m_Name: wood_pallet_low (4)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9210,7 +9276,7 @@ GameObject:
   - component: {fileID: 8237728340934796782}
   m_Layer: 6
   m_Name: Factory_Wall_3 (4)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9315,7 +9381,7 @@ GameObject:
   - component: {fileID: 2145812532876733513}
   m_Layer: 0
   m_Name: Factory_Korkuluk (16)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9419,7 +9485,7 @@ GameObject:
   - component: {fileID: 897414957696369510}
   m_Layer: 0
   m_Name: Factory_RoomBase1 (5)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9695,7 +9761,7 @@ GameObject:
   - component: {fileID: 7533320773670386937}
   m_Layer: 0
   m_Name: Factory_Korkuluk (7)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9905,7 +9971,7 @@ GameObject:
   - component: {fileID: 2898324488901994115}
   m_Layer: 0
   m_Name: Box2 (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10010,7 +10076,7 @@ GameObject:
   - component: {fileID: 9054936392185603385}
   m_Layer: 0
   m_Name: wood_pallet_low (5)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10112,9 +10178,10 @@ GameObject:
   - component: {fileID: 7335560760803830005}
   - component: {fileID: 7175903395950728437}
   - component: {fileID: 8522347717392739877}
+  - component: {fileID: 1279310820154874357}
   m_Layer: 0
   m_Name: Office_Chair
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10184,6 +10251,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1279310820154874357
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2952516146969936714}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7880568, y: 0.749984, z: 1.1657021}
+  m_Center: {x: 0.000000014901167, y: -0.000000014901163, z: 2.5443294e-15}
 --- !u!1 &2959531763311085382
 GameObject:
   m_ObjectHideFlags: 0
@@ -10251,7 +10339,7 @@ GameObject:
   - component: {fileID: 376601787192822502}
   m_Layer: 0
   m_Name: Factory_Container1 (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10356,7 +10444,7 @@ GameObject:
   - component: {fileID: 8637908101839637145}
   m_Layer: 0
   m_Name: Factory_Korkuluk (57)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10461,7 +10549,7 @@ GameObject:
   - component: {fileID: 8534726043585764521}
   m_Layer: 0
   m_Name: Factory_Korkuluk (17)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10646,6 +10734,7 @@ GameObject:
   - component: {fileID: 1827076056392334387}
   - component: {fileID: 1747767063198701559}
   - component: {fileID: 653930042315853725}
+  - component: {fileID: 1551260218844098633}
   m_Layer: 0
   m_Name: Trashbag (2)
   m_TagString: Untagged
@@ -10718,6 +10807,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1551260218844098633
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3004173261469230030}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.79933697, y: 0.91969335, z: 1.0599614}
+  m_Center: {x: -0.031919774, y: 0.01131145, z: -0.05555005}
 --- !u!1 &3066049785120786683
 GameObject:
   m_ObjectHideFlags: 0
@@ -10732,7 +10842,7 @@ GameObject:
   - component: {fileID: 655548752601036412}
   m_Layer: 0
   m_Name: Factory_ConstBlock (20)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10887,6 +10997,7 @@ GameObject:
   - component: {fileID: 5558465893809374633}
   - component: {fileID: 4760226067173275720}
   - component: {fileID: 8647860823408595389}
+  - component: {fileID: 1394893210723431515}
   m_Layer: 0
   m_Name: Bed (1)
   m_TagString: Untagged
@@ -10959,6 +11070,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1394893210723431515
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3108662550270721981}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.026869431, y: 0.030893266, z: 0.051999014}
+  m_Center: {x: 0.0000000021270121, y: 0.015431499, z: 9.19789e-10}
 --- !u!1 &3144560961015228597
 GameObject:
   m_ObjectHideFlags: 0
@@ -10973,7 +11105,7 @@ GameObject:
   - component: {fileID: 2360872206763598324}
   m_Layer: 0
   m_Name: Factory_Barrel (4)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11077,7 +11209,7 @@ GameObject:
   - component: {fileID: 4478374833971135576}
   m_Layer: 0
   m_Name: Cube.043 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11371,7 +11503,7 @@ GameObject:
   - component: {fileID: 6854337219221373837}
   m_Layer: 0
   m_Name: Factory_Korkuluk (54)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11647,7 +11779,7 @@ GameObject:
   - component: {fileID: 2612009568723726411}
   m_Layer: 0
   m_Name: Factory_Korkuluk (6)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11918,7 +12050,7 @@ GameObject:
   - component: {fileID: 3369532759879466000}
   m_Layer: 0
   m_Name: Factory_Table2
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12020,6 +12152,7 @@ GameObject:
   - component: {fileID: 5659119887770518863}
   - component: {fileID: 8514100455433559564}
   - component: {fileID: 3155296354326640154}
+  - component: {fileID: 900184893236408703}
   m_Layer: 0
   m_Name: Mattress (1)
   m_TagString: Untagged
@@ -12092,6 +12225,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &900184893236408703
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3293291364198469656}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.026250977, y: 0.00231836, z: 0.049164917}
+  m_Center: {x: 1.4448781e-11, y: 0.01551426, z: 0}
 --- !u!1 &3328910189476378301
 GameObject:
   m_ObjectHideFlags: 0
@@ -12106,7 +12260,7 @@ GameObject:
   - component: {fileID: 8490641657415308940}
   m_Layer: 0
   m_Name: Factory_Korkuluk (48)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12211,7 +12365,7 @@ GameObject:
   - component: {fileID: 744016358424318559}
   m_Layer: 0
   m_Name: Factory_ConstBlock (34)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12820,7 +12974,7 @@ GameObject:
   - component: {fileID: 4170399991825769686}
   m_Layer: 0
   m_Name: Cylinder.008
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13035,7 +13189,7 @@ GameObject:
   - component: {fileID: 6867292415550009421}
   m_Layer: 0
   m_Name: Factory_Korkuluk (27)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13140,7 +13294,7 @@ GameObject:
   - component: {fileID: 2796163633453817053}
   m_Layer: 0
   m_Name: Factory_Korkuluk (61)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13350,7 +13504,7 @@ GameObject:
   - component: {fileID: 2927525259763248389}
   m_Layer: 0
   m_Name: Factory_Korkuluk (18)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13455,7 +13609,7 @@ GameObject:
   - component: {fileID: 3854235460135510487}
   m_Layer: 0
   m_Name: Factory_Barrel (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13811,7 +13965,7 @@ GameObject:
   - component: {fileID: 880286816633132747}
   m_Layer: 0
   m_Name: Box2
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13916,7 +14070,7 @@ GameObject:
   - component: {fileID: 2943447559978414622}
   m_Layer: 0
   m_Name: Factory_Korkuluk (34)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14273,7 +14427,7 @@ GameObject:
   - component: {fileID: 5231945800391485476}
   m_Layer: 0
   m_Name: Factory_RoomBase1 (4)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14360,7 +14514,7 @@ GameObject:
   - component: {fileID: 8328795839619123969}
   m_Layer: 0
   m_Name: pCube1
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14497,7 +14651,7 @@ GameObject:
   - component: {fileID: 1148266280017883949}
   m_Layer: 6
   m_Name: Factory_Wall_3
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14599,6 +14753,7 @@ GameObject:
   - component: {fileID: 628337925379646769}
   - component: {fileID: 6153452342273417941}
   - component: {fileID: 4684357071768738188}
+  - component: {fileID: 1341134969194805161}
   m_Layer: 0
   m_Name: MASH2_ReproMesh
   m_TagString: Untagged
@@ -14671,6 +14826,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1341134969194805161
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3935956796551819075}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.1000004, y: 4.1, z: 1.9434208}
+  m_Center: {x: 0, y: 1.55, z: 0}
 --- !u!1 &3963108612107900471
 GameObject:
   m_ObjectHideFlags: 0
@@ -14685,7 +14861,7 @@ GameObject:
   - component: {fileID: 6148219030027204146}
   m_Layer: 0
   m_Name: Cube.040 (7)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14790,7 +14966,7 @@ GameObject:
   - component: {fileID: 9113502625994553174}
   m_Layer: 0
   m_Name: Factory_Korkuluk (62)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14892,9 +15068,10 @@ GameObject:
   - component: {fileID: 8836959381557664117}
   - component: {fileID: 2197230801789105977}
   - component: {fileID: 3860355153306803257}
+  - component: {fileID: 5509780936299063821}
   m_Layer: 0
   m_Name: model
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14964,6 +15141,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5509780936299063821
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3984881058284627119}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0055401, y: 0.900562, z: 2.0000002}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3993927399153456377
 GameObject:
   m_ObjectHideFlags: 0
@@ -15248,7 +15446,7 @@ GameObject:
   - component: {fileID: 1636936813445033694}
   m_Layer: 0
   m_Name: pCube96
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15625,7 +15823,7 @@ GameObject:
   - component: {fileID: 1385325034916692702}
   m_Layer: 0
   m_Name: Factory_Korkuluk (70)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16210,7 +16408,7 @@ GameObject:
   - component: {fileID: 8286913051019108421}
   m_Layer: 0
   m_Name: Cylinder.005 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16416,7 +16614,7 @@ GameObject:
   - component: {fileID: 7310119081286282465}
   m_Layer: 0
   m_Name: Cylinder.009 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16521,7 +16719,7 @@ GameObject:
   - component: {fileID: 7637110877352327214}
   m_Layer: 0
   m_Name: Cube.040 (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16821,7 +17019,7 @@ GameObject:
   - component: {fileID: 1637099707217829974}
   m_Layer: 0
   m_Name: Factory_Korkuluk (44)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16926,7 +17124,7 @@ GameObject:
   - component: {fileID: 1488912506942979374}
   m_Layer: 0
   m_Name: Factory_Korkuluk (46)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17204,7 +17402,7 @@ GameObject:
   - component: {fileID: 1540116765912105037}
   m_Layer: 0
   m_Name: Factory_Korkuluk (19)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17392,7 +17590,7 @@ GameObject:
   - component: {fileID: 6948898813460310588}
   m_Layer: 0
   m_Name: Cube.040 (5)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17735,6 +17933,7 @@ GameObject:
   - component: {fileID: 7367610644550179377}
   - component: {fileID: 7965349162286855341}
   - component: {fileID: 8982381031391986434}
+  - component: {fileID: 2501632253099389717}
   m_Layer: 0
   m_Name: low_case (1)
   m_TagString: Untagged
@@ -17807,6 +18006,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2501632253099389717
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4761543279151844613}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.28357244, y: 1.0248754, z: 0.2884978}
+  m_Center: {x: 0.0052472204, y: 0.0045004487, z: 0.11965093}
 --- !u!1 &4765424188227253081
 GameObject:
   m_ObjectHideFlags: 0
@@ -17821,7 +18041,7 @@ GameObject:
   - component: {fileID: 8447790269382998825}
   m_Layer: 0
   m_Name: Factory_ConstBlock (17)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18114,7 +18334,7 @@ GameObject:
   - component: {fileID: 6503074908386047773}
   m_Layer: 0
   m_Name: Factory_Korkuluk (41)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18219,7 +18439,7 @@ GameObject:
   - component: {fileID: 2024815529412538244}
   m_Layer: 0
   m_Name: Factory_Korkuluk (73)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18324,7 +18544,7 @@ GameObject:
   - component: {fileID: 1510861947436562529}
   m_Layer: 0
   m_Name: Factory_Container1
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18479,6 +18699,7 @@ GameObject:
   - component: {fileID: 926252299803706306}
   - component: {fileID: 2007440964998140678}
   - component: {fileID: 2587237779682217696}
+  - component: {fileID: 267115271014790762}
   m_Layer: 0
   m_Name: low_case
   m_TagString: Untagged
@@ -18551,6 +18772,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &267115271014790762
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4881863660777500344}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.28357244, y: 1.0248754, z: 0.2884978}
+  m_Center: {x: 0.0052472204, y: 0.0045004487, z: 0.11965093}
 --- !u!1 &4914405193026162437
 GameObject:
   m_ObjectHideFlags: 0
@@ -18565,7 +18807,7 @@ GameObject:
   - component: {fileID: 7962990999263117567}
   m_Layer: 0
   m_Name: Factory_Korkuluk (37)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18670,7 +18912,7 @@ GameObject:
   - component: {fileID: 4851370943264181352}
   m_Layer: 0
   m_Name: Factory_Container1 (4)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18775,7 +19017,7 @@ GameObject:
   - component: {fileID: 6729330977237909099}
   m_Layer: 0
   m_Name: Factory_Korkuluk (65)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18880,7 +19122,7 @@ GameObject:
   - component: {fileID: 4608943067397450541}
   m_Layer: 0
   m_Name: Cylinder.009 (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18985,7 +19227,7 @@ GameObject:
   - component: {fileID: 7544630994517069408}
   m_Layer: 0
   m_Name: Factory_Korkuluk (47)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19090,7 +19332,7 @@ GameObject:
   - component: {fileID: 3006139784269217863}
   m_Layer: 0
   m_Name: Factory_Korkuluk (24)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19195,7 +19437,7 @@ GameObject:
   - component: {fileID: 2880547313603167245}
   m_Layer: 0
   m_Name: Factory_Korkuluk (30)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19300,7 +19542,7 @@ GameObject:
   - component: {fileID: 4019017076206572965}
   m_Layer: 0
   m_Name: Factory_Korkuluk (33)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20140,7 +20382,7 @@ GameObject:
   - component: {fileID: 3506653621970171688}
   m_Layer: 0
   m_Name: Box2 (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20433,7 +20675,7 @@ GameObject:
   - component: {fileID: 3270850065395996051}
   m_Layer: 0
   m_Name: Factory_Korkuluk (71)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20538,7 +20780,7 @@ GameObject:
   - component: {fileID: 7874328135257675635}
   m_Layer: 0
   m_Name: wood_pallet_low (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20643,7 +20885,7 @@ GameObject:
   - component: {fileID: 7500274802571814340}
   m_Layer: 0
   m_Name: Factory_Korkuluk (38)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20748,7 +20990,7 @@ GameObject:
   - component: {fileID: 5810933761610699190}
   m_Layer: 0
   m_Name: Factory_Korkuluk (52)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20853,7 +21095,7 @@ GameObject:
   - component: {fileID: 836601911672242638}
   m_Layer: 0
   m_Name: Factory_Korkuluk (59)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20958,7 +21200,7 @@ GameObject:
   - component: {fileID: 1490059519548783560}
   m_Layer: 0
   m_Name: Factory_Korkuluk (68)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21759,7 +22001,7 @@ GameObject:
   - component: {fileID: 9021863092281028852}
   m_Layer: 0
   m_Name: Factory_ConstBlock (32)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21864,7 +22106,7 @@ GameObject:
   - component: {fileID: 6956855555683096754}
   m_Layer: 6
   m_Name: Factory_Wall_3 (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22022,7 +22264,7 @@ GameObject:
   - component: {fileID: 3881993149885534547}
   m_Layer: 0
   m_Name: oldcarwreck
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22127,7 +22369,7 @@ GameObject:
   - component: {fileID: 4325978789457267071}
   m_Layer: 6
   m_Name: Factory_ClosingWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22232,7 +22474,7 @@ GameObject:
   - component: {fileID: 7997288862808418935}
   m_Layer: 0
   m_Name: Factory_Korkuluk (58)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22442,7 +22684,7 @@ GameObject:
   - component: {fileID: 1074547382885306433}
   m_Layer: 0
   m_Name: Factory_Barrel (5)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22665,7 +22907,7 @@ GameObject:
   - component: {fileID: 3222998972962958744}
   m_Layer: 0
   m_Name: Factory_Korkuluk (63)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22770,7 +23012,7 @@ GameObject:
   - component: {fileID: 7768126387682703887}
   m_Layer: 0
   m_Name: Factory_Korkuluk (31)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23273,7 +23515,7 @@ GameObject:
   - component: {fileID: 4370746072256876692}
   m_Layer: 0
   m_Name: Box3 (4)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23378,7 +23620,7 @@ GameObject:
   - component: {fileID: 485429808269094902}
   m_Layer: 0
   m_Name: Factory_Korkuluk (78)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23807,7 +24049,7 @@ GameObject:
   - component: {fileID: 3879497868154933446}
   m_Layer: 0
   m_Name: Factory_Korkuluk (49)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24016,7 +24258,7 @@ GameObject:
   - component: {fileID: 7267297024654779289}
   m_Layer: 0
   m_Name: Cube.041
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24236,7 +24478,7 @@ GameObject:
   - component: {fileID: 3410989901035723803}
   m_Layer: 0
   m_Name: Factory_Table2 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25330,7 +25572,7 @@ GameObject:
   - component: {fileID: 4237126610655735867}
   m_Layer: 0
   m_Name: Factory_Korkuluk (40)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25717,7 +25959,7 @@ GameObject:
   - component: {fileID: 8713129175887926231}
   m_Layer: 0
   m_Name: Factory_Korkuluk (36)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25927,7 +26169,7 @@ GameObject:
   - component: {fileID: 3288294879707444975}
   m_Layer: 0
   m_Name: Factory_Korkuluk (67)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26136,7 +26378,7 @@ GameObject:
   - component: {fileID: 8416775204996274239}
   m_Layer: 0
   m_Name: Factory_Wall_1 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26388,7 +26630,7 @@ GameObject:
   - component: {fileID: 554077708986673626}
   m_Layer: 0
   m_Name: Factory_Wall_1 (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26558,7 +26800,7 @@ GameObject:
   - component: {fileID: 7253377501097427983}
   m_Layer: 0
   m_Name: Factory_Korkuluk (29)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26746,7 +26988,7 @@ GameObject:
   - component: {fileID: 1576578012536038171}
   m_Layer: 0
   m_Name: Factory_Korkuluk (45)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27125,6 +27367,7 @@ GameObject:
   - component: {fileID: 3349954114001574643}
   - component: {fileID: 6174848069270217353}
   - component: {fileID: 3102966516833214347}
+  - component: {fileID: 872240723511445851}
   m_Layer: 0
   m_Name: Trashbag
   m_TagString: Untagged
@@ -27197,6 +27440,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &872240723511445851
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7274560043563931179}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7993369, y: 0.9196931, z: 1.0599612}
+  m_Center: {x: -0.031915963, y: 0.011312171, z: -0.055550136}
 --- !u!1 &7293269007612575487
 GameObject:
   m_ObjectHideFlags: 0
@@ -27329,7 +27593,7 @@ GameObject:
   - component: {fileID: 9069542298371858517}
   m_Layer: 0
   m_Name: Factory_ConstBlock (22)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27434,7 +27698,7 @@ GameObject:
   - component: {fileID: 5577019844127714149}
   m_Layer: 0
   m_Name: Factory_Korkuluk (43)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27622,7 +27886,7 @@ GameObject:
   - component: {fileID: 8170803614393038833}
   m_Layer: 0
   m_Name: Factory_Korkuluk (13)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27727,7 +27991,7 @@ GameObject:
   - component: {fileID: 4980104178145176570}
   m_Layer: 0
   m_Name: Factory_Barrel (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27867,7 +28131,7 @@ GameObject:
   - component: {fileID: 814648601762093041}
   m_Layer: 0
   m_Name: Factory_Korkuluk (60)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27972,7 +28236,7 @@ GameObject:
   - component: {fileID: 6059624248850842275}
   m_Layer: 0
   m_Name: Factory_Korkuluk (39)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28365,7 +28629,7 @@ GameObject:
   - component: {fileID: 2919951398577954696}
   m_Layer: 0
   m_Name: Box3 (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28467,6 +28731,7 @@ GameObject:
   - component: {fileID: 2579469063562437457}
   - component: {fileID: 1527012491754755275}
   - component: {fileID: 1280416890300561442}
+  - component: {fileID: 6959006229311743052}
   m_Layer: 0
   m_Name: Bed
   m_TagString: Untagged
@@ -28539,6 +28804,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6959006229311743052
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7783478700630049057}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02686942, y: 0.030893259, z: 0.051999}
+  m_Center: {x: 0, y: 0.015431499, z: 0}
 --- !u!1 &7816878677278051321
 GameObject:
   m_ObjectHideFlags: 0
@@ -28719,7 +29005,7 @@ GameObject:
   - component: {fileID: 4298414767872521428}
   m_Layer: 0
   m_Name: Factory_Korkuluk (22)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29095,7 +29381,7 @@ GameObject:
   - component: {fileID: 5036681731629319721}
   m_Layer: 0
   m_Name: Factory_Korkuluk (8)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29283,7 +29569,7 @@ GameObject:
   - component: {fileID: 1472655417889271386}
   m_Layer: 0
   m_Name: Factory_Korkuluk (15)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29388,7 +29674,7 @@ GameObject:
   - component: {fileID: 5709562482040283003}
   m_Layer: 0
   m_Name: Factory_Korkuluk (64)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29703,7 +29989,7 @@ GameObject:
   - component: {fileID: 8496315695833333794}
   m_Layer: 0
   m_Name: Factory_Korkuluk (32)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29808,7 +30094,7 @@ GameObject:
   - component: {fileID: 2414941844171188767}
   m_Layer: 0
   m_Name: Box3 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30195,9 +30481,10 @@ GameObject:
   - component: {fileID: 3199937718909218242}
   - component: {fileID: 6640633323488554360}
   - component: {fileID: 1521283313276291905}
+  - component: {fileID: 1304145500776130612}
   m_Layer: 0
   m_Name: electricbox
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30268,6 +30555,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &1521283313276291905
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8379606972990783976}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.996183, y: 2.8762321, z: 3.0596726}
+  m_Center: {x: 0.7776156, y: -0.13198936, z: 1.0706571}
+--- !u!65 &1304145500776130612
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30543,7 +30851,7 @@ GameObject:
   - component: {fileID: 4079725916750995185}
   m_Layer: 0
   m_Name: Factory_Korkuluk (35)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30648,7 +30956,7 @@ GameObject:
   - component: {fileID: 3697973355249726918}
   m_Layer: 0
   m_Name: Factory_Korkuluk (75)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30753,7 +31061,7 @@ GameObject:
   - component: {fileID: 4072856918448127926}
   m_Layer: 0
   m_Name: Factory_Korkuluk (69)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30858,7 +31166,7 @@ GameObject:
   - component: {fileID: 7843763471956226565}
   m_Layer: 0
   m_Name: Cube.040 (4)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31129,7 +31437,7 @@ GameObject:
   - component: {fileID: 316655070117520129}
   m_Layer: 0
   m_Name: Factory_Container1 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31234,7 +31542,7 @@ GameObject:
   - component: {fileID: 4597124255441831917}
   m_Layer: 0
   m_Name: Factory_Korkuluk (56)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31423,7 +31731,7 @@ GameObject:
   - component: {fileID: 4398392114474942202}
   m_Layer: 0
   m_Name: Factory_ConstBlock (31)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31528,7 +31836,7 @@ GameObject:
   - component: {fileID: 6720440476545937559}
   m_Layer: 6
   m_Name: Factory_Wall_3 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31716,7 +32024,7 @@ GameObject:
   - component: {fileID: 5705021409448304475}
   m_Layer: 0
   m_Name: Factory_ConstBlock (33)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31821,7 +32129,7 @@ GameObject:
   - component: {fileID: 3220563345061993775}
   m_Layer: 0
   m_Name: Factory_Korkuluk (50)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32066,7 +32374,7 @@ GameObject:
   - component: {fileID: 5005477960597758555}
   m_Layer: 0
   m_Name: Factory_ConstBlock (21)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32359,7 +32667,7 @@ GameObject:
   - component: {fileID: 8765803175188747084}
   m_Layer: 0
   m_Name: Factory_Korkuluk (53)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32800,7 +33108,7 @@ GameObject:
   - component: {fileID: 8764452752912546533}
   m_Layer: 0
   m_Name: Cube.040 (8)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32904,7 +33212,7 @@ GameObject:
   - component: {fileID: 3916829145075005239}
   m_Layer: 0
   m_Name: Factory_Wall_1 (4)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32991,7 +33299,7 @@ GameObject:
   - component: {fileID: 44284849779938587}
   m_Layer: 0
   m_Name: Cube.040 (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33096,7 +33404,7 @@ GameObject:
   - component: {fileID: 3556127819861843665}
   m_Layer: 0
   m_Name: Cylinder.008 (3)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33201,7 +33509,7 @@ GameObject:
   - component: {fileID: 2106863868634941880}
   m_Layer: 0
   m_Name: Factory_Korkuluk (12)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

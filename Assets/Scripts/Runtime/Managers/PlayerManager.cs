@@ -24,6 +24,7 @@ namespace Runtime.Managers
         [SerializeField] private PlayerMovementController playerMovementController;
         [SerializeField] private PlayerAnimationController playerAnimationController;
         [SerializeField] private PlayerHitDetectionController playerHitDetectionController;
+        
         [SerializeField] private Transform playerTransform;
         
         
@@ -87,6 +88,13 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onSetAnimationTrigger += playerAnimationController.OnSetTriggerAnimation;
             PlayerSignals.Instance.onSetCombatCount += playerAnimationController.OnSetCombatCount;
             PlayerSignals.Instance.onPlayerCollidedWithObstacle += playerMovementController.OnPlayerCollidedWithObstacle;
+            PlayerSignals.Instance.onIsPlayerFalling += playerMovementController.OnIsPlayerFalling;
+            PlayerSignals.Instance.onIsKillRoll += playerMovementController.OnIsKillRoll;
+            PlayerSignals.Instance.onPlayerInterectWithObject +=
+                playerHitDetectionController.OnPlayerInteractWithObject;
+            PlayerSignals.Instance.onGetPlayerTransform += OnGetPlayerManagerTransform;
+            PlayerSignals.Instance.onCanPlayerInteractWithSomething += playerHitDetectionController.OnCanPlayerInteractWithSomething;
+            PlayerSignals.Instance.onTakeInteractableObject += playerHitDetectionController.OnGetInteractableObject;
 
 
 
@@ -127,6 +135,11 @@ namespace Runtime.Managers
         {
             PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Crouch, condition);
         }
+        
+        private Transform OnGetPlayerManagerTransform()
+        {
+            return playerTransform;
+        }
 
 
         private void UnSubscribeEvents()
@@ -141,8 +154,18 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onSetAnimationBool -= playerAnimationController.OnSetBoolAnimation;
             PlayerSignals.Instance.onSetAnimationTrigger -= playerAnimationController.OnSetTriggerAnimation;
             PlayerSignals.Instance.onSetCombatCount -= playerAnimationController.OnSetCombatCount;
+            PlayerSignals.Instance.onIsPlayerFalling -= playerMovementController.OnIsPlayerFalling;
+            PlayerSignals.Instance.onIsKillRoll -= playerMovementController.OnIsKillRoll;
+            PlayerSignals.Instance.onPlayerInterectWithObject -=
+                playerHitDetectionController.OnPlayerInteractWithObject;
+            PlayerSignals.Instance.onGetPlayerTransform -= OnGetPlayerManagerTransform;
+            PlayerSignals.Instance.onCanPlayerInteractWithSomething -= playerHitDetectionController.OnCanPlayerInteractWithSomething;
+            PlayerSignals.Instance.onTakeInteractableObject -= playerHitDetectionController.OnGetInteractableObject;
             
         }
+
+
+       
 
         private void OnDisable()
         {

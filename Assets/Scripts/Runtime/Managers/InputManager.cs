@@ -163,6 +163,12 @@ namespace Runtime.Managers
             // -------------------------------------------------
             
             _meeleCombatCommand.Execute(ref _combatCount,_isCombat);
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.LogWarning("Take the item");
+                PlayerSignals.Instance.onPlayerInterectWithObject?.Invoke();
+            }
             
 
 

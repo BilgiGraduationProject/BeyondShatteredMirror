@@ -1,3 +1,4 @@
+using System;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Player;
 using Runtime.Extentions;
@@ -16,6 +17,20 @@ namespace Runtime.Signals
       
        
        public UnityAction<Transform> onPlayerCollidedWithObstacle = delegate {  };
+       
+       
+       public UnityAction<bool> onIsPlayerFalling = delegate {  };
+       
+       public Func<bool> onIsKillRoll = delegate { return false; };
+       
+       
+       public UnityAction onPlayerInterectWithObject = delegate {  };
+       
+       public Func<Transform> onGetPlayerTransform = delegate { return null; };
+       
+       public UnityAction<bool> onCanPlayerInteractWithSomething = delegate {  };
+       
+       public UnityAction onTakeInteractableObject = delegate {  };
       
         
     }

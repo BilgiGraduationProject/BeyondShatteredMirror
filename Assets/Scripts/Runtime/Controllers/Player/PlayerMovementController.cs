@@ -30,6 +30,8 @@ namespace Runtime.Controllers.Player
         private Transform _cameraTransform;
         private bool _isReadyToMove;
         private TweenerCore<Vector3,Vector3,VectorOptions> _dotWeenRoll;
+        private bool _isFalling;
+        private bool _isKillRoll;
        
         #endregion
 
@@ -56,7 +58,8 @@ namespace Runtime.Controllers.Player
 
         private void MovePlayer()
         {
-           
+            if (_isFalling) return;
+            Debug.LogWarning("IsNotFalling");
             if (!_isReadyToMove) return;
             var moveDirection = (_cameraTransform.forward * _inputParams.Vertical + _cameraTransform.right * _inputParams.Horizontal);
             if (moveDirection == Vector3.zero) return;
@@ -99,12 +102,14 @@ namespace Runtime.Controllers.Player
             var newLookDirection = Quaternion.Euler(0,_cameraTransform.eulerAngles.y,0);
             transform.DORotateQuaternion(newLookDirection, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
             {
+                _isKillRoll = true;
                 PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Roll);
               _dotWeenRoll =   transform.DOMove(transform.position + transform.forward * _playerData.RollDistance, _playerData.RollTime)
                      .SetEase(Ease.Flash);
               
                 
             });
+            _isKillRoll = false;
 
         }
 
@@ -112,6 +117,18 @@ namespace Runtime.Controllers.Player
         public void OnPlayerCollidedWithObstacle(Transform arg0)
         {
             _dotWeenRoll.Kill();
+            
+            
+        }
+
+        public void OnIsPlayerFalling(bool isFalling)
+        {
+            _isFalling = isFalling;
+        }
+
+        public bool OnIsKillRoll()
+        {
+            return _isKillRoll;
         }
     }
      
