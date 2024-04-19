@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Runtime.Enums.UI;
+using Runtime.Enums;
 using Runtime.Signals;
 using UnityEngine;
 using DG.Tweening;
@@ -122,6 +123,7 @@ namespace Runtime.Controllers.UI
         
         private void OnClosePanel(int layerValue)
         {
+            CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
             // Check if the layer is the last one or the one before the last one
             if (IsLastOrBeforeLastLayer(layerValue))
             {
@@ -240,6 +242,7 @@ namespace Runtime.Controllers.UI
         
         private void OnOpenPanel(UIPanelTypes panel, short layerValue)
         {
+            CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
             // GameManager gameManager = FindObjectOfType<GameManager>();
             //
             // if(gameManager.gameState is GameStateEnum.Cutscene && layerValue > 0) return;

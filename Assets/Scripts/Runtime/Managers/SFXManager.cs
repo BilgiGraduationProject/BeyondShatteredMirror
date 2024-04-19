@@ -82,7 +82,6 @@ namespace Runtime.Managers
                 if (sfxClip.type == type)
                 {
                     audioSource.PlayOneShot(sfxClip.clip);
-                    print(sfxClip.clip.name + " is playing".ColoredText(Color.cyan));
                     return;
                 }
             }

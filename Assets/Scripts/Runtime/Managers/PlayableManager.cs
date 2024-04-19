@@ -95,6 +95,8 @@ namespace Runtime.Managers
             switch (playableEnum)
             {
                 case PlayableEnum.BathroomLayingSeize:
+                    factory.SetActive(false);
+                    aslanHouse.SetActive(true);
                     PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true,playableEnum);
                     break;
                 case PlayableEnum.StandFrontOfMirror:
@@ -103,6 +105,8 @@ namespace Runtime.Managers
                     PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredFactory);
                     break;
                 case PlayableEnum.EnteredHouse:
+                    factory.SetActive(false);
+                    aslanHouse.SetActive(true);
                     PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true,playableEnum);
                     break;
                 

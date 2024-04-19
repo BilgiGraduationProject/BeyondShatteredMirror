@@ -11,6 +11,7 @@ namespace Runtime.Controllers.Player
         {
             if (other.CompareTag("Mirror"))
             {
+                print("Mirror Triggered");
                 other.CompareTag("Untagged");
                 PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.StandFrontOfMirror);
             }

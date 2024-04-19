@@ -33,13 +33,12 @@ namespace Runtime.Managers
 
         public void OnStart()
         {
-            
             // TODO: Add more shows to beatify the game start.
             CoreUISignals.Instance.onCloseAllPanels?.Invoke();
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Ingame, 0);
-            //CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+            //CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Settings);
             CoreUISignals.Instance.onOpenCutscene?.Invoke(1);
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Settings);
         }
 
         public void OnQuit()

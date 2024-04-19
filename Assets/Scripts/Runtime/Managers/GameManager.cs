@@ -42,7 +42,6 @@ namespace Runtime.Managers
                     InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(true);
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
                     CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Play);
-                  
                     break;
                 case GameStateEnum.Cutscene:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);

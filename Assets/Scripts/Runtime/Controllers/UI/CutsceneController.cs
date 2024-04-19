@@ -70,15 +70,15 @@ namespace Runtime.Controllers
             // TODO: This part is for testing purposes only. Change it later with collision or something else.
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
-                CoreUISignals.Instance.onOpenCutscene?.Invoke(0); // This method helps to load cutscene video.
+                //CoreUISignals.Instance.onOpenCutscene?.Invoke(0); // This method helps to load cutscene video.
             }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                CoreUISignals.Instance.onOpenCutscene?.Invoke(1);
+                //CoreUISignals.Instance.onOpenCutscene?.Invoke(1);
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                CoreUISignals.Instance.onOpenCutscene?.Invoke(2);
+                //CoreUISignals.Instance.onOpenCutscene?.Invoke(2);
             }
         }
         
