@@ -5,5 +5,6 @@ namespace Runtime.Enums.Camera
         Play,
         Capture,
         CutScene,
+        UnPlayer
     }
 }

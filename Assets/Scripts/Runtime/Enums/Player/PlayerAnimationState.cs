@@ -8,6 +8,8 @@ namespace Runtime.Enums.Player
        PunchCount,
        Attack,
        PickUp,
+       OpenDoor,
+       isWalking,
        
         
         

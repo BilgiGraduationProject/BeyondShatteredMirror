@@ -33,12 +33,13 @@ namespace Runtime.Managers
         [Header(("Combat"))]
         private int _combatCount;
         private Coroutine _combatCoroutine;
-        private bool _isCombat = true;
+        private bool _isCombat;
         [Header("Actions")]
         
         private bool _isCrouch;
         private bool _isRun;
         private bool _isCutSceneInputReadyToUse;
+        private bool _isPickingUp;
         
 
 
@@ -95,6 +96,12 @@ namespace Runtime.Managers
 
         private void OnIsReadyForCombat(bool condition) => _isCombat = condition;
         
+        
+        private void OnIsPlayerPickingItem(bool condition)
+        {
+            _isPickingUp = condition;
+        }
+        
 
         private void OnSendInputManagerToReadyForInput(bool condition, PlayableEnum playableEnum)
         {
@@ -132,8 +139,11 @@ namespace Runtime.Managers
             InputSignals.Instance.onChangeMouseVisibility -= OnChangeMouseVisibility;
             InputSignals.Instance.onIsMovementInputReadyToUse -= OnIsInputReadyToUse;
             InputSignals.Instance.onIsReadyForCombat -= OnIsReadyForCombat;
+            InputSignals.Instance.onIsPlayerPickingItem -= OnIsPlayerPickingItem;
             PlayableSignals.Instance.onSendInputManagerToReadyForInput -= OnSendInputManagerToReadyForInput;
         }
+
+       
 
         private void OnDisable()
         {
@@ -149,7 +159,14 @@ namespace Runtime.Managers
                 {
                     switch (_playableEnumIndex)
                     {
-                        
+                        case PlayableEnum.BathroomLayingSeize:
+                            PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.StandUp);
+                            _isCutSceneInputReadyToUse = false;
+                            break;
+                        case PlayableEnum.EnteredHouse:
+                            PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.StandUp);
+                            _isCutSceneInputReadyToUse = false;
+                            break;
                         
                     }
                 }
@@ -162,12 +179,17 @@ namespace Runtime.Managers
             _spaceInputCommand.Execute(_isCrouch,_isMovementInputIsReadyToUse);
             // -------------------------------------------------
             
-            _meeleCombatCommand.Execute(ref _combatCount,_isCombat);
+            _meeleCombatCommand.Execute(ref _combatCount,_isCombat,_isMovementInputIsReadyToUse);
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && !_isPickingUp)
             {
                 Debug.LogWarning("Take the item");
-                PlayerSignals.Instance.onPlayerInterectWithObject?.Invoke();
+                InputSignals.Instance.onPlayerPressedPickUpButton?.Invoke();
+            }
+
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                InputSignals.Instance.onPlayerPressedDropItemButton?.Invoke();
             }
             
 

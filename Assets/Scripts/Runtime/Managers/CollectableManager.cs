@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using Runtime.Commands.Collectable;
+using System.Diagnostics;
+using DG.Tweening;
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
 using Runtime.Enums.Collectable;
+using Runtime.Enums.Playable;
+using Runtime.Enums.Player;
 using Runtime.Enums.Pool;
 using Runtime.Signals;
 using Sirenix.OdinInspector;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 namespace Runtime.Managers
 {
@@ -17,15 +24,18 @@ namespace Runtime.Managers
 
         #region Serialized Variables
 
-        [SerializeField] private Transform collectableHolder;
-        
+        [SerializeField] private CollectableEnum _collectableType;
+        [SerializeField] private Animator animator;
+        [SerializeField] private MeshRenderer renderer;
+        [SerializeField] private Rigidbody rigidbody;
+        [SerializeField] private GameObject catRightEye;
+        [SerializeField] private GameObject catLeftEye;
+        [SerializeField] private RawImage _viewFinderImage;
         #endregion
 
         #region Private Variables
 
         private CD_Collectable _collectableData;
-        private GameObject _emptyObject;
-        private CollectableCreateHolderCommand _collectableCreateHolderCommand;
         private readonly string _pathOfData = "Data/CD_Collectable";
         
         #endregion
@@ -35,15 +45,9 @@ namespace Runtime.Managers
         private void Awake()
         {
             _collectableData = GetCollectableData();
-            Init();
-            _collectableCreateHolderCommand.Execute();
+         
         }
 
-        private void Init()
-        {
-            _collectableCreateHolderCommand =
-                new CollectableCreateHolderCommand(ref collectableHolder, ref _emptyObject, _collectableData);
-        }
         
         private CD_Collectable GetCollectableData() => Resources.Load<CD_Collectable>(_pathOfData);
 
@@ -54,45 +58,138 @@ namespace Runtime.Managers
 
         private void SubscribeEvents()
         {
-            EnemySignals.Instance.onEnemyDied += OnEnemyDied;
+            CollectableSignals.Instance.onCollectableDoJob += OnCollectableDoJob;
+            CollectableSignals.Instance.onCheckCollectableType += OnCheckCollectableType;
+            CollectableSignals.Instance.onChangeCollectableColor += OnChangeCollectableColor;
         }
 
-        private void OnEnemyDied(Transform enemyTransform)
+        private void OnChangeCollectableColor(GameObject colObj, bool condition)
         {
-            SaveLoadManager.Instance.ArithmeticalData(SaveDataValues.TotalKill, 1);
-            print(SaveDataValues.TotalKill + " Count: " + SaveLoadManager.Instance.LoadData<object>(SaveDataValues.TotalKill));
-            
-            var soul = PoolSignals.Instance.onGetPoolObject?.Invoke(PoolType.Soul, enemyTransform);
-            //soul.transform.parent = collectableHolder.GetChild((int)CollectableEnum.Soul);
-            soul.transform.GetComponent<ParticleSystem>().Play();
-            
-            SaveLoadManager.Instance.ArithmeticalData(SaveDataValues.Soul, 
-                _collectableData.Data[(int)CollectableEnum.Soul].CollectableDropAmount);
-            print(SaveDataValues.Soul + " Count: " + SaveLoadManager.Instance.LoadData<object>(SaveDataValues.Soul));
-            
-            // for (int i = 0; i < _collectableData.Data[(int)CollectableEnum.Soul].CollectableDropAmount; i++)
-            // {
-            //     var soul = PoolSignals.Instance.onGetPoolObject?.Invoke(PoolType.Soul, enemyTransform);
-            //     soul.transform.parent = collectableHolder.GetChild((int)CollectableEnum.Soul);
-            //     soul.transform.GetComponent<ParticleSystem>().Play();
-            //     print(soul.transform.GetComponent<ParticleSystem>().isPlaying);
-            // }
+            if(colObj.GetInstanceID() != gameObject.GetInstanceID()) return;
+            if (condition)
+            {
+                if (_collectableType == CollectableEnum.Puzzle)
+                {
+                    Debug.LogWarning("Do something about puzzle");
+                   
+                }
+                else if (_collectableType == CollectableEnum.Photo)
+                {
+                    _viewFinderImage.DOColor(Color.green, 1);
+                }
+                else
+                {
+                    renderer.material.DOFloat(1, "_OutlineWidth", 1);
+                }
+                    
+                
+              
+            }
+           
+            else
+            {
+                if (_collectableType == CollectableEnum.Puzzle)
+                {
+                    Debug.LogWarning("Do something");
+                }
+                else if (_collectableType == CollectableEnum.Photo)
+                {
+                    _viewFinderImage.DOColor(Color.white, 1);
+                }
+                else
+                {
+                    renderer.material.DOFloat(0, "_OutlineWidth", 1);
+
+                }
+               
+                
+            }
         }
+
+        private void OnCheckCollectableType(GameObject collectableObj)
+        {
+            if(collectableObj.GetInstanceID() != gameObject.GetInstanceID()) return;
+            CollectableSignals.Instance.onSendCollectableType?.Invoke(_collectableType);
+        }
+
+        private void OnCollectableDoJob(GameObject collectableObj,CollectableEnum collectableType)
+        {
+            Debug.LogWarning(collectableObj.name + collectableType.ToString());
+            if(collectableObj.GetInstanceID() != gameObject.GetInstanceID()) return;
+
+            switch (collectableType)
+            {
+                case CollectableEnum.Open:
+                   var isOpen = animator.GetBool("Open");
+                     animator.SetBool("Open",!isOpen);
+                   Debug.LogWarning("Opened door");
+                    break;
+                
+                case CollectableEnum.Carryable:
+                    rigidbody.useGravity = false;
+                    break;
+                
+                case CollectableEnum.Puzzle:
+                    var tagOfItem = PlayerSignals.Instance.onSendPlayerItemTag?.Invoke();
+                    Debug.LogWarning("Player item tag is :" + tagOfItem);
+                    switch (tagOfItem.tag)
+                    {
+                        case "null":
+                           
+                            break;
+                        case "CatLeftEye":
+                            catLeftEye.SetActive(true);
+                            Destroy(tagOfItem);
+                            if (catRightEye.activeSelf)
+                            {
+                                PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.Puzzle1);
+                            }
+                            break;
+                        case "CatRightEye":
+                            Destroy(tagOfItem);
+                            catRightEye.SetActive(true);
+                            if (catLeftEye.activeSelf)
+                            {
+                                PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.Puzzle1);
+                            }
+                           
+                            break;
+                        
+                    }
+
+                    break;
+                
+            }
+            
+        }
+
+       
+
 
         private void UnSubscribeEvents()
         {
-            EnemySignals.Instance.onEnemyDied -= OnEnemyDied;
+            CollectableSignals.Instance.onCollectableDoJob -= OnCollectableDoJob;
+            CollectableSignals.Instance.onCheckCollectableType -= OnCheckCollectableType;
+            CollectableSignals.Instance.onChangeCollectableColor -= OnChangeCollectableColor;
         }
 
         private void OnDisable()
         {
             UnSubscribeEvents();
         }
-    }
 
-    [System.Serializable]
-    public class Collectible
-    {
-        private float colls;
+
+
+        #region  Anim Events
+
+        public void AnimEventOnOpenDoor()
+        {
+            
+        }
+        
+
+        #endregion
     }
+    
+    
 }

@@ -171,8 +171,11 @@ namespace Runtime.Controllers
             switch (_index)
             {
                 case 0:
+                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.BathroomLayingSeize);
+                    Debug.LogWarning("Cut scene finished");
                     break;
                 case 1:
+                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredHouse);
                    
                     break;
                 

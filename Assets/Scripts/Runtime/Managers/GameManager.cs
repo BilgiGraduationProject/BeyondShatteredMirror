@@ -1,4 +1,5 @@
 using System;
+using Runtime.Enums.Camera;
 using Runtime.Enums.GameManager;
 using Runtime.Enums.Player;
 using Runtime.Signals;
@@ -40,11 +41,13 @@ namespace Runtime.Managers
                 case GameStateEnum.Game:
                     InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(true);
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
+                    CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Play);
                   
                     break;
                 case GameStateEnum.Cutscene:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
                     InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
+                    CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.CutScene);
                  
                     break;
                 case GameStateEnum.Quit:

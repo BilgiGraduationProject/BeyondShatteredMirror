@@ -24,6 +24,7 @@ namespace Runtime.Managers
         [SerializeField] private PlayerMovementController playerMovementController;
         [SerializeField] private PlayerAnimationController playerAnimationController;
         [SerializeField] private PlayerHitDetectionController playerHitDetectionController;
+        [SerializeField] private PlayerPickUpController playerPickUpController;
         
         [SerializeField] private Transform playerTransform;
         
@@ -82,6 +83,8 @@ namespace Runtime.Managers
             InputSignals.Instance.onPlayerPressedLeftControlButton += OnPlayerPressedLeftControlButton;
             InputSignals.Instance.onPlayerPressedLeftShiftButton += OnPlayerPressedLeftShiftButton;
             InputSignals.Instance.onPlayerPressedSpaceButton += OnPlayerPressedSpaceButton;
+            InputSignals.Instance.onPlayerPressedPickUpButton += playerHitDetectionController.OnPlayerPressedPickUpButton;
+            InputSignals.Instance.onPlayerPressedDropItemButton += playerPickUpController.OnPlayerPressedDropItemButton;
             PlayerSignals.Instance.onGetPlayerSpeed += OnGetPlayerSpeed;
             PlayerSignals.Instance.onSetPlayerToCutScenePosition += OnSetPlayerToCutScenePosition;
             PlayerSignals.Instance.onSetAnimationBool += playerAnimationController.OnSetBoolAnimation;
@@ -90,11 +93,10 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onPlayerCollidedWithObstacle += playerMovementController.OnPlayerCollidedWithObstacle;
             PlayerSignals.Instance.onIsPlayerFalling += playerMovementController.OnIsPlayerFalling;
             PlayerSignals.Instance.onIsKillRoll += playerMovementController.OnIsKillRoll;
-            PlayerSignals.Instance.onPlayerInterectWithObject +=
-                playerHitDetectionController.OnPlayerInteractWithObject;
-            PlayerSignals.Instance.onGetPlayerTransform += OnGetPlayerManagerTransform;
-            PlayerSignals.Instance.onCanPlayerInteractWithSomething += playerHitDetectionController.OnCanPlayerInteractWithSomething;
-            PlayerSignals.Instance.onTakeInteractableObject += playerHitDetectionController.OnGetInteractableObject;
+            PlayerSignals.Instance.onPlayerStartToPickUp += playerPickUpController.OnPlayerStartToPickUp;
+            CollectableSignals.Instance.onSendCollectableType += playerPickUpController.OnSendCollectableType;
+            PlayerSignals.Instance.onSendPlayerItemTag += playerPickUpController.onSendPlayerItemTag;
+
 
 
 
@@ -104,24 +106,19 @@ namespace Runtime.Managers
         {
             var position = _cutScenePositionHolderData.cutSceneHolders[(int)playableEnum].cutScenePosition;
             var rotation = _cutScenePositionHolderData.cutSceneHolders[(int)playableEnum].cutSceneRotation;
+            playerTransform.DOMove(position.position, 1f);
+            playerTransform.DORotate(rotation, 1f);
+            PlayableSignals.Instance.onSetUpCutScene?.Invoke(playableEnum);
            
         }
 
-
-        private void SetPlayerToCutScenePosition(Transform position, float duration, Vector3 rotation)
-        {
-            playerTransform.DOMove(position.position, duration);
-            playerTransform.DORotate(rotation, duration);
-        }
-
-       
+        
 
 
         
 
         private void OnPlayerPressedSpaceButton()
         {
-            
             playerMovementController.OnPlayerPressedSpaceButton();
         }
 
@@ -149,6 +146,8 @@ namespace Runtime.Managers
             InputSignals.Instance.onPlayerPressedLeftControlButton -= OnPlayerPressedLeftControlButton;
             InputSignals.Instance.onPlayerPressedLeftShiftButton -= OnPlayerPressedLeftShiftButton;
             InputSignals.Instance.onPlayerPressedSpaceButton -= OnPlayerPressedSpaceButton;
+            InputSignals.Instance.onPlayerPressedPickUpButton -= playerHitDetectionController.OnPlayerPressedPickUpButton;
+            InputSignals.Instance.onPlayerPressedDropItemButton -= playerPickUpController.OnPlayerPressedDropItemButton;
             PlayerSignals.Instance.onGetPlayerSpeed -= OnGetPlayerSpeed;
             PlayerSignals.Instance.onSetPlayerToCutScenePosition -= OnSetPlayerToCutScenePosition;
             PlayerSignals.Instance.onSetAnimationBool -= playerAnimationController.OnSetBoolAnimation;
@@ -156,11 +155,10 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onSetCombatCount -= playerAnimationController.OnSetCombatCount;
             PlayerSignals.Instance.onIsPlayerFalling -= playerMovementController.OnIsPlayerFalling;
             PlayerSignals.Instance.onIsKillRoll -= playerMovementController.OnIsKillRoll;
-            PlayerSignals.Instance.onPlayerInterectWithObject -=
-                playerHitDetectionController.OnPlayerInteractWithObject;
-            PlayerSignals.Instance.onGetPlayerTransform -= OnGetPlayerManagerTransform;
-            PlayerSignals.Instance.onCanPlayerInteractWithSomething -= playerHitDetectionController.OnCanPlayerInteractWithSomething;
-            PlayerSignals.Instance.onTakeInteractableObject -= playerHitDetectionController.OnGetInteractableObject;
+            PlayerSignals.Instance.onPlayerStartToPickUp -= playerPickUpController.OnPlayerStartToPickUp;
+            CollectableSignals.Instance.onSendCollectableType -= playerPickUpController.OnSendCollectableType;
+            PlayerSignals.Instance.onSendPlayerItemTag -= playerPickUpController.onSendPlayerItemTag;
+           
             
         }
 

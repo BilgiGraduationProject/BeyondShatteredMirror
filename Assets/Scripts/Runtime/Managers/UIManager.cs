@@ -39,6 +39,7 @@ namespace Runtime.Managers
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Ingame, 0);
             //CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
             CoreUISignals.Instance.onOpenCutscene?.Invoke(1);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Settings);
         }
 
         public void OnQuit()

@@ -2,8 +2,11 @@
 {
     public enum CollectableEnum
     {
-        Soul,
-        Heal,
-        
+        Carryable,
+        Inventory,
+        Consumable,
+        Open,
+        Puzzle,
+        Photo
     }
 }

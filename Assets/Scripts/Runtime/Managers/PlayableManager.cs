@@ -18,6 +18,8 @@ namespace Runtime.Managers
     {
         [SerializeField] private PlayableDirector playableDirector;
         private CD_PlayerPlayable _playerPlayable;
+        [SerializeField] private GameObject aslanHouse;
+        [SerializeField] private GameObject factory;
 
 
         private void Awake()
@@ -70,7 +72,7 @@ namespace Runtime.Managers
             
             if (assets is null) return;
             
-            CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.CutScene);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
             var playableBindings = assets.outputs.ToArray();
             
             foreach (var binding in playableBindings)
@@ -83,21 +85,36 @@ namespace Runtime.Managers
             }
 
             StartCoroutine(directorMode is DirectorWrapMode.Hold
-                ? OnHoldCutScene((float)playableDirector.duration,(int)playableEnum)
+                ? OnHoldCutScene((float)playableDirector.duration,playableEnum)
                 : OnCutSceneFinished((float)playableDirector.duration));
         }
 
-        private IEnumerator OnHoldCutScene(float playableDirectorDuration,int playableEnum)
+        private IEnumerator OnHoldCutScene(float playableDirectorDuration,PlayableEnum playableEnum)
         {
             yield return new WaitForSeconds(playableDirectorDuration);
+            switch (playableEnum)
+            {
+                case PlayableEnum.BathroomLayingSeize:
+                    PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true,playableEnum);
+                    break;
+                case PlayableEnum.StandFrontOfMirror:
+                    aslanHouse.SetActive(false);
+                    factory.SetActive(true);
+                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredFactory);
+                    break;
+                case PlayableEnum.EnteredHouse:
+                    PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true,playableEnum);
+                    break;
+                
+            }
+            
             
         }
 
         private IEnumerator OnCutSceneFinished(float playableDirectorDuration)
         {
             yield return new WaitForSeconds(playableDirectorDuration);
-            CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Play);
-            // CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
             
         }
 

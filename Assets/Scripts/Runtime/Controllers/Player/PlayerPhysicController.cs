@@ -12,6 +12,7 @@ namespace Runtime.Controllers.Player
             if (other.CompareTag("Mirror"))
             {
                 other.CompareTag("Untagged");
+                PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.StandFrontOfMirror);
             }
 
             if (other.CompareTag("House"))

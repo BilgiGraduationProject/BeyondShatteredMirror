@@ -28,6 +28,7 @@ namespace Runtime.Controllers.UI
         private Sprite _photoSprite;
         private string _fileName;
         private bool _viewingPhoto = true;
+      
 
         #endregion
 
@@ -43,8 +44,9 @@ namespace Runtime.Controllers.UI
         {
             // TODO: Daha sonrası için kamerayı o an açıp açamayacağını da kontrol et.
             if (Input.GetKeyDown(KeyCode.C) && _viewingPhoto)
-            { 
+            {
                 StopCoroutine(CaptureShot());
+                
                 //StopCoroutine(CaptureScreenshotAndSave());
                 RemovePhoto();
                 CaptureTime();
@@ -60,6 +62,8 @@ namespace Runtime.Controllers.UI
             {
                 CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
             }
+            
+            
         }
 
         private void CaptureTime()

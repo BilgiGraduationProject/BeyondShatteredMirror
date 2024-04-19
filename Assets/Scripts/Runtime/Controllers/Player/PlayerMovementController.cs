@@ -46,6 +46,7 @@ namespace Runtime.Controllers.Player
             if (_isReadyToMove) return;
             PlayerSignals.Instance.onGetPlayerSpeed?.Invoke(0);
             playerRb.velocity = Vector3.zero;
+           
         }
         
         private void FixedUpdate()
@@ -58,8 +59,6 @@ namespace Runtime.Controllers.Player
 
         private void MovePlayer()
         {
-            if (_isFalling) return;
-            Debug.LogWarning("IsNotFalling");
             if (!_isReadyToMove) return;
             var moveDirection = (_cameraTransform.forward * _inputParams.Vertical + _cameraTransform.right * _inputParams.Horizontal);
             if (moveDirection == Vector3.zero) return;

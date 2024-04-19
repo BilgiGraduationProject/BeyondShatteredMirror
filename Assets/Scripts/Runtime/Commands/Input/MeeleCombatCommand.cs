@@ -19,10 +19,11 @@ namespace Runtime.Commands.Input
         }
 
 
-        public void Execute(ref int combatCount, bool isCombat)
+        public void Execute(ref int combatCount, bool isCombat, bool _isInputReadyToUse)
         {
             if (UnityEngine.Input.GetMouseButtonDown(0))
             {
+                if (!_isInputReadyToUse) return;
                 if (_combatCoroutine != null)
                 {
                     _inputManager.StopCoroutine(_combatCoroutine);

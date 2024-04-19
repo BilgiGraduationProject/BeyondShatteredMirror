@@ -11,8 +11,7 @@ namespace Runtime.Signals
     public class EnemySignals : MonoSingleton<EnemySignals>
     {
    
-        public UnityAction<EnemyAnimationState> onChangeEnemyAnimationState = delegate {  };
-        public UnityAction<Transform> onEnemyDied = delegate {  };
+        
        
         
     }

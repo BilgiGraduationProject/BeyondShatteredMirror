@@ -49,14 +49,14 @@ namespace Runtime.Managers
 
         private void SubscribeEvents()
         {
-            EnemySignals.Instance.onChangeEnemyAnimationState += enemyAnimationController.ChangeEnemyAnimationState;
+           
           
             
         }
         
         private void UnSubscribeEvents()
         {
-            EnemySignals.Instance.onChangeEnemyAnimationState -= enemyAnimationController.ChangeEnemyAnimationState;
+            
         }
 
         private void OnDisable()

@@ -8,6 +8,7 @@
         StandFrontOfMirror,
         EnteredFactory,
         EnteredHouse,
+        Puzzle1
         
     }
 }
