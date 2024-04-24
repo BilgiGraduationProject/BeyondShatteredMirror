@@ -9,7 +9,5 @@ namespace Runtime.Enums.UI
         Pause,
         Shop,
         Quit,
-       
-        
     }
 }

@@ -72,6 +72,7 @@ namespace Runtime.Managers
             
             if (assets is null) return;
             
+            CoreUISignals.Instance.onDisableAllPanels?.Invoke();
             CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
             var playableBindings = assets.outputs.ToArray();
             
@@ -118,6 +119,7 @@ namespace Runtime.Managers
         private IEnumerator OnCutSceneFinished(float playableDirectorDuration)
         {
             yield return new WaitForSeconds(playableDirectorDuration);
+            CoreUISignals.Instance.onEnableAllPanels?.Invoke();
             CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
             
         }

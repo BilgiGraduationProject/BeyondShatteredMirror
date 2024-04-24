@@ -242,7 +242,7 @@ namespace Runtime.Controllers.UI
         
         private void OnOpenPanel(UIPanelTypes panel, short layerValue)
         {
-            CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+            //CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
             // GameManager gameManager = FindObjectOfType<GameManager>();
             //
             // if(gameManager.gameState is GameStateEnum.Cutscene && layerValue > 0) return;
@@ -267,20 +267,17 @@ namespace Runtime.Controllers.UI
             // Switch case for UIPanelTypes
             switch (panel)
             {
-                case UIPanelTypes.Ingame:
-                    break;
                 case UIPanelTypes.Start:
-                case UIPanelTypes.Inventory:
                 case UIPanelTypes.Settings:
+                case UIPanelTypes.Quit:
+                    break;
+                case UIPanelTypes.Ingame:
+                case UIPanelTypes.Inventory:
                 case UIPanelTypes.Pause:
                 case UIPanelTypes.Shop:
-                    
-                    break;
-                case UIPanelTypes.Quit:
-                    
+                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
                     break;
                 default:
-                    
                     break;
             }
         }

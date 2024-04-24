@@ -160,5 +160,10 @@ namespace Runtime.Controllers.UI
                 item.GetComponent<Toggle>().isOn = false;
             });
         }
+
+        public void ClosePanel()
+        {
+            CoreUISignals.Instance.onClosePanel?.Invoke(1);
+        }
     }
 }

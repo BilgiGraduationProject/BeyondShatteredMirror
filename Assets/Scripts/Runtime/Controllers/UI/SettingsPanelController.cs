@@ -44,5 +44,10 @@ namespace Runtime.Controllers.UI
             //SaveLoadManager.Instance.SaveData("Settings2", gameplay_settings2.value);
             //SaveLoadManager.Instance.SaveData("Settings3", gameplay_settings3.value);
         }
+
+        public void ClosePanel()
+        {
+            CoreUISignals.Instance.onClosePanel?.Invoke(2);
+        }
     }
 }

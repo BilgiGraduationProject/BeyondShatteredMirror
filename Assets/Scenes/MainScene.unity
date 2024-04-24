@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.07496776, g: 0.05940415, b: 0.08763229, a: 1}
+  m_IndirectSpecularColor: {r: 0.07497, g: 0.05939994, b: 0.087629475, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -189,7 +189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &70530939
 Transform:
   m_ObjectHideFlags: 0
@@ -3919,7 +3919,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1693361162
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4366,11 +4366,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1686138744}
     m_Modifications:
-    - target: {fileID: 308532368371269232, guid: 5dcc5715c658e4a4cadd05f66dc2cfcf,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1060993657113094247, guid: 5dcc5715c658e4a4cadd05f66dc2cfcf,
         type: 3}
       propertyPath: m_Pivot.x
@@ -4475,11 +4470,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VideoCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 6710318456010357197, guid: 5dcc5715c658e4a4cadd05f66dc2cfcf,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4738,23 +4728,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5630338474753398810, guid: 5a30068b5e0ecf14db3d320d773c68cd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5834054691981994461, guid: 5a30068b5e0ecf14db3d320d773c68cd,
         type: 3}
       propertyPath: m_Name
       value: PhotoCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 5834054691981994461, guid: 5a30068b5e0ecf14db3d320d773c68cd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2575123457049548778, guid: 5a30068b5e0ecf14db3d320d773c68cd, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

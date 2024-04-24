@@ -11,6 +11,7 @@ using Runtime.Enums.Playable;
 using Runtime.Enums.Pool;
 using Runtime.Utilities;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 namespace Runtime.Controllers
 {
@@ -22,7 +23,7 @@ namespace Runtime.Controllers
         
         [SerializeField] private GameObject blackwBG;
         [SerializeField] private VideoPlayer videoPlayer;
-        [SerializeField] private List<GameObject> cutsceneList = new List<GameObject>();
+        [SerializeField] private Button completeButton;
         
         #endregion
         
@@ -59,6 +60,7 @@ namespace Runtime.Controllers
         private void UnsubscribeEvents()
         {
             //SceneManager.sceneLoaded -= OnSceneLoaded;
+            CoreUISignals.Instance.onOpenCutscene -= OnOpenCutscene;
         }
     
         private void OnDisable() => UnsubscribeEvents();
@@ -80,21 +82,19 @@ namespace Runtime.Controllers
             {
                 //CoreUISignals.Instance.onOpenCutscene?.Invoke(2);
             }
+
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                CompleteButton();
+            }
         }
         
         private void OnOpenCutscene(int index)
         {
             LoadVideoClip(index);
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
+            completeButton.gameObject.SetActive(true);
             _index = index - 1;
-
-            // _lastIndex = index;
-            // CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.CancelPlayerMovement);
-            // blackwBG.SetActive(false);
-            // cutsceneList[index].SetActive(true);
-            // cutsceneList[index].GetComponent<VideoPlayer>().Play();
-            // cutsceneList[index].GetComponent<CanvasGroup>().alpha = 0;
-            // cutsceneList[index].GetComponent<CanvasGroup>().DOFade(1f, .75f).SetEase(Ease.OutQuad);
-            // cutsceneList[index].GetComponent<VideoPlayer>().loopPointReached += OnCutsceneFinished;
         }
         
         private void LoadVideoClip(int index)
@@ -136,39 +136,19 @@ namespace Runtime.Controllers
                 videoPlayer.GetComponent<CanvasGroup>().alpha = 1;
             }
         }
-        
-        private void OnCutsceneFinished(VideoPlayer videoPlayer)
+
+        public void CompleteButton()
         {
-            videoPlayer.loopPointReached -= OnCutsceneFinished;
-            blackwBG.SetActive(true);
-            // Tween tween = cutsceneList[_lastIndex].GetComponent<CanvasGroup>().DOFade(0, 3f);
-            // tween.onComplete += () =>
-            // {
-            //     cutsceneList[_lastIndex].GetComponent<CanvasGroup>().alpha = 1;
-            //     blackwBG.SetActive(false);
-            //     cutsceneList[_lastIndex].SetActive(false);
-            //     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.StartPlayer);
-            // };
-            cutsceneList[_lastIndex].GetComponent<CanvasGroup>().DOFade(0f, 3).SetEase(Ease.OutQuad).OnComplete(() =>
-            {
-                cutsceneList[_lastIndex].GetComponent<CanvasGroup>().alpha = 1;
-                cutsceneList[_lastIndex].SetActive(false);
-                cutsceneList[_lastIndex].GetComponent<VideoPlayer>().Prepare();
-                blackwBG.GetComponent<CanvasGroup>().DOFade(0f, 3f).SetEase(Ease.OutQuad).OnComplete(() =>
-                {
-                    blackwBG.GetComponent<CanvasGroup>().alpha = 1;
-                    blackwBG.SetActive(false);
-                    
-                });
-            });
+            videoPlayer.Stop();
+            completeButton.gameObject.SetActive(false);
+            OnCutsceneCompleted(videoPlayer);
         }
         
         private void OnCutsceneCompleted(VideoPlayer videoPlayerr)
         {
-            
+            print("This is working.");
             videoPlayerr.loopPointReached -= OnCutsceneCompleted;
             blackwBG.SetActive(true);
-          
             
             videoPlayer.GetComponent<CanvasGroup>().DOFade(0f, 2f).SetEase(Ease.OutQuad).OnComplete(() =>
             {
@@ -183,18 +163,15 @@ namespace Runtime.Controllers
                         break;
                     case 1:
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredHouse);
-                   
                         break;
-                
                 }
+                
                 blackwBG.GetComponent<CanvasGroup>().DOFade(0f, 1f).SetEase(Ease.OutQuad).OnComplete(() =>
                 {
-                   
                     blackwBG.SetActive(false);
                     blackwBG.GetComponent<CanvasGroup>().alpha = 1;
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                     CoreUISignals.Instance.onEnableAllPanels?.Invoke();
-                    
-                    
                 });
             });
         }
