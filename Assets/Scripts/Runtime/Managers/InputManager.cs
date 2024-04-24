@@ -183,7 +183,6 @@ namespace Runtime.Managers
 
             if (Input.GetKeyDown(KeyCode.E) && !_isPickingUp)
             {
-                Debug.LogWarning("Take the item");
                 InputSignals.Instance.onPlayerPressedPickUpButton?.Invoke();
             }
 

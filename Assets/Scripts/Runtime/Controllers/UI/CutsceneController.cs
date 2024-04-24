@@ -168,26 +168,28 @@ namespace Runtime.Controllers
             
             videoPlayerr.loopPointReached -= OnCutsceneCompleted;
             blackwBG.SetActive(true);
-            switch (_index)
-            {
-                case 0:
-                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.BathroomLayingSeize);
-                    Debug.LogWarning("Cut scene finished");
-                    break;
-                case 1:
-                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredHouse);
-                   
-                    break;
-                
-            }
+          
             
             videoPlayer.GetComponent<CanvasGroup>().DOFade(0f, 2f).SetEase(Ease.OutQuad).OnComplete(() =>
             {
                 videoPlayer.gameObject.SetActive(false);
                 videoPlayer.GetComponent<CanvasGroup>().alpha = 1;
                 videoPlayer.GetComponent<VideoPlayer>().Prepare(); // Unnecessary line of code.
+                switch (_index)
+                {
+                    case 0:
+                        PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.BathroomLayingSeize);
+                        Debug.LogWarning("Cut scene finished");
+                        break;
+                    case 1:
+                        PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredHouse);
+                   
+                        break;
+                
+                }
                 blackwBG.GetComponent<CanvasGroup>().DOFade(0f, 1f).SetEase(Ease.OutQuad).OnComplete(() =>
                 {
+                   
                     blackwBG.SetActive(false);
                     blackwBG.GetComponent<CanvasGroup>().alpha = 1;
                     CoreUISignals.Instance.onEnableAllPanels?.Invoke();

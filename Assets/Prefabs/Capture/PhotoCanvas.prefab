@@ -174,7 +174,6 @@ GameObject:
   - component: {fileID: 1801010130128363094}
   - component: {fileID: 724338276870762560}
   - component: {fileID: 5388473870319646513}
-  - component: {fileID: 2575123457049548778}
   m_Layer: 5
   m_Name: CameraViewfinder
   m_TagString: Untagged
@@ -236,25 +235,6 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &2575123457049548778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5630338474753398810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 824f3bae1afd4315bce3a7348dcdbdab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _collectableType: 0
-  animator: {fileID: 0}
-  renderer: {fileID: 0}
-  rigidbody: {fileID: 0}
-  catRightEye: {fileID: 0}
-  catLeftEye: {fileID: 0}
-  _viewFinderImage: {fileID: 5388473870319646513}
 --- !u!1 &5834054691981994461
 GameObject:
   m_ObjectHideFlags: 0

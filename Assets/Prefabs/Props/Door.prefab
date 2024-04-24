@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 6913295970776600455}
   - component: {fileID: 2804943800607228339}
   - component: {fileID: 6537000696663527640}
-  - component: {fileID: 6081490929065174898}
+  - component: {fileID: 6027277258377271754}
   m_Layer: 11
   m_Name: Door
-  m_TagString: Collectable
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.6938607, z: 0, w: 0.7201093}
   m_LocalPosition: {x: 7.375338, y: 0.06174028, z: -1.2283597}
-  m_LocalScale: {x: 1.0395, y: 1.0374, z: 1}
+  m_LocalScale: {x: 1.0395001, y: 1.0374, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,9 +126,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.2589395, y: 2.5119214, z: 0.274245}
-  m_Center: {x: -0.59515125, y: 1.1361773, z: 0.07766309}
---- !u!114 &6081490929065174898
+  m_Size: {x: 1.3437773, y: 2.5845768, z: 0.274245}
+  m_Center: {x: -0.6092128, y: 1.1725053, z: 0.07766312}
+--- !u!114 &6027277258377271754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,9 +137,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3584416099881831139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 824f3bae1afd4315bce3a7348dcdbdab, type: 3}
+  m_Script: {fileID: 11500000, guid: 4df51671e8814d08b95245c97a55e9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collectableType: 3
+  meshRenderer: {fileID: 6913295970776600455}
+  rigidbody: {fileID: 0}
   animator: {fileID: 2804943800607228339}
-  renderer: {fileID: 6913295970776600455}

@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 8354289567384226435}
   - component: {fileID: 5736678488280324797}
   - component: {fileID: 3180297354523315405}
+  - component: {fileID: 7039988768581948483}
   m_Layer: 10
   m_Name: Mesh Controller
   m_TagString: Player
@@ -425,6 +426,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!320 &7039988768581948483
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381565168296540278}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 243a8f3d365978a40b82850bf99acb02, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -1134373699263971540, guid: 243a8f3d365978a40b82850bf99acb02, type: 2}
+    value: {fileID: 3180297354523315405}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1575850122932771623
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,52 +1218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 10
---- !u!1 &4009575747762886863
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 276178284436433569}
-  - component: {fileID: 3154782503591368622}
-  m_Layer: 10
-  m_Name: PickUpController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &276178284436433569
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4009575747762886863}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3825825139416800656}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3154782503591368622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4009575747762886863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a064fda0e0e846899e675bd5c950aca5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   playerTransform: {fileID: 3825825139416800656}
-  playerHandTransform: {fileID: 0}
+  playerHandTransform: {fileID: 1915717374503458655}
 --- !u!1 &4080759012995654556
 GameObject:
   m_ObjectHideFlags: 0
@@ -3166,7 +3142,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8354289567384226435}
-  - {fileID: 276178284436433569}
   - {fileID: 5002676344137116524}
   - {fileID: 6503164246964637025}
   - {fileID: 911625515534521749}
@@ -3214,7 +3189,6 @@ MonoBehaviour:
   playerMovementController: {fileID: 5401471163811090263}
   playerAnimationController: {fileID: 5736678488280324797}
   playerHitDetectionController: {fileID: 9216303523973145712}
-  playerPickUpController: {fileID: 3154782503591368622}
   playerTransform: {fileID: 3825825139416800656}
 --- !u!114 &5401471163811090263
 MonoBehaviour:

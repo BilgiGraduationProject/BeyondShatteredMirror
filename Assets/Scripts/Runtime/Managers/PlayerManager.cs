@@ -24,7 +24,6 @@ namespace Runtime.Managers
         [SerializeField] private PlayerMovementController playerMovementController;
         [SerializeField] private PlayerAnimationController playerAnimationController;
         [SerializeField] private PlayerHitDetectionController playerHitDetectionController;
-        [SerializeField] private PlayerPickUpController playerPickUpController;
         
         [SerializeField] private Transform playerTransform;
         
@@ -84,7 +83,8 @@ namespace Runtime.Managers
             InputSignals.Instance.onPlayerPressedLeftShiftButton += OnPlayerPressedLeftShiftButton;
             InputSignals.Instance.onPlayerPressedSpaceButton += OnPlayerPressedSpaceButton;
             InputSignals.Instance.onPlayerPressedPickUpButton += playerHitDetectionController.OnPlayerPressedPickUpButton;
-            InputSignals.Instance.onPlayerPressedDropItemButton += playerPickUpController.OnPlayerPressedDropItemButton;
+            InputSignals.Instance.onPlayerPressedDropItemButton +=
+                playerHitDetectionController.OnPlayerPressedDropItemButton;
             PlayerSignals.Instance.onGetPlayerSpeed += OnGetPlayerSpeed;
             PlayerSignals.Instance.onSetPlayerToCutScenePosition += OnSetPlayerToCutScenePosition;
             PlayerSignals.Instance.onSetAnimationBool += playerAnimationController.OnSetBoolAnimation;
@@ -93,9 +93,7 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onPlayerCollidedWithObstacle += playerMovementController.OnPlayerCollidedWithObstacle;
             PlayerSignals.Instance.onIsPlayerFalling += playerMovementController.OnIsPlayerFalling;
             PlayerSignals.Instance.onIsKillRoll += playerMovementController.OnIsKillRoll;
-            PlayerSignals.Instance.onPlayerStartToPickUp += playerPickUpController.OnPlayerStartToPickUp;
-            CollectableSignals.Instance.onSendCollectableType += playerPickUpController.OnSendCollectableType;
-            PlayerSignals.Instance.onSendPlayerItemTag += playerPickUpController.onSendPlayerItemTag;
+          
 
 
 
@@ -147,7 +145,7 @@ namespace Runtime.Managers
             InputSignals.Instance.onPlayerPressedLeftShiftButton -= OnPlayerPressedLeftShiftButton;
             InputSignals.Instance.onPlayerPressedSpaceButton -= OnPlayerPressedSpaceButton;
             InputSignals.Instance.onPlayerPressedPickUpButton -= playerHitDetectionController.OnPlayerPressedPickUpButton;
-            InputSignals.Instance.onPlayerPressedDropItemButton -= playerPickUpController.OnPlayerPressedDropItemButton;
+            InputSignals.Instance.onPlayerPressedDropItemButton -= playerHitDetectionController.OnPlayerPressedDropItemButton;
             PlayerSignals.Instance.onGetPlayerSpeed -= OnGetPlayerSpeed;
             PlayerSignals.Instance.onSetPlayerToCutScenePosition -= OnSetPlayerToCutScenePosition;
             PlayerSignals.Instance.onSetAnimationBool -= playerAnimationController.OnSetBoolAnimation;
@@ -155,9 +153,7 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onSetCombatCount -= playerAnimationController.OnSetCombatCount;
             PlayerSignals.Instance.onIsPlayerFalling -= playerMovementController.OnIsPlayerFalling;
             PlayerSignals.Instance.onIsKillRoll -= playerMovementController.OnIsKillRoll;
-            PlayerSignals.Instance.onPlayerStartToPickUp -= playerPickUpController.OnPlayerStartToPickUp;
-            CollectableSignals.Instance.onSendCollectableType -= playerPickUpController.OnSendCollectableType;
-            PlayerSignals.Instance.onSendPlayerItemTag -= playerPickUpController.onSendPlayerItemTag;
+           
            
             
         }

@@ -2,11 +2,8 @@
 {
     public enum CollectableEnum
     {
-        Carryable,
-        Inventory,
-        Consumable,
-        Open,
-        Puzzle,
-        Photo
+        Pickable,
+        Door,
+        Puzzle
     }
 }

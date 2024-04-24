@@ -21,8 +21,6 @@ namespace Runtime.Signals
        
        public UnityAction<bool> onIsPlayerFalling = delegate {  };
        
-       public UnityAction<GameObject> onPlayerStartToPickUp = delegate {  };
-       public Func<GameObject> onSendPlayerItemTag = delegate { return null;};
 
 
 

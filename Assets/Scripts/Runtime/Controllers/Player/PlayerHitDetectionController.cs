@@ -14,19 +14,22 @@ namespace Runtime.Controllers.Player
 
         #region Private Variables
 
-        private Camera camera;
+        private Camera _camera;
         private NativeArray<RaycastCommand> _raycastCommands;
         private NativeArray<RaycastHit> _raycastHits;
         private JobHandle _jobHandle;
-        private bool _isReadyToInteract;
-        private bool _isRaySearching;
         private GameObject _collidedObject;
+
+        private bool _didHit;
+        
         
         #endregion
         
         #endregion
 
         [SerializeField] private float maxDistance;// Maximum distance for raycasting
+        [SerializeField] private Transform playerTransform;
+        [SerializeField] private Transform playerHandTransform;
 
 
         private void Awake()
@@ -44,7 +47,7 @@ namespace Runtime.Controllers.Player
         
        
         [Obsolete("Obsolete")]
-        private void Update()
+        private void FixedUpdate()
         {
             
             
@@ -54,57 +57,103 @@ namespace Runtime.Controllers.Player
             
             if (didHitYa)
             {
-                
-                if (!_isRaySearching)
+                if (_collidedObject != pickUpRay.collider.gameObject)
                 {
-                    Debug.LogWarning("Ray colliding with something");
-                    _collidedObject = pickUpRay.collider.gameObject;
-                    ChangeColorOfCollectable(_collidedObject,true);
-                    _isReadyToInteract = true;
-                    _isRaySearching = true;
+                    ChangeColorOfObject(_collidedObject,false);
+                    _didHit = false;
                 }
                 
+                if (!_didHit)
+                {
+                   if(Vector3.Distance(playerTransform.position,pickUpRay.collider.transform.position) < 3f)
+                   {
+                       _collidedObject = pickUpRay.collider.gameObject;
+                          ChangeColorOfObject(_collidedObject,true);
+                          _didHit = true;
+                   }
+                }
+                
+               
 
             }
             else
             {
-                if (_isReadyToInteract && _isRaySearching)
+                if (_didHit)
                 {
-                    Debug.LogWarning("Ray stop colliding with something");
-                    ChangeColorOfCollectable(_collidedObject,false);
-                    _collidedObject = null;
-                    _isReadyToInteract = false;
-                    _isRaySearching = false;
-
+                    ChangeColorOfObject(_collidedObject,false);
+                    _didHit = false;
                 }
                
                 
+
+
             }
            
             
-            var newRay =  camera.transform.forward;
-            _raycastCommands[0] = new RaycastCommand(camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Pick","Door"));
-            Debug.DrawRay(camera.transform.position,newRay * maxDistance , Color.cyan);
+            var newRay =  _camera.transform.forward;
+            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Pickable","Door","Openable","Puzzle"));
+            Debug.DrawRay(_camera.transform.position,newRay * maxDistance , Color.cyan);
             _jobHandle = RaycastCommand.ScheduleBatch(_raycastCommands, _raycastHits, 1);
         }
 
-        private void ChangeColorOfCollectable(GameObject collidedObject, bool condition)
+        private void ChangeColorOfObject(GameObject collidedObject, bool condition)
         {
-                CollectableSignals.Instance.onChangeCollectableColor?.Invoke(collidedObject,condition);
+            if(_collidedObject is null) return;
+            if (condition)
+            {
+                InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(true,collidedObject);
+            }
+            else
+            {
+                InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(false,collidedObject);
+                _collidedObject = null;
+            }
         }
 
 
         public void GetCameraTransform(Camera cameraTrans)
         {
-            camera = cameraTrans;
+            _camera = cameraTrans;
         }
 
 
         public void OnPlayerPressedPickUpButton()
         {
             if (_collidedObject is null) return;
-            Debug.LogWarning("Item is not null");
-            PlayerSignals.Instance.onPlayerStartToPickUp?.Invoke(_collidedObject);
+            var layerName = LayerMask.LayerToName(_collidedObject.layer);
+            switch (layerName)
+            {
+                case "Door":
+                    InteractableSignals.Instance.onInteractableOpenDoor?.Invoke(_collidedObject);
+                    break;
+                case "Pickable":
+                    var child = playerHandTransform.childCount > 0;
+                    if (child)
+                    {
+                        Debug.LogWarning("Drop the object first");
+                        InteractableSignals.Instance.onDropandPickUpTheInteractableObject?.Invoke(playerHandTransform.GetChild(0).gameObject,_collidedObject,playerHandTransform);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Pick up the object");
+                        InteractableSignals.Instance.onPickUpTheInteractableObject?.Invoke(_collidedObject,playerHandTransform);
+                    }
+                    break;
+                case "Puzzle":
+                    InteractableSignals.Instance.onPlayerInteractWithPuzzlePart?.Invoke(_collidedObject,playerHandTransform.GetChild(0).gameObject);
+                    break;
+                
+            }
+           
+            
         }
+
+        public void OnPlayerPressedDropItemButton()
+        {
+            if (playerHandTransform.childCount < 1) return;
+            Debug.LogWarning("Drop the object");
+            InteractableSignals.Instance.onDropTheInteractableObject?.Invoke(playerHandTransform.GetChild(0).gameObject,playerHandTransform);
+        }
+        
     }
 }
