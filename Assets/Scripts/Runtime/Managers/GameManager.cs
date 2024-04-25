@@ -28,8 +28,8 @@ namespace Runtime.Managers
 
         private void SubscribeEvents()
         {
-            
             CoreGameSignals.Instance.onGameStatusChanged += OnGameStatusChanged;
+            CoreGameSignals.Instance.onGetGameState += () => gameState;
         }
        
 
@@ -52,13 +52,13 @@ namespace Runtime.Managers
                 case GameStateEnum.Quit:
                     
                     break;
-                case GameStateEnum.Settings:
+                case GameStateEnum.UI:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
                     InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
                     break;
                 
-                case GameStateEnum.UI:
-                    InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
+                case GameStateEnum.Start:
+                    InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
                     InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
                     break;
               

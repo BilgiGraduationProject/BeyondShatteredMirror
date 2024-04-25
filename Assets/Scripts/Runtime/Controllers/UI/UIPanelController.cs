@@ -124,6 +124,7 @@ namespace Runtime.Controllers.UI
         private void OnClosePanel(int layerValue)
         {
             CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+            
             // Check if the layer is the last one or the one before the last one
             if (IsLastOrBeforeLastLayer(layerValue))
             {
@@ -147,6 +148,13 @@ namespace Runtime.Controllers.UI
                 layers[layerValue - 1].transform.GetChild(0).gameObject.SetActive(value);
             }
             
+            if (layers[0].transform.childCount > 0 && layers[0].transform.GetChild(0).name.Replace("Panel(Clone)", "").Trim() 
+                == UIPanelTypes.Start.ToString())
+            {
+                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Start);
+                print("Start panel is open. Game state is Start.");
+            }
+            
             if(!value) return;
             
             // Switch case for UIPanelTypes
@@ -158,22 +166,28 @@ namespace Runtime.Controllers.UI
                 print(panel);
                 switch (panel)
                 {
-                    case UIPanelTypes.Ingame:
-                        // TODO: Sorun Burdan Kaynaklanıyor Olabilir
-                        
-                        break;
                     case UIPanelTypes.Start:
-                    case UIPanelTypes.Inventory:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Start);
+                        break;
                     case UIPanelTypes.Settings:
-                    case UIPanelTypes.Pause:
-                    case UIPanelTypes.Shop:
-                       
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
                         break;
                     case UIPanelTypes.Quit:
-                       
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Quit);
+                        break;
+                    case UIPanelTypes.Ingame:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                        break;
+                    case UIPanelTypes.Inventory:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
+                        break;
+                    case UIPanelTypes.Pause:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
+                        break;
+                    case UIPanelTypes.Shop:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
                         break;
                     default:
-                        Debug.LogError("Invalid UIPanelTypes value");
                         break;
                 }
             }
@@ -240,12 +254,31 @@ namespace Runtime.Controllers.UI
         }
         */
         
+        /// <summary>
+        /// Opens a new UI panel based on the given UIPanelTypes enum value.
+        /// This function checks if a cutscene is playing and prevents opening a new panel during a cutscene.
+        /// It also checks if there is already a panel open in a higher layer and prevents opening a new panel in such cases.
+        /// If the layer is the last one or the one before the last one, it disables the previous panel.
+        /// </summary>
+        /// <param name="panel">The type of the panel to open.</param>
+        /// <param name="layerValue">The layer value to determine where to open the panel.</param>
+        ///
+        /// /// <summary>
+        /// Verilen UIPanelTypes enum değerine göre yeni bir UI paneli açar.
+        /// Bu fonksiyon bir cutscene'in oynatılıp oynatılmadığını kontrol eder ve bir cutscene sırasında yeni bir panel açılmasını engeller.
+        /// Ayrıca, daha yüksek bir katmanda zaten bir panelin açık olup olmadığını kontrol eder ve bu tür durumlarda yeni bir panel açılmasını engeller.
+        /// Katman sonuncu veya sonuncudan bir önceki ise, önceki paneli devre dışı bırakır.
+        /// </summary>
+        /// <param name="panel">Açılacak panelin tipi.</param>
+        /// <param name="layerValue">Panelin nerede açılacağını belirlemek için katman değeri.</param>
         private void OnOpenPanel(UIPanelTypes panel, short layerValue)
         {
-            //CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
-            // GameManager gameManager = FindObjectOfType<GameManager>();
-            //
-            // if(gameManager.gameState is GameStateEnum.Cutscene && layerValue > 0) return;
+            // Check if a cutscene is playing. If it is, we don't open a new panel.
+            if (CoreGameSignals.Instance.onGetGameState() is GameStateEnum.Cutscene && layerValue > 0)
+            {
+                print($"Cutscene is playing. You can't open a panel right now. \n GameState: {CoreGameSignals.Instance.onGetGameState()}");
+                return;
+            }
             
             // Check if there is already a panel open in a higher layer
             if (IsPanelOpenInHigherLayer(layerValue))
@@ -268,13 +301,28 @@ namespace Runtime.Controllers.UI
             switch (panel)
             {
                 case UIPanelTypes.Start:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Start);
+                    break;
                 case UIPanelTypes.Settings:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
+                    break;
                 case UIPanelTypes.Quit:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Quit);
                     break;
                 case UIPanelTypes.Ingame:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+                    break;
                 case UIPanelTypes.Inventory:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
+                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+                    break;
                 case UIPanelTypes.Pause:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
+                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+                    break;
                 case UIPanelTypes.Shop:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
                     CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
                     break;
                 default:

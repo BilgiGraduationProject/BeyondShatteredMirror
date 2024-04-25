@@ -43,13 +43,11 @@ namespace Runtime.Managers
 
         public void OnQuit()
         {
-            
             Application.Quit();
         }
 
         public void OnSettings()
         {
-           
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Settings, 2);
         }
     }

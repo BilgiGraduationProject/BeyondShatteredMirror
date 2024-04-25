@@ -4,8 +4,8 @@ namespace Runtime.Enums.GameManager
     {
         Game,
         Cutscene,
-        Settings,
         UI,
+        Start,
         Quit,
        
         

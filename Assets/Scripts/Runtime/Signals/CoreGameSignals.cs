@@ -8,8 +8,7 @@ namespace Runtime.Signals
     public class CoreGameSignals : MonoSingleton<CoreGameSignals>
     {
         public UnityAction<GameStateEnum> onGameStatusChanged = delegate {  };
-        
-       
-        
+        public Func<GameStateEnum> onGetGameState;
+
     }
 }
