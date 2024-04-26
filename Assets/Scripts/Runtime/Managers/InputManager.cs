@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using DG.Tweening;
 using Runtime.Commands.Input;
@@ -79,6 +80,11 @@ namespace Runtime.Managers
             _spaceInputCommand = new SpaceInputCommand(space);
             _meeleCombatCommand = new MeeleCombatCommand(leftMouseButton,this,ref _combatCoroutine);
             
+        }
+
+        private void Start()
+        {
+            OnChangeMouseVisibility(false);
         }
 
         private void OnEnable()

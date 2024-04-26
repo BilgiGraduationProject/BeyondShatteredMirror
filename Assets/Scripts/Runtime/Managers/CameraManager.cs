@@ -23,6 +23,7 @@ namespace Runtime.Managers
         #region Private Variables
 
         private Transform _playerLookAt;
+        private Transform _playerFollow;
         private Vector3 _viewDirection;
 
         #endregion
@@ -59,7 +60,9 @@ namespace Runtime.Managers
         {
             var playerManager = GameObject.FindObjectOfType<PlayerManager>().transform;
             _playerLookAt = playerManager.GetChild(playerManager.childCount - 1).transform;
-            _stateDrivenCamera.Follow = _playerLookAt;
+            _playerFollow = playerManager.GetChild(0).transform;
+            
+            _stateDrivenCamera.Follow = _playerFollow;
             _stateDrivenCamera.LookAt = _playerLookAt;
         }   
 
@@ -69,12 +72,11 @@ namespace Runtime.Managers
             switch (cameraState)
             {
                 case CameraStateEnum.Play:
-                    _stateDrivenCamera.Follow = _playerLookAt;
+                    _stateDrivenCamera.Follow = _playerFollow;
                     _stateDrivenCamera.LookAt = _playerLookAt;
                     break;
                 case CameraStateEnum.CutScene:
                     _stateDrivenCamera.Follow = null;
-                    _stateDrivenCamera.LookAt = null;
                     break;
                 
                 
