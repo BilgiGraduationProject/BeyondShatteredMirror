@@ -14,11 +14,12 @@ namespace Runtime.Controllers.Player
                 print("Mirror Triggered");
                 other.CompareTag("Untagged");
                 PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.StandFrontOfMirror);
+                PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.StandFrontOfMirror);
             }
 
             if (other.CompareTag("House"))
             {
-                CoreUISignals.Instance.onOpenCutscene?.Invoke((2));
+                CoreUISignals.Instance.onOpenCutscene?.Invoke(2);
                 other.CompareTag("Untagged");
             }
 

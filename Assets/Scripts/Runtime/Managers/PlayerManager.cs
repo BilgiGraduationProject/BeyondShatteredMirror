@@ -106,8 +106,7 @@ namespace Runtime.Managers
             var rotation = _cutScenePositionHolderData.cutSceneHolders[(int)playableEnum].cutSceneRotation;
             playerTransform.DOMove(position.position, 1f);
             playerTransform.DORotate(rotation, 1f);
-            PlayableSignals.Instance.onSetUpCutScene?.Invoke(playableEnum);
-           
+
         }
 
         

@@ -77,6 +77,7 @@ namespace Runtime.Managers
                     break;
                 case CameraStateEnum.CutScene:
                     _stateDrivenCamera.Follow = null;
+                    _stateDrivenCamera.LookAt = null;
                     break;
                 
                 

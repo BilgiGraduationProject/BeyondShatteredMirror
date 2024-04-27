@@ -84,7 +84,7 @@ namespace Runtime.Managers
 
         private void Start()
         {
-            OnChangeMouseVisibility(false);
+            //OnChangeMouseVisibility(false);
         }
 
         private void OnEnable()
