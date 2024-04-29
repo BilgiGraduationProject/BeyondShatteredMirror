@@ -103,7 +103,7 @@ namespace Runtime.Managers
             {
                 if (type == CollectableEnum.Puzzle)
                 {
-                    meshRenderer.material.DOFade(0.55f, "_BaseColor", 1);
+                    meshRenderer.material.DOFade(99f, "_BaseColor", 1);
                 }
                 meshRenderer.material.DOFloat(1, "_OutlineWidth", 1);
             }

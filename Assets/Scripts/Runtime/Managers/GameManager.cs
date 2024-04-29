@@ -55,13 +55,17 @@ namespace Runtime.Managers
                 case GameStateEnum.UI:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
                     InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
+                    CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.CutScene);
                     break;
                 
                 case GameStateEnum.Start:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
                     InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
                     break;
-              
+                case GameStateEnum.Capture:
+                    InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
+                    InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(true);
+                    break;
             }
         }
 

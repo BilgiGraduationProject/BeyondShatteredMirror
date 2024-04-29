@@ -17,5 +17,10 @@ namespace Runtime.Controllers.UI
         #endregion
 
         #endregion
+
+        private void OnEnable()
+        {
+            
+        }
     }
 }

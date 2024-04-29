@@ -45,11 +45,23 @@ namespace Runtime.Controllers.UI
             // TODO: Daha sonrası için kamerayı o an açıp açamayacağını da kontrol et.
             if (Input.GetKeyDown(KeyCode.C) && _viewingPhoto)
             {
+                if (CoreGameSignals.Instance.onGetGameState() is not GameStateEnum.Game)
+                {
+                    print("You can't take photo now. You are in the wrong state. \n You are in " + CoreGameSignals.Instance.onGetGameState() + " state.");
+                    return;
+                }
                 StopCoroutine(CaptureShot());
-                
                 //StopCoroutine(CaptureScreenshotAndSave());
                 RemovePhoto();
                 CaptureTime();
+            }
+            else if (Input.GetKeyDown(KeyCode.C) && !_viewingPhoto || Input.GetKeyDown(KeyCode.Escape) && !_viewingPhoto)
+            {
+                if(CoreGameSignals.Instance.onGetGameState() is not GameStateEnum.Capture) return;
+                print("Capture is stopped.");
+                StopCoroutine(CaptureShot());
+                RemovePhoto();
+                UnCaptureTime();
             }
             
             if (Input.GetMouseButtonDown(0) && !_viewingPhoto)
@@ -62,23 +74,24 @@ namespace Runtime.Controllers.UI
             {
                 CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
             }
-            
-            
         }
 
         private void CaptureTime()
         {
-            
             cameraViewfinder.SetActive(true);
+            CoreUISignals.Instance.onDisableAllPanels?.Invoke();
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Capture);
             //CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.StopPlayer);
         }
 
         private void UnCaptureTime()
         {
-            
             _photoSprite = null;
+            _viewingPhoto = true;
             photoFrame.SetActive(false);
-           
+            cameraViewfinder.SetActive(false);
+            CoreUISignals.Instance.onEnableAllPanels?.Invoke();
+            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
         }
         
         IEnumerator CaptureShot()

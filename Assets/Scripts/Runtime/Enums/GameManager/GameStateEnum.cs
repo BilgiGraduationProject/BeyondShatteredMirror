@@ -6,9 +6,7 @@ namespace Runtime.Enums.GameManager
         Cutscene,
         UI,
         Start,
+        Capture,
         Quit,
-       
-        
-        
     }
 }

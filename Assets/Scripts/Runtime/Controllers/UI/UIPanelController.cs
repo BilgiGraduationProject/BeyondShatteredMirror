@@ -50,6 +50,9 @@ namespace Runtime.Controllers.UI
         
         #endregion
 
+        /// <summary>
+        /// Tüm panelleri devre dışı bırakır. Her katmandaki tüm çocuk nesneleri devre dışı bırakır.
+        /// </summary>
         private void OnDisableAllPanels()
         {
             foreach (var layer in layers)
@@ -61,6 +64,9 @@ namespace Runtime.Controllers.UI
             }
         }
 
+        /// <summary>
+        /// Tüm panelleri etkinleştirir. Her katmandaki tüm çocuk nesneleri etkinleştirir.
+        /// </summary>
         private void OnEnableAllPanels()
         {
             foreach (var layer in layers)
@@ -72,6 +78,9 @@ namespace Runtime.Controllers.UI
             }
         }
         
+        /// <summary>
+        /// Tüm panelleri kapatır. Her katmandaki tüm çocuk nesneleri yok eder.
+        /// </summary>
         private void OnCloseAllPanels()
         {
             InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
@@ -83,71 +92,51 @@ namespace Runtime.Controllers.UI
                 }
             }
         }
-
-        /*
-        private void OnClosePanel(int layerValue)
-        {
-            // This helps to enable just for second the previous panel. Ayarlar acilinca sorun olmasın diye yapilan bir ayar.
-            if(layers.Count - 1 == layerValue && layers[layerValue - 1].transform.childCount > 0)
-            {
-                layers[layerValue - 1].transform.GetChild(0).gameObject.SetActive(true);
-            }
-            
-            else if (layers.Count - 2 == layerValue && layers[layerValue - 1].transform.childCount > 0) // TODO: Kontrolu GameManager ile yap.
-            {
-                if (layers[layerValue - 1].transform.GetChild(0).name.Contains(UIPanelTypes.Ingame.ToString()))
-                {
-                    layers[layerValue - 1].transform.GetChild(0).gameObject.SetActive(true); 
-                }
-            }
-            
-            //InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
-            if (layers[layerValue].transform.childCount > 0)
-            {
-                for (int i = 0; i < layers[layerValue].transform.childCount; i++)
-                {
-                    //Destroy(layers[layerValue].transform.GetChild(i).gameObject);
-                    GameObject myObj = layers[layerValue].transform.GetChild(i).gameObject;
-                    
-                    // TODO: This part is for testing purposes only. Change it later with animation.
-                    if(layerValue is 0) return;
-                    myObj.transform.localScale = Vector3.one;
-                    myObj.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.OutQuart).OnComplete(() =>
-                    {
-                        Destroy(myObj);
-                    });
-                }
-            }
-        }
-        */
         
+        /// <summary>
+        /// Belirtilen katmandaki paneli kapatır. Eğer kapatılan katman sonuncu veya sonuncudan bir önceki ise, önceki paneli etkinleştirir.
+        /// </summary>
+        /// <param name="layerValue">Kapatılacak panelin katman değeri.</param>
         private void OnClosePanel(int layerValue)
         {
             CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
             
             // Check if the layer is the last one or the one before the last one
-            if (IsLastOrBeforeLastLayer(layerValue))
+            if (IsLayerGreaterThanZero(layerValue))
             {
                 // Enable the previous panel
-                EnableDisablePreviousPanel(true, layerValue);
+                SetPreviousPanelState(true, layerValue);
             }
 
             // Close the current layer
             CloseCurrentLayer(layerValue);
         }
 
-        private bool IsLastOrBeforeLastLayer(int layerValue)
+        /// <summary>
+        /// Belirtilen katman değerinin 0'dan büyük olup olmadığını kontrol eder.
+        /// </summary>
+        /// <param name="layerValue">Kontrol edilecek katmanın değeri.</param>
+        /// <returns>Eğer belirtilen katman değeri 0'dan büyükse true, değilse false döner.</returns>
+        private bool IsLayerGreaterThanZero(int layerValue)
         {
-            return layers.Count - 1 == layerValue || layers.Count - 2 == layerValue;
+            //return layers.Count - 1 == layerValue || layers.Count - 2 == layerValue;
+            return layerValue > 0;
         }
 
-        private void EnableDisablePreviousPanel(bool value, int layerValue)
+        /// <summary>
+        /// Belirtilen katmandaki önceki paneli etkinleştirir veya devre dışı bırakır.
+        /// Eğer panel etkinleştiriliyorsa, oyun durumunu da günceller.
+        /// </summary>
+        /// <param name="value">Önceki panelin etkinleştirilip etkinleştirilmeyeceğini belirler.</param>
+        /// <param name="layerValue">Etkinleştirilecek veya devre dışı bırakılacak panelin katman değeri.</param>
+        private void SetPreviousPanelState(bool value, int layerValue)
         {
             if (layers[layerValue - 1].transform.childCount > 0)
             {
                 layers[layerValue - 1].transform.GetChild(0).gameObject.SetActive(value);
             }
             
+            // Check if layer[0] is Start panel and if it is open, change the game state to Start
             if (layers[0].transform.childCount > 0 && layers[0].transform.GetChild(0).name.Replace("Panel(Clone)", "").Trim() 
                 == UIPanelTypes.Start.ToString())
             {
@@ -155,13 +144,13 @@ namespace Runtime.Controllers.UI
                 print("Start panel is open. Game state is Start.");
             }
             
-            if(!value) return;
+            //if(!value) return;
             
             // Switch case for UIPanelTypes
             if (layers[layerValue - 1].transform.childCount > 0)
             {
                 string panelName = layers[layerValue - 1].transform.GetChild(0).name.Replace("Panel(Clone)", "").Trim();
-                print(panelName);
+                //print(panelName);
                 UIPanelTypes panel = (UIPanelTypes)Enum.Parse(typeof(UIPanelTypes), panelName);
                 print(panel);
                 switch (panel)
@@ -193,6 +182,10 @@ namespace Runtime.Controllers.UI
             }
         }
 
+        /// <summary>
+        /// Belirtilen katmandaki paneli kapatır. Paneli kapatırken bir animasyon oynatır ve animasyon bittiğinde paneli yok eder.
+        /// </summary>
+        /// <param name="layerValue">Kapatılacak panelin katman değeri.</param>
         private void CloseCurrentLayer(int layerValue)
         {
             if (layers[layerValue].transform.childCount > 0)
@@ -209,61 +202,7 @@ namespace Runtime.Controllers.UI
             }
         }
         
-        
-        /*
-        private void OnOpenPanel(UIPanelTypes panel, short layerValue)
-        {
-            // This helps to disable just for second the previous panel. Ayarlar acilinca sorun olmasın diye yapilan bir ayar.
-            if(layers.Count - 1 == layerValue && layers[layerValue - 1].transform.childCount > 0) 
-            {
-                layers[layerValue - 1].transform.GetChild(0).gameObject.SetActive(false); 
-            }
-            else if (layers.Count - 2 == layerValue && layers[layerValue - 1].transform.childCount > 0) // TODO: Kontrolu GameManager ile yap.
-            {
-                if (layers[layerValue - 1].transform.GetChild(0).name.Contains(UIPanelTypes.Ingame.ToString()))
-                {
-                    layers[layerValue - 1].transform.GetChild(0).gameObject.SetActive(false); 
-                }
-            }
-            
-            if (layers[layerValue].transform.childCount > 0 && layerValue is not 0) // This helps to close the previous panel
-            {
-                OnClosePanel(layerValue);
-                
-                // This helps to prevent opening the same panel
-                if (!layers[layerValue].transform.GetChild(0).name.Contains(panel.ToString())) 
-                {
-                    //CoreUISignals.Instance.onClosePanel?.Invoke(layerValue);
-                    InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
-                    GameObject gom = Instantiate(Resources.Load<GameObject>($"Prefabs/UIPanels/{panel}Panel"), layers[layerValue].transform);
-            
-                    if (layerValue is 0) return;
-                    gom.transform.localScale = Vector3.zero;
-                    gom.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
-                }
-                return;
-            }
-            
-            //CoreUISignals.Instance.onClosePanel?.Invoke(layerValue);
-            InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
-            GameObject go = Instantiate(Resources.Load<GameObject>($"Prefabs/UIPanels/{panel}Panel"), layers[layerValue].transform);
-            
-            if (layerValue is 0) return;
-            go.transform.localScale = Vector3.zero;
-            go.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
-        }
-        */
-        
         /// <summary>
-        /// Opens a new UI panel based on the given UIPanelTypes enum value.
-        /// This function checks if a cutscene is playing and prevents opening a new panel during a cutscene.
-        /// It also checks if there is already a panel open in a higher layer and prevents opening a new panel in such cases.
-        /// If the layer is the last one or the one before the last one, it disables the previous panel.
-        /// </summary>
-        /// <param name="panel">The type of the panel to open.</param>
-        /// <param name="layerValue">The layer value to determine where to open the panel.</param>
-        ///
-        /// /// <summary>
         /// Verilen UIPanelTypes enum değerine göre yeni bir UI paneli açar.
         /// Bu fonksiyon bir cutscene'in oynatılıp oynatılmadığını kontrol eder ve bir cutscene sırasında yeni bir panel açılmasını engeller.
         /// Ayrıca, daha yüksek bir katmanda zaten bir panelin açık olup olmadığını kontrol eder ve bu tür durumlarda yeni bir panel açılmasını engeller.
@@ -273,25 +212,50 @@ namespace Runtime.Controllers.UI
         /// <param name="layerValue">Panelin nerede açılacağını belirlemek için katman değeri.</param>
         private void OnOpenPanel(UIPanelTypes panel, short layerValue)
         {
-            // Check if a cutscene is playing. If it is, we don't open a new panel.
-            if (CoreGameSignals.Instance.onGetGameState() is GameStateEnum.Cutscene && layerValue > 0)
+            // Check if the layer value is out of range
+            if (layerValue < 0 || layerValue >= layers.Count)
             {
-                print($"Cutscene is playing. You can't open a panel right now. \n GameState: {CoreGameSignals.Instance.onGetGameState()}");
+                print("Layer value is out of range.");
+                throw new ArgumentOutOfRangeException(nameof(layerValue), "Layer value is out of range.");
                 return;
             }
             
+            // Check if a cutscene is playing. If it is, we don't open a new panel.
+            if (GameState(GameStateEnum.Cutscene) && layerValue > 0 || GameState(GameStateEnum.Capture)
+                || GameState(GameStateEnum.Start) && panel is not UIPanelTypes.Settings && panel is not UIPanelTypes.Ingame)
+            {
+                print($"You can't open a panel right now. GameState: {CoreGameSignals.Instance.onGetGameState()}, Panel: {panel}");
+                return;
+            }
+            
+            // if (CoreGameSignals.Instance.onGetGameState() is GameStateEnum.Cutscene && layerValue > 0 
+            //     || CoreGameSignals.Instance.onGetGameState() is GameStateEnum.Start && panel is not UIPanelTypes.Settings && panel is not UIPanelTypes.Ingame
+            //     || CoreGameSignals.Instance.onGetGameState() is GameStateEnum.Capture)
+            // {
+            //     print($"You can't open a panel right now. \n GameState: {CoreGameSignals.Instance.onGetGameState()}, \t Panel: {panel}");
+            //     return;
+            // }
+            
             // Check if there is already a panel open in a higher layer
+            // TODO: Aynı layerda başka bir panel açıkken, buna izin vermemek için bir kontrol yapılmalı.
             if (IsPanelOpenInHigherLayer(layerValue))
             {
                 // If there is, we don't open a new panel and return
+                print("IsPanelOpenInHigherLayer");
                 return;
             }
             
-            // Check if the layer is the last one or the one before the last one
-            if (IsLastOrBeforeLastLayer(layerValue))
+            // Check if there is already a panel open in the same layer
+            if (IsLayerGreaterThanZero(layerValue))
             {
                 // Disable the previous panel
-                EnableDisablePreviousPanel(false, layerValue);
+                print("IsLayerGreaterThanZero, true");
+                SetPreviousPanelState(false, layerValue);
+            }
+            else
+            {
+                print("IsLayerGreaterThanZero, false");
+                print($"There is no panel in the layer {layerValue} to close.");
             }
 
             // Open the new panel
@@ -330,11 +294,21 @@ namespace Runtime.Controllers.UI
             }
         }
         
+        /// <summary>
+        /// Belirtilen katmanda bir panelin açık olup olmadığını kontrol eder.
+        /// </summary>
+        /// <param name="layerValue">Kontrol edilecek katmanın değeri.</param>
+        /// <returns>Belirtilen katmanda bir panel açıksa true, değilse false döner.</returns>
         private bool IsPanelOpenInLayer(int layerValue)
         {
             return layers[layerValue].transform.childCount > 0;
         }
         
+        /// <summary>
+        /// Belirtilen katmandan daha yüksek bir katmanda bir panelin açık olup olmadığını kontrol eder.
+        /// </summary>
+        /// <param name="layerValue">Kontrol edilecek katmanın değeri.</param>
+        /// <returns>Belirtilen katmandan daha yüksek bir katmanda bir panel açıksa true, değilse false döner.</returns>
         private bool IsPanelOpenInHigherLayer(int layerValue)
         {
             for (int i = layerValue + 1; i < layers.Count; i++)
@@ -347,22 +321,35 @@ namespace Runtime.Controllers.UI
             return false;
         }
 
+        /// <summary>
+        /// Belirtilen UIPanelTypes enum değerine göre yeni bir panel açar.
+        /// </summary>
+        /// <param name="panel">Açılacak panelin tipi.</param>
+        /// <param name="layerValue">Panelin nerede açılacağını belirlemek için katman değeri.</param>
         private void OpenNewPanel(UIPanelTypes panel, short layerValue)
         {
             if (layers[layerValue].transform.childCount > 0 && layerValue is not 0)
             {
                 OnClosePanel(layerValue);
+                print($"Closed the panel in layer {layerValue} to open a new one.");
                 if (!layers[layerValue].transform.GetChild(0).name.Contains(panel.ToString()))
                 {
                     InstantiateNewPanel(panel, layerValue);
+                    print("InstantiateNewPanel");
                 }
             }
             else
             {
                 InstantiateNewPanel(panel, layerValue);
+                print("InstantiateNewPanel");
             }
         }
 
+        /// <summary>
+        /// Belirtilen UIPanelTypes enum değerine göre yeni bir panel örneği oluşturur ve belirtilen katmanda bu paneli açar.
+        /// </summary>
+        /// <param name="panel">Açılacak panelin tipi.</param>
+        /// <param name="layerValue">Panelin nerede açılacağını belirlemek için katman değeri.</param>
         private void InstantiateNewPanel(UIPanelTypes panel, short layerValue)
         {
             InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
@@ -372,11 +359,13 @@ namespace Runtime.Controllers.UI
             go.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
         }
         
-        
+        private bool GameState(GameStateEnum state)
+        {
+            return CoreGameSignals.Instance.onGetGameState() == state;
+        }
 
         private void Start()
         {
-            
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 0);
         }
 
@@ -387,13 +376,11 @@ namespace Runtime.Controllers.UI
                 // Close the topmost panel
                 CloseTopmostPanel();
             }
-
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-               
-            }
         }
         
+        /// <summary>
+        /// Escape tuşuna basıldığında en üstteki paneli kapatır.
+        /// </summary>
         private void CloseTopmostPanel()
         {
             for (int i = layers.Count - 1; i > 0; i--)
