@@ -57,9 +57,10 @@ namespace Runtime.Controllers.Player
             
             if (didHitYa)
             {
-                if (_collidedObject != pickUpRay.collider.gameObject)
+                if ( _collidedObject is not null &&_collidedObject != pickUpRay.collider.gameObject)
                 {
-                    ChangeColorOfObject(_collidedObject,false);
+                    Debug.LogWarning("Colliding is not same");
+                    ChangeColorOfObject(_collidedObject,false,LayerMask.LayerToName(_collidedObject.layer));
                     _didHit = false;
                 }
                 
@@ -67,8 +68,9 @@ namespace Runtime.Controllers.Player
                 {
                    if(Vector3.Distance(playerTransform.position,pickUpRay.collider.transform.position) < 3f)
                    {
+                       Debug.LogWarning("Colliding is same");
                        _collidedObject = pickUpRay.collider.gameObject;
-                          ChangeColorOfObject(_collidedObject,true);
+                          ChangeColorOfObject(_collidedObject,true,LayerMask.LayerToName(_collidedObject.layer));
                           _didHit = true;
                    }
                 }
@@ -80,7 +82,7 @@ namespace Runtime.Controllers.Player
             {
                 if (_didHit)
                 {
-                    ChangeColorOfObject(_collidedObject,false);
+                    ChangeColorOfObject(_collidedObject,false,LayerMask.LayerToName(_collidedObject.layer));
                     _didHit = false;
                 }
                
@@ -91,22 +93,55 @@ namespace Runtime.Controllers.Player
            
             
             var newRay =  _camera.transform.forward;
-            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Pickable","Door","Openable","Puzzle"));
+            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Interectable","Openable","Puzzle"));
             Debug.DrawRay(_camera.transform.position,newRay * maxDistance , Color.cyan);
             _jobHandle = RaycastCommand.ScheduleBatch(_raycastCommands, _raycastHits, 1);
         }
 
-        private void ChangeColorOfObject(GameObject collidedObject, bool condition)
+        private void ChangeColorOfObject(GameObject collidedObject, bool condition, string layerToName)
         {
             if(_collidedObject is null) return;
+            
             if (condition)
             {
-                InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(true,collidedObject);
+                switch (layerToName)
+                {
+                    case "Interectable":
+                        InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(true,collidedObject);
+                       
+                        break;
+                    case "Puzzle":
+                        PuzzleSignals.Instance.onChangePuzzleColor?.Invoke(collidedObject,true);
+                        break;
+                    
+                    case "Openable":
+                        InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(true,collidedObject);
+                        break;
+                    
+                }
+               
             }
             else
             {
-                InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(false,collidedObject);
-                _collidedObject = null;
+                switch (layerToName)
+                {
+                    case "Interectable":
+                        InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(false,collidedObject);
+                        _collidedObject = null;
+                       
+                        break;
+                    case "Puzzle":
+                        PuzzleSignals.Instance.onChangePuzzleColor?.Invoke(collidedObject,false);
+                        _collidedObject = null;
+                        break;
+                    
+                    case "Openable":
+                        InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(false,collidedObject);
+                        _collidedObject = null;
+                        break;
+                    
+                }
+                
             }
         }
 
@@ -123,10 +158,10 @@ namespace Runtime.Controllers.Player
             var layerName = LayerMask.LayerToName(_collidedObject.layer);
             switch (layerName)
             {
-                case "Door":
+                case "Openable":
                     InteractableSignals.Instance.onInteractableOpenDoor?.Invoke(_collidedObject);
                     break;
-                case "Pickable":
+                case "Interectable":
                     var child = playerHandTransform.childCount > 0;
                     if (child)
                     {
@@ -140,7 +175,7 @@ namespace Runtime.Controllers.Player
                     }
                     break;
                 case "Puzzle":
-                    InteractableSignals.Instance.onPlayerInteractWithPuzzlePart?.Invoke(_collidedObject,playerHandTransform.GetChild(0).gameObject);
+                    PuzzleSignals.Instance.onInteractWithPuzzlePieces?.Invoke(_collidedObject,playerHandTransform.GetChild(0).gameObject);
                     break;
                 
             }

@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 4597303911047598285}
   - component: {fileID: 6284016485602766690}
   - component: {fileID: 7501357240948469465}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube__11_
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1882,7 +1882,6 @@ GameObject:
   - component: {fileID: 9021812081995841959}
   - component: {fileID: 2022217851401724894}
   - component: {fileID: 1243906495205288043}
-  - component: {fileID: 4784339263640427738}
   - component: {fileID: 2612658927983096338}
   m_Layer: 12
   m_Name: RightEyePuzzlePart
@@ -1956,22 +1955,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4784339263640427738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602841103720424244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4df51671e8814d08b95245c97a55e9a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  meshRenderer: {fileID: 1243906495205288043}
-  rigidbody: {fileID: 0}
-  animator: {fileID: 0}
 --- !u!135 &2612658927983096338
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2118,7 +2101,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 945933758542549791, guid: 9d82c66b1f46a439da7b847a975d6d21, type: 3}
 --- !u!1 &1796349275271558966
@@ -10117,6 +10100,7 @@ GameObject:
   - component: {fileID: 530072577950771371}
   - component: {fileID: 1021048672917099542}
   - component: {fileID: 7606547320470402262}
+  - component: {fileID: 7734102688208814017}
   m_Layer: 0
   m_Name: CatEye_EyelessFrame
   m_TagString: Untagged
@@ -10191,6 +10175,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7734102688208814017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038236824842711658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a3806126ab420a8e13dea8d0397956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzleEnum: 0
 --- !u!1 &9055150184877328867
 GameObject:
   m_ObjectHideFlags: 0
@@ -10285,7 +10282,6 @@ GameObject:
   - component: {fileID: 3575490992234958902}
   - component: {fileID: 556892490523334333}
   - component: {fileID: 5184631139991383525}
-  - component: {fileID: 8346786786180416315}
   - component: {fileID: 5218335915937374600}
   m_Layer: 12
   m_Name: LeftEyePuzzlePart
@@ -10359,22 +10355,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8346786786180416315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9096158270675913508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4df51671e8814d08b95245c97a55e9a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  meshRenderer: {fileID: 5184631139991383525}
-  rigidbody: {fileID: 0}
-  animator: {fileID: 0}
 --- !u!135 &5218335915937374600
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -12389,7 +12369,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -5049032948309972686, guid: 0a70dc809bd4e4a4faeecd1a754e874f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2079038557376251934}
   m_SourcePrefab: {fileID: 100100000, guid: 0a70dc809bd4e4a4faeecd1a754e874f, type: 3}
 --- !u!4 &4871360088544713022 stripped
 Transform:
@@ -12397,6 +12381,33 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4904478601652764373}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9078709314750371815 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5049032948309972686, guid: 0a70dc809bd4e4a4faeecd1a754e874f,
+    type: 3}
+  m_PrefabInstance: {fileID: 4904478601652764373}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2079038557376251934
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9078709314750371815}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.3247528, y: 0.2728085, z: 1.0664849}
+  m_Center: {x: -0.0021011697, y: -0.22299454, z: -0.000061273575}
 --- !u!1001 &4997049127122922844
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12988,6 +12999,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 3584416099881831139, guid: 93a64b9950c46c44cbee36e564c5c277,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027277258377271754, guid: 93a64b9950c46c44cbee36e564c5c277,
+        type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6378947621153783688, guid: 93a64b9950c46c44cbee36e564c5c277,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13420,7 +13441,7 @@ PrefabInstance:
     - target: {fileID: 3584416099881831139, guid: 93a64b9950c46c44cbee36e564c5c277,
         type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6378947621153783688, guid: 93a64b9950c46c44cbee36e564c5c277,
         type: 3}
@@ -13543,7 +13564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df51671e8814d08b95245c97a55e9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   meshRenderer: {fileID: 3902244557272192035}
   rigidbody: {fileID: 0}
   animator: {fileID: 5708964777826359831}

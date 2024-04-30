@@ -9,13 +9,7 @@ namespace Runtime.Managers
     public class InteractableManager : MonoBehaviour
     {
         #region Self Variables
-
-        #region Private Variables
-
         
-
-        #endregion
-
 
         #region Serialized Variables
 
@@ -41,25 +35,8 @@ namespace Runtime.Managers
             InteractableSignals.Instance.onPickUpTheInteractableObject += OnPickUpTheInteractableObject;
             InteractableSignals.Instance.onDropandPickUpTheInteractableObject += OnDropandPickUpTheInteractableObject;
             InteractableSignals.Instance.onInteractableOpenDoor += OnInteractableOpenDoor;
-            InteractableSignals.Instance.onPlayerInteractWithPuzzlePart += OnPlayerInteractWithPuzzlePart;
+          
         }
-
-        private void OnPlayerInteractWithPuzzlePart(GameObject puzzlePlace,GameObject puzzlePart )
-        {
-            if (puzzlePlace.GetInstanceID() != gameObject.GetInstanceID() || puzzlePart is null) return;
-            if (puzzlePlace.CompareTag(puzzlePart.tag))
-            {
-                puzzlePart.transform.parent = null;
-                puzzlePart.transform.position = puzzlePlace.transform.position;
-                puzzlePart.transform.rotation = puzzlePlace.transform.rotation;
-                puzzlePart.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-                puzzlePart.layer = 0;
-                puzzlePlace.layer = 0;
-
-            } 
-            
-        }
-
         private void OnInteractableOpenDoor(GameObject obj)
         {
             if(obj.GetInstanceID() != gameObject.GetInstanceID()) return;
@@ -93,26 +70,19 @@ namespace Runtime.Managers
             if(obj.GetInstanceID() != gameObject.GetInstanceID()) return;
             obj.transform.parent = null;
             rigidbody.useGravity = true;
+            rigidbody.isKinematic = false;
         }
 
         private void OnChangeColorOfInteractableObject(bool condition, GameObject obj)
         {
             if(obj.GetInstanceID() != gameObject.GetInstanceID()) return;
-            Debug.LogWarning("Change the material color");
             if (condition)
             {
-                if (type == CollectableEnum.Puzzle)
-                {
-                    meshRenderer.material.DOFade(99f, "_BaseColor", 1);
-                }
+                
                 meshRenderer.material.DOFloat(1, "_OutlineWidth", 1);
             }
             else
             {
-                if (type == CollectableEnum.Puzzle)
-                {
-                    meshRenderer.material.DOFade(0f, "_BaseColor", 1);
-                }
                 meshRenderer.material.DOFloat(0, "_OutlineWidth", 1);
             }
         }

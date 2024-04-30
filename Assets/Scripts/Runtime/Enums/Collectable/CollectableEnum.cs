@@ -4,6 +4,5 @@
     {
         Pickable,
         Door,
-        Puzzle
     }
 }

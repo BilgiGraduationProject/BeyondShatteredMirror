@@ -13,8 +13,7 @@ namespace Runtime.Signals
         public UnityAction<GameObject,Transform> onDropTheInteractableObject = delegate {  };
         public UnityAction<GameObject,GameObject,Transform> onDropandPickUpTheInteractableObject = delegate {  };
         public UnityAction<GameObject> onInteractableOpenDoor = delegate {  };
-        public UnityAction<GameObject,GameObject> onPlayerInteractWithPuzzlePart = delegate {  };
         
-        public UnityAction onSetPlayerHitDetectionGameObjectNull = delegate {  };
+       
     }
 }
