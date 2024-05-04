@@ -10,6 +10,7 @@ namespace Runtime.Enums.Player
        PickUp,
        OpenDoor,
        isWalking,
+       StealthKill
        
         
         

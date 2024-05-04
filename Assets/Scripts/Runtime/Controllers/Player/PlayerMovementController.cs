@@ -22,6 +22,10 @@ namespace Runtime.Controllers.Player
         #region Serialized Variables
         [SerializeField] private Rigidbody playerRb;
         [SerializeField] private PlayerAnimationController playerAnimationController;
+        [SerializeField] private float gravity = -9.81f;
+        [SerializeField] private float gravityMultiplier = 3.0f;
+        [SerializeField] private float _velocity;
+        
         #endregion
 
         #region Private Variables
@@ -32,6 +36,7 @@ namespace Runtime.Controllers.Player
         private TweenerCore<Vector3,Vector3,VectorOptions> _dotWeenRoll;
         private bool _isFalling;
         private bool _isKillRoll;
+        private bool _isRolling;
        
         #endregion
 
@@ -44,6 +49,7 @@ namespace Runtime.Controllers.Player
         {
             _isReadyToMove = condition;
             if (_isReadyToMove) return;
+            Debug.LogWarning("Playyer is not moving");
             PlayerSignals.Instance.onGetPlayerSpeed?.Invoke(0);
             playerRb.velocity = Vector3.zero;
            
@@ -59,12 +65,13 @@ namespace Runtime.Controllers.Player
 
         private void MovePlayer()
         {
-            if (!_isReadyToMove) return;
+            if (!_isReadyToMove || _isRolling) return;
             var moveDirection = (_cameraTransform.forward * _inputParams.Vertical + _cameraTransform.right * _inputParams.Horizontal);
             if (moveDirection == Vector3.zero) return;
             var playerRotateDirection = new Vector3(moveDirection.x,0, moveDirection.z);
             transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(playerRotateDirection),_playerData.RotationSpeed * Time.fixedDeltaTime);
-            playerRb.velocity = transform.forward * _playerData.PlayerSpeed;
+            var newMoveDirection = new Vector3(transform.forward.x,0,transform.forward.z);
+            playerRb.velocity = newMoveDirection * _playerData.PlayerSpeed;
             PlayerSignals.Instance.onGetPlayerSpeed?.Invoke(playerRb.velocity.magnitude);
             
         }
@@ -98,36 +105,22 @@ namespace Runtime.Controllers.Player
 
         internal void OnPlayerPressedSpaceButton()
         {
+            if (_isRolling) return;
             var newLookDirection = Quaternion.Euler(0,_cameraTransform.eulerAngles.y,0);
             transform.DORotateQuaternion(newLookDirection, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
             {
-                _isKillRoll = true;
-                PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Roll);
-              _dotWeenRoll =   transform.DOMove(transform.position + transform.forward * _playerData.RollDistance, _playerData.RollTime)
-                     .SetEase(Ease.Flash);
-              
+                playerRb.AddForce((transform.forward * _playerData.RollForce) / _playerData.PlayerSpeed,ForceMode.Impulse);
+                PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Roll,true);
                 
             });
-            _isKillRoll = false;
+          
 
         }
 
 
-        public void OnPlayerCollidedWithObstacle(Transform arg0)
+        public void OnPlayerIsRolling(bool condition)
         {
-            _dotWeenRoll.Kill();
-            
-            
-        }
-
-        public void OnIsPlayerFalling(bool isFalling)
-        {
-            _isFalling = isFalling;
-        }
-
-        public bool OnIsKillRoll()
-        {
-            return _isKillRoll;
+            _isRolling = condition;
         }
     }
      

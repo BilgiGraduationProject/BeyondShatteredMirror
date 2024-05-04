@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Data.ValueObject
 {
@@ -8,9 +9,7 @@ namespace Runtime.Data.ValueObject
     {
         public float PlayerSpeed;
         public float RotationSpeed;
-        public float RollDistance;
-        public float RollTime;
-        public float CameraRayDistance;
+        public float RollForce;
         public float PlayerSpeedMultiplier;
 
 

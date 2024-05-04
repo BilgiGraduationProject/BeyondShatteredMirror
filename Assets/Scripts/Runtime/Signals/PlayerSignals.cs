@@ -16,10 +16,12 @@ namespace Runtime.Signals
        public UnityAction<float> onSetCombatCount = delegate {  };
       
        
-       public UnityAction<Transform> onPlayerCollidedWithObstacle = delegate {  };
-       public Func<bool> onIsKillRoll = delegate { return false; };
+       public UnityAction<bool> onPlayerIsRolling = delegate {  };
        
-       public UnityAction<bool> onIsPlayerFalling = delegate {  };
+       
+       
+       public UnityAction onPlayerReadyToKillTheEnemy = delegate {  };
+       
        
 
 

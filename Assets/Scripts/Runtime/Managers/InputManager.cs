@@ -5,6 +5,7 @@ using DG.Tweening;
 using Runtime.Commands.Input;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Player;
+using Runtime.Enums.UI;
 using Runtime.Keys.Input;
 using Runtime.Signals;
 using Unity.VisualScripting;
@@ -166,6 +167,7 @@ namespace Runtime.Managers
                     switch (_playableEnumIndex)
                     {
                         case PlayableEnum.BathroomLayingSeize:
+                            UITextSignals.Instance.onChangeMissionText?.Invoke(UITextEnum.GoToMirror);
                             PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.StandUp);
                             _isCutSceneInputReadyToUse = false;
                             break;

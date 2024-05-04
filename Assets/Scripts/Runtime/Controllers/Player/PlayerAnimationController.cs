@@ -81,6 +81,23 @@ namespace Runtime.Controllers.Player
             PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Attack, false);
         }
 
+        public void AnimEventOnPlayerRolling()
+        {
+            PlayerSignals.Instance.onPlayerIsRolling?.Invoke(true);
+        }
+
+        public void AnimEventOnPlayIsNotRolling()
+        {
+            PlayerSignals.Instance.onPlayerIsRolling?.Invoke(false);
+            PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Roll,false);
+        }
+
+
+        public void AnimEventOnKillEnemy()
+        {
+            PlayerSignals.Instance.onPlayerReadyToKillTheEnemy?.Invoke();
+        }
+
 
         #endregion
       

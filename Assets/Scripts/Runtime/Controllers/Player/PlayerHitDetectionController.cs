@@ -11,18 +11,18 @@ namespace Runtime.Controllers.Player
     public class PlayerHitDetectionController : MonoBehaviour
     {
         #region Self Variables
-
+        
         #region Private Variables
 
         private Camera _camera;
         private NativeArray<RaycastCommand> _raycastCommands;
         private NativeArray<RaycastHit> _raycastHits;
+        
+        
         private JobHandle _jobHandle;
         private GameObject _collidedObject;
-
         private bool _didHit;
-        
-        
+        private GameObject enemyObj;
         #endregion
         
         #endregion
@@ -30,6 +30,7 @@ namespace Runtime.Controllers.Player
         [SerializeField] private float maxDistance;// Maximum distance for raycasting
         [SerializeField] private Transform playerTransform;
         [SerializeField] private Transform playerHandTransform;
+        [SerializeField] private Transform playerKillTransform;
 
 
         private void Awake()
@@ -53,9 +54,18 @@ namespace Runtime.Controllers.Player
             
             _jobHandle.Complete();
             RaycastHit pickUpRay = _raycastHits[0];
-            bool didHitYa = pickUpRay.collider is not null;
+            bool pickUpDidHitYa = pickUpRay.collider is not null;
+            CheckForPickUpRay(pickUpDidHitYa,pickUpRay);
             
-            if (didHitYa)
+            var newRay =  _camera.transform.forward;
+            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Interectable","Openable","Puzzle","SearchingEnemy"));
+            Debug.DrawRay(_camera.transform.position,newRay * maxDistance , Color.cyan);
+            _jobHandle = RaycastCommand.ScheduleBatch(_raycastCommands, _raycastHits, 1);
+        }
+
+        private void CheckForPickUpRay(bool pickUpDidHitYa, RaycastHit pickUpRay)
+        {
+            if (pickUpDidHitYa)
             {
                 if ( _collidedObject is not null &&_collidedObject != pickUpRay.collider.gameObject)
                 {
@@ -66,13 +76,13 @@ namespace Runtime.Controllers.Player
                 
                 if (!_didHit)
                 {
-                   if(Vector3.Distance(playerTransform.position,pickUpRay.collider.transform.position) < 3f)
-                   {
-                       Debug.LogWarning("Colliding is same");
-                       _collidedObject = pickUpRay.collider.gameObject;
-                          ChangeColorOfObject(_collidedObject,true,LayerMask.LayerToName(_collidedObject.layer));
-                          _didHit = true;
-                   }
+                    if(Vector3.Distance(playerTransform.position,pickUpRay.collider.transform.position) < 3f)
+                    {
+                        Debug.LogWarning("Colliding is same");
+                        _collidedObject = pickUpRay.collider.gameObject;
+                        ChangeColorOfObject(_collidedObject,true,LayerMask.LayerToName(_collidedObject.layer));
+                        _didHit = true;
+                    }
                 }
                 
                
@@ -90,12 +100,6 @@ namespace Runtime.Controllers.Player
 
 
             }
-           
-            
-            var newRay =  _camera.transform.forward;
-            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Interectable","Openable","Puzzle"));
-            Debug.DrawRay(_camera.transform.position,newRay * maxDistance , Color.cyan);
-            _jobHandle = RaycastCommand.ScheduleBatch(_raycastCommands, _raycastHits, 1);
         }
 
         private void ChangeColorOfObject(GameObject collidedObject, bool condition, string layerToName)
@@ -178,6 +182,15 @@ namespace Runtime.Controllers.Player
                     PuzzleSignals.Instance.onInteractWithPuzzlePieces?.Invoke(_collidedObject,playerHandTransform.GetChild(0).gameObject);
                     break;
                 
+                case "SearchingEnemy":
+                    if (Vector3.Distance(playerTransform.position, _collidedObject.transform.position) > 2f) return;
+                    enemyObj = _collidedObject;
+                    Debug.LogWarning("Ready to assassinate");
+                    PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.StealthKill);
+                    playerTransform.LookAt(enemyObj.transform.position);
+                    
+                    break;
+                
             }
            
             
@@ -189,6 +202,12 @@ namespace Runtime.Controllers.Player
             Debug.LogWarning("Drop the object");
             InteractableSignals.Instance.onDropTheInteractableObject?.Invoke(playerHandTransform.GetChild(0).gameObject,playerHandTransform);
         }
-        
+
+
+        public void OnPlayerReadyToKillTheEnemy()
+        {
+            enemyObj.transform.parent = playerKillTransform;
+            enemyObj.transform.position = playerKillTransform.position;
+        }
     }
 }

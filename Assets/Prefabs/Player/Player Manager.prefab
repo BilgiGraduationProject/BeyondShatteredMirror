@@ -368,7 +368,6 @@ GameObject:
   - component: {fileID: 8354289567384226435}
   - component: {fileID: 5736678488280324797}
   - component: {fileID: 3180297354523315405}
-  - component: {fileID: 7039988768581948483}
   m_Layer: 10
   m_Name: Mesh Controller
   m_TagString: Player
@@ -426,25 +425,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!320 &7039988768581948483
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1381565168296540278}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 243a8f3d365978a40b82850bf99acb02, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -1134373699263971540, guid: 243a8f3d365978a40b82850bf99acb02, type: 2}
-    value: {fileID: 3180297354523315405}
-  m_ExposedReferences:
-    m_References: []
 --- !u!1 &1575850122932771623
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,7 +729,7 @@ Transform:
   m_GameObject: {fileID: 2322513049915938198}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.7, z: 0}
+  m_LocalPosition: {x: -0.893, y: 1.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1217,6 +1197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f82f6f2c09014dfcb36550806aee50aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxSize: {x: 1, y: 0.2, z: 1}
   maxDistance: 10
   playerTransform: {fileID: 3825825139416800656}
   playerHandTransform: {fileID: 1915717374503458655}
@@ -3155,7 +3136,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8680854072100739241}
   serializedVersion: 4
-  m_Mass: 50
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -3204,6 +3185,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRb: {fileID: 810818842888294048}
   playerAnimationController: {fileID: 5736678488280324797}
+  gravity: -9.81
+  gravityMultiplier: 3
+  _velocity: 0
 --- !u!136 &4041177238089459547
 CapsuleCollider:
   m_ObjectHideFlags: 0

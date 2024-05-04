@@ -90,9 +90,8 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onSetAnimationBool += playerAnimationController.OnSetBoolAnimation;
             PlayerSignals.Instance.onSetAnimationTrigger += playerAnimationController.OnSetTriggerAnimation;
             PlayerSignals.Instance.onSetCombatCount += playerAnimationController.OnSetCombatCount;
-            PlayerSignals.Instance.onPlayerCollidedWithObstacle += playerMovementController.OnPlayerCollidedWithObstacle;
-            PlayerSignals.Instance.onIsPlayerFalling += playerMovementController.OnIsPlayerFalling;
-            PlayerSignals.Instance.onIsKillRoll += playerMovementController.OnIsKillRoll;
+            PlayerSignals.Instance.onPlayerIsRolling += playerMovementController.OnPlayerIsRolling;
+            PlayerSignals.Instance.onPlayerReadyToKillTheEnemy += playerHitDetectionController.OnPlayerReadyToKillTheEnemy;
           
 
 
@@ -102,6 +101,7 @@ namespace Runtime.Managers
 
         private void OnSetPlayerToCutScenePosition(PlayableEnum playableEnum)
         {
+            Debug.LogWarning("SetUppedPosition");
             var position = _cutScenePositionHolderData.cutSceneHolders[(int)playableEnum].cutScenePosition;
             var rotation = _cutScenePositionHolderData.cutSceneHolders[(int)playableEnum].cutSceneRotation;
             playerTransform.DOMove(position.position, 1f);
@@ -110,7 +110,6 @@ namespace Runtime.Managers
         }
 
         
-
 
         
 
@@ -144,15 +143,15 @@ namespace Runtime.Managers
             InputSignals.Instance.onPlayerPressedLeftShiftButton -= OnPlayerPressedLeftShiftButton;
             InputSignals.Instance.onPlayerPressedSpaceButton -= OnPlayerPressedSpaceButton;
             InputSignals.Instance.onPlayerPressedPickUpButton -= playerHitDetectionController.OnPlayerPressedPickUpButton;
-            InputSignals.Instance.onPlayerPressedDropItemButton -= playerHitDetectionController.OnPlayerPressedDropItemButton;
+            InputSignals.Instance.onPlayerPressedDropItemButton -=
+                playerHitDetectionController.OnPlayerPressedDropItemButton;
             PlayerSignals.Instance.onGetPlayerSpeed -= OnGetPlayerSpeed;
             PlayerSignals.Instance.onSetPlayerToCutScenePosition -= OnSetPlayerToCutScenePosition;
             PlayerSignals.Instance.onSetAnimationBool -= playerAnimationController.OnSetBoolAnimation;
             PlayerSignals.Instance.onSetAnimationTrigger -= playerAnimationController.OnSetTriggerAnimation;
             PlayerSignals.Instance.onSetCombatCount -= playerAnimationController.OnSetCombatCount;
-            PlayerSignals.Instance.onIsPlayerFalling -= playerMovementController.OnIsPlayerFalling;
-            PlayerSignals.Instance.onIsKillRoll -= playerMovementController.OnIsKillRoll;
-           
+            PlayerSignals.Instance.onPlayerIsRolling -= playerMovementController.OnPlayerIsRolling;
+            PlayerSignals.Instance.onPlayerReadyToKillTheEnemy -= playerHitDetectionController.OnPlayerReadyToKillTheEnemy;
            
             
         }
