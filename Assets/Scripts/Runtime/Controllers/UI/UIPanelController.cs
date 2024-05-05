@@ -212,6 +212,8 @@ namespace Runtime.Controllers.UI
         /// <param name="layerValue">Panelin nerede açılacağını belirlemek için katman değeri.</param>
         private void OnOpenPanel(UIPanelTypes panel, short layerValue)
         {
+            //CheckEmptyPanels();
+            
             // Check if the layer value is out of range
             if (layerValue < 0 || layerValue >= layers.Count)
             {
@@ -362,6 +364,22 @@ namespace Runtime.Controllers.UI
         private bool GameState(GameStateEnum state)
         {
             return CoreGameSignals.Instance.onGetGameState() == state;
+        }
+
+        private void CheckEmptyPanels()
+        {
+            for (int i = 0; i < layers.Count; i++)
+            {
+                if (layers[i].transform.childCount is 0)
+                {
+                    print($"Boş: {i}");
+                    break;
+                }
+                else
+                {
+                    print($"Dolu: {i}");
+                }
+            }
         }
 
         private void Start()

@@ -5,16 +5,32 @@ using UnityEngine;
 public class EnemyAttackState : StateMachineBehaviour
 {
     private Transform _player;
-    
+
+    private void OnEnable()
+    {
+        GetValues();
+    }
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-    _player = GameObject.FindWithTag("Player").transform;
+        _player = GameObject.FindWithTag("Player").transform;
+    }
+    
+    void GetValues()
+    {
+        _player = GameObject.FindWithTag("Player").transform;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (_player is null)
+        {
+            GetValues();
+            return;
+        }
+        
         animator.transform.LookAt(_player);
         
         float distance = Vector3.Distance(_player.position, animator.transform.position);
