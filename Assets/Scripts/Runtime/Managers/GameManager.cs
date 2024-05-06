@@ -1,6 +1,8 @@
 using System;
+using Runtime.Data.UnityObject;
 using Runtime.Enums.Camera;
 using Runtime.Enums.GameManager;
+using Runtime.Enums.Playable;
 using Runtime.Enums.Player;
 using Runtime.Signals;
 using UnityEngine;
@@ -17,8 +19,10 @@ namespace Runtime.Managers
        [SerializeField] private GameStateEnum gameState;
 
         #endregion
+        
 
         #endregion
+
         
 
         private void OnEnable()
@@ -31,7 +35,10 @@ namespace Runtime.Managers
             CoreGameSignals.Instance.onGameStatusChanged += OnGameStatusChanged;
             CoreGameSignals.Instance.onGetGameState += () => gameState;
         }
+
        
+       
+
 
         private void OnGameStatusChanged(GameStateEnum type)
         {
@@ -39,13 +46,13 @@ namespace Runtime.Managers
             switch (gameState)
             {
                 case GameStateEnum.Game:
-                    InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(true);
+                    InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(true);
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
                     CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Play);
                     break;
                 case GameStateEnum.Cutscene:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
-                    InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
+                    InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
                     CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.CutScene);
                  
                     break;
@@ -54,24 +61,24 @@ namespace Runtime.Managers
                     break;
                 case GameStateEnum.UI:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
-                    InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
+                    InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
                     CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.CutScene);
                     break;
                 
                 case GameStateEnum.Start:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
-                    InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
+                    InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
                     break;
                 case GameStateEnum.Capture:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
-                    InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(true);
+                    InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(true);
                     break;
             }
         }
 
         private void UnSubscribeEvents()
         {
-            CoreGameSignals.Instance.onGameStatusChanged += OnGameStatusChanged;
+            CoreGameSignals.Instance.onGameStatusChanged -= OnGameStatusChanged;
         }
 
         private void OnDisable()

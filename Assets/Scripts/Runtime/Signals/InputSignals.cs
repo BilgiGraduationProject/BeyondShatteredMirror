@@ -11,14 +11,10 @@ namespace Runtime.Signals
     { 
       
         public UnityAction<bool> onChangeMouseVisibility = delegate {  };
-        public UnityAction<InputParams> onSendInputParams = delegate {  };
-        public UnityAction<bool> onIsMovementInputReadyToUse = delegate {  };
-        public UnityAction<bool> onPlayerPressedLeftControlButton = delegate {  };
-        public UnityAction<bool> onPlayerPressedLeftShiftButton = delegate {  };
-        public UnityAction onPlayerPressedSpaceButton = delegate {  };
         public UnityAction<bool> onIsPlayerReadyToMove = delegate {  };
+        public UnityAction<bool> onPlayerPressedLeftControlButton = delegate {  };
+        public UnityAction onPlayerPressedSpaceButton = delegate {  };
         public UnityAction<bool> onIsReadyForCombat = delegate {  };
-        public UnityAction<bool> onIsPlayerPickingItem = delegate {  };
         public UnityAction onPlayerPressedPickUpButton = delegate {  };
         public UnityAction onPlayerPressedDropItemButton = delegate {  };
       

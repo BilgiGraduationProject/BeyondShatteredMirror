@@ -71,7 +71,6 @@ namespace Runtime.Managers
             var directorMode = _playerPlayable.PlayerPlayable[(int)playableEnum].directorWrapMode;
             
             if (assets is null) return;
-            
             CoreUISignals.Instance.onDisableAllPanels?.Invoke();
             CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
             var playableBindings = assets.outputs.ToArray();

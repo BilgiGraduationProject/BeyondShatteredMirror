@@ -9,7 +9,6 @@ namespace Runtime.Signals
 {
     public class PlayerSignals : MonoSingleton<PlayerSignals>
     {
-       public UnityAction<float> onGetPlayerSpeed = delegate {  };
        public UnityAction<PlayableEnum> onSetPlayerToCutScenePosition = delegate {  };
        public UnityAction<PlayerAnimationState,bool> onSetAnimationBool = delegate {  };
        public UnityAction<PlayerAnimationState> onSetAnimationTrigger = delegate {  };
@@ -18,10 +17,13 @@ namespace Runtime.Signals
        
        public UnityAction<bool> onPlayerIsRolling = delegate {  };
        
-       
-       
        public UnityAction onPlayerReadyToKillTheEnemy = delegate {  };
        
+       public UnityAction<float> onSetAnimationPlayerSpeed = delegate {  };
+       
+       
+       
+       public Func<PlayableEnum,Transform> onGetLevelCutScenePosition = delegate { return null; };
        
 
 

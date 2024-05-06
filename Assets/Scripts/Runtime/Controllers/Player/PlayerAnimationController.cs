@@ -33,11 +33,7 @@ namespace Runtime.Controllers.Player
         #endregion
 
         
-
-        internal void GetPlayerSpeed(float speed)
-        {
-            _playerAnimator.SetFloat(_speed,speed);
-        }
+        
         
         
         internal void OnSetBoolAnimation(PlayerAnimationState playerEnum, bool condition)
@@ -59,25 +55,25 @@ namespace Runtime.Controllers.Player
 
         public void AnimEventCancelPlayerMovement()
         {
-            InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
+            InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
         }
 
         public void AnimEventActivatePlayerMovement()
         {
-            InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(true);
+            InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(true);
         }
 
 
         public void AnimEventCancelPlayerCombat()
         {
             InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
-            InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(false);
+            InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
         }
 
         public void AnimEventActivatePlayerCombat()
         {
             InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
-            InputSignals.Instance.onIsMovementInputReadyToUse?.Invoke(true);
+            InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(true);
             PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Attack, false);
         }
 
@@ -100,10 +96,12 @@ namespace Runtime.Controllers.Player
 
 
         #endregion
-      
 
 
-        
+        public void OnSetAnimationPlayerSpeed(float speed)
+        {
+            _playerAnimator.SetFloat("Speed",speed);
+        }
     }
     
 }

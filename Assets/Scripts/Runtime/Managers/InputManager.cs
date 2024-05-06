@@ -24,9 +24,6 @@ namespace Runtime.Managers
 
         [Header("Variables")] 
         [Header("Movement")]
-        private float _verticalInput;
-        private float _horizontalInput;
-        private bool _isInput;
         private bool _isCanTouchButton;
        
         private PlayableEnum _playableEnumIndex;
@@ -39,7 +36,6 @@ namespace Runtime.Managers
         [Header("Actions")]
         
         private bool _isCrouch;
-        private bool _isRun;
         private bool _isCutSceneInputReadyToUse;
         private bool _isPickingUp;
         
@@ -55,9 +51,7 @@ namespace Runtime.Managers
 
 
         [Header("Commands")]
-        private MovementInputCommand _movementInputCommand;
         private CrouchInputCommand _crouchInputCommand;
-        private RunInputCommand _runInputCommand;
         private SpaceInputCommand _spaceInputCommand;
         private MeeleCombatCommand _meeleCombatCommand;
 
@@ -75,18 +69,12 @@ namespace Runtime.Managers
 
         private void Init()
         {
-            _movementInputCommand = new MovementInputCommand(ref _verticalInput,ref _horizontalInput,  horizontal, vertical);
             _crouchInputCommand = new CrouchInputCommand(leftControl);
-            _runInputCommand = new RunInputCommand(leftShift);
             _spaceInputCommand = new SpaceInputCommand(space);
             _meeleCombatCommand = new MeeleCombatCommand(leftMouseButton,this,ref _combatCoroutine);
             
         }
-
-        private void Start()
-        {
-            //OnChangeMouseVisibility(false);
-        }
+        
 
         private void OnEnable()
         {
@@ -96,7 +84,6 @@ namespace Runtime.Managers
         private void SubscribeEvents()
         {
             InputSignals.Instance.onChangeMouseVisibility += OnChangeMouseVisibility;
-            InputSignals.Instance.onIsMovementInputReadyToUse += OnIsInputReadyToUse;
             InputSignals.Instance.onIsReadyForCombat += OnIsReadyForCombat;
             PlayableSignals.Instance.onSendInputManagerToReadyForInput += OnSendInputManagerToReadyForInput;
         }
@@ -115,15 +102,7 @@ namespace Runtime.Managers
             _isCutSceneInputReadyToUse = condition;
             _playableEnumIndex = playableEnum;
         }
-
-        private void OnIsInputReadyToUse(bool condition)
-        {
-            
-            _isMovementInputIsReadyToUse = condition;
-            InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(condition);
-           
-        }
-
+        
 
         private void OnChangeMouseVisibility(bool condition)
         {
@@ -144,9 +123,7 @@ namespace Runtime.Managers
         private void UnSubscribeEvents()
         {
             InputSignals.Instance.onChangeMouseVisibility -= OnChangeMouseVisibility;
-            InputSignals.Instance.onIsMovementInputReadyToUse -= OnIsInputReadyToUse;
             InputSignals.Instance.onIsReadyForCombat -= OnIsReadyForCombat;
-            InputSignals.Instance.onIsPlayerPickingItem -= OnIsPlayerPickingItem;
             PlayableSignals.Instance.onSendInputManagerToReadyForInput -= OnSendInputManagerToReadyForInput;
         }
 
@@ -159,7 +136,6 @@ namespace Runtime.Managers
 
         private void Update()
         {
-            _runInputCommand.Execute(_isRun);
             if (_isCutSceneInputReadyToUse)
             {
                 if (Input.GetButtonDown(horizontal) || Input.GetButtonDown(vertical))
@@ -180,9 +156,7 @@ namespace Runtime.Managers
                 }
                     
             }
-
-            // They have _isInputReady unless they are true.
-            _movementInputCommand.Execute(ref _isInput,ref _isCanTouchButton,_isMovementInputIsReadyToUse);
+            
             _crouchInputCommand.Execute(ref _isCrouch,_isMovementInputIsReadyToUse);
             _spaceInputCommand.Execute(_isCrouch,_isMovementInputIsReadyToUse);
             // -------------------------------------------------
