@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.010495078, g: 0.008951039, b: 0.009445744, a: 1}
+  m_IndirectSpecularColor: {r: 0.010558471, g: 0.009006545, b: 0.009517946, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -672,6 +672,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelAslanHouse
       objectReference: {fileID: 0}
+    - target: {fileID: 1300664921031869097, guid: 25887480e96e72c449d8b28ded1a3d77,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.538
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300664921031869097, guid: 25887480e96e72c449d8b28ded1a3d77,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -18.545
+      objectReference: {fileID: 0}
+    - target: {fileID: 3134794686405369425, guid: 25887480e96e72c449d8b28ded1a3d77,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.233
+      objectReference: {fileID: 0}
+    - target: {fileID: 3134794686405369425, guid: 25887480e96e72c449d8b28ded1a3d77,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -14.496
+      objectReference: {fileID: 0}
     - target: {fileID: 3188382582576948140, guid: 25887480e96e72c449d8b28ded1a3d77,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -721,6 +741,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3371427634133191262, guid: 25887480e96e72c449d8b28ded1a3d77,
+        type: 3}
+      propertyPath: m_Range
+      value: 2.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 3371427634133191262, guid: 25887480e96e72c449d8b28ded1a3d77,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 3718215595249689882, guid: 25887480e96e72c449d8b28ded1a3d77,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0.54
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
