@@ -12,10 +12,9 @@ namespace Runtime.Controllers.Player
         {
             if (other.CompareTag("Mirror"))
             {
-                print("Mirror Triggered");
                 PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.StandFrontOfMirror);
-                UITextSignals.Instance.onChangeMissionText?.Invoke(UITextEnum.FindMemoryCards);
-                PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.StandFrontOfMirror);
+               PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.StandFrontOfMirror);
+                
                 other.CompareTag("Untagged");
                
             }
@@ -25,13 +24,10 @@ namespace Runtime.Controllers.Player
                 CoreUISignals.Instance.onOpenCutscene?.Invoke(2);
                 other.CompareTag("Untagged");
             }
-
-          
             
 
            
         }
-
-       
+        
     }
 }

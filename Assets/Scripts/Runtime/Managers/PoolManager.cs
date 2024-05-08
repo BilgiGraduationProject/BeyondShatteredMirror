@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Runtime.Commands.Pool;
 using Runtime.Data.UnityObject;
+using Runtime.Enums.Playable;
 using Runtime.Enums.Pool;
 using Runtime.Signals;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Runtime.Managers
 {
@@ -28,6 +32,8 @@ namespace Runtime.Managers
         private PoolResetCommand _poolResetCommand;
         private List<GameObject> _emptyList = new List<GameObject>();
         private readonly string _poolDataPath = "Data/CD_Pool";
+        
+        private PlayableEnum _currentPlayableEnum;
         
         #endregion
 
@@ -69,6 +75,40 @@ namespace Runtime.Managers
             PoolSignals.Instance.onSendPool += OnSendPool;
             PoolSignals.Instance.onGetLevelHolderTransform += OnGetLeveLHolderTransform;
             PoolSignals.Instance.onGetLevelHolderPoolObject += OnGetLevelHolderPoolObject;
+            PoolSignals.Instance.onLoadLevel += OnLoadLevel;
+            PoolSignals.Instance.onDestroyTheCurrentLevel += OnDestroyTheCurrentLevel;
+        }
+
+        private void OnDestroyTheCurrentLevel()
+        {
+            var destroyLevel = levelHolder.transform.GetChild(0);
+            Destroy(destroyLevel);
+        }
+
+
+        [Button("Load Level")]
+        private void OnLoadLevel(LevelEnum levelEnum,PlayableEnum playableEnum)
+        {
+            _currentPlayableEnum = playableEnum;
+            AsyncOperationHandle<GameObject> asyncOperationHandle =
+                Addressables.LoadAssetAsync<GameObject>($"Assets/Levels/Level{levelEnum.ToString()}.prefab");
+            
+                asyncOperationHandle.Completed += AsyncOperationHandle_Completed;
+        }
+        
+        
+        private void AsyncOperationHandle_Completed(AsyncOperationHandle<GameObject> obj)
+        {
+            if(obj.Status == AsyncOperationStatus.Succeeded)
+            {
+                Instantiate(obj.Result, levelHolder.transform);
+                PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
+                Debug.LogWarning("Level Loaded");
+            }
+            else
+            {
+                Debug.LogWarning("Failed to Load Level");
+            }
         }
 
         private Transform OnGetLeveLHolderTransform() => levelHolder.transform;
@@ -129,6 +169,8 @@ namespace Runtime.Managers
             PoolSignals.Instance.onSendPool -= OnSendPool;
             PoolSignals.Instance.onGetLevelHolderTransform -= OnGetLeveLHolderTransform;
             PoolSignals.Instance.onGetLevelHolderPoolObject -= OnGetLevelHolderPoolObject;
+            PoolSignals.Instance.onLoadLevel -= OnLoadLevel;
+            PoolSignals.Instance.onDestroyTheCurrentLevel -= OnDestroyTheCurrentLevel;
         }
 
         private void OnDisable()

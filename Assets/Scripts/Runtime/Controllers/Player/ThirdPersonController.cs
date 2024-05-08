@@ -189,6 +189,7 @@ namespace StarterAssets
 
         private void CameraRotation()
         {
+            if (!_isPlayerReadyToMove) return;
             // if there is an input and camera position is not fixed
             if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
@@ -245,7 +246,11 @@ namespace StarterAssets
 
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;
-            if (!_isPlayerReadyToMove) return;
+            if (!_isPlayerReadyToMove)
+            {
+                PlayerSignals.Instance.onSetAnimationPlayerSpeed?.Invoke(0);
+                return;
+            }
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
@@ -360,5 +365,9 @@ namespace StarterAssets
         {
             _isPlayerReadyToMove = condition;
         }
+
+
+       
+        
     }
 }

@@ -71,10 +71,10 @@ namespace Runtime.Managers
             switch (cameraState)
             {
                 case CameraStateEnum.Play:
-                    _stateDrivenCamera.Follow = _playerFollow;
+                   
                     break;
                 case CameraStateEnum.CutScene:
-                    _stateDrivenCamera.Follow = null;
+                  
                     break;
                 
                 

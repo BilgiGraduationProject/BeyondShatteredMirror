@@ -91,17 +91,17 @@ namespace Runtime.Controllers
         
         private void OnOpenCutscene(int index)
         {
+            _index = index-1;
             LoadVideoClip(index);
             CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
             completeButton.gameObject.SetActive(true);
-            _index = index - 1;
-            switch (_index)
+            switch (index)
             {
-                case (int)PlayableEnum.BathroomLayingSeize:
-                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.BathroomLayingSeize);
+                case 1:
+                    PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.AslanHouse,PlayableEnum.BathroomLayingSeize);
                     break;
-                case (int)PlayableEnum.EnteredHouse:
-                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredHouse);
+                
+                case 2:
                     break;
                 
             }
@@ -164,28 +164,30 @@ namespace Runtime.Controllers
             {
                
                 videoPlayer.gameObject.SetActive(false);
-                videoPlayer.GetComponent<CanvasGroup>().alpha = 1;
-                videoPlayer.GetComponent<VideoPlayer>().Prepare(); // Unnecessary line of code.
                 switch (_index)
                 {
-                    case (int)PlayableEnum.BathroomLayingSeize:
+                    case 0:
+                        Debug.LogWarning("Playing seizing");
                         PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.BathroomLayingSeize);
                         break;
-                    case (int)PlayableEnum.EnteredHouse:
-                        PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.EnteredHouse);
-                        break;
-                    
+                        
                 }
+                videoPlayer.GetComponent<CanvasGroup>().alpha = 1;
+                videoPlayer.GetComponent<VideoPlayer>().Prepare(); // Unnecessary line of code.
+               
                 blackwBG.GetComponent<CanvasGroup>().DOFade(0f, 1f).SetEase(Ease.OutQuad).OnComplete(() =>
                 {
-                   
+                    
                     blackwBG.SetActive(false);
                     blackwBG.GetComponent<CanvasGroup>().alpha = 1;
-                    
                    
-                    CoreUISignals.Instance.onEnableAllPanels?.Invoke();
+                    
+                  
                 });
             });
         }
+
+
+        
     }
 }

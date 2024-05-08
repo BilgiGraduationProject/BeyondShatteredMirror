@@ -1,4 +1,5 @@
 using System;
+using Runtime.Enums.Playable;
 using Runtime.Enums.Pool;
 using Runtime.Extentions;
 using UnityEngine;
@@ -13,5 +14,10 @@ namespace Runtime.Signals
         public UnityAction<GameObject,PoolType> onSendPool = delegate {  };
         public Func<Transform> onGetLevelHolderTransform = delegate { return null; };
         public Func<PoolType,Transform,GameObject> onGetLevelHolderPoolObject = delegate { return null; };
+        
+        public UnityAction<LevelEnum,PlayableEnum> onLoadLevel = delegate {  };
+        
+        
+        public UnityAction onDestroyTheCurrentLevel = delegate {  };
     }
 }

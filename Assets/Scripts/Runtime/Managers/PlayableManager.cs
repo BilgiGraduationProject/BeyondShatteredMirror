@@ -11,6 +11,7 @@ using Runtime.Signals;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 namespace Runtime.Managers
 {
@@ -25,8 +26,8 @@ namespace Runtime.Managers
         private void Awake()
         {
             Init();
-            
-           
+
+
         }
 
         private void Init()
@@ -42,7 +43,7 @@ namespace Runtime.Managers
 
 
         private CD_PlayerPlayable GetPlayable() => Resources.Load<CD_PlayerPlayable>("Data/CD_PlayerPlayable");
-        
+
 
         public void OnEnable()
         {
@@ -58,79 +59,100 @@ namespace Runtime.Managers
         private void SubscribeEvents()
         {
             PlayableSignals.Instance.onSetUpCutScene += OnSetUpCutScene;
-            
+
         }
 
 
-        
+
 
         private void OnSetUpCutScene(PlayableEnum playableEnum)
         {
-           
+
             var assets = _playerPlayable.PlayerPlayable[(int)playableEnum].playerPlayableAssets;
             var directorMode = _playerPlayable.PlayerPlayable[(int)playableEnum].directorWrapMode;
-            
+
             if (assets is null) return;
             CoreUISignals.Instance.onDisableAllPanels?.Invoke();
             CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
             var playableBindings = assets.outputs.ToArray();
-            
+            playableDirector.playableAsset = assets;
+
+            playableDirector.extrapolationMode = directorMode;
             foreach (var binding in playableBindings)
             {
-                playableDirector.playableAsset = assets;
-                playableDirector.SetGenericBinding(playableDirector, binding.sourceObject);
+
+                var obj = playableDirector.GetGenericBinding(binding.sourceObject);
+                if (obj is null)
+                {
+                    var timelineAsset = playableDirector.playableAsset as TimelineAsset;
+                    var track = timelineAsset.GetOutputTracks().FirstOrDefault(t=>t.name == binding.streamName);
+                    Debug.LogWarning(track.name);
+                    switch (track.name)
+                    {
+                        case "MirrorAnimTrack":
+                            var getAnim = GameObject.FindWithTag("MirrorAnim").GetComponent<Animator>();
+                            Debug.Log(getAnim);
+                            playableDirector.SetGenericBinding(track, getAnim);
+
+                            break;
+
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning(binding.streamName);
+                    playableDirector.SetGenericBinding(playableDirector, binding.sourceObject);
+
+                }
+
                 playableDirector.Play();
-                 playableDirector.extrapolationMode = directorMode;
 
+
+                StartCoroutine(directorMode is DirectorWrapMode.Hold
+                    ? OnHoldCutScene((float)playableDirector.duration, playableEnum)
+                    : OnCutSceneFinished((float)playableDirector.duration));
             }
-
-            StartCoroutine(directorMode is DirectorWrapMode.Hold
-                ? OnHoldCutScene((float)playableDirector.duration,playableEnum)
-                : OnCutSceneFinished((float)playableDirector.duration));
         }
 
-        private IEnumerator OnHoldCutScene(float playableDirectorDuration,PlayableEnum playableEnum)
-        {
-            yield return new WaitForSeconds(playableDirectorDuration);
-            switch (playableEnum)
+        private IEnumerator OnHoldCutScene(float playableDirectorDuration, PlayableEnum playableEnum)
             {
-                case PlayableEnum.BathroomLayingSeize:
-                    factory.SetActive(false);
-                    aslanHouse.SetActive(true);
-                    PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true,playableEnum);
-                    break;
-                case PlayableEnum.StandFrontOfMirror:
-                    aslanHouse.SetActive(false);
-                    factory.SetActive(true);
-                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredFactory);
-                    break;
-                case PlayableEnum.EnteredHouse:
-                    factory.SetActive(false);
-                    aslanHouse.SetActive(true);
-                    PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true,playableEnum);
-                    break;
-                
+                yield return new WaitForSeconds(playableDirectorDuration);
+                switch (playableEnum)
+                {
+                    case PlayableEnum.BathroomLayingSeize:
+                       
+                        PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true, playableEnum);
+                        break;
+                    case PlayableEnum.StandFrontOfMirror:
+                        
+                        PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredFactory);
+                        break;
+                    case PlayableEnum.EnteredHouse:
+                      
+                        PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true, playableEnum);
+                        break;
+
+                }
+
+
             }
-            
-            
+
+            private IEnumerator OnCutSceneFinished(float playableDirectorDuration)
+            {
+                yield return new WaitForSeconds(playableDirectorDuration);
+                CoreUISignals.Instance.onEnableAllPanels?.Invoke();
+                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+
+            }
+
+
+            private void UnSubscribeEvents()
+            {
+                PlayableSignals.Instance.onSetUpCutScene -= OnSetUpCutScene;
+
+            }
+
+
+
         }
-
-        private IEnumerator OnCutSceneFinished(float playableDirectorDuration)
-        {
-            yield return new WaitForSeconds(playableDirectorDuration);
-            CoreUISignals.Instance.onEnableAllPanels?.Invoke();
-            CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
-            
-        }
-
-
-        private void UnSubscribeEvents()
-        {
-            PlayableSignals.Instance.onSetUpCutScene -= OnSetUpCutScene;
-          
-        }
-
-
-
     }
-}
