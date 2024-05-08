@@ -21,15 +21,22 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PlayerMaterial 1
-  m_Shader: {fileID: 4800000, guid: 6c046203321edf34fb092959a05e5b4a, type: 3}
+  m_Shader: {fileID: 4800000, guid: ef3178aabaab247448c46c904e37bf43, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - TCP2_REFLECTIONS_FRESNEL
+  - TCP2_RIM_LIGHTING_LIGHTMASK
+  - TCP2_UV_NORMALS_FULL
+  m_InvalidKeywords:
+  - _FRESNELHIGHLIGHTS_ON
   - _MK_ALBEDO_MAP
   - _MK_ARTISTIC_HATCHING
   - _MK_ARTISTIC_PROJECTION_SCREEN_SPACE
   - _MK_COLOR_GRADING_ALBEDO
+  - _MK_DETAIL_BLEND_MIX
   - _MK_ENVIRONMENT_REFLECTIONS_AMBIENT
+  - _MK_FRESNEL_HIGHLIGHTS
   - _MK_IRIDESCENCE_DEFAULT
   - _MK_LIGHT_BANDED
   - _MK_OUTLINE_DATA_UV7
@@ -38,24 +45,16 @@ Material:
   - _MK_RECEIVE_SHADOWS
   - _MK_RIM_DEFAULT
   - _MK_SPECULAR_ISOTROPIC
-  - _MK_WRAPPED_DIFFUSE
-  m_InvalidKeywords:
-  - TCP2_REFLECTIONS_FRESNEL
-  - TCP2_RIM_LIGHTING_LIGHTMASK
-  - TCP2_UV_NORMALS_FULL
-  - _FRESNELHIGHLIGHTS_ON
-  - _MK_DETAIL_BLEND_MIX
-  - _MK_FRESNEL_HIGHLIGHTS
   - _MK_WORKFLOW_SPECULAR
+  - _MK_WRAPPED_DIFFUSE
   - _RECEIVESHADOWS_ON
   - _WRAPPEDLIGHTING_ON
   m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 1985
+  m_CustomRenderQueue: -1
   stringTagMap:
     IGNOREPROJECTOR: False
-    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -330,7 +329,7 @@ Material:
     - _OutlineMinWidth: 1
     - _OutlineNoise: -1
     - _OutlinePixelSizeType: 0
-    - _OutlineSize: 10
+    - _OutlineSize: 0
     - _OutlineTab: 1
     - _OutlineTextureLOD: 5
     - _OutlineTextureType: 0

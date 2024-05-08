@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using TMPro;
 using Runtime.Signals;
+using Sirenix.OdinInspector;
 
 namespace Runtime.Controllers.UI
 {
@@ -21,8 +22,8 @@ namespace Runtime.Controllers.UI
         [SerializeField] private Image userAvatarImage;
         [SerializeField] private TextMeshProUGUI userNameText;
         
-        [Header("Health Area Settings")]
-        [SerializeField] private GameObject healthImage;
+        [Header("Emotion Area Settings")]
+        [SerializeField] private Animator emotionAnimator;
         
         [Header("Weapon Area Settings")]
         [SerializeField] private Image weaponImage;
@@ -164,6 +165,14 @@ namespace Runtime.Controllers.UI
         public void ClosePanel()
         {
             CoreUISignals.Instance.onClosePanel?.Invoke(1);
+        }
+
+        [Button("Change Emotion Animation State")]
+        public void ChangeEmotionAnimationState(int num)
+        {
+            emotionAnimator.SetInteger("EmotionState", num);
+            emotionAnimator.SetFloat("",2);
+            print("sa");
         }
     }
 }
