@@ -17,6 +17,7 @@ namespace Runtime.Managers
 
         [SerializeField] private CinemachineStateDrivenCamera _stateDrivenCamera;
         [SerializeField] private Animator cameraAnimator;
+        [SerializeField] private Transform cutsSceneCamera;
        
 
 
@@ -56,10 +57,13 @@ namespace Runtime.Managers
 
         private void OnSetCameraPositionForCutScene(PlayableEnum playable)
         {
+            Debug.LogWarning(playable);
+            
             switch (playable)
             {
                 case PlayableEnum.BathroomLayingSeize:
                     var seizingPos = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
+                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
                     if(seizingPos is null) return;
                     _stateDrivenCamera.transform.position = seizingPos.position; 
                     _stateDrivenCamera.transform.rotation = seizingPos.rotation;
@@ -67,15 +71,24 @@ namespace Runtime.Managers
                         
                 case PlayableEnum.StandFrontOfMirror:
                     var mirrorPos = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
+                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
                     if(mirrorPos is null) return;
                     _stateDrivenCamera.transform.position = mirrorPos.position; 
                     _stateDrivenCamera.transform.rotation = mirrorPos.rotation;
                     break;
                 case PlayableEnum.EnteredFactory:
                     var factoryEntry = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
+                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
                     if(factoryEntry is null) return;
                     _stateDrivenCamera.transform.position = factoryEntry.position; 
                     _stateDrivenCamera.transform.rotation = factoryEntry.rotation;
+                    break;
+                case PlayableEnum.SecretWall:
+                    var secretWall = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
+                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
+                    if(secretWall is null) return;
+                    _stateDrivenCamera.transform.position = secretWall.position; 
+                    _stateDrivenCamera.transform.rotation = secretWall.rotation;
                     break;
                             
             }

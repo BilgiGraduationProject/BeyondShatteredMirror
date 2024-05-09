@@ -59,11 +59,12 @@ namespace Runtime.Managers
 
         private void OnInteractWithPuzzlePieces(GameObject intereact, GameObject puzzlePieces)
         {
+          
             if (puzzlePieces is null) return;
             switch (puzzleEnum)
             {
                 case PuzzleEnum.PictureTable:
-                   
+                   Debug.LogWarning("Puzzle is Picture Table");
                     if (intereact.CompareTag(puzzlePieces.tag))
                     {
                         puzzlePieces.transform.parent = null;
@@ -74,10 +75,25 @@ namespace Runtime.Managers
                         intereact.layer = 0;
                         puzzleParams.tablePictureCount++;
                     }
-
                     if (puzzleParams.tablePictureCount == 2)
                     {
+                        CameraSignals.Instance.onSetCameraPositionForCutScene?.Invoke(PlayableEnum.SecretWall);
                         PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.SecretWall);
+                        puzzleEnum = PuzzleEnum.SecretBookShelf;
+                    }
+                    break;
+                
+                case PuzzleEnum.SecretBookShelf:
+                    Debug.LogWarning("Puzzle is SecretBookShelf");
+                    if (intereact.CompareTag(puzzlePieces.tag))
+                    {
+                        puzzlePieces.transform.parent = intereact.transform;
+                        puzzlePieces.transform.position = intereact.transform.position;
+                        puzzlePieces.transform.rotation = intereact.transform.rotation;
+                        puzzlePieces.layer = 0;
+                        intereact.layer = 0;
+                        intereact.GetComponent<MeshRenderer>().material.DOFade(0f, "_BaseColor", 0f);
+                        GameObject.FindWithTag("BookShelf").GetComponent<Animator>().SetBool("Open",true);
                     }
                     break;
                 

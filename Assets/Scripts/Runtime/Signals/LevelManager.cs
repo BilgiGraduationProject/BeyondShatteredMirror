@@ -26,6 +26,7 @@ namespace Runtime.Signals
         [SerializeField] private Transform seizingCameraPos;
         [SerializeField] private Transform mirrorCameraPos;
         [SerializeField] private Transform factoryEntryCameraPos;
+        [SerializeField] private Transform secretRoomCameraPos;
         #endregion
 
         #endregion
@@ -56,6 +57,9 @@ namespace Runtime.Signals
                    break;
                case PlayableEnum.EnteredFactory:
                    return factoryEntryCameraPos;
+                   break;
+               case PlayableEnum.SecretWall:
+                   return secretRoomCameraPos;
                    break;
                default:
                    return seizingCameraPos;

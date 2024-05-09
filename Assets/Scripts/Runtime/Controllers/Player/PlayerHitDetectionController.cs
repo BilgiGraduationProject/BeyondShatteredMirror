@@ -58,7 +58,7 @@ namespace Runtime.Controllers.Player
             CheckForPickUpRay(pickUpDidHitYa,pickUpRay);
             
             var newRay =  _camera.transform.forward;
-            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Interectable","Openable","Puzzle","SearchingEnemy"));
+            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Interectable","Openable","Puzzle","SearchingEnemy","Wall"));
             Debug.DrawRay(_camera.transform.position,newRay * maxDistance , Color.cyan);
             _jobHandle = RaycastCommand.ScheduleBatch(_raycastCommands, _raycastHits, 1);
         }
@@ -179,6 +179,7 @@ namespace Runtime.Controllers.Player
                     }
                     break;
                 case "Puzzle":
+                    if(playerHandTransform.childCount < 1) return;
                     PuzzleSignals.Instance.onInteractWithPuzzlePieces?.Invoke(_collidedObject,playerHandTransform.GetChild(0).gameObject);
                     break;
                 
