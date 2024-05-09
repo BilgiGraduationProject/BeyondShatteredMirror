@@ -80,20 +80,20 @@ namespace Runtime.Managers
             playableDirector.extrapolationMode = directorMode;
             foreach (var binding in playableBindings)
             {
-
                 var obj = playableDirector.GetGenericBinding(binding.sourceObject);
                 if (obj is null)
                 {
                     var timelineAsset = playableDirector.playableAsset as TimelineAsset;
                     var track = timelineAsset.GetOutputTracks().FirstOrDefault(t=>t.name == binding.streamName);
-                    Debug.LogWarning(track.name);
                     switch (track.name)
                     {
                         case "MirrorAnimTrack":
-                            var getAnim = GameObject.FindWithTag("MirrorAnim").GetComponent<Animator>();
-                            Debug.Log(getAnim);
-                            playableDirector.SetGenericBinding(track, getAnim);
-
+                            var getMirrorAnim = GameObject.FindWithTag("MirrorAnim").GetComponent<Animator>();
+                            playableDirector.SetGenericBinding(track, getMirrorAnim);
+                            break;
+                        case "SecretWall":
+                            var getWallAnim = GameObject.FindWithTag("SecretWall").GetComponent<Animator>();
+                            playableDirector.SetGenericBinding(track, getWallAnim);
                             break;
 
                     }
@@ -120,12 +120,10 @@ namespace Runtime.Managers
                 switch (playableEnum)
                 {
                     case PlayableEnum.BathroomLayingSeize:
-                       
                         PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true, playableEnum);
                         break;
                     case PlayableEnum.StandFrontOfMirror:
-                        
-                        PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredFactory);
+                        CoreUISignals.Instance.onOpenUnCutScene?.Invoke();
                         break;
                     case PlayableEnum.EnteredHouse:
                       
@@ -140,6 +138,7 @@ namespace Runtime.Managers
             private IEnumerator OnCutSceneFinished(float playableDirectorDuration)
             {
                 yield return new WaitForSeconds(playableDirectorDuration);
+                Debug.LogWarning("Cutscene is finished");
                 CoreUISignals.Instance.onEnableAllPanels?.Invoke();
                 CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
 

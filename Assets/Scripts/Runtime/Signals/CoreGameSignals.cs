@@ -11,6 +11,6 @@ namespace Runtime.Signals
     {
         public UnityAction<GameStateEnum> onGameStatusChanged = delegate {  };
         public Func<GameStateEnum> onGetGameState;
-
+        public Func<PlayableEnum, Transform> onGetCameraCutScenePosition;
     }
 }

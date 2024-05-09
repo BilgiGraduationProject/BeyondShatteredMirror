@@ -19,5 +19,6 @@ namespace Runtime.Signals
         
         
         public UnityAction onDestroyTheCurrentLevel = delegate {  };
+        public UnityAction<bool> onSetAslanHouseVisible = delegate {  };
     }
 }

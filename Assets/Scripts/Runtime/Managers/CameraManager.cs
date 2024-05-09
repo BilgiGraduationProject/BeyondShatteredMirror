@@ -1,8 +1,10 @@
 using System;
 using Cinemachine;
 using Runtime.Enums.Camera;
+using Runtime.Enums.Playable;
 using Runtime.Signals;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Runtime.Managers
@@ -48,11 +50,39 @@ namespace Runtime.Managers
         {
             CameraSignals.Instance.onChangeCameraState += OnChangeCameraState;
             CameraSignals.Instance.onSetCinemachineTarget += OnSetCameraTarget;
-            
+            CameraSignals.Instance.onSetCameraPositionForCutScene += OnSetCameraPositionForCutScene;
 
         }
 
-       
+        private void OnSetCameraPositionForCutScene(PlayableEnum playable)
+        {
+            switch (playable)
+            {
+                case PlayableEnum.BathroomLayingSeize:
+                    var seizingPos = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
+                    if(seizingPos is null) return;
+                    _stateDrivenCamera.transform.position = seizingPos.position; 
+                    _stateDrivenCamera.transform.rotation = seizingPos.rotation;
+                    break;
+                        
+                case PlayableEnum.StandFrontOfMirror:
+                    var mirrorPos = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
+                    if(mirrorPos is null) return;
+                    _stateDrivenCamera.transform.position = mirrorPos.position; 
+                    _stateDrivenCamera.transform.rotation = mirrorPos.rotation;
+                    break;
+                case PlayableEnum.EnteredFactory:
+                    var factoryEntry = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
+                    if(factoryEntry is null) return;
+                    _stateDrivenCamera.transform.position = factoryEntry.position; 
+                    _stateDrivenCamera.transform.rotation = factoryEntry.rotation;
+                    break;
+                            
+            }
+        
+
+        }
+        
 
 
         private void OnSetCameraTarget()
@@ -64,28 +94,30 @@ namespace Runtime.Managers
             _stateDrivenCamera.Follow = _playerFollow;
          
         }   
-
-        [Button]
+        
         private void OnChangeCameraState(CameraStateEnum cameraState)
         {
+            cameraAnimator.SetTrigger(cameraState.ToString());
             switch (cameraState)
             {
                 case CameraStateEnum.Play:
-                   
+                    _stateDrivenCamera.Follow = _playerFollow;
                     break;
                 case CameraStateEnum.CutScene:
-                  
+                    _stateDrivenCamera.Follow = null;
                     break;
-                
+                    
+                  
                 
             }
-            cameraAnimator.SetTrigger(cameraState.ToString());
+            
         }
 
         private void UnSubscribeEvents()
         {
-            CameraSignals.Instance.onChangeCameraState -= OnChangeCameraState;
-            CameraSignals.Instance.onSetCinemachineTarget -= OnSetCameraTarget;
+            CameraSignals.Instance.onChangeCameraState += OnChangeCameraState;
+            CameraSignals.Instance.onSetCinemachineTarget += OnSetCameraTarget;
+            CameraSignals.Instance.onSetCameraPositionForCutScene += OnSetCameraPositionForCutScene;
         }
 
         private void OnDisable()

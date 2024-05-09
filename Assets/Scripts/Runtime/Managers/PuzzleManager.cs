@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Runtime.Data.UnityObject;
+using Runtime.Enums.Playable;
 using Runtime.Enums.Puzzle;
 using Runtime.Keys.Input;
 using Runtime.Signals;
@@ -76,7 +77,7 @@ namespace Runtime.Managers
 
                     if (puzzleParams.tablePictureCount == 2)
                     {
-                        Debug.LogWarning("Completed");
+                        PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.SecretWall);
                     }
                     break;
                 

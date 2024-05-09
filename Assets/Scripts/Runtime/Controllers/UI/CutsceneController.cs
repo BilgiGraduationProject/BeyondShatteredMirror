@@ -10,6 +10,7 @@ using Runtime.Data.ValueObject;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Pool;
 using Runtime.Utilities;
+using Sirenix.OdinInspector;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 
@@ -55,14 +56,20 @@ namespace Runtime.Controllers
         {
             //SceneManager.sceneLoaded += OnSceneLoaded;
             CoreUISignals.Instance.onOpenCutscene += OnOpenCutscene;
+            CoreUISignals.Instance.onOpenUnCutScene += OnOpenUnCutScene;
+            CoreUISignals.Instance.onCloseUnCutScene += OnCloseUnCutScene;
         }
 
         private void UnsubscribeEvents()
         {
             //SceneManager.sceneLoaded -= OnSceneLoaded;
             CoreUISignals.Instance.onOpenCutscene -= OnOpenCutscene;
+            CoreUISignals.Instance.onOpenUnCutScene -= OnOpenUnCutScene;
+            CoreUISignals.Instance.onCloseUnCutScene -= OnCloseUnCutScene;
         }
-    
+
+       
+
         private void OnDisable() => UnsubscribeEvents();
     
         #endregion
@@ -186,6 +193,37 @@ namespace Runtime.Controllers
                 });
             });
         }
+        
+        
+        
+        
+        [Button("Open Cutscene")]
+        private void OnOpenUnCutScene()
+        {
+            blackwBG.GetComponent<CanvasGroup>().alpha = 0;
+            blackwBG.SetActive(true);
+            blackwBG.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetEase(Ease.OutQuad).OnComplete(() =>
+            {
+                PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.Factory,PlayableEnum.EnteredFactory);
+                PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
+                
+            });
+        }
+
+
+
+        private void OnCloseUnCutScene(PlayableEnum playableEnum)
+        {
+            PlayableSignals.Instance.onSetUpCutScene?.Invoke(playableEnum);
+            blackwBG.GetComponent<CanvasGroup>().DOFade(0f, 2f).SetEase(Ease.OutQuad).OnComplete(() =>
+            {
+                blackwBG.SetActive(false);
+                blackwBG.GetComponent<CanvasGroup>().alpha = 1;
+                
+            });
+        }
+
+       
 
 
         

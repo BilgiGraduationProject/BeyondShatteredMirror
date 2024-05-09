@@ -8,7 +8,7 @@
         StandFrontOfMirror,
         EnteredFactory,
         EnteredHouse,
-        Puzzle1
+        SecretWall,
         
     }
 }

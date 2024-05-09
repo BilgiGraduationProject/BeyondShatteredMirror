@@ -19,6 +19,13 @@ namespace Runtime.Signals
         [Header("Factory")] 
         [SerializeField] private Transform factoryStart;
 
+
+
+
+        [Header("Camera Position")] 
+        [SerializeField] private Transform seizingCameraPos;
+        [SerializeField] private Transform mirrorCameraPos;
+        [SerializeField] private Transform factoryEntryCameraPos;
         #endregion
 
         #endregion
@@ -32,6 +39,30 @@ namespace Runtime.Signals
         private void SubscribeEvents()
         {
             PlayerSignals.Instance.onGetLevelCutScenePosition += OnGetLevelCutScenePosition;
+           CoreGameSignals.Instance.onGetCameraCutScenePosition += OnGetCameraCutScenePosition;
+        }
+
+        private Transform OnGetCameraCutScenePosition(PlayableEnum type)
+        {
+            Debug.LogWarning(type);
+            switch (type)
+            {
+                
+               case PlayableEnum.BathroomLayingSeize:
+                   return seizingCameraPos;
+                   break;
+               case PlayableEnum.StandFrontOfMirror:
+                   return mirrorCameraPos;
+                   break;
+               case PlayableEnum.EnteredFactory:
+                   return factoryEntryCameraPos;
+                   break;
+               default:
+                   return seizingCameraPos;
+               
+                
+                
+            }
         }
 
         private Transform OnGetLevelCutScenePosition(PlayableEnum cutscene)
@@ -44,6 +75,8 @@ namespace Runtime.Signals
                     return mirror;
                 case PlayableEnum.EnteredHouse:
                     return layingBed;
+                case PlayableEnum.EnteredFactory:
+                    return factoryStart;
                 default:
                     return null;
             }
@@ -54,6 +87,7 @@ namespace Runtime.Signals
         private void UnSubscribeEvents()
         {
             PlayerSignals.Instance.onGetLevelCutScenePosition -= OnGetLevelCutScenePosition;
+            CoreGameSignals.Instance.onGetCameraCutScenePosition -= OnGetCameraCutScenePosition;
         }
 
 

@@ -1,6 +1,7 @@
 using Runtime.Enums.Playable;
 using Runtime.Enums.UI;
 using Runtime.Extentions;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Runtime.Signals
@@ -15,5 +16,11 @@ namespace Runtime.Signals
         public UnityAction<int> onOpenCutscene = delegate {  };
         
         public UnityAction<SFXTypes> onPlaySFX = delegate {  };
+        
+        
+        public UnityAction onOpenUnCutScene = delegate {  };
+        public UnityAction<PlayableEnum> onCloseUnCutScene = delegate {  };
+        
+        
     }
 }

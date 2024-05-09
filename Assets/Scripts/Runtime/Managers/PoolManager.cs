@@ -21,6 +21,7 @@ namespace Runtime.Managers
 
         [SerializeField] private GameObject levelHolder;
         [SerializeField] private Transform poolHolder;
+        [SerializeField] private Transform houseHolder;
 
         #endregion
         
@@ -77,11 +78,18 @@ namespace Runtime.Managers
             PoolSignals.Instance.onGetLevelHolderPoolObject += OnGetLevelHolderPoolObject;
             PoolSignals.Instance.onLoadLevel += OnLoadLevel;
             PoolSignals.Instance.onDestroyTheCurrentLevel += OnDestroyTheCurrentLevel;
+            PoolSignals.Instance.onSetAslanHouseVisible += OnSetAslanHouseVisible;
+        }
+
+        private void OnSetAslanHouseVisible(bool condition)
+        {
+            houseHolder.transform.GetChild(0).gameObject.SetActive(!condition);
         }
 
         private void OnDestroyTheCurrentLevel()
         {
-            var destroyLevel = levelHolder.transform.GetChild(0);
+            if (levelHolder.transform.childCount is 0) return;
+            var destroyLevel = levelHolder.transform.GetChild(0).gameObject;
             Destroy(destroyLevel);
         }
 
@@ -101,9 +109,21 @@ namespace Runtime.Managers
         {
             if(obj.Status == AsyncOperationStatus.Succeeded)
             {
-                Instantiate(obj.Result, levelHolder.transform);
-                PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
-                Debug.LogWarning("Level Loaded");
+                switch (_currentPlayableEnum)
+                {
+                    case PlayableEnum.BathroomLayingSeize:
+                        Instantiate(obj.Result, houseHolder.transform);
+                        PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
+                        break;
+                    
+                    case PlayableEnum.EnteredFactory:
+                        Instantiate(obj.Result, levelHolder.transform);
+                        PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
+                        CoreUISignals.Instance.onCloseUnCutScene?.Invoke(_currentPlayableEnum);
+                        break;
+                    
+                }
+                
             }
             else
             {
@@ -171,6 +191,7 @@ namespace Runtime.Managers
             PoolSignals.Instance.onGetLevelHolderPoolObject -= OnGetLevelHolderPoolObject;
             PoolSignals.Instance.onLoadLevel -= OnLoadLevel;
             PoolSignals.Instance.onDestroyTheCurrentLevel -= OnDestroyTheCurrentLevel;
+            PoolSignals.Instance.onSetAslanHouseVisible -= OnSetAslanHouseVisible;
         }
 
         private void OnDisable()
