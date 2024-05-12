@@ -83,21 +83,21 @@ namespace Runtime.Handler.UI
             switch (subscriptionType)
             {
                 case UIEventSubscriptionTypes.OnDefault:
-                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
                     break;
                 case UIEventSubscriptionTypes.OnStart:
                     print("OnStart");
-                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
                     _uiManager.OnStart();
                     break;
                 case UIEventSubscriptionTypes.OnSettings:
                     print("OnSettings");
-                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
                     _uiManager.OnSettings();
                     break;
                 case UIEventSubscriptionTypes.OnQuit:
                     print("OnQuit");
-                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonClose);
+                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonClose);
                     _uiManager.OnQuit();
                     break;
             }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.05005321, g: 0.04268328, b: 0.045109548, a: 1}
+  m_IndirectSpecularColor: {r: 0.049752492, g: 0.042418897, b: 0.044768933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -183,7 +183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &70530939
 Transform:
   m_ObjectHideFlags: 0
@@ -670,15 +670,17 @@ MonoBehaviour:
   - type: 1
     clip: {fileID: 8300000, guid: be4385d9717917e4fa1972c08b7af3fb, type: 3}
   - type: 2
-    clip: {fileID: 8300000, guid: 00b5e6ad5bcca1140bd60e07aa35e1cc, type: 3}
+    clip: {fileID: 8300000, guid: c5d8bfa39a8be694fb4a2c6f57223598, type: 3}
   - type: 3
     clip: {fileID: 8300000, guid: 93d8245f63dd469418a93f9c91922ba3, type: 3}
   - type: 4
-    clip: {fileID: 8300000, guid: 7c54d7778b19f144bbf3971ad30c0ba1, type: 3}
+    clip: {fileID: 8300000, guid: 1b7f04d03225f8041921be2b36b273e2, type: 3}
   - type: 5
     clip: {fileID: 8300000, guid: ba2b8adb077028a468b00dda27825475, type: 3}
   - type: 6
-    clip: {fileID: 8300000, guid: 7c9f1ea255bd6284187a484ab53c27fd, type: 3}
+    clip: {fileID: 8300000, guid: 7fd34331bea1b1540904b19c8ecaf0c0, type: 3}
+  - type: 7
+    clip: {fileID: 8300000, guid: ccf8c28248de4ec49b172fc080eb7a79, type: 3}
 --- !u!82 &581489587
 AudioSource:
   m_ObjectHideFlags: 0
@@ -693,7 +695,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

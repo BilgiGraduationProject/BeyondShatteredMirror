@@ -9,6 +9,7 @@ using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Pool;
+using Runtime.Enums.UI;
 using Runtime.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine.Playables;
@@ -100,6 +101,7 @@ namespace Runtime.Controllers
         {
             _index = index-1;
             LoadVideoClip(index);
+            CoreUISignals.Instance.onStopSFX?.Invoke();
             CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
             completeButton.gameObject.SetActive(true);
             switch (index)
@@ -169,15 +171,24 @@ namespace Runtime.Controllers
             
             videoPlayer.GetComponent<CanvasGroup>().DOFade(0f, 2f).SetEase(Ease.OutQuad).OnComplete(() =>
             {
-               
+                completeButton.gameObject.SetActive(false);
                 videoPlayer.gameObject.SetActive(false);
                 switch (_index)
                 {
-                    case 0:
+                    case 0: // Game Start, Go to House
                         Debug.LogWarning("Playing seizing");
                         PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.BathroomLayingSeize);
+                        CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.AslanHouse);
                         break;
-                        
+                    case 1: // After Mirror, Go to Factory
+                        CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.FactoryWhispers);
+                        break;
+                    case 2: // After Factory, Go to House
+                        CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.AslanHouse);
+                        break;
+                    case 3: // After House, Go to Mansion
+                        CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.Mansion);
+                        break;
                 }
                 videoPlayer.GetComponent<CanvasGroup>().alpha = 1;
                 videoPlayer.GetComponent<VideoPlayer>().Prepare(); // Unnecessary line of code.
@@ -188,7 +199,6 @@ namespace Runtime.Controllers
                     blackwBG.SetActive(false);
                     blackwBG.GetComponent<CanvasGroup>().alpha = 1;
                    
-                    
                   
                 });
             });
@@ -206,7 +216,7 @@ namespace Runtime.Controllers
             {
                 PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.Factory,PlayableEnum.EnteredFactory);
                 PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
-                
+                CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.FactoryWhispers);
             });
         }
 

@@ -1,8 +1,13 @@
 ﻿using Runtime.Enums.Enemy;
+using Runtime.Enums.Player;
+using Runtime.Managers;
+using Runtime.Signals;
 using Runtime.Utilities;
+using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 namespace Runtime.Controllers.Enemy
 {
@@ -16,11 +21,12 @@ namespace Runtime.Controllers.Enemy
           [SerializeField] private Animator animator;
           [SerializeField] private NavMeshAgent agent;
           [SerializeField] private CapsuleCollider collider;
-          
-          [Header("Combat")]
+          [SerializeField] private BoxCollider hitCollider;
+
+          [Header("Combat")] 
           [SerializeField] private float attackCooldown = 3f;
           [SerializeField] private float attackRange = 2f;
-          [SerializeField] private float aggroRange = 6f;
+          [SerializeField] private float aggroRange = 50f;
           
           #endregion
 
@@ -37,6 +43,7 @@ namespace Runtime.Controllers.Enemy
           private void Awake()
           {
                GetReferences();
+               RandomizeStats();
           }
           
           void GetReferences()
@@ -47,6 +54,13 @@ namespace Runtime.Controllers.Enemy
                player = GameObject.FindGameObjectWithTag("Player");
           }
 
+          [Button("Randomize Stats")]
+          private void RandomizeStats()
+          {
+               attackCooldown = Random.Range(2f, 6f);
+               attackRange = Random.Range(2f, 4f);
+          }
+          
           void TakeDamage(float damage)
           {
                health -= damage;
@@ -58,10 +72,17 @@ namespace Runtime.Controllers.Enemy
 
           void Update()
           {
-               if(Input.GetKeyDown(KeyCode.T))
+               if(Input.GetKeyDown(KeyCode.T) && !CheckDie())
                {
                     TakeDamage(50f);
                }
+
+               if (Input.GetKeyDown(KeyCode.Y))
+               {
+                    
+               }
+               
+               if(CheckDie()) return;
                
                animator.SetFloat("Speed", agent.velocity.magnitude / agent.speed);
                
@@ -96,10 +117,21 @@ namespace Runtime.Controllers.Enemy
                print("Enemy Died".ColoredText(Color.Lerp(Color.gray, Color.red, 0.5f)));
                animator.SetTrigger("Die");
                Destroy(collider);
+               Destroy(hitCollider);
                Destroy(agent);
                Destroy(gameObject, 10f);
           }
 
+          public void StartDealDamage()
+          {
+               GetComponentInChildren<EnemyDamageController>().StartDealDamage();
+          }
+        
+          public void EndDealDamage()
+          {
+               GetComponentInChildren<EnemyDamageController>().EndDealDamage();
+          }
+          
           void OnDrawGizmos()
           {
                Gizmos.color = Color.Lerp(Color.red, Color.yellow, 0.5f);

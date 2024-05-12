@@ -99,7 +99,7 @@ namespace Runtime.Controllers.UI
         /// <param name="layerValue">Kapatılacak panelin katman değeri.</param>
         private void OnClosePanel(int layerValue)
         {
-            CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+            CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
             
             // Check if the layer is the last one or the one before the last one
             if (IsLayerGreaterThanZero(layerValue))
@@ -277,19 +277,19 @@ namespace Runtime.Controllers.UI
                     break;
                 case UIPanelTypes.Ingame:
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
-                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
                     break;
                 case UIPanelTypes.Inventory:
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
-                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
                     break;
                 case UIPanelTypes.Pause:
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
-                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
                     break;
                 case UIPanelTypes.Shop:
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
-                    CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.ButtonOpen);
+                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
                     break;
                 default:
                     break;
@@ -385,10 +385,16 @@ namespace Runtime.Controllers.UI
         private void Start()
         {
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 0);
+            CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.MainMenu);
         }
 
         private void Update()
         {
+            if(Input.GetKeyDown(KeyCode.Escape) && GameState(GameStateEnum.Game)) // This is for opening the start panel
+            {
+                OnOpenPanel(UIPanelTypes.Pause, 1);
+                return;
+            }
             if (Input.GetKeyDown(KeyCode.Escape)) // This is for closing the panels with the escape button
             {
                 // Close the topmost panel

@@ -16,6 +16,9 @@ namespace Runtime.Signals
         public UnityAction<int> onOpenCutscene = delegate {  };
         
         public UnityAction<SFXTypes> onPlaySFX = delegate {  };
+        public UnityAction onStopSFX = delegate {  };
+        public UnityAction<SFXTypes> onPlayOneShotSFX = delegate {  };
+        public UnityAction<float> onSetSFXVolume = delegate {  };
         
         
         public UnityAction onOpenUnCutScene = delegate {  };

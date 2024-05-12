@@ -4,7 +4,9 @@ using DG.Tweening;
 using Runtime.Controllers.UI;
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
+using Runtime.Enums;
 using Runtime.Enums.UI;
+using Runtime.Keys;
 using Runtime.Signals;
 using Runtime.Utilities;
 using UnityEngine;
@@ -104,14 +106,20 @@ namespace Runtime.Managers
         
         private bool CanAfford(int itemPrice)
         {
-            int currentSoul = SaveLoadManager.Instance.LoadData<int>(SaveDataValues.Soul);
+            int currentSoul = GameDataManager.LoadData<int>(GameDataEnums.Soul.ToString());
             return itemPrice <= currentSoul;
         }
         
         private void ConfirmPurchase(GameObject itemObject, int itemIndex)
         {
-            SaveLoadManager.Instance.ArithmeticalData(SaveDataValues.Soul, -_itemDatas[itemIndex].Price);
-            SaveLoadManager.Instance.ArithmeticalData(_itemDatas[itemIndex].Name, +1);
+            //SaveLoadManager.Instance.ArithmeticalData(GameDataKeys.Soul, -_itemDatas[itemIndex].Price);
+            //SaveLoadManager.Instance.ArithmeticalData(_itemDatas[itemIndex].Name, +1);
+            
+            int currentSoul = GameDataManager.LoadData<int>(GameDataEnums.Soul.ToString());
+            GameDataManager.SaveData(GameDataEnums.Soul.ToString(), currentSoul - _itemDatas[itemIndex].Price);
+
+            int currentItemQuantity = GameDataManager.LoadData<int>(_itemDatas[itemIndex].Name);
+            GameDataManager.SaveData(_itemDatas[itemIndex].Name, currentItemQuantity + 1);
             itemObject.transform.DOScale(new Vector3().SetFloat(1.25f), 0.5f)
                 .SetEase(Ease.InOutBack)
                 .OnComplete(() =>

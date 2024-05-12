@@ -39,11 +39,15 @@ namespace Runtime.Managers
         private void SubscribeEvents()
         {
             CoreUISignals.Instance.onPlaySFX += OnPlaySFX;
+            CoreUISignals.Instance.onPlayOneShotSFX += OnPlayOneShotSFX;
+            CoreUISignals.Instance.onStopSFX += OnStopSFX;
         }
 
         private void UnSubscribeEvents()
         {
             CoreUISignals.Instance.onPlaySFX -= OnPlaySFX;
+            CoreUISignals.Instance.onPlayOneShotSFX -= OnPlayOneShotSFX;
+            CoreUISignals.Instance.onStopSFX -= OnStopSFX;
         }
 
         private void OnDisable()
@@ -67,15 +71,33 @@ namespace Runtime.Managers
         {
             if (Input.GetKeyDown(KeyCode.G))
             {
-                OnPlaySFX(SFXTypes.FactoryWhispers);
+                OnPlayOneShotSFX(SFXTypes.FactoryWhispers);
             }
             if (Input.GetKeyDown(KeyCode.H))
             {
-                OnPlaySFX(SFXTypes.ButtonMenu);
+                OnPlayOneShotSFX(SFXTypes.ButtonMenu);
             }
         }
 
-        public void OnPlaySFX(SFXTypes type)
+        private void OnPlaySFX(SFXTypes type)
+        {
+            foreach (var sfxClip in audioClips)
+            {
+                if (sfxClip.type == type)
+                {
+                    audioSource.clip = sfxClip.clip;
+                    audioSource.Play();
+                    return;
+                }
+            }
+        }
+        
+        private void OnStopSFX()
+        {
+            audioSource.Stop();
+        }
+        
+        private void OnPlayOneShotSFX(SFXTypes type)
         {
             foreach (var sfxClip in audioClips)
             {

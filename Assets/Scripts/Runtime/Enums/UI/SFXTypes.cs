@@ -8,6 +8,7 @@
         ButtonMenu,
         FactoryWhispers,
         BathroomAmbientUnderwater,
-        AslanHouse
+        AslanHouse,
+        Mansion,
     }
 }

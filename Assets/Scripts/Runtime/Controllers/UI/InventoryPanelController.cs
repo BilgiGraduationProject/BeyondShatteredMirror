@@ -116,7 +116,7 @@ namespace Runtime.Controllers.UI
             {
                 if (ES3.KeyExists(item.Name))
                 {
-                    print(item.Name + " : " + SaveLoadManager.Instance.LoadData<int>(item.Name));
+                    print(item.Name + " : " + GameDataManager.LoadData<int>(item.Name));
                     GameObject itemObject = Instantiate(shopItemObjectPrefab, shopItemObjectParent);
                     _shopItemObjects.Add(itemObject);
                     itemObject.GetComponent<Toggle>().onValueChanged.AddListener((value) =>
@@ -131,7 +131,8 @@ namespace Runtime.Controllers.UI
                     });
                     //itemObject.gameObject.GetComponent<Toggle>().onValueChanged.AddListener((value => DisableItemsToggle()));
                     itemObject.transform.GetChild(1).gameObject.GetComponent<Image>().sprite = item.Thumbnail;
-                    itemObject.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = SaveLoadManager.Instance.LoadData<int>(item.Name).ToString();
+                    //itemObject.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = SaveLoadManager.Instance.LoadData<int>(item.Name).ToString();
+                    itemObject.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = GameDataManager.LoadData<int>(item.Name).ToString();
                 }
             }
             

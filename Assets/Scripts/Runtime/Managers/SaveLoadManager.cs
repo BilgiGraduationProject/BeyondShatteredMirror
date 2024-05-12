@@ -5,17 +5,6 @@ using System.Threading.Tasks;
 
 namespace Runtime.Managers
 {
-    public static class SaveDataValues
-    {
-        public static string Score => "Score";
-        public static string Gold => "Gold";
-        public static string Soul => "Soul";
-        public static string TotalKill => "TotalKill";
-        public static string LevelID => "LevelID";
-        public static string OwnedVehicles => "OwnedVehicles";
-        public static string OwnedWeapons => "OwnedWeapons";
-    }
-    
     public class SaveLoadManager : MonoBehaviour
     {
         public static SaveLoadManager Instance { get; private set; }
@@ -32,26 +21,6 @@ namespace Runtime.Managers
             {
                 Destroy(gameObject);
             }
-        }
-
-        private void OnEnable()
-        {
-            SubscribeEvents();
-        }
-
-        private void SubscribeEvents()
-        {
-            
-        }
-
-        private void UnsubscribeEvents()
-        {
-
-        }
-
-        private void OnDisable()
-        {
-            UnsubscribeEvents();
         }
 
         public void SaveData(string dataName, object value)
