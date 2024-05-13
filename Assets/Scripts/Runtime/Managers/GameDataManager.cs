@@ -28,6 +28,11 @@ namespace Runtime.Managers
             {
                 PlayerPrefs.SetInt(key, byteValue);
             }
+            else if (value is Resolution resolutionValue)
+            {
+                string resolutionString = resolutionValue.width + "x" + resolutionValue.height + "@" + resolutionValue.refreshRate;
+                PlayerPrefs.SetString(key, resolutionString);
+            }
             else
             {
                 Debug.LogError("Type not supported");
@@ -55,6 +60,23 @@ namespace Runtime.Managers
             else if (typeof(T) == typeof(byte))
             {
                 return (T)(object)(byte)PlayerPrefs.GetInt(key, (byte)(object)defaultValue);
+            }
+            else if (typeof(T) == typeof(Resolution))
+            {
+                string defaultVal = Screen.currentResolution.width + "x" + Screen.currentResolution.height + "@" + Screen.currentResolution.refreshRate;
+                string resolutionString = PlayerPrefs.GetString(key, defaultVal);
+                if (string.IsNullOrEmpty(resolutionString))
+                {
+                    return defaultValue;
+                }
+                string[] parts = resolutionString.Split('x', '@');
+                Resolution resolution = new Resolution
+                {
+                    width = int.Parse(parts[0]),
+                    height = int.Parse(parts[1]),
+                    refreshRate = int.Parse(parts[2])
+                };
+                return (T)(object)resolution;
             }
             else
             {

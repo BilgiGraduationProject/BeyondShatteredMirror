@@ -382,6 +382,28 @@ namespace Runtime.Controllers.UI
             }
         }
 
+        private void Awake()
+        {
+            
+        }
+
+        #if !UNITY_EDITOR
+
+        [RuntimeInitializeOnLoadMethod]
+        static void SetScreenResolutionOnLoad()
+        {
+            Resolution resolution = GameDataManager.LoadData<Resolution>(GameDataEnums.Resolution.ToString(),
+                new Resolution
+                {
+                    width = Screen.currentResolution.width,
+                    height = Screen.currentResolution.height,
+                    refreshRate = Screen.currentResolution.refreshRate
+                });
+            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen, resolution.refreshRate);
+        }
+        
+        #endif
+        
         private void Start()
         {
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 0);

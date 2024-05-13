@@ -100,7 +100,30 @@ namespace Runtime.Controllers.UI
             }
             
             resolutionDropdown.AddOptions(options);
-            resolutionDropdown.value = currentResolutionIndex;
+            
+            // Load the saved resolution from PlayerPrefs
+            Resolution savedResolution = GameDataManager.LoadData<Resolution>(GameDataEnums.Resolution.ToString(),
+                new Resolution
+                {
+                    width = Screen.currentResolution.width,
+                    height = Screen.currentResolution.height,
+                    refreshRate = Screen.currentResolution.refreshRate
+                });
+
+            // Find the index of the saved resolution in the filteredResolutions list
+            int savedResolutionIndex = filteredResolutions.FindIndex(r => r.width == savedResolution.width && r.height == savedResolution.height && r.refreshRate == savedResolution.refreshRate);
+
+            // If the saved resolution is found in the list, set it as the selected value of the dropdown
+            if (savedResolutionIndex != -1)
+            {
+                resolutionDropdown.value = savedResolutionIndex;
+            }
+            else
+            {
+                // If the saved resolution is not found in the list, use the current resolution index
+                resolutionDropdown.value = currentResolutionIndex;
+            }
+            
             resolutionDropdown.RefreshShownValue();
         }
         
