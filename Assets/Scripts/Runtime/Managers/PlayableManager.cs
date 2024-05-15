@@ -124,7 +124,7 @@ namespace Runtime.Managers
                         break;
                     case PlayableEnum.StandFrontOfMirror:
                         CoreUISignals.Instance.onOpenUnCutScene?.Invoke();
-                        CoreUISignals.Instance.onStopSFX?.Invoke();
+                        CoreUISignals.Instance.onStopMusic?.Invoke();
                         break;
                     case PlayableEnum.EnteredHouse:
                       

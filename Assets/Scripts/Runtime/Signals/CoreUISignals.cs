@@ -15,15 +15,13 @@ namespace Runtime.Signals
         public UnityAction onDisableAllPanels = delegate {  };
         public UnityAction<int> onOpenCutscene = delegate {  };
         
-        public UnityAction<SFXTypes> onPlaySFX = delegate {  };
-        public UnityAction onStopSFX = delegate {  };
-        public UnityAction<SFXTypes> onPlayOneShotSFX = delegate {  };
-        public UnityAction<float> onSetSFXVolume = delegate {  };
-        
+        public UnityAction<SFXTypes> onPlayMusic = delegate {  };
+        public UnityAction onStopMusic = delegate {  };
+        public UnityAction<SFXTypes> onPlayOneShotSound = delegate {  };
+        public UnityAction<float> onSetMusicVolume = delegate {  };
+        public UnityAction<float> onSetSoundVolume = delegate {  };
         
         public UnityAction onOpenUnCutScene = delegate {  };
         public UnityAction<PlayableEnum> onCloseUnCutScene = delegate {  };
-        
-        
     }
 }

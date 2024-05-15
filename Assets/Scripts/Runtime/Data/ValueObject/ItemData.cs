@@ -1,4 +1,5 @@
 ﻿using System;
+using Runtime.Enums;
 using UnityEngine;
 
 namespace Runtime.Data.ValueObject
@@ -7,6 +8,7 @@ namespace Runtime.Data.ValueObject
     public struct ItemData
     {
         public string Name;
+        public GameDataEnums DataType;
         public string Description;
         public Sprite Thumbnail;
         public int Price;

@@ -1,4 +1,5 @@
-﻿using Runtime.Managers;
+﻿using System;
+using Runtime.Managers;
 using UnityEngine;
 using System.Collections.Generic;
 using Runtime.Enums;
@@ -14,24 +15,40 @@ namespace Runtime.Controllers.UI
         
         #region Serialized Variables
 
-        [Space(10)]
+        [Space(20)]
         [Header("Gameplay Settings Panel")]
         [SerializeField] private GameObject gameplaySettingsPanel;
-        [SerializeField] private TMP_Dropdown resolutionDropdown;
-        
         [Space(10)]
+        
+        [SerializeField] private Slider sensitivitySlider;
+        [SerializeField] private TextMeshProUGUI sensitivityInfoText;
+        
+        [Space(20)]
         [Header("Camera Settings Panel")]
         [SerializeField] private GameObject cameraSettingsPanel;
-        
-        
         [Space(10)]
+        
+        [Space(20)]
         [Header("Video Settings Panel")]
         [SerializeField] private GameObject videoSettingsPanel;
-        
-        
         [Space(10)]
+        
+        [SerializeField] private TMP_Dropdown resolutionDropdown;
+        [Space(10)]
+        
+        [SerializeField] private Toggle screenMode;
+        [SerializeField] private TextMeshProUGUI screenModeInfoText;
+        [Space(10)]
+        
+        [SerializeField] private Toggle vsyncToggle;
+        
+        [Space(20)]
         [Header("Audioplay Settings Panel")]
         [SerializeField] private GameObject audioSettingsPanel;
+        [Space(10)]
+        
+        [SerializeField] private Slider musicVolumeSlider;
+        [SerializeField] private Slider soundVolumeSlider;
         
         #endregion
 
@@ -46,13 +63,10 @@ namespace Runtime.Controllers.UI
         
         #endregion
 
+        [Obsolete("Obsolete")]
         private void Awake()
         {
             Initialize();
-        }
-
-        private void Start()
-        {
             InitResolution();
         }
 
@@ -68,7 +82,26 @@ namespace Runtime.Controllers.UI
         {
             CoreUISignals.Instance.onClosePanel?.Invoke(2);
         }
+
+        public void DeleteDatasClose()
+        {
+            gameplaySettingsPanel.SetActive(false);
+            cameraSettingsPanel.SetActive(false);
+            audioSettingsPanel.SetActive(false);
+            videoSettingsPanel.SetActive(false);
+            
+            GameDataManager.ClearAllData();
+            
+            SetScreenMode(GameDataManager.LoadData<bool>(GameDataEnums.ScreenMode.ToString(), true));
+            SetVSync(GameDataManager.LoadData<bool>(GameDataEnums.VSync.ToString(), true));
+            SetMusicVolume(GameDataManager.LoadData<float>(GameDataEnums.MusicVolume.ToString(), 0.65f));
+            SetSoundVolume(GameDataManager.LoadData<float>(GameDataEnums.SoundVolume.ToString(), 0.8f));
+            SetSensitivity(GameDataManager.LoadData<float>(GameDataEnums.Sensitivity.ToString(), 1f));
+            
+            CoreUISignals.Instance.onClosePanel?.Invoke(2);
+        }
         
+        [Obsolete("Obsolete")]
         void InitResolution()
         {
             resolutions = Screen.resolutions;
@@ -77,11 +110,8 @@ namespace Runtime.Controllers.UI
             resolutionDropdown.ClearOptions();
             currentRefreshRate = Screen.currentResolution.refreshRate;
             
-            print($"Refresh Rate: {currentRefreshRate}");
-            
             for (int i = 0; i < resolutions.Length; i++)
             {
-                print($"Resolution: {resolutions[i]}");
                 if (resolutions[i].refreshRate == currentRefreshRate)
                 {
                     filteredResolutions.Add(resolutions[i]);
@@ -89,7 +119,6 @@ namespace Runtime.Controllers.UI
             }
             
             List<string> options = new List<string>();
-            print(GameDataEnums.Soul.ToString());
             for (int i = 0; i < filteredResolutions.Count; i++)
             {
                 options.Add(filteredResolutions[i].width + " x " + filteredResolutions[i].height + " @ " + filteredResolutions[i].refreshRate + "Hz");
@@ -100,37 +129,43 @@ namespace Runtime.Controllers.UI
             }
             
             resolutionDropdown.AddOptions(options);
-            
-            // Load the saved resolution from PlayerPrefs
-            Resolution savedResolution = GameDataManager.LoadData<Resolution>(GameDataEnums.Resolution.ToString(),
-                new Resolution
-                {
-                    width = Screen.currentResolution.width,
-                    height = Screen.currentResolution.height,
-                    refreshRate = Screen.currentResolution.refreshRate
-                });
-
-            // Find the index of the saved resolution in the filteredResolutions list
-            int savedResolutionIndex = filteredResolutions.FindIndex(r => r.width == savedResolution.width && r.height == savedResolution.height && r.refreshRate == savedResolution.refreshRate);
-
-            // If the saved resolution is found in the list, set it as the selected value of the dropdown
-            if (savedResolutionIndex != -1)
-            {
-                resolutionDropdown.value = savedResolutionIndex;
-            }
-            else
-            {
-                // If the saved resolution is not found in the list, use the current resolution index
-                resolutionDropdown.value = currentResolutionIndex;
-            }
-            
+            resolutionDropdown.value = currentResolutionIndex;
             resolutionDropdown.RefreshShownValue();
         }
         
+        [Obsolete("Obsolete")]
         public void SetResolution(int resolutionIndex)
         {
             Resolution resolution = filteredResolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen, resolution.refreshRate);
+        }
+        
+        public void SetScreenMode(bool isFullScreen)
+        {
+            Screen.fullScreen = isFullScreen;
+            //Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            screenModeInfoText.text = isFullScreen ? "Fullscreen" : "Windowed";
+        }
+        
+        public void SetVSync(bool isVSync)
+        {
+            QualitySettings.vSyncCount = isVSync ? 1 : 0;
+        }
+        
+        public void SetMusicVolume(float volume)
+        {
+            CoreUISignals.Instance.onSetMusicVolume?.Invoke(volume);
+        }
+        
+        public void SetSoundVolume(float volume)
+        {
+            CoreUISignals.Instance.onSetSoundVolume?.Invoke(volume);
+        }
+        
+        public void SetSensitivity(float sensitivity)
+        {
+            // TODO: Change sensitivity using Signal
+            sensitivityInfoText.text = sensitivity.ToString("F2");
         }
     }
 }

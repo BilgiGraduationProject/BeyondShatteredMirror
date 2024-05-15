@@ -6,5 +6,6 @@ namespace Runtime.Enums.UI
         OnStart,
         OnQuit,
         OnSettings,
+        OnMainMenu
     }
 }

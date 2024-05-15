@@ -69,11 +69,6 @@ namespace Runtime.Controllers.UI
                 StartCoroutine(CaptureShot());
                 //StartCoroutine(CaptureScreenshotAndSave());
             }
-
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
-            }
         }
 
         private void CaptureTime()

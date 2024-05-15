@@ -21,7 +21,8 @@ namespace Runtime.Managers
         #region Serialized Variables
         
         [Header("Audio Source Settings")]
-        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioSource musicAudioSource;
+        [SerializeField] private AudioSource soundAudioSource;
         [Space(10)]
         [SerializeField] private List<SFXClip> audioClips = new List<SFXClip>();
         
@@ -38,16 +39,20 @@ namespace Runtime.Managers
 
         private void SubscribeEvents()
         {
-            CoreUISignals.Instance.onPlaySFX += OnPlaySFX;
-            CoreUISignals.Instance.onPlayOneShotSFX += OnPlayOneShotSFX;
-            CoreUISignals.Instance.onStopSFX += OnStopSFX;
+            CoreUISignals.Instance.onPlayMusic += OnPlayMusic;
+            CoreUISignals.Instance.onPlayOneShotSound += OnPlayOneShotSound;
+            CoreUISignals.Instance.onStopMusic += OnStopMusic;
+            CoreUISignals.Instance.onSetMusicVolume += OnSetMusicVolume;
+            CoreUISignals.Instance.onSetSoundVolume += OnSetSoundVolume;
         }
 
         private void UnSubscribeEvents()
         {
-            CoreUISignals.Instance.onPlaySFX -= OnPlaySFX;
-            CoreUISignals.Instance.onPlayOneShotSFX -= OnPlayOneShotSFX;
-            CoreUISignals.Instance.onStopSFX -= OnStopSFX;
+            CoreUISignals.Instance.onPlayMusic -= OnPlayMusic;
+            CoreUISignals.Instance.onPlayOneShotSound -= OnPlayOneShotSound;
+            CoreUISignals.Instance.onStopMusic -= OnStopMusic;
+            CoreUISignals.Instance.onSetMusicVolume -= OnSetMusicVolume;
+            CoreUISignals.Instance.onSetSoundVolume -= OnSetSoundVolume;
         }
 
         private void OnDisable()
@@ -57,56 +62,44 @@ namespace Runtime.Managers
         
         #endregion
 
-        private void Awake()
-        {
-            GetReferences();
-        }
-        
-        void GetReferences()
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                OnPlayOneShotSFX(SFXTypes.FactoryWhispers);
-            }
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                OnPlayOneShotSFX(SFXTypes.ButtonMenu);
-            }
-        }
-
-        private void OnPlaySFX(SFXTypes type)
+        private void OnPlayMusic(SFXTypes type)
         {
             foreach (var sfxClip in audioClips)
             {
                 if (sfxClip.type == type)
                 {
-                    audioSource.clip = sfxClip.clip;
-                    audioSource.Play();
+                    musicAudioSource.clip = sfxClip.clip;
+                    musicAudioSource.Play();
                     return;
                 }
             }
         }
         
-        private void OnStopSFX()
+        private void OnStopMusic()
         {
-            audioSource.Stop();
+            musicAudioSource.Stop();
         }
         
-        private void OnPlayOneShotSFX(SFXTypes type)
+        private void OnPlayOneShotSound(SFXTypes type)
         {
             foreach (var sfxClip in audioClips)
             {
                 if (sfxClip.type == type)
                 {
-                    audioSource.PlayOneShot(sfxClip.clip);
+                    soundAudioSource.PlayOneShot(sfxClip.clip);
                     return;
                 }
             }
+        }
+        
+        private void OnSetMusicVolume(float volume)
+        {
+            musicAudioSource.volume = volume;
+        }
+
+        private void OnSetSoundVolume(float volume)
+        {
+            soundAudioSource.volume = volume;
         }
     }
 }

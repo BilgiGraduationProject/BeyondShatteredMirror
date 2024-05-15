@@ -8,9 +8,18 @@
         MusicVolume,
         SoundVolume,
         Quality,
-        FullScreen,
+        ScreenMode,
         Vibration,
         Sensitivity,
-        CameraShake
+        CameraShake,
+        VSync,
+        AntiDepressantPill,
+        HealthPill,
+        PsychoPill,
+        PulseofImmortalityPerk,
+        SalvageSavior,
+        Shield,
+        SonicPerk,
+        SoulHarvestAmplifier,
     }
 }

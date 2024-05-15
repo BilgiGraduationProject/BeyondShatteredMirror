@@ -99,7 +99,7 @@ namespace Runtime.Controllers.UI
         /// <param name="layerValue">Kapatılacak panelin katman değeri.</param>
         private void OnClosePanel(int layerValue)
         {
-            CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
+            CoreUISignals.Instance.onPlayOneShotSound?.Invoke(SFXTypes.ButtonOpen);
             
             // Check if the layer is the last one or the one before the last one
             if (IsLayerGreaterThanZero(layerValue))
@@ -277,19 +277,19 @@ namespace Runtime.Controllers.UI
                     break;
                 case UIPanelTypes.Ingame:
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
-                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
+                    CoreUISignals.Instance.onPlayOneShotSound?.Invoke(SFXTypes.ButtonOpen);
                     break;
                 case UIPanelTypes.Inventory:
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
-                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
+                    CoreUISignals.Instance.onPlayOneShotSound?.Invoke(SFXTypes.ButtonOpen);
                     break;
                 case UIPanelTypes.Pause:
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
-                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
+                    CoreUISignals.Instance.onPlayOneShotSound?.Invoke(SFXTypes.ButtonOpen);
                     break;
                 case UIPanelTypes.Shop:
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.UI);
-                    CoreUISignals.Instance.onPlayOneShotSFX?.Invoke(SFXTypes.ButtonOpen);
+                    CoreUISignals.Instance.onPlayOneShotSound?.Invoke(SFXTypes.ButtonOpen);
                     break;
                 default:
                     break;
@@ -387,27 +387,28 @@ namespace Runtime.Controllers.UI
             
         }
 
-        #if !UNITY_EDITOR
-
-        [RuntimeInitializeOnLoadMethod]
-        static void SetScreenResolutionOnLoad()
-        {
-            Resolution resolution = GameDataManager.LoadData<Resolution>(GameDataEnums.Resolution.ToString(),
-                new Resolution
-                {
-                    width = Screen.currentResolution.width,
-                    height = Screen.currentResolution.height,
-                    refreshRate = Screen.currentResolution.refreshRate
-                });
-            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen, resolution.refreshRate);
-        }
-        
-        #endif
+        // #if !UNITY_EDITOR
+        //
+        // [RuntimeInitializeOnLoadMethod]
+        // [Obsolete("Obsolete")]
+        // static void SetScreenResolutionOnLoad()
+        // {
+        //     Resolution resolution = GameDataManager.LoadData<Resolution>(GameDataEnums.Resolution.ToString(),
+        //         new Resolution
+        //         {
+        //             width = Screen.currentResolution.width,
+        //             height = Screen.currentResolution.height,
+        //             refreshRate = Screen.currentResolution.refreshRate
+        //         });
+        //     Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen, resolution.refreshRate);
+        // }
+        //
+        // #endif
         
         private void Start()
         {
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 0);
-            CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.MainMenu);
+            CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.MainMenu);
         }
 
         private void Update()
@@ -417,17 +418,44 @@ namespace Runtime.Controllers.UI
                 OnOpenPanel(UIPanelTypes.Pause, 1);
                 return;
             }
+            if (Input.GetKeyDown(KeyCode.P) && GameState(GameStateEnum.Game))
+            {
+                OnOpenPanel(UIPanelTypes.Pause, 1);
+                return;
+            }
+            else if (Input.GetKeyDown(KeyCode.P) && GameState(GameStateEnum.UI))
+            {
+                CloseTheTopPanel();
+            }
+            if (Input.GetKeyDown(KeyCode.M) && GameState(GameStateEnum.Game))
+            {
+                CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Shop, 1);
+                return;
+            }
+            else if (Input.GetKeyDown(KeyCode.M) && GameState(GameStateEnum.UI))
+            {
+                CloseTheTopPanel();
+            }
+            if (Input.GetKeyDown(KeyCode.I) && GameState(GameStateEnum.Game))
+            {
+                CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
+                return;
+            }
+            else if (Input.GetKeyDown(KeyCode.I) && GameState(GameStateEnum.UI))
+            {
+                CloseTheTopPanel();
+            }
             if (Input.GetKeyDown(KeyCode.Escape)) // This is for closing the panels with the escape button
             {
                 // Close the topmost panel
-                CloseTopmostPanel();
+                CloseTheTopPanel();
             }
         }
         
         /// <summary>
         /// Escape tuşuna basıldığında en üstteki paneli kapatır.
         /// </summary>
-        private void CloseTopmostPanel()
+        private void CloseTheTopPanel()
         {
             for (int i = layers.Count - 1; i > 0; i--)
             {

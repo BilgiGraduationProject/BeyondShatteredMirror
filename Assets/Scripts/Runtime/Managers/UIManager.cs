@@ -6,6 +6,7 @@ using Runtime.Enums.UI;
 using UnityEngine.Playables;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Pool;
+using UnityEngine.SceneManagement;
 
 namespace Runtime.Managers
 {
@@ -49,6 +50,11 @@ namespace Runtime.Managers
         public void OnSettings()
         {
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Settings, 2);
+        }
+        
+        public void OnMainMenu()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

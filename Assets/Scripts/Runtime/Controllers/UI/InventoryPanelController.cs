@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Runtime.Data.ValueObject;
+using Runtime.Enums;
 using UnityEngine;
 using UnityEngine.UI;
 using Runtime.Managers;
@@ -53,6 +54,7 @@ namespace Runtime.Controllers.UI
 
         private Texture2D[] _captureTextureArray;
         private List<ItemData> _shopItemData = new List<ItemData>();
+        private ItemData _selectedItemData;
         private List<Texture2D> _captureData = new List<Texture2D>();
         
         private List<GameObject> _shopItemObjects = new List<GameObject>();
@@ -63,6 +65,10 @@ namespace Runtime.Controllers.UI
         
         private void Awake()
         {
+            if(!GameDataManager.HasData(GameDataEnums.Soul.ToString()))
+            {
+                GameDataManager.SaveData<int>(GameDataEnums.Soul.ToString(), 1);
+            }
             //if(_photoSpriteList.Count > 0) _photoSpriteList.Clear();
             GetShopItemDatas();
             GetCaptureDatas();
@@ -114,11 +120,12 @@ namespace Runtime.Controllers.UI
             
             foreach (var item in _shopItemData)
             {
-                if (ES3.KeyExists(item.Name))
+                if (GameDataManager.HasData(item.DataType.ToString()))
                 {
-                    print(item.Name + " : " + GameDataManager.LoadData<int>(item.Name));
+                    print(item.DataType + " : " + GameDataManager.LoadData<int>(item.DataType.ToString()));
                     GameObject itemObject = Instantiate(shopItemObjectPrefab, shopItemObjectParent);
                     _shopItemObjects.Add(itemObject);
+                    if (_shopItemObjects.Count is 1) _selectedItemData = item;
                     itemObject.GetComponent<Toggle>().onValueChanged.AddListener((value) =>
                     {
                         DisableItemsToggle();
@@ -137,9 +144,12 @@ namespace Runtime.Controllers.UI
             }
             
             //Selected first one
-            _shopItemObjects[0].transform.GetChild(0).GetComponent<Outline>().enabled = true;
-            selectedImage.sprite = _shopItemData[0].Thumbnail;
-            descriptionText.text = _shopItemData[0].Description;
+            if (_shopItemObjects.Count > 0 && _shopItemData.Count > 0)
+            {
+                _shopItemObjects[0].transform.GetChild(0).GetComponent<Outline>().enabled = true;
+                selectedImage.sprite = _selectedItemData.Thumbnail;
+                descriptionText.text = _selectedItemData.Description;
+            }
         }
 
         private void GetCaptureObjects()

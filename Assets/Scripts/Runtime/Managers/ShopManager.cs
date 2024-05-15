@@ -76,15 +76,7 @@ namespace Runtime.Managers
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.M))
-            {
-                CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Shop, 1);
-            }
-
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Pause, 1);
-            }
+            
         }
         
         public void PurchaseItem(int itemIndex, GameObject itemObject)

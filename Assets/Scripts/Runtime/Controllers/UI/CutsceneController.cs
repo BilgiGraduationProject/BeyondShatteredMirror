@@ -101,7 +101,7 @@ namespace Runtime.Controllers
         {
             _index = index-1;
             LoadVideoClip(index);
-            CoreUISignals.Instance.onStopSFX?.Invoke();
+            CoreUISignals.Instance.onStopMusic?.Invoke();
             CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
             completeButton.gameObject.SetActive(true);
             switch (index)
@@ -178,16 +178,16 @@ namespace Runtime.Controllers
                     case 0: // Game Start, Go to House
                         Debug.LogWarning("Playing seizing");
                         PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.BathroomLayingSeize);
-                        CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.AslanHouse);
+                        CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.AslanHouse);
                         break;
                     case 1: // After Mirror, Go to Factory
-                        CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.FactoryWhispers);
+                        CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
                         break;
                     case 2: // After Factory, Go to House
-                        CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.AslanHouse);
+                        CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.AslanHouse);
                         break;
                     case 3: // After House, Go to Mansion
-                        CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.Mansion);
+                        CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.Mansion);
                         break;
                 }
                 videoPlayer.GetComponent<CanvasGroup>().alpha = 1;
@@ -216,7 +216,7 @@ namespace Runtime.Controllers
             {
                 PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.Factory,PlayableEnum.EnteredFactory);
                 PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
-                CoreUISignals.Instance.onPlaySFX?.Invoke(SFXTypes.FactoryWhispers);
+                CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
             });
         }
 

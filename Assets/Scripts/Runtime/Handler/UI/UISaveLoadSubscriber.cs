@@ -35,26 +35,7 @@ namespace Runtime.Handler.UI
         private void Awake()
         {
             _component = GetComponent<Toggle>() ?? GetComponent<Slider>() 
-                ?? (Component)GetComponent<TMP_Dropdown>() ?? GetComponent<Dropdown>();
-        }
-
-        private void OnEnable()
-        {
-            switch (_component)
-            {
-                case Toggle toggle:
-                    print("It is a toggle");
-                    break;
-                case Slider slider:
-                    print("It is a slider");
-                    break;
-                case TMP_Dropdown tmpDropdown:
-                    print("It is a TMP_Dropdown");
-                    break;
-                case Dropdown dropdown:
-                    print("It is a Dropdown");
-                    break;
-            }
+                ?? (Component)GetComponent<TMP_Dropdown>();
         }
 
         private void Start()
@@ -78,25 +59,17 @@ namespace Runtime.Handler.UI
                     GameDataManager.SaveData<float>(gameData.ToString(), slider.value);
                     break;
                 case TMP_Dropdown tmpDropdown:
-                    if (gameData == GameDataEnums.Resolution)
+                    switch (gameData)
                     {
-                        GameDataManager.SaveData<Resolution>(gameData.ToString(), 
-                            GetResolutionFromDropdown(tmpDropdown));
-                    }
-                    else
-                    {
-                        GameDataManager.SaveData<int>(gameData.ToString(), tmpDropdown.value);
-                    }
-                    break;
-                case Dropdown dropdown:
-                    if (gameData == GameDataEnums.Resolution)
-                    {
-                        GameDataManager.SaveData<Resolution>(gameData.ToString(), 
-                            GetResolutionFromDropdown(dropdown));
-                    }
-                    else
-                    {
-                        GameDataManager.SaveData<int>(gameData.ToString(), dropdown.value);
+                        case GameDataEnums.Resolution:
+                            string resolutionString = tmpDropdown.options[tmpDropdown.value].text;
+                            GameDataManager.SaveData<string>(gameData.ToString(), resolutionString);
+                            break;
+                        case GameDataEnums.None:
+                            break;
+                        default:
+                            GameDataManager.SaveData<int>(gameData.ToString(), tmpDropdown.value);
+                            break;
                     }
                     break;
             }
@@ -107,101 +80,62 @@ namespace Runtime.Handler.UI
             switch (_component)
             {
                 case Toggle toggle:
-                    toggle.isOn = GameDataManager.LoadData<bool>(gameData.ToString());
+                    switch (gameData)
+                    {
+                        case GameDataEnums.ScreenMode:
+                            toggle.isOn = GameDataManager.LoadData<bool>(gameData.ToString(), true);
+                            break;
+                        case GameDataEnums.VSync:
+                            toggle.isOn = GameDataManager.LoadData<bool>(gameData.ToString(), true);
+                            break;
+                        case GameDataEnums.None:
+                            break;
+                        default:
+                            toggle.isOn = GameDataManager.LoadData<bool>(gameData.ToString());
+                            break;
+                    }
                     break;
                 case Slider slider:
-                    slider.value = GameDataManager.LoadData<float>(gameData.ToString());
+                    switch (gameData)
+                    {
+                        case GameDataEnums.MusicVolume:
+                            slider.value = GameDataManager.LoadData<float>(gameData.ToString(), .75f);
+                            break;
+                        case GameDataEnums.SoundVolume:
+                            slider.value = GameDataManager.LoadData<float>(gameData.ToString(), .9f);
+                            break;
+                        case GameDataEnums.Sensitivity:
+                            slider.value = GameDataManager.LoadData<float>(gameData.ToString(), 1f);
+                            break;
+                        case GameDataEnums.None:
+                            break;
+                        default:
+                            slider.value = GameDataManager.LoadData<float>(gameData.ToString());
+                            break;
+                    }
                     break;
                 case TMP_Dropdown tmpDropdown:
-                    if (gameData == GameDataEnums.Resolution)
+                    switch (gameData)
                     {
-                        SetDropdownValueToResolution(tmpDropdown, gameData.ToString());
-                    }
-                    else
-                    {
-                        tmpDropdown.value = GameDataManager.LoadData<int>(gameData.ToString());
+                        case GameDataEnums.Resolution:
+                            string defaultResolution = Screen.currentResolution.width + " x " + Screen.currentResolution.height + " @ " + Screen.currentResolution.refreshRate + "Hz";
+                            string resolutionString = GameDataManager.LoadData<string>(gameData.ToString(), defaultResolution);
+                            int resolutionIndex = tmpDropdown.options.FindIndex(option => option.text == resolutionString);
+                            if (resolutionIndex != -1)
+                            {
+                                tmpDropdown.value = resolutionIndex;
+                            }
+                            else
+                            {
+                                Debug.Log("Saved resolution not found in dropdown options");
+                            }
+                            break;
+                        case GameDataEnums.None:
+                            break;
+                        default: tmpDropdown.value = GameDataManager.LoadData<int>(gameData.ToString());
+                            break;
                     }
                     break;
-                case Dropdown dropdown:
-                    if (gameData == GameDataEnums.Resolution)
-                    {
-                        SetDropdownValueToResolution(dropdown, gameData.ToString());
-                    }
-                    else
-                    {
-                        dropdown.value = GameDataManager.LoadData<int>(gameData.ToString());
-                    }
-                    break;
-            }
-        }
-        
-        private Resolution GetResolutionFromDropdown(TMP_Dropdown tmpDropdown)
-        {
-            string[] parts = tmpDropdown.options[tmpDropdown.value].text.Split('x', '@');
-            Resolution resolution = new Resolution
-            {
-                width = int.Parse(parts[0]),
-                height = int.Parse(parts[1]),
-                refreshRate = int.Parse(parts[2])
-            };
-            return resolution;
-        }
-        
-        private Resolution GetResolutionFromDropdown(Dropdown dropdown)
-        {
-            string[] parts = dropdown.options[dropdown.value].text.Split('x', '@');
-            Resolution resolution = new Resolution
-            {
-                width = int.Parse(parts[0]),
-                height = int.Parse(parts[1]),
-                refreshRate = int.Parse(parts[2])
-            };
-            return resolution;
-        }
-        
-        private Resolution GetResolutionFromDropdownn(Component component)
-        {
-            string[] parts;
-            if (component is TMP_Dropdown tmpDropdown)
-            {
-                parts = tmpDropdown.options[tmpDropdown.value].text.Split('x', '@');
-            }
-            else if (component is Dropdown dropdown)
-            {
-                parts = dropdown.options[dropdown.value].text.Split('x', '@');
-            }
-            else
-            {
-                return new Resolution();
-            }
-
-            Resolution resolution = new Resolution
-            {
-                width = int.Parse(parts[0]),
-                height = int.Parse(parts[1]),
-                refreshRate = int.Parse(parts[2])
-            };
-            return resolution;
-        }
-        
-        private void SetDropdownValueToResolution(Component component, string key)
-        {
-            Resolution resolution = GameDataManager.LoadData<Resolution>(key,
-                new Resolution
-                {
-                    width = Screen.currentResolution.width,
-                    height = Screen.currentResolution.height,
-                    refreshRate = Screen.currentResolution.refreshRate
-                });
-            string resolutionString = resolution.width + "x" + resolution.height + "@" + resolution.refreshRate;
-
-            if (component is TMP_Dropdown tmpDropdown)
-            {
-                tmpDropdown.value = tmpDropdown.options.FindIndex(option => option.text == resolutionString);
-            }
-            else if (component is Dropdown dropdown)
-            {
-                dropdown.value = dropdown.options.FindIndex(option => option.text == resolutionString);
             }
         }
     }
