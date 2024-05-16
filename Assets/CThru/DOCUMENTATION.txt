@@ -1,0 +1,10 @@
+Setup:
+
+- Import "Mathematics" package into your project
+- Add a "Refraction" renderer feature to your URP Renderer asset.
+- Under the "settings" dropdown on the renderer feature, set the LayerMask to "TransparentFX".
+- On the URP Renderer asset, remove "TransparentFX" from the Opaque and Transparent Layer Masks.
+- Set the layer of any objects you use the material on to "TransparentFX".
+
+Please consider leaving a review for the asset as it really helps :)
+For any questions, or to show what you have made with my asset, email me at wgappster@gmail.com
