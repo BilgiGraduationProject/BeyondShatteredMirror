@@ -19,8 +19,7 @@ namespace Runtime.Managers
     {
         [SerializeField] private PlayableDirector playableDirector;
         private CD_PlayerPlayable _playerPlayable;
-        [SerializeField] private GameObject aslanHouse;
-        [SerializeField] private GameObject factory;
+        private bool _isPlayableStarted;
 
 
         private void Awake()
@@ -67,7 +66,7 @@ namespace Runtime.Managers
 
         private void OnSetUpCutScene(PlayableEnum playableEnum)
         {
-
+            
             var assets = _playerPlayable.PlayerPlayable[(int)playableEnum].playerPlayableAssets;
             var directorMode = _playerPlayable.PlayerPlayable[(int)playableEnum].directorWrapMode;
 
@@ -100,18 +99,18 @@ namespace Runtime.Managers
                 }
                 else
                 {
-                    Debug.LogWarning(binding.streamName);
                     playableDirector.SetGenericBinding(playableDirector, binding.sourceObject);
 
                 }
 
-                playableDirector.Play();
-
-
-                StartCoroutine(directorMode is DirectorWrapMode.Hold
-                    ? OnHoldCutScene((float)playableDirector.duration, playableEnum)
-                    : OnCutSceneFinished((float)playableDirector.duration));
+               
             }
+            playableDirector.Play();
+
+           
+            StartCoroutine(directorMode is DirectorWrapMode.Hold
+                ? OnHoldCutScene((float)playableDirector.duration, playableEnum)
+                : OnCutSceneFinished((float)playableDirector.duration));
         }
 
         private IEnumerator OnHoldCutScene(float playableDirectorDuration, PlayableEnum playableEnum)
@@ -130,8 +129,9 @@ namespace Runtime.Managers
                       
                         PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true, playableEnum);
                         break;
-
                 }
+
+               
 
 
             }
@@ -139,7 +139,6 @@ namespace Runtime.Managers
             private IEnumerator OnCutSceneFinished(float playableDirectorDuration)
             {
                 yield return new WaitForSeconds(playableDirectorDuration);
-                Debug.LogWarning("Cutscene is finished");
                 CoreUISignals.Instance.onEnableAllPanels?.Invoke();
                 CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
 

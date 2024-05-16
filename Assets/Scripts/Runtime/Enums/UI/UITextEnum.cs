@@ -4,5 +4,7 @@
     {
         GoToMirror,
         FindMemoryCards,
+        LookAtCatEyes,
+        TakeBook,
     }
 }

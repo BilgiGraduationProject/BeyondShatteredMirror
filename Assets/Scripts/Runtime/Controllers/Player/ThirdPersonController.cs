@@ -1,4 +1,5 @@
-﻿ using Runtime.Signals;
+﻿ using System.Collections;
+ using Runtime.Signals;
  using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
@@ -87,6 +88,8 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+        private float _speedTimer = 100f;
+        private bool _isRunning;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -213,8 +216,8 @@ namespace StarterAssets
         {
             
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
-
+            
+            float targetSpeed = _input.sprint && !_isRunning ? SprintSpeed : MoveSpeed;
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
@@ -238,11 +241,38 @@ namespace StarterAssets
 
                 // round speed to 3 decimal places
                 _speed = Mathf.Round(_speed * 1000f) / 1000f;
+                
             }
             else
             {
                 _speed = targetSpeed;
             }
+
+            if (_speed > 3)
+            {
+                _speedTimer -= 10f * Time.deltaTime;
+                PlayerSignals.Instance.onSendPlayerSpeedToSlider?.Invoke(_speedTimer);
+                if(_speedTimer <= 0)
+                {
+                    _speedTimer = 0;
+                    _isRunning = true;
+                }
+            }
+            else
+            {
+                if (_speedTimer < 100f)
+                {
+                    _speedTimer += 10f * Time.deltaTime;
+                    PlayerSignals.Instance.onSendPlayerSpeedToSlider?.Invoke(_speedTimer);
+                }
+                else
+                {
+                    _isRunning = false;
+                }
+                
+                
+            }
+            Debug.LogWarning(_speedTimer);
 
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;
@@ -277,6 +307,8 @@ namespace StarterAssets
             // update animator if using character
             PlayerSignals.Instance.onSetAnimationPlayerSpeed?.Invoke(_animationBlend);
         }
+
+     
 
         private void JumpAndGravity()
         {
@@ -366,8 +398,6 @@ namespace StarterAssets
             _isPlayerReadyToMove = condition;
         }
 
-
-       
         
     }
 }

@@ -25,6 +25,9 @@ namespace Runtime.Signals
        
        public Func<PlayableEnum,Transform> onGetLevelCutScenePosition = delegate { return null; };
        
+       
+       public UnityAction<float> onSendPlayerSpeedToSlider = delegate {  };
+       
 
 
 

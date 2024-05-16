@@ -89,8 +89,12 @@ namespace Runtime.Managers
         private void OnDestroyTheCurrentLevel()
         {
             if (levelHolder.transform.childCount is 0) return;
-            var destroyLevel = levelHolder.transform.GetChild(0).gameObject;
-            Destroy(destroyLevel);
+            for (int i = 0; i < levelHolder.transform.childCount; i++)
+            {
+                var destroyLevel = levelHolder.transform.GetChild(i).gameObject;
+                Destroy(destroyLevel);
+            }
+            
         }
 
 
@@ -117,6 +121,7 @@ namespace Runtime.Managers
                         break;
                     
                     case PlayableEnum.EnteredFactory:
+                        Debug.LogWarning("Entered Factory instaisted");
                         Instantiate(obj.Result, levelHolder.transform);
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
                         CoreUISignals.Instance.onCloseUnCutScene?.Invoke(_currentPlayableEnum);

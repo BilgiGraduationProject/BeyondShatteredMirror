@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Runtime.Controllers.UI;
 using Runtime.Data.UnityObject;
 using Runtime.Signals;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Runtime.Managers
 {
@@ -14,6 +17,8 @@ namespace Runtime.Managers
         #region Serilized Variables
 
          [SerializeField] private MissionTextController missionTextController;
+         [SerializeField] private Slider _speedSlider;
+         
 
         #endregion
 
@@ -50,11 +55,22 @@ namespace Runtime.Managers
         private void SubscribeEvents()
         {
             UITextSignals.Instance.onChangeMissionText += missionTextController.OnChangeMissionText;
+            missionTextController.OnChangeMissionText();
+            PlayerSignals.Instance.onSendPlayerSpeedToSlider += SetSpeedSliderValue;
+           
         }
+
+        private void SetSpeedSliderValue(float arg0)
+        {
+            _speedSlider.value = arg0;
+        }
+
 
         private void UnSubscribeEvents()
         {
             UITextSignals.Instance.onChangeMissionText -= missionTextController.OnChangeMissionText;
+            PlayerSignals.Instance.onSendPlayerSpeedToSlider -= SetSpeedSliderValue;
+           
         }
 
         private void OnDisable()

@@ -108,9 +108,13 @@ namespace Runtime.Controllers
             {
                 case 1:
                     PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.AslanHouse,PlayableEnum.BathroomLayingSeize);
+                    CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.BathroomLayingSeize);
                     break;
                 
                 case 2:
+                    PoolSignals.Instance.onDestroyTheCurrentLevel?.Invoke();
+                    PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(false);
+                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredHouse);
                     break;
                 
             }
@@ -180,11 +184,14 @@ namespace Runtime.Controllers
                         PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.BathroomLayingSeize);
                         CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.AslanHouse);
                         break;
-                    case 1: // After Mirror, Go to Factory
-                        CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
-                        break;
-                    case 2: // After Factory, Go to House
+                    case 1: // This is entered house
+                        PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.EnteredHouse);
                         CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.AslanHouse);
+                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredHouse);
+                        break;
+                    case 2: // This is mansion
+                        
+                        
                         break;
                     case 3: // After House, Go to Mansion
                         CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.Mansion);
@@ -215,6 +222,7 @@ namespace Runtime.Controllers
             blackwBG.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetEase(Ease.OutQuad).OnComplete(() =>
             {
                 PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.Factory,PlayableEnum.EnteredFactory);
+                CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredFactory);
                 PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
                 CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
             });
@@ -224,6 +232,7 @@ namespace Runtime.Controllers
 
         private void OnCloseUnCutScene(PlayableEnum playableEnum)
         {
+            CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
             PlayableSignals.Instance.onSetUpCutScene?.Invoke(playableEnum);
             blackwBG.GetComponent<CanvasGroup>().DOFade(0f, 2f).SetEase(Ease.OutQuad).OnComplete(() =>
             {

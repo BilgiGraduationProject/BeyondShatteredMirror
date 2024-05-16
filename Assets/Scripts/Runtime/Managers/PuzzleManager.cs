@@ -4,6 +4,7 @@ using DG.Tweening;
 using Runtime.Data.UnityObject;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Puzzle;
+using Runtime.Enums.UI;
 using Runtime.Keys.Input;
 using Runtime.Signals;
 using Unity.VisualScripting;
@@ -18,32 +19,21 @@ namespace Runtime.Managers
         #region Serialized Variables
 
         [SerializeField] private PuzzleEnum puzzleEnum;
-        private int pieces;
         
 
         #endregion
 
 
         #region Private Variables
-
-
-        private CD_Puzzle puzzleData;
-       [SerializeField] private List<GameObject> puzzlePieces = new List<GameObject>();
+        
        private PuzzleParams puzzleParams;
+       private GameObject lanternPuzzleHolder;
 
         #endregion
 
         #endregion
 
-
-        private void Awake()
-        {
-            puzzleData = GetPuzzleData();
-        }
-
-       
-
-        private CD_Puzzle GetPuzzleData() => Resources.Load<CD_Puzzle>("Data/CD_Puzzle");
+        
 
 
         private void OnEnable()
@@ -55,6 +45,12 @@ namespace Runtime.Managers
         {
             PuzzleSignals.Instance.onChangePuzzleColor += OnChangePuzzleColor;
             PuzzleSignals.Instance.onInteractWithPuzzlePieces += OnInteractWithPuzzlePieces;
+            PuzzleSignals.Instance.onGetPuzzleCatEyeValues += OnGetPuzzleCatEye;
+        }
+
+        private int OnGetPuzzleCatEye()
+        {
+            return puzzleParams.tablePictureCount;
         }
 
         private void OnInteractWithPuzzlePieces(GameObject intereact, GameObject puzzlePieces)
@@ -74,12 +70,15 @@ namespace Runtime.Managers
                         puzzlePieces.layer = 0;
                         intereact.layer = 0;
                         puzzleParams.tablePictureCount++;
+                        UITextSignals.Instance.onChangeMissionText?.Invoke();
+                        
                     }
                     if (puzzleParams.tablePictureCount == 2)
                     {
                         CameraSignals.Instance.onSetCameraPositionForCutScene?.Invoke(PlayableEnum.SecretWall);
                         PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.SecretWall);
                         puzzleEnum = PuzzleEnum.SecretBookShelf;
+                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.SecretWall);
                     }
                     break;
                 
@@ -92,8 +91,58 @@ namespace Runtime.Managers
                         puzzlePieces.transform.rotation = intereact.transform.rotation;
                         puzzlePieces.layer = 0;
                         intereact.layer = 0;
-                        intereact.GetComponent<MeshRenderer>().material.DOFade(0f, "_BaseColor", 0f);
+                        intereact.GetComponent<MeshRenderer>().material.DOFade(0f, "_BaseColor", 1f);
                         GameObject.FindWithTag("BookShelf").GetComponent<Animator>().SetBool("Open",true);
+                        puzzleEnum = PuzzleEnum.Lantern;
+                    }
+                    break;
+                
+                case PuzzleEnum.Lantern:
+                    lanternPuzzleHolder ??= GameObject.FindWithTag("LanternPuzzle").transform.GetChild(0).gameObject;
+                    
+
+                    if (intereact.CompareTag(puzzlePieces.tag))
+                    {
+                        intereact.GetComponent<MeshRenderer>().material.DOFade(0f, "_BaseColor", 1f);
+                        
+                        var rb = puzzlePieces.GetComponent<Rigidbody>();
+                        rb.useGravity = false;
+                        rb.isKinematic = true;
+                        puzzlePieces.transform.parent = lanternPuzzleHolder.transform;
+                        puzzlePieces.transform.position = intereact.transform.position;
+                        puzzlePieces.transform.rotation = intereact.transform.rotation;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < lanternPuzzleHolder.transform.childCount; i++)
+                        {
+                            
+                            var puzzleRb = lanternPuzzleHolder.transform.GetChild(i).gameObject;
+                            puzzleRb.transform.parent = null;
+                            var puzzleRbRb = puzzleRb.GetComponent<Rigidbody>();
+                            puzzleRbRb.useGravity = true;
+                            puzzleRbRb.isKinematic = false;
+                            puzzleRbRb.AddForce(new Vector3(0,0,1) * 500f);
+                            
+
+                        }
+                    }
+
+                    if (lanternPuzzleHolder.transform.childCount == 4)
+                    {
+                        var newObj = lanternPuzzleHolder.transform.parent.gameObject;
+                        for (int i = 0; i < lanternPuzzleHolder.transform.childCount; i++)
+                        {
+                            var puzzleObj = lanternPuzzleHolder.transform.GetChild(i).gameObject;
+                            puzzleObj.layer = 0;
+                            
+                        }
+
+                        for (int i = 1; i < newObj.transform.childCount; i++)
+                        {
+                            var puzzleObj = newObj.transform.GetChild(i).gameObject;
+                            puzzleObj.layer = 0;
+                        }
                     }
                     break;
                 
@@ -118,6 +167,8 @@ namespace Runtime.Managers
         private void UnSubscribeEvents()
         {
             PuzzleSignals.Instance.onChangePuzzleColor -= OnChangePuzzleColor;
+            PuzzleSignals.Instance.onInteractWithPuzzlePieces -= OnInteractWithPuzzlePieces;
+            PuzzleSignals.Instance.onGetPuzzleCatEyeValues -= OnGetPuzzleCatEye;
         }
 
         private void OnDisable()

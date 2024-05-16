@@ -1,6 +1,8 @@
 ﻿using System;
 using Runtime.Data.UnityObject;
+using Runtime.Enums.Playable;
 using Runtime.Enums.UI;
+using Runtime.Signals;
 using TMPro;
 using UnityEngine;
 
@@ -15,6 +17,7 @@ namespace Runtime.Controllers.UI
         private CD_UIMissionTextData _missionData;
         private string showText;
 
+        private PlayableEnum playabelEnum;
         #endregion
 
         #region Serialzied Variables
@@ -28,33 +31,31 @@ namespace Runtime.Controllers.UI
         {
             _missionData = missionData;
         }
-
-        public void OnChangeMissionText(UITextEnum textEnum)
+        
+        public void OnChangeMissionText()
         {
-            Debug.LogWarning("Text is Changed");
-            var text = _missionData.data[(int)textEnum].text;
-            switch (textEnum)
+            switch (CoreGameSignals.Instance.onSendCurrentGameStateToUIText?.Invoke())
             {
-                
-                case UITextEnum.GoToMirror:
-                    showText = text;
+                case PlayableEnum.BathroomLayingSeize:
+                    Debug.LogWarning("Text Changed To BathroomLayingSeize");
+                    var text =_missionData.data[(int)UITextEnum.GoToMirror].text;
                     missionText.text = text;
                     break;
-                case UITextEnum.FindMemoryCards:
-                    showText = text;
-                    missionText.text = text;
+                case PlayableEnum.EnteredFactory:
+                    var text1 =_missionData.data[(int)UITextEnum.FindMemoryCards].text;
+                    missionText.text = text1;
+                    break;
+                case PlayableEnum.EnteredHouse:
+                    var text2 =_missionData.data[(int)UITextEnum.LookAtCatEyes].text;
+                    missionText.text = $"{text2} {PuzzleSignals.Instance.onGetPuzzleCatEyeValues?.Invoke()}/2";
+                    break;
+                case PlayableEnum.SecretWall:
+                    var text3 =_missionData.data[(int)UITextEnum.TakeBook].text;
+                    missionText.text = text3;
                     break;
             }
         }
 
-        // private void OnEnable()
-        // {
-        //     ShowTextAgain();
-        // }
-        //
-        // private void ShowTextAgain()
-        // {
-        //     missionText.text = showText;
-        // }
+       
     }
 }

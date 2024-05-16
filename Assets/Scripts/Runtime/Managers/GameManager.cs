@@ -17,6 +17,7 @@ namespace Runtime.Managers
         #region Serialized Variables
 
        [SerializeField] private GameStateEnum gameState;
+       private PlayableEnum currentGameState;
 
         #endregion
         
@@ -34,10 +35,19 @@ namespace Runtime.Managers
         {
             CoreGameSignals.Instance.onGameStatusChanged += OnGameStatusChanged;
             CoreGameSignals.Instance.onGetGameState += () => gameState;
+            CoreGameSignals.Instance.onGameManagerGetCurrentGameState += OnGameManagerGetCurrentGameState;
+            CoreGameSignals.Instance.onSendCurrentGameStateToUIText += SendCurrentGameState;
         }
 
-       
-       
+        private PlayableEnum SendCurrentGameState()
+        {
+            return currentGameState;
+        }
+
+        private void OnGameManagerGetCurrentGameState(PlayableEnum condition)
+        {
+            currentGameState = condition;
+        }
 
 
         private void OnGameStatusChanged(GameStateEnum type)
@@ -79,6 +89,9 @@ namespace Runtime.Managers
         private void UnSubscribeEvents()
         {
             CoreGameSignals.Instance.onGameStatusChanged -= OnGameStatusChanged;
+            CoreGameSignals.Instance.onGetGameState -= () => gameState;
+            CoreGameSignals.Instance.onGameManagerGetCurrentGameState -= OnGameManagerGetCurrentGameState;
+            CoreGameSignals.Instance.onSendCurrentGameStateToUIText -= SendCurrentGameState;
         }
 
         private void OnDisable()

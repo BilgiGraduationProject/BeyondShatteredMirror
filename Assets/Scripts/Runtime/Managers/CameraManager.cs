@@ -90,6 +90,14 @@ namespace Runtime.Managers
                     _stateDrivenCamera.transform.position = secretWall.position; 
                     _stateDrivenCamera.transform.rotation = secretWall.rotation;
                     break;
+                case PlayableEnum.EnteredHouse:
+                    Debug.LogWarning("Entered House Camera Position is setted" + playable);
+                    var enteredHouse = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
+                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
+                    if(enteredHouse is null) return;
+                    _stateDrivenCamera.transform.position = enteredHouse.position; 
+                    _stateDrivenCamera.transform.rotation = enteredHouse.rotation;
+                    break;
                             
             }
         

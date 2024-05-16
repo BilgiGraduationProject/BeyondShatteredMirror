@@ -143,7 +143,6 @@ namespace Runtime.Managers
                     switch (_playableEnumIndex)
                     {
                         case PlayableEnum.BathroomLayingSeize:
-                            UITextSignals.Instance.onChangeMissionText?.Invoke(UITextEnum.GoToMirror);
                             PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.StandUp);
                             _isCutSceneInputReadyToUse = false;
                             break;

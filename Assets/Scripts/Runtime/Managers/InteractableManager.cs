@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Numerics;
 using DG.Tweening;
 using Runtime.Enums.Collectable;
 using Runtime.Signals;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Runtime.Managers
 {
@@ -62,7 +65,8 @@ namespace Runtime.Managers
             rigidbody.useGravity = false;
             rigidbody.isKinematic = true;
             obj.transform.parent = playerHandTransform;
-            obj.transform.localPosition = Vector3.zero;
+            obj.transform.localRotation = Quaternion.identity;
+            obj.transform.localPosition = playerHandTransform.localPosition;
         }
 
         private void OnDropTheInteractableObject(GameObject obj, Transform playerHandTransform)
@@ -78,7 +82,7 @@ namespace Runtime.Managers
             if(obj.GetInstanceID() != gameObject.GetInstanceID()) return;
             if (condition)
             {
-                
+                Debug.LogWarning("Changing Color");
                 meshRenderer.material.DOFloat(1, "_OutlineWidth", 1);
             }
             else

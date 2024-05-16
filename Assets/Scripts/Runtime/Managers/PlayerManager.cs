@@ -90,12 +90,13 @@ namespace Runtime.Managers
 
         private void OnSetPlayerToCutScenePosition(PlayableEnum playableEnum)
         {
+            CameraSignals.Instance.onSetCameraPositionForCutScene(playableEnum);
             Debug.LogWarning("SetUppedPosition");
             var position = PlayerSignals.Instance.onGetLevelCutScenePosition(playableEnum);
             var rotation = _cutScenePositionHolderData.cutSceneHolders[(int)playableEnum].cutSceneRotation;
             transform.position = position.position;
             playerTransform.DORotate(rotation, 1f);
-            CameraSignals.Instance.onSetCameraPositionForCutScene(playableEnum);
+            
            
 
         }

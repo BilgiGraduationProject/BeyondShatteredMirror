@@ -4,6 +4,7 @@
     {
         PictureTable,
         SecretBookShelf,
+        Lantern
         
     }
 }

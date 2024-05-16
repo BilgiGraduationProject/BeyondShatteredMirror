@@ -69,7 +69,6 @@ namespace Runtime.Controllers.Player
             {
                 if ( _collidedObject is not null &&_collidedObject != pickUpRay.collider.gameObject)
                 {
-                    Debug.LogWarning("Colliding is not same");
                     ChangeColorOfObject(_collidedObject,false,LayerMask.LayerToName(_collidedObject.layer));
                     _didHit = false;
                 }
@@ -78,7 +77,6 @@ namespace Runtime.Controllers.Player
                 {
                     if(Vector3.Distance(playerTransform.position,pickUpRay.collider.transform.position) < 3f)
                     {
-                        Debug.LogWarning("Colliding is same");
                         _collidedObject = pickUpRay.collider.gameObject;
                         ChangeColorOfObject(_collidedObject,true,LayerMask.LayerToName(_collidedObject.layer));
                         _didHit = true;
