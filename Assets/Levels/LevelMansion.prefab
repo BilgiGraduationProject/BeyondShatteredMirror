@@ -66933,6 +66933,7 @@ GameObject:
   - component: {fileID: 320515304159879751}
   - component: {fileID: 7254695221625828159}
   - component: {fileID: 2601296033539724439}
+  - component: {fileID: 5303754749521210856}
   m_Layer: 0
   m_Name: Cube__6__1.003
   m_TagString: Untagged
@@ -67005,6 +67006,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5303754749521210856
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7350549772516998620}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.079398535, y: 9.999997, z: 4.9999986}
+  m_Center: {x: 0.24999931, y: 0.0000057145953, z: 0.00000023841858}
 --- !u!1 &7385246917060243106
 GameObject:
   m_ObjectHideFlags: 0
@@ -75720,6 +75742,7 @@ GameObject:
   - component: {fileID: 520324849768299117}
   - component: {fileID: 8173374303048183638}
   - component: {fileID: 3099128436853294510}
+  - component: {fileID: 1114934538295799913}
   m_Layer: 0
   m_Name: Cube__6__1.001
   m_TagString: Untagged
@@ -75792,6 +75815,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1114934538295799913
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8188721932445197429}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.079398535, y: 9.999997, z: 4.9999986}
+  m_Center: {x: 0.24999884, y: 0.0000038072467, z: 0.00000023841858}
 --- !u!1 &8197284839621088924
 GameObject:
   m_ObjectHideFlags: 0
@@ -77348,7 +77392,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1fc426bcb320a497fb199aa9ea8e3bd9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
