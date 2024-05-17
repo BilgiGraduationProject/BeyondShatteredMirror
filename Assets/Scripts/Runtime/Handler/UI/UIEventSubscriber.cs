@@ -36,48 +36,6 @@ namespace Runtime.Handler.UI
             triggerEvent ??= GetComponent<EventTrigger>();
         }
 
-        // private void OnEnable()
-        // {
-        //     SubscribeEvents();
-        // }
-        //
-        // private void SubscribeEvents()
-        // {
-        //     switch (subscriptionType)
-        //     {
-        //         case UIEventSubscriptionTypes.OnStart:
-        //             button.onClick.AddListener(_uiManager.OnStart);
-        //             break;
-        //         case UIEventSubscriptionTypes.OnSettings:
-        //             button.onClick.AddListener(_uiManager.OnSettings);
-        //             break;
-        //         case UIEventSubscriptionTypes.OnQuit:
-        //             button.onClick.AddListener(_uiManager.OnQuit);
-        //             break;
-        //     }
-        // }
-        //
-        // private void UnSubscribeEvents()
-        // {
-        //     switch (subscriptionType)
-        //     {
-        //         case UIEventSubscriptionTypes.OnStart:
-        //             button.onClick.RemoveListener(_uiManager.OnStart);
-        //             break;
-        //         case UIEventSubscriptionTypes.OnSettings:
-        //             button.onClick.RemoveListener(_uiManager.OnSettings);
-        //             break;
-        //         case UIEventSubscriptionTypes.OnQuit:
-        //             button.onClick.RemoveListener(_uiManager.OnQuit);
-        //             break;
-        //     }
-        // }
-        //
-        // private void OnDisable()
-        // {
-        //     UnSubscribeEvents();
-        // }
-
         public void OnPointerClick(PointerEventData eventData)
         {
             switch (subscriptionType)
@@ -104,6 +62,12 @@ namespace Runtime.Handler.UI
                     print("OnMainMenu");
                     CoreUISignals.Instance.onPlayOneShotSound?.Invoke(SFXTypes.ButtonOpen);
                     _uiManager.OnMainMenu();
+                    break;
+                case UIEventSubscriptionTypes.OnShop:
+                    _uiManager.OnShop();
+                    break;
+                case UIEventSubscriptionTypes.OnInventory:
+                    _uiManager.OnInventory();
                     break;
             }
         }

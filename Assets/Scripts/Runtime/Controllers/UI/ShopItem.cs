@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Sirenix.OdinInspector;
 
 namespace Runtime.Controllers.UI
 {
@@ -18,7 +19,8 @@ namespace Runtime.Controllers.UI
         [SerializeField] private TextMeshProUGUI itemDescription;
         [SerializeField] private Image itemThumbnail;
         [SerializeField] private TextMeshProUGUI itemPrice;
-
+        [SerializeField] private Outline itemOutline;
+        
         #endregion
         
         #region Private Variables
@@ -34,14 +36,15 @@ namespace Runtime.Controllers.UI
             itemName.text = name;
             itemDescription.text = description;
             itemThumbnail.sprite = thumbnail;
-            itemPrice.text = "$" + price; // Changeable
+            itemPrice.text = price + " Souls"; // Changeable
         }
         
         internal void SetItemIndex(int index) => _itemIndex = index;
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            transform.DOScale(new Vector3().SetFloat(1.15f), 0.3f)
+            SetOutlineAnimation();
+            transform.DOScale(new Vector3().SetFloat(1.1f), 0.3f)
                 .SetEase(Ease.Flash);
         }
 
@@ -54,6 +57,19 @@ namespace Runtime.Controllers.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             ShopManager.Instance.PurchaseItem(_itemIndex, gameObject);
+        }
+        
+        [Button("Set Outline Animation")]
+        private void SetOutlineAnimation()
+        {
+            itemOutline.effectDistance = new Vector2(50, 120);
+
+            DOTween.To(() => itemOutline.effectDistance, w => itemOutline.effectDistance = w, new Vector2(50, 0), 0.5f)
+                .SetEase(Ease.Flash)
+                .OnComplete(() =>
+                    DOTween.To(() => itemOutline.effectDistance, w => itemOutline.effectDistance = w,
+                            new Vector2(0, 0), 0.5f)
+                        .SetEase(Ease.Flash));
         }
     }
 }

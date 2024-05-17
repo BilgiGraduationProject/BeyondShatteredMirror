@@ -56,5 +56,15 @@ namespace Runtime.Managers
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        
+        public void OnShop()
+        {
+            CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Shop, 1);
+        }
+        
+        public void OnInventory()
+        {
+            CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
+        }
     }
 }
