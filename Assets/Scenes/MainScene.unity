@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.087938726, g: 0.18493542, b: 0.2603773, a: 1}
   m_FogMode: 2
-  m_FogDensity: 0.12
+  m_FogDensity: 0.09
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.05005321, g: 0.04268328, b: 0.045109548, a: 1}
+  m_IndirectSpecularColor: {r: 0.050053217, g: 0.042683255, b: 0.04510956, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -488,6 +488,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9081562319476351246, guid: 19ef66df3d382b04aa06b12f5d28668c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4bfd59f30ec17e6489b7e04cee169499, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1059,6 +1064,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 638685555}
     m_Modifications:
+    - target: {fileID: 3484143996716950510, guid: 55b906f890dd141418d92ffc22118ee2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eb93b645d6b9d0a439f54ae0d513a94d, type: 2}
     - target: {fileID: 6247427346470011841, guid: 55b906f890dd141418d92ffc22118ee2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1820,6 +1830,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 638685555}
     m_Modifications:
+    - target: {fileID: 1125131943770971719, guid: d50f570b4dacfb148b116351d5641036,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9e3005d5ee35fd04cb2a584077921daa, type: 2}
     - target: {fileID: 1155225898155847646, guid: d50f570b4dacfb148b116351d5641036,
         type: 3}
       propertyPath: m_Name
@@ -2869,6 +2884,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandOrange
       objectReference: {fileID: 0}
+    - target: {fileID: 7466362902257894186, guid: ebd16c5befa2bd54d97285af0da0d30a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38c320bf4f33b1847b2dcfd61659e475, type: 2}
     - target: {fileID: 8345174038733822930, guid: ebd16c5befa2bd54d97285af0da0d30a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3568,6 +3588,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandGreen
       objectReference: {fileID: 0}
+    - target: {fileID: 1179666050071285358, guid: 2668928aea633714e96e633ac3e847fc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c48bb0e76bbef7045820f0520c5b6481, type: 2}
     - target: {fileID: 4617948709809498015, guid: 2668928aea633714e96e633ac3e847fc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3830,6 +3855,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandNormal
       objectReference: {fileID: 0}
+    - target: {fileID: 3438339030367672689, guid: e12c1f6e4eb5aea4994c18b3165e3231,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4d4b67ae16225ba4dbe40d64db5c176c, type: 2}
     - target: {fileID: 3926125259450905997, guid: e12c1f6e4eb5aea4994c18b3165e3231,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4110,6 +4140,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelMansion
       objectReference: {fileID: 0}
+    - target: {fileID: 5666209276625461740, guid: 7739490ba03a241da8c82611d322342a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c621a8f77218bf4e8664a7f15d647c5, type: 2}
     - target: {fileID: 6906951177483867519, guid: 7739490ba03a241da8c82611d322342a,
         type: 3}
       propertyPath: m_LocalPosition.y
