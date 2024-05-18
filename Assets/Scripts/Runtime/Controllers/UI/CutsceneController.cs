@@ -59,6 +59,29 @@ namespace Runtime.Controllers
             CoreUISignals.Instance.onOpenCutscene += OnOpenCutscene;
             CoreUISignals.Instance.onOpenUnCutScene += OnOpenUnCutScene;
             CoreUISignals.Instance.onCloseUnCutScene += OnCloseUnCutScene;
+            videoPlayer.started += OnVideoPlayerStarted;
+        }
+
+        private void OnVideoPlayerStarted(VideoPlayer source)
+        {
+            switch (_index)
+            {
+                case 0:
+                    PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelAslanHouse,PlayableEnum.BathroomLayingSeize);
+                    CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.BathroomLayingSeize);
+                    break;
+                
+                case 1:
+                    PoolSignals.Instance.onDestroyTheCurrentLevel?.Invoke();
+                    PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(false);
+                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredHouse);
+                    break;
+                case 2:
+                    PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelMansion,PlayableEnum.Mansion);
+                    PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
+                    break;
+                
+            }
         }
 
         private void UnsubscribeEvents()
@@ -67,6 +90,7 @@ namespace Runtime.Controllers
             CoreUISignals.Instance.onOpenCutscene -= OnOpenCutscene;
             CoreUISignals.Instance.onOpenUnCutScene -= OnOpenUnCutScene;
             CoreUISignals.Instance.onCloseUnCutScene -= OnCloseUnCutScene;
+            videoPlayer.started -= OnVideoPlayerStarted;
         }
 
        
@@ -74,28 +98,6 @@ namespace Runtime.Controllers
         private void OnDisable() => UnsubscribeEvents();
     
         #endregion
-
-        private void Update()
-        {
-            // TODO: This part is for testing purposes only. Change it later with collision or something else.
-            if (Input.GetKeyDown(KeyCode.Alpha0))
-            {
-                //CoreUISignals.Instance.onOpenCutscene?.Invoke(0); // This method helps to load cutscene video.
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                //CoreUISignals.Instance.onOpenCutscene?.Invoke(1);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                //CoreUISignals.Instance.onOpenCutscene?.Invoke(2);
-            }
-
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                CompleteButton();
-            }
-        }
         
         private void OnOpenCutscene(int index)
         {
@@ -103,21 +105,12 @@ namespace Runtime.Controllers
             LoadVideoClip(index);
             CoreUISignals.Instance.onStopMusic?.Invoke();
             CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
-            completeButton.gameObject.SetActive(true);
-            switch (index)
+            DOVirtual.DelayedCall(3f ,() =>
             {
-                case 1:
-                    PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.AslanHouse,PlayableEnum.BathroomLayingSeize);
-                    CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.BathroomLayingSeize);
-                    break;
-                
-                case 2:
-                    PoolSignals.Instance.onDestroyTheCurrentLevel?.Invoke();
-                    PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(false);
-                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredHouse);
-                    break;
-                
-            }
+                completeButton.gameObject.SetActive(true);
+            });
+            
+            
         }
         
         private void LoadVideoClip(int index)
@@ -136,6 +129,7 @@ namespace Runtime.Controllers
                 
                 videoPlayer.gameObject.SetActive(true);
                 videoPlayer.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+                
                 if (_index is 0)
                 {
                     videoPlayer.gameObject.GetComponent<CanvasGroup>().DOFade(1f, 0).SetEase(Ease.OutQuad);
@@ -149,8 +143,10 @@ namespace Runtime.Controllers
                 
                 videoPlayer.url = _fullPath;
                 videoPlayer.Prepare();
+               
                 
-                Debug.Log("Video is playing.".ColoredText(Color.green));
+               
+                
             }
             catch (System.Exception ex)
             {
@@ -158,6 +154,7 @@ namespace Runtime.Controllers
                 videoPlayer.gameObject.SetActive(false);
                 videoPlayer.GetComponent<CanvasGroup>().alpha = 1;
             }
+            
         }
 
         public void CompleteButton()
@@ -190,11 +187,12 @@ namespace Runtime.Controllers
                         CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredHouse);
                         break;
                     case 2: // This is mansion
-                        
-                        
+                        PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.Mansion);
+                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.Mansion);
+                        CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.Mansion);
                         break;
                     case 3: // After House, Go to Mansion
-                        CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.Mansion);
+                       
                         break;
                 }
                 videoPlayer.GetComponent<CanvasGroup>().alpha = 1;
@@ -221,7 +219,7 @@ namespace Runtime.Controllers
             blackwBG.SetActive(true);
             blackwBG.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetEase(Ease.OutQuad).OnComplete(() =>
             {
-                PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.Factory,PlayableEnum.EnteredFactory);
+                PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelFactory,PlayableEnum.EnteredFactory);
                 CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredFactory);
                 PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
                 CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);

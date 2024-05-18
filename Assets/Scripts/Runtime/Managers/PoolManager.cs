@@ -103,7 +103,7 @@ namespace Runtime.Managers
         {
             _currentPlayableEnum = playableEnum;
             AsyncOperationHandle<GameObject> asyncOperationHandle =
-                Addressables.LoadAssetAsync<GameObject>($"Assets/Levels/Level{levelEnum.ToString()}.prefab");
+                Addressables.LoadAssetAsync<GameObject>($"Assets/Levels/{levelEnum.ToString()}.prefab");
             
                 asyncOperationHandle.Completed += AsyncOperationHandle_Completed;
         }
@@ -125,6 +125,10 @@ namespace Runtime.Managers
                         Instantiate(obj.Result, levelHolder.transform);
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
                         CoreUISignals.Instance.onCloseUnCutScene?.Invoke(_currentPlayableEnum);
+                        break;
+                    case PlayableEnum.Mansion:
+                        Instantiate(obj.Result, levelHolder.transform);
+                        PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
                         break;
                     
                 }

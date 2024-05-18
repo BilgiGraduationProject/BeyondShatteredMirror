@@ -53,6 +53,14 @@ namespace Runtime.Controllers.UI
                     var text3 =_missionData.data[(int)UITextEnum.TakeBook].text;
                     missionText.text = text3;
                     break;
+                case PlayableEnum.DetectiveBoard:
+                    var text4 =_missionData.data[(int)UITextEnum.LookAtTheDetectiveBoard].text;
+                    missionText.text = text4;
+                    break;
+                case PlayableEnum.Mansion:
+                    var text5 =_missionData.data[(int)UITextEnum.FindLanterns].text;
+                    missionText.text = text5;
+                    break;
             }
         }
 

@@ -94,6 +94,8 @@ namespace Runtime.Managers
                         intereact.GetComponent<MeshRenderer>().material.DOFade(0f, "_BaseColor", 1f);
                         GameObject.FindWithTag("BookShelf").GetComponent<Animator>().SetBool("Open",true);
                         puzzleEnum = PuzzleEnum.Lantern;
+                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.DetectiveBoard);
+                        UITextSignals.Instance.onChangeMissionText?.Invoke();
                     }
                     break;
                 
@@ -143,6 +145,20 @@ namespace Runtime.Managers
                             var puzzleObj = newObj.transform.GetChild(i).gameObject;
                             puzzleObj.layer = 0;
                         }
+                        GameObject.FindWithTag("BackDoor").GetComponent<Animator>().SetTrigger("Open");
+                    }
+                    break;
+                
+                case PuzzleEnum.HandPuzzle:
+                    if (intereact.CompareTag(puzzlePieces.tag))
+                    {
+                        puzzlePieces.transform.parent = null;
+                        puzzlePieces.transform.position = intereact.transform.position;
+                        puzzlePieces.transform.rotation = intereact.transform.rotation;
+                        puzzlePieces.transform.localScale = intereact.transform.localScale;
+                        puzzlePieces.layer = 0;
+                        intereact.layer = 0;
+                        
                     }
                     break;
                 

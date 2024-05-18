@@ -21,6 +21,8 @@ namespace Runtime.Signals
         [SerializeField] private Transform factoryStart;
 
 
+        [Header("Mansion")] 
+        [SerializeField] private Transform mansion;
 
 
         [Header("Camera Position")] 
@@ -29,6 +31,7 @@ namespace Runtime.Signals
         [SerializeField] private Transform factoryEntryCameraPos;
         [SerializeField] private Transform secretRoomCameraPos;
         [SerializeField] private Transform layingBedCameraPos;
+        [SerializeField] private Transform mansionCameraPos;
         #endregion
 
         #endregion
@@ -66,6 +69,9 @@ namespace Runtime.Signals
                case PlayableEnum.EnteredHouse:
                    return layingBedCameraPos;
                    break;
+               case PlayableEnum.Mansion:
+                   return mansionCameraPos;
+                   break;
                default:
                    return seizingCameraPos;
                
@@ -86,6 +92,8 @@ namespace Runtime.Signals
                     return layingBed;
                 case PlayableEnum.EnteredFactory:
                     return factoryStart;
+                case PlayableEnum.Mansion:
+                    return mansion;
                 
                 default:
                     return null;

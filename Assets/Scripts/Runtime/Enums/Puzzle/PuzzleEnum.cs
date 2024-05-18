@@ -4,7 +4,9 @@
     {
         PictureTable,
         SecretBookShelf,
-        Lantern
+        Lantern,
+        HandPuzzle,
+        
         
     }
 }

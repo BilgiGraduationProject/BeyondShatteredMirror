@@ -139,8 +139,9 @@ namespace Runtime.Managers
             private IEnumerator OnCutSceneFinished(float playableDirectorDuration)
             {
                 yield return new WaitForSeconds(playableDirectorDuration);
-                CoreUISignals.Instance.onEnableAllPanels?.Invoke();
                 CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                CoreUISignals.Instance.onEnableAllPanels?.Invoke();
+                
 
             }
 

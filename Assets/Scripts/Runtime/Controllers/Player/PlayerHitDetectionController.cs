@@ -58,7 +58,7 @@ namespace Runtime.Controllers.Player
             CheckForPickUpRay(pickUpDidHitYa,pickUpRay);
             
             var newRay =  _camera.transform.forward;
-            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Interectable","Openable","Puzzle","SearchingEnemy","Wall"));
+            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Interectable","Openable","Puzzle","SearchingEnemy","Wall","DetectiveBoard"));
             Debug.DrawRay(_camera.transform.position,newRay * maxDistance , Color.cyan);
             _jobHandle = RaycastCommand.ScheduleBatch(_raycastCommands, _raycastHits, 1);
         }
@@ -119,7 +119,9 @@ namespace Runtime.Controllers.Player
                     case "Openable":
                         InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(true,collidedObject);
                         break;
-                    
+                    case "DetectiveBoard":
+                        collidedObject.GetComponent<MeshRenderer>().material.DOFloat(1.8f, "_OutlineWidth", 1);
+                        break;
                 }
                
             }
@@ -140,6 +142,9 @@ namespace Runtime.Controllers.Player
                     case "Openable":
                         InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(false,collidedObject);
                         _collidedObject = null;
+                        break;
+                    case "DetectiveBoard":
+                        collidedObject.GetComponent<MeshRenderer>().material.DOFloat(0, "_OutlineWidth", 1);
                         break;
                     
                 }
@@ -188,6 +193,11 @@ namespace Runtime.Controllers.Player
                     PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.StealthKill);
                     playerTransform.LookAt(enemyObj.transform.position);
                     
+                    break;
+                
+                case "DetectiveBoard":
+                    CoreUISignals.Instance.onOpenCutscene?.Invoke(3);
+                    _collidedObject.layer = 0;
                     break;
                 
             }

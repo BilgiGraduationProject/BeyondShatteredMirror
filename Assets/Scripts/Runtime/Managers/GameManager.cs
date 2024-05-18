@@ -53,6 +53,7 @@ namespace Runtime.Managers
         private void OnGameStatusChanged(GameStateEnum type)
         {
             gameState = type;
+            Debug.LogWarning("Game State Changed To this" + type);
             switch (gameState)
             {
                 case GameStateEnum.Game:
@@ -72,7 +73,7 @@ namespace Runtime.Managers
                 case GameStateEnum.UI:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
                     InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
-                    CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.CutScene);
+                    CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Play);
                     break;
                 
                 case GameStateEnum.Start:

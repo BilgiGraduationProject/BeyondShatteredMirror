@@ -14,8 +14,7 @@ namespace Runtime.Controllers.Player
             {
                 PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.StandFrontOfMirror);
                PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.StandFrontOfMirror);
-                
-                other.CompareTag("Untagged");
+               Destroy(other.gameObject);
                
             }
 

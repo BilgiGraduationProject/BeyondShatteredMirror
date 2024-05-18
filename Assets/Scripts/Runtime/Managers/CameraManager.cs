@@ -18,6 +18,7 @@ namespace Runtime.Managers
         [SerializeField] private CinemachineStateDrivenCamera _stateDrivenCamera;
         [SerializeField] private Animator cameraAnimator;
         [SerializeField] private Transform cutsSceneCamera;
+        [SerializeField] private Transform playerFollowCamera;
        
 
 
@@ -57,13 +58,11 @@ namespace Runtime.Managers
 
         private void OnSetCameraPositionForCutScene(PlayableEnum playable)
         {
-            Debug.LogWarning(playable);
             
             switch (playable)
             {
                 case PlayableEnum.BathroomLayingSeize:
                     var seizingPos = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
-                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
                     if(seizingPos is null) return;
                     _stateDrivenCamera.transform.position = seizingPos.position; 
                     _stateDrivenCamera.transform.rotation = seizingPos.rotation;
@@ -71,32 +70,35 @@ namespace Runtime.Managers
                         
                 case PlayableEnum.StandFrontOfMirror:
                     var mirrorPos = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
-                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
                     if(mirrorPos is null) return;
                     _stateDrivenCamera.transform.position = mirrorPos.position; 
                     _stateDrivenCamera.transform.rotation = mirrorPos.rotation;
                     break;
                 case PlayableEnum.EnteredFactory:
                     var factoryEntry = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
-                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
                     if(factoryEntry is null) return;
                     _stateDrivenCamera.transform.position = factoryEntry.position; 
                     _stateDrivenCamera.transform.rotation = factoryEntry.rotation;
                     break;
                 case PlayableEnum.SecretWall:
                     var secretWall = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
-                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
                     if(secretWall is null) return;
                     _stateDrivenCamera.transform.position = secretWall.position; 
                     _stateDrivenCamera.transform.rotation = secretWall.rotation;
                     break;
                 case PlayableEnum.EnteredHouse:
-                    Debug.LogWarning("Entered House Camera Position is setted" + playable);
                     var enteredHouse = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
                     cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
                     if(enteredHouse is null) return;
                     _stateDrivenCamera.transform.position = enteredHouse.position; 
                     _stateDrivenCamera.transform.rotation = enteredHouse.rotation;
+                    break;
+                case PlayableEnum.Mansion:
+                    var mansion = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
+                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
+                    if(mansion is null) return;
+                    _stateDrivenCamera.transform.position = mansion.position; 
+                    _stateDrivenCamera.transform.rotation = mansion.rotation;
                     break;
                             
             }
@@ -118,16 +120,23 @@ namespace Runtime.Managers
         
         private void OnChangeCameraState(CameraStateEnum cameraState)
         {
-            cameraAnimator.SetTrigger(cameraState.ToString());
+            Debug.LogWarning("Camera State Changed" + cameraState);
+            
             switch (cameraState)
             {
                 case CameraStateEnum.Play:
+                    cameraAnimator.SetBool("CutScene",false);
+                    cameraAnimator.SetBool(cameraState.ToString(),true);
                     _stateDrivenCamera.Follow = _playerFollow;
                     break;
                 case CameraStateEnum.CutScene:
+                    playerFollowCamera.transform.position = transform.position;
+                    Debug.LogWarning(playerFollowCamera.transform.position);
+                    cameraAnimator.SetBool("Play",false);
+                    cameraAnimator.SetBool(cameraState.ToString(),true);
                     _stateDrivenCamera.Follow = null;
                     break;
-                    
+                
                   
                 
             }
@@ -136,9 +145,9 @@ namespace Runtime.Managers
 
         private void UnSubscribeEvents()
         {
-            CameraSignals.Instance.onChangeCameraState += OnChangeCameraState;
-            CameraSignals.Instance.onSetCinemachineTarget += OnSetCameraTarget;
-            CameraSignals.Instance.onSetCameraPositionForCutScene += OnSetCameraPositionForCutScene;
+            CameraSignals.Instance.onChangeCameraState -= OnChangeCameraState;
+            CameraSignals.Instance.onSetCinemachineTarget -= OnSetCameraTarget;
+            CameraSignals.Instance.onSetCameraPositionForCutScene -= OnSetCameraPositionForCutScene;
         }
 
         private void OnDisable()

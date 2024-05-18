@@ -260,19 +260,18 @@ namespace StarterAssets
             }
             else
             {
-                if (_speedTimer < 100f)
+                switch (_speedTimer)
                 {
-                    _speedTimer += 10f * Time.deltaTime;
-                    PlayerSignals.Instance.onSendPlayerSpeedToSlider?.Invoke(_speedTimer);
+                    case < 100f:
+                        _speedTimer += 10f * Time.deltaTime;
+                        PlayerSignals.Instance.onSendPlayerSpeedToSlider?.Invoke(_speedTimer);
+                        break;
+                    case >= 100f:
+                        _isRunning = false;
+                        break;
                 }
-                else
-                {
-                    _isRunning = false;
-                }
-                
-                
             }
-            Debug.LogWarning(_speedTimer);
+            
 
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;

@@ -2,8 +2,8 @@
 {
     public enum LevelEnum
     {
-        AslanHouse,
-        Mainson,
-        Factory,
+        LevelAslanHouse,
+        LevelMansion,
+        LevelFactory,
     }
 }

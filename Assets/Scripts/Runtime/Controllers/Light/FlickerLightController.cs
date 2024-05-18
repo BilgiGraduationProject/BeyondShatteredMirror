@@ -43,7 +43,6 @@ namespace Runtime.Controllers.Light
 
         private IEnumerator BlinkLight()
         {
-            Debug.LogWarning(" How many timed blinked");
             for (int i = 0; i < light.Count; i++)
             {
                 var randomWaitTime = Random.Range(0, blinkWaitingTime);

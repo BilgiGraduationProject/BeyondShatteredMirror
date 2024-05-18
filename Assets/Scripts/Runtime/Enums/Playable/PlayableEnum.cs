@@ -9,6 +9,8 @@
         EnteredFactory,
         EnteredHouse,
         SecretWall,
+        Mansion,
+        DetectiveBoard,
         
     }
 }
