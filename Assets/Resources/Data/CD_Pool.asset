@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: CD_Pool
   m_EditorClassIdentifier: 
   Data:
-  - ObjName: Cube
-    ObjPrefab: {fileID: 100000, guid: 71c1a7d31ae1f5148bd68555e9baee05, type: 3}
-    ObjectCount: 10
   - ObjName: Souls
     ObjPrefab: {fileID: 2557983453525354733, guid: b17443521a1c1e241936b3894505d988,
       type: 3}
     ObjectCount: 5
+  - ObjName: Enemy
+    ObjPrefab: {fileID: 2898565275095517643, guid: cdf7c64d364044343a2d52d899987c0f,
+      type: 3}
+    ObjectCount: 20
