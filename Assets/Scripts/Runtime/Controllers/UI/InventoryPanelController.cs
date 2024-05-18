@@ -139,7 +139,7 @@ namespace Runtime.Controllers.UI
                     //itemObject.gameObject.GetComponent<Toggle>().onValueChanged.AddListener((value => DisableItemsToggle()));
                     itemObject.transform.GetChild(1).gameObject.GetComponent<Image>().sprite = item.Thumbnail;
                     //itemObject.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = SaveLoadManager.Instance.LoadData<int>(item.Name).ToString();
-                    itemObject.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = GameDataManager.LoadData<int>(item.Name).ToString();
+                    itemObject.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = GameDataManager.LoadData<int>(item.DataType.ToString()).ToString();
                 }
             }
             

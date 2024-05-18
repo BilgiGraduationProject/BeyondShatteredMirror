@@ -17,7 +17,7 @@ namespace Runtime.Signals
         public UnityAction<bool> onIsReadyForCombat = delegate {  };
         public UnityAction onPlayerPressedPickUpButton = delegate {  };
         public UnityAction onPlayerPressedDropItemButton = delegate {  };
-      
+        public Func<bool> onGetCombatState = delegate { return false; };
         
     
         

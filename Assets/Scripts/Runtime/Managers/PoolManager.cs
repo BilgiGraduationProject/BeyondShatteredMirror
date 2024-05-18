@@ -151,6 +151,7 @@ namespace Runtime.Managers
             {
                 var obj = parent.transform.GetChild(0).gameObject;
                 obj.transform.parent = target;
+                obj.transform.position = target.position;
                 obj.SetActive(true);
                 return obj;
             }

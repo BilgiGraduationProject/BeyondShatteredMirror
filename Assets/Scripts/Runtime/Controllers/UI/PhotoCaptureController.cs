@@ -43,7 +43,7 @@ namespace Runtime.Controllers.UI
         private void Update()
         {
             // TODO: Daha sonrası için kamerayı o an açıp açamayacağını da kontrol et.
-            if (Input.GetKeyDown(KeyCode.C) && _viewingPhoto)
+            if (Input.GetKeyUp(KeyCode.C) && _viewingPhoto)
             {
                 if (CoreGameSignals.Instance.onGetGameState() is not GameStateEnum.Game)
                 {

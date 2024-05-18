@@ -1,11 +1,15 @@
-﻿using Runtime.Enums.Enemy;
+﻿using DG.Tweening;
+using Runtime.Enums;
+using Runtime.Enums.Enemy;
 using Runtime.Enums.Player;
+using Runtime.Enums.Pool;
 using Runtime.Managers;
 using Runtime.Signals;
 using Runtime.Utilities;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
@@ -22,6 +26,9 @@ namespace Runtime.Controllers.Enemy
           [SerializeField] private NavMeshAgent agent;
           [SerializeField] private CapsuleCollider collider;
           [SerializeField] private BoxCollider hitCollider;
+          [SerializeField] private Slider healthBar;
+          [SerializeField] private Image healthBarImageGradient;
+          [SerializeField] private Gradient healtGradient;
 
           [Header("Combat")] 
           [SerializeField] private float attackCooldown = 3f;
@@ -52,6 +59,8 @@ namespace Runtime.Controllers.Enemy
                agent = GetComponent<NavMeshAgent>();
                collider = GetComponent<CapsuleCollider>();
                player = GameObject.FindGameObjectWithTag("Player");
+               healthBar.value = health / 100f;
+               healthBarImageGradient.color = healtGradient.Evaluate(health / 100f);
           }
 
           [Button("Randomize Stats")]
@@ -61,9 +70,11 @@ namespace Runtime.Controllers.Enemy
                attackRange = Random.Range(2f, 4f);
           }
           
-          void TakeDamage(float damage)
+          public void TakeDamage(float damage)
           {
                health -= damage;
+               healthBar.DOValue(health / 100f, 0.5f);
+               healthBarImageGradient.color = healtGradient.Evaluate(health / 100f);
                animator.SetTrigger("Damage");
                
                if(CheckDie())
@@ -72,16 +83,6 @@ namespace Runtime.Controllers.Enemy
 
           void Update()
           {
-               if(Input.GetKeyDown(KeyCode.T) && !CheckDie())
-               {
-                    TakeDamage(50f);
-               }
-
-               if (Input.GetKeyDown(KeyCode.Y))
-               {
-                    
-               }
-               
                if(CheckDie()) return;
                
                animator.SetFloat("Speed", agent.velocity.magnitude / agent.speed);
@@ -116,10 +117,17 @@ namespace Runtime.Controllers.Enemy
           {
                print("Enemy Died".ColoredText(Color.Lerp(Color.gray, Color.red, 0.5f)));
                animator.SetTrigger("Die");
-               Destroy(collider);
+               collider.enabled = false;
                Destroy(hitCollider);
                Destroy(agent);
-               Destroy(gameObject, 10f);
+               Destroy(healthBar.gameObject);
+               PoolSignals.Instance.onGetPoolObject?.Invoke(PoolType.Soul, gameObject.transform);
+               GameDataManager.SaveData<int>(GameDataEnums.Soul.ToString(), GameDataManager.LoadData<int>(GameDataEnums.Soul.ToString(), 0) + 10);
+               EnemySignals.Instance.onEnemyDied?.Invoke();
+               DOVirtual.DelayedCall(3f ,() =>
+               {
+                    PoolSignals.Instance.onSendPool?.Invoke(gameObject, PoolType.Enemy);
+               });
           }
 
           public void StartDealDamage()

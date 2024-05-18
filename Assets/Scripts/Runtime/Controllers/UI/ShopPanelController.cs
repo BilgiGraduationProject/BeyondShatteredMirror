@@ -1,5 +1,6 @@
 ﻿using Runtime.Data.ValueObject;
 using System.Collections.Generic;
+using Runtime.Enums;
 using Runtime.Managers;
 using TMPro;
 using UnityEngine;
@@ -44,6 +45,8 @@ namespace Runtime.Controllers.UI
             int index = 0;
             foreach (var item in _itemData)
             {
+                if(item.DataType is GameDataEnums.Soul)
+                    continue;
                 var itemObject = Instantiate(shopItemPrefab, shopItemParent.transform);
                 itemObject.GetComponent<ShopItem>().SetItem(item.Name, item.Description, item.Thumbnail, item.Price); 
                 itemObject.GetComponent<ShopItem>().SetItemIndex(index++);

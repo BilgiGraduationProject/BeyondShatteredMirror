@@ -1,7 +1,9 @@
 ﻿using System;
+using Runtime.Controllers.Enemy;
 using Runtime.Enums.Playable;
 using Runtime.Enums.UI;
 using Runtime.Signals;
+using Runtime.Utilities;
 using UnityEngine;
 
 namespace Runtime.Controllers.Player
@@ -17,16 +19,17 @@ namespace Runtime.Controllers.Player
                Destroy(other.gameObject);
                
             }
-
             if (other.CompareTag("House"))
             {
                 CoreUISignals.Instance.onOpenCutscene?.Invoke(2);
                 other.CompareTag("Untagged");
             }
-            
-
-           
+            if (other.gameObject.TryGetComponent<EnemyAIController>(out var controller))
+            {
+                if (!InputSignals.Instance.onGetCombatState()) return;
+                controller.TakeDamage(UnityEngine.Random.Range(25f,45f));
+                print("Aslan hit Shadow".ColoredText(Color.Lerp(Color.yellow, Color.cyan, 0.5f)));
+            }
         }
-        
     }
 }

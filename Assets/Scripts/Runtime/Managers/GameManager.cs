@@ -60,11 +60,13 @@ namespace Runtime.Managers
                     InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(true);
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
                     CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Play);
+                    InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
                     break;
                 case GameStateEnum.Cutscene:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
                     InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
                     CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.CutScene);
+                    InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
                  
                     break;
                 case GameStateEnum.Quit:
@@ -74,15 +76,18 @@ namespace Runtime.Managers
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
                     InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
                     CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.Play);
+                    InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
                     break;
                 
                 case GameStateEnum.Start:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
                     InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
+                    InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
                     break;
                 case GameStateEnum.Capture:
                     InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
                     InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(true);
+                    InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
                     break;
             }
         }

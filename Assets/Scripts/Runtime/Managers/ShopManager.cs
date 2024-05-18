@@ -110,8 +110,8 @@ namespace Runtime.Managers
             int currentSoul = GameDataManager.LoadData<int>(GameDataEnums.Soul.ToString());
             GameDataManager.SaveData(GameDataEnums.Soul.ToString(), currentSoul - _itemDatas[itemIndex].Price);
 
-            int currentItemQuantity = GameDataManager.LoadData<int>(_itemDatas[itemIndex].Name);
-            GameDataManager.SaveData(_itemDatas[itemIndex].Name, currentItemQuantity + 1);
+            int currentItemQuantity = GameDataManager.LoadData<int>(_itemDatas[itemIndex].DataType.ToString());
+            GameDataManager.SaveData(_itemDatas[itemIndex].DataType.ToString(), currentItemQuantity + 1);
             itemObject.transform.DOScale(new Vector3().SetFloat(1.25f), 0.5f)
                 .SetEase(Ease.InOutBack)
                 .OnComplete(() =>

@@ -8,6 +8,7 @@ using DG.Tweening;
 using Runtime.Enums.GameManager;
 using Runtime.Managers;
 using Runtime.Utilities;
+using Unity.VisualScripting;
 using UnityEngine.Rendering;
 
 namespace Runtime.Controllers.UI
@@ -413,43 +414,66 @@ namespace Runtime.Controllers.UI
 
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Escape) && GameState(GameStateEnum.Game)) // This is for opening the start panel
+            if(Input.GetKeyUp(KeyCode.Escape) && GameState(GameStateEnum.Game)) // This is for opening the start panel
             {
-                OnOpenPanel(UIPanelTypes.Pause, 1);
+                CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Pause, 1);
                 return;
             }
-            if (Input.GetKeyDown(KeyCode.P) && GameState(GameStateEnum.Game))
+            if (Input.GetKeyUp(KeyCode.P) && GameState(GameStateEnum.Game))
             {
-                OnOpenPanel(UIPanelTypes.Pause, 1);
+                CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Pause, 1);
                 return;
             }
-            else if (Input.GetKeyDown(KeyCode.P) && GameState(GameStateEnum.UI))
+            else if (Input.GetKeyUp(KeyCode.P) && GameState(GameStateEnum.UI))
             {
                 CloseTheTopPanel();
             }
-            if (Input.GetKeyDown(KeyCode.M) && GameState(GameStateEnum.Game))
+            if (Input.GetKeyUp(KeyCode.M) && GameState(GameStateEnum.Game))
             {
                 CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Shop, 1);
                 return;
             }
-            else if (Input.GetKeyDown(KeyCode.M) && GameState(GameStateEnum.UI))
+            else if (Input.GetKeyUp(KeyCode.M) && GameState(GameStateEnum.UI))
             {
                 CloseTheTopPanel();
             }
-            if (Input.GetKeyDown(KeyCode.I) && GameState(GameStateEnum.Game))
+            if (Input.GetKeyUp(KeyCode.I) && GameState(GameStateEnum.Game))
             {
                 CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
                 return;
             }
-            else if (Input.GetKeyDown(KeyCode.I) && GameState(GameStateEnum.UI))
+            else if (Input.GetKeyUp(KeyCode.I) && GameState(GameStateEnum.UI))
             {
                 CloseTheTopPanel();
             }
-            if (Input.GetKeyDown(KeyCode.Escape)) // This is for closing the panels with the escape button
+            if (Input.GetKeyUp(KeyCode.Escape) && GameState(GameStateEnum.UI) && CheckBug())
+            {
+                CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                return;
+            }
+            
+            if (Input.GetKeyUp(KeyCode.Escape)) // This is for closing the panels with the escape button
             {
                 // Close the topmost panel
                 CloseTheTopPanel();
             }
+        }
+
+        private bool CheckBug()
+        {
+            for(int i = layers.Count - 1; i >= 0; i--)
+            {
+                if (layers[i].transform.childCount > 0)
+                {
+                    if (i == 0)
+                    {
+                        return true;
+                        break;
+                    }
+                    return false;
+                }
+            }
+            return true;
         }
         
         /// <summary>

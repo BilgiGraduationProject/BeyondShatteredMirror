@@ -10,7 +10,7 @@ namespace Runtime.Signals
 {
     public class EnemySignals : MonoSingleton<EnemySignals>
     {
-   
+        public UnityAction onEnemyDied = delegate {  };
         
        
         

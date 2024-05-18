@@ -39,32 +39,6 @@ namespace Runtime.Controllers.Enemy
             canDealDamage = false;
             hasDealtDamage = false;
         }
-        
-        void Update()
-        {
-            if (canDealDamage && !hasDealtDamage)
-            {
-                //DealDamage();
-            }
-        }
-
-        void DealDamage()
-        {
-            RaycastHit hit;
-            
-            int layerMask = 1 << 8;
-            
-            if (Physics.Raycast(transform.position, transform.up, out hit, weaponLength))
-            {
-                if (hit.collider.TryGetComponent<PlayerPhysicController>(out var physic))
-                {
-                    //hit.collider.GetComponent<Player.PlayerDamageController>().TakeDamage(weaponDamage);
-                    PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Damage);
-                    print("Vuruyo Shadow".ColoredText(Color.Lerp(Color.yellow, Color.cyan, 0.5f)));
-                    hasDealtDamage = true;
-                }
-            }
-        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -73,21 +47,21 @@ namespace Runtime.Controllers.Enemy
             {
                 //other.collider.GetComponent<Player.PlayerDamageController>().TakeDamage(weaponDamage);
                 PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Damage);
-                print("Vuruyo Shadow".ColoredText(Color.Lerp(Color.yellow, Color.cyan, 0.5f)));
+                print("Shadow hit Player".ColoredText(Color.Lerp(Color.yellow, Color.cyan, 0.5f)));
                 hasDealtDamage = true;
             }
         }
 
         public void StartDealDamage()
         {
-            collider.enabled = true;
+            if (collider) collider.enabled = true;
             canDealDamage = true;
             hasDealtDamage = false;
         }
         
         public void EndDealDamage()
         {
-            collider.enabled = false;
+            if (collider is not null) collider.enabled = false;
             canDealDamage = false;
         }
 

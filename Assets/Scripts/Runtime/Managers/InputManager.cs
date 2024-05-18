@@ -32,7 +32,7 @@ namespace Runtime.Managers
         [Header(("Combat"))]
         private int _combatCount;
         private Coroutine _combatCoroutine;
-        private bool _isCombat;
+        private bool _isCombat = true;
         [Header("Actions")]
         
         private bool _isCrouch;
@@ -86,6 +86,7 @@ namespace Runtime.Managers
             InputSignals.Instance.onChangeMouseVisibility += OnChangeMouseVisibility;
             InputSignals.Instance.onIsReadyForCombat += OnIsReadyForCombat;
             PlayableSignals.Instance.onSendInputManagerToReadyForInput += OnSendInputManagerToReadyForInput;
+            InputSignals.Instance.onGetCombatState += () => _isCombat;
         }
 
         private void OnIsReadyForCombat(bool condition) => _isCombat = condition;
@@ -125,6 +126,7 @@ namespace Runtime.Managers
             InputSignals.Instance.onChangeMouseVisibility -= OnChangeMouseVisibility;
             InputSignals.Instance.onIsReadyForCombat -= OnIsReadyForCombat;
             PlayableSignals.Instance.onSendInputManagerToReadyForInput -= OnSendInputManagerToReadyForInput;
+            InputSignals.Instance.onGetCombatState -= () => _isCombat;
         }
 
        
