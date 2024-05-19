@@ -23,5 +23,8 @@ namespace Runtime.Signals
         
         public UnityAction onOpenUnCutScene = delegate {  };
         public UnityAction<PlayableEnum> onCloseUnCutScene = delegate {  };
+        
+        public UnityAction<float> onSetHealthSlider = delegate {  };
+        public UnityAction<float> onSetHappinesSlider = delegate {  };
     }
 }

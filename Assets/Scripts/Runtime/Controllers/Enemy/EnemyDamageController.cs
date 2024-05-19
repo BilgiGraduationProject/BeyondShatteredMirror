@@ -11,22 +11,30 @@ namespace Runtime.Controllers.Enemy
         #region Self Variables
 
         #region Serialized Variables
-
-        [SerializeField] private float weaponLength;
-        [SerializeField] private float weaponDamage;
+        
         [SerializeField] private BoxCollider collider;
 
         #endregion
 
         #region Private Variables
 
-        private readonly string _damage = "Damage";
-        private bool canDealDamage;
-        private bool hasDealtDamage;
+        private float _damage = 8f;
+        private bool _canDealDamage;
+        private bool _hasDealtDamage;
 
         #endregion
 
         #endregion
+
+        private void Awake()
+        {
+            GetReferences();
+        }
+        
+        void GetReferences()
+        {
+            collider = GetComponent<BoxCollider>();
+        }
 
         private void Start()
         {
@@ -36,39 +44,33 @@ namespace Runtime.Controllers.Enemy
         private void Initialize()
         {
             collider.enabled = false;
-            canDealDamage = false;
-            hasDealtDamage = false;
+            _canDealDamage = false;
+            _hasDealtDamage = false;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            print(other.name);
-            if (canDealDamage && other.gameObject.TryGetComponent<PlayerPhysicController>(out var physic))
+            if (_canDealDamage && other.gameObject.TryGetComponent<PlayerPhysicController>(out var physic))
             {
                 //other.collider.GetComponent<Player.PlayerDamageController>().TakeDamage(weaponDamage);
                 PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Damage);
+                PlayerSignals.Instance.onTakeDamage?.Invoke(_damage);
                 print("Shadow hit Player".ColoredText(Color.Lerp(Color.yellow, Color.cyan, 0.5f)));
-                hasDealtDamage = true;
+                _hasDealtDamage = true;
             }
         }
 
         public void StartDealDamage()
         {
             if (collider) collider.enabled = true;
-            canDealDamage = true;
-            hasDealtDamage = false;
+            _canDealDamage = true;
+            _hasDealtDamage = false;
         }
         
         public void EndDealDamage()
         {
             if (collider is not null) collider.enabled = false;
-            canDealDamage = false;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(transform.position, transform.up * weaponLength);
+            _canDealDamage = false;
         }
     }
 }

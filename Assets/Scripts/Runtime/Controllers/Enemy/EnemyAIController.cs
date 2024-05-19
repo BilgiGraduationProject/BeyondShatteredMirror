@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using Runtime.Enums;
 using Runtime.Enums.Enemy;
+using Runtime.Enums.GameManager;
 using Runtime.Enums.Player;
 using Runtime.Enums.Pool;
 using Runtime.Managers;
@@ -72,6 +73,8 @@ namespace Runtime.Controllers.Enemy
           
           public void TakeDamage(float damage)
           {
+               EndDealDamage();
+               timePassed = 0;
                health -= damage;
                healthBar.DOValue(health / 100f, 0.5f);
                healthBarImageGradient.color = healtGradient.Evaluate(health / 100f);
@@ -84,6 +87,11 @@ namespace Runtime.Controllers.Enemy
           void Update()
           {
                if(CheckDie()) return;
+               if (CoreGameSignals.Instance.onGetGameState() == GameStateEnum.UI)
+               {
+                    agent.SetDestination(transform.position);
+                    return;
+               }
                
                animator.SetFloat("Speed", agent.velocity.magnitude / agent.speed);
                
@@ -115,7 +123,9 @@ namespace Runtime.Controllers.Enemy
 
           void Die()
           {
+               float happiness = 12;
                print("Enemy Died".ColoredText(Color.Lerp(Color.gray, Color.red, 0.5f)));
+               CoreUISignals.Instance.onSetHappinesSlider?.Invoke(happiness);
                animator.SetTrigger("Die");
                collider.enabled = false;
                Destroy(hitCollider);

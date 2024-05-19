@@ -65,10 +65,6 @@ namespace Runtime.Controllers.UI
         
         private void Awake()
         {
-            if(!GameDataManager.HasData(GameDataEnums.Soul.ToString()))
-            {
-                GameDataManager.SaveData<int>(GameDataEnums.Soul.ToString(), 1);
-            }
             //if(_photoSpriteList.Count > 0) _photoSpriteList.Clear();
             GetShopItemDatas();
             GetCaptureDatas();

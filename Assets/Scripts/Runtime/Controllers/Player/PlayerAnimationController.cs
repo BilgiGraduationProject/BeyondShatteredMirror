@@ -104,6 +104,23 @@ namespace Runtime.Controllers.Player
         {
             _playerAnimator.SetFloat("Speed",speed);
         }
+        
+        public void StartDealDamage()
+        {
+            foreach (var controller in GetComponentsInChildren<PlayerDamageController>())
+            {
+                AnimatorStateInfo stateInfo = _playerAnimator.GetCurrentAnimatorStateInfo(0);
+                print(stateInfo);
+                controller.StartDealDamage();
+            }
+        }
+        
+        public void EndDealDamage()
+        {
+            foreach (var controller in GetComponentsInChildren<PlayerDamageController>())
+            {
+                controller.EndDealDamage();
+            }
+        }
     }
-    
 }

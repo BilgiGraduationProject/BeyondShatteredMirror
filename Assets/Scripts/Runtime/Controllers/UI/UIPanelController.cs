@@ -142,7 +142,7 @@ namespace Runtime.Controllers.UI
                 == UIPanelTypes.Start.ToString())
             {
                 CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Start);
-                print("Start panel is open. Game state is Start.");
+                //print("Start panel is open. Game state is Start.");
             }
             
             //if(!value) return;
@@ -153,7 +153,7 @@ namespace Runtime.Controllers.UI
                 string panelName = layers[layerValue - 1].transform.GetChild(0).name.Replace("Panel(Clone)", "").Trim();
                 //print(panelName);
                 UIPanelTypes panel = (UIPanelTypes)Enum.Parse(typeof(UIPanelTypes), panelName);
-                print(panel);
+                //print(panel);
                 switch (panel)
                 {
                     case UIPanelTypes.Start:
@@ -218,7 +218,7 @@ namespace Runtime.Controllers.UI
             // Check if the layer value is out of range
             if (layerValue < 0 || layerValue >= layers.Count)
             {
-                print("Layer value is out of range.");
+                //print("Layer value is out of range.");
                 throw new ArgumentOutOfRangeException(nameof(layerValue), "Layer value is out of range.");
                 return;
             }
@@ -227,7 +227,7 @@ namespace Runtime.Controllers.UI
             if (GameState(GameStateEnum.Cutscene) && layerValue > 0 || GameState(GameStateEnum.Capture)
                 || GameState(GameStateEnum.Start) && panel is not UIPanelTypes.Settings && panel is not UIPanelTypes.Ingame)
             {
-                print($"You can't open a panel right now. GameState: {CoreGameSignals.Instance.onGetGameState()}, Panel: {panel}");
+                //print($"You can't open a panel right now. GameState: {CoreGameSignals.Instance.onGetGameState()}, Panel: {panel}");
                 return;
             }
             
@@ -235,7 +235,7 @@ namespace Runtime.Controllers.UI
             //     || CoreGameSignals.Instance.onGetGameState() is GameStateEnum.Start && panel is not UIPanelTypes.Settings && panel is not UIPanelTypes.Ingame
             //     || CoreGameSignals.Instance.onGetGameState() is GameStateEnum.Capture)
             // {
-            //     print($"You can't open a panel right now. \n GameState: {CoreGameSignals.Instance.onGetGameState()}, \t Panel: {panel}");
+            //     //print($"You can't open a panel right now. \n GameState: {CoreGameSignals.Instance.onGetGameState()}, \t Panel: {panel}");
             //     return;
             // }
             
@@ -244,7 +244,7 @@ namespace Runtime.Controllers.UI
             if (IsPanelOpenInHigherLayer(layerValue))
             {
                 // If there is, we don't open a new panel and return
-                print("IsPanelOpenInHigherLayer");
+                //print("IsPanelOpenInHigherLayer");
                 return;
             }
             
@@ -252,13 +252,13 @@ namespace Runtime.Controllers.UI
             if (IsLayerGreaterThanZero(layerValue))
             {
                 // Disable the previous panel
-                print("IsLayerGreaterThanZero, true");
+                //print("IsLayerGreaterThanZero, true");
                 SetPreviousPanelState(false, layerValue);
             }
             else
             {
-                print("IsLayerGreaterThanZero, false");
-                print($"There is no panel in the layer {layerValue} to close.");
+                //print("IsLayerGreaterThanZero, false");
+                //print($"There is no panel in the layer {layerValue} to close.");
             }
 
             // Open the new panel
@@ -334,17 +334,17 @@ namespace Runtime.Controllers.UI
             if (layers[layerValue].transform.childCount > 0 && layerValue is not 0)
             {
                 OnClosePanel(layerValue);
-                print($"Closed the panel in layer {layerValue} to open a new one.");
+                //print($"Closed the panel in layer {layerValue} to open a new one.");
                 if (!layers[layerValue].transform.GetChild(0).name.Contains(panel.ToString()))
                 {
                     InstantiateNewPanel(panel, layerValue);
-                    print("InstantiateNewPanel");
+                    //print("InstantiateNewPanel");
                 }
             }
             else
             {
                 InstantiateNewPanel(panel, layerValue);
-                print("InstantiateNewPanel");
+                //print("InstantiateNewPanel");
             }
         }
 
@@ -373,12 +373,12 @@ namespace Runtime.Controllers.UI
             {
                 if (layers[i].transform.childCount is 0)
                 {
-                    print($"Boş: {i}");
+                    //print($"Boş: {i}");
                     break;
                 }
                 else
                 {
-                    print($"Dolu: {i}");
+                    //print($"Dolu: {i}");
                 }
             }
         }
@@ -410,6 +410,15 @@ namespace Runtime.Controllers.UI
         {
             CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 0);
             CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.MainMenu);
+            
+            if(!GameDataManager.HasData(GameDataEnums.Soul.ToString()))
+            {
+                GameDataManager.SaveData<int>(GameDataEnums.Soul.ToString(), 1);
+            }
+            if(!GameDataManager.HasData(GameDataEnums.HealthPill.ToString()))
+            {
+                GameDataManager.SaveData<int>(GameDataEnums.HealthPill.ToString(), 1);
+            }
         }
 
         private void Update()

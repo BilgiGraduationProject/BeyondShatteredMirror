@@ -13,27 +13,12 @@ namespace Runtime.Signals
        public UnityAction<PlayerAnimationState,bool> onSetAnimationBool = delegate {  };
        public UnityAction<PlayerAnimationState> onSetAnimationTrigger = delegate {  };
        public UnityAction<float> onSetCombatCount = delegate {  };
-      
-       
        public UnityAction<bool> onPlayerIsRolling = delegate {  };
-       
        public UnityAction onPlayerReadyToKillTheEnemy = delegate {  };
-       
        public UnityAction<float> onSetAnimationPlayerSpeed = delegate {  };
-       
-       
-       
        public Func<PlayableEnum,Transform> onGetLevelCutScenePosition = delegate { return null; };
-       
-       
        public UnityAction<float> onSendPlayerSpeedToSlider = delegate {  };
-       
-       
-       
-
-
-
-
-
+       public UnityAction<float> onTakeDamage = delegate {  };
+       public UnityAction<float> onSetHealthValue = delegate {  };
     }
 }

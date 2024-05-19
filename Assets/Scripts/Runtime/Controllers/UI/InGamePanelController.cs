@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
 using Runtime.Enums;
+using Runtime.Enums.UI;
 using Runtime.Managers;
+using Runtime.Signals;
 using TMPro;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,24 +34,111 @@ namespace Runtime.Controllers.UI
     
     public class InGamePanelController : MonoBehaviour
     {
-        [SerializeField] private Gradient healthGradient;
         [SerializeField] private TextMeshProUGUI healthText;
+        [SerializeField] private Slider healthBar;
+        [SerializeField] private Gradient healthGradient;
+        [SerializeField] private Slider happinessBar;
+        [SerializeField] private Gradient happinessGradient;
+        [SerializeField] private GameObject healthInfo;
         
+        private float _currentHealth = 100;
+        private float _currentHappiness = 0;
+        
+        [Space(10)]
+        [Header("Tutorial Part")]
         [SerializeField] private GameObject tutorialPart;
         [SerializeField] private Image tutorialImage;
         [SerializeField] private Image tutorialProgress;
         [SerializeField] private Sprite tutorialProgressNotDone;
         [SerializeField] private Sprite tutorialProgressDone;
-        
         public List<TutorialTask> tutorialTasks;
         private TutorialTask currentTask;
         private int currentTaskIndex = 0;
-        private bool isReady = false;
 
         private void OnEnable()
         {
+            SubscribeEvents();
+            
             OnHealthPillUsed(0);
             TaskUpdate();
+            GetHealthAndHappiness();
+        }
+        
+        void SubscribeEvents()
+        {
+            CoreUISignals.Instance.onSetHealthSlider += UpdateHealthBar;
+            CoreUISignals.Instance.onSetHappinesSlider += UpdateHappinessBar;
+        }
+        
+        void UnsubscribeEvents()
+        {
+            CoreUISignals.Instance.onSetHealthSlider -= UpdateHealthBar;
+            CoreUISignals.Instance.onSetHappinesSlider -= UpdateHappinessBar;
+        }
+        
+        private void OnDisable()
+        {
+            UnsubscribeEvents();
+        }
+        
+        void GetHealthAndHappiness()
+        {
+            healthBar.DOValue(_currentHealth / 100f, 0.5f);
+            healthBar.value = _currentHealth / 100f;
+            healthBar.fillRect.GetComponent<Image>().color = healthGradient.Evaluate(healthBar.normalizedValue);
+            happinessBar.DOValue(_currentHappiness / 100f, 0.5f);
+            happinessBar.value = _currentHappiness / 100f;
+            happinessBar.fillRect.GetComponent<Image>().color = happinessGradient.Evaluate(happinessBar.normalizedValue);
+            
+            if (_currentHappiness >= 100)
+            {
+                // TODO: Pill kullan diye güzel bir uyarı vermek lazım
+                //CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
+                InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
+                
+                print("You need to use");
+                Sequence mySequence = DOTween.Sequence();
+                mySequence.Append(healthInfo.transform.DOScale(1.2f, 0.5f));
+                mySequence.Append(healthInfo.transform.DOScale(0.9f, 0.5f));
+                mySequence.SetLoops(3);
+                mySequence.Append(healthInfo.transform.DOScale(1f, 0.5f));
+                
+                print("You need to use Happiness Pill");
+                return;
+            }
+        }
+        
+        void UpdateHealthBar(float health)
+        {
+            _currentHealth = health;
+            healthBar.DOValue(health / 100f, 0.5f);
+            healthBar.value = health / 100f;
+            healthBar.fillRect.GetComponent<Image>().color = healthGradient.Evaluate(healthBar.normalizedValue);
+        }
+        
+        void UpdateHappinessBar(float happiness)
+        {
+            _currentHappiness += happiness;
+            happinessBar.DOValue(_currentHappiness / 100f, 0.5f);
+            happinessBar.value = _currentHappiness / 100f;
+            happinessBar.fillRect.GetComponent<Image>().color = happinessGradient.Evaluate(happinessBar.normalizedValue);
+            
+            if (_currentHappiness >= 100)
+            {
+                // TODO: Pill kullan diye güzel bir uyarı vermek lazım
+                //CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
+                InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
+                
+                print("You need to use");
+                Sequence mySequence = DOTween.Sequence();
+                mySequence.Append(healthInfo.transform.DOScale(1.2f, 0.5f));
+                mySequence.Append(healthInfo.transform.DOScale(0.9f, 0.5f));
+                mySequence.SetLoops(3);
+                mySequence.Append(healthInfo.transform.DOScale(1f, 0.5f));
+                
+                print("You need to use Happiness Pill");
+                return;
+            }
         }
 
         private void TaskUpdate()
@@ -57,7 +147,7 @@ namespace Runtime.Controllers.UI
             print(currentTaskIndex);
             if (currentTaskIndex >= tutorialTasks.Count)
             {
-                AllTasksCompleted();
+                AllTasksCompleted(true);
                 return;
             }
             currentTask = tutorialTasks[currentTaskIndex];
@@ -67,13 +157,21 @@ namespace Runtime.Controllers.UI
 
         private void Update()
         {
-            if (currentTask is null) return;
-            
-            currentTask.CheckIfAnyKeysPressed();
-            if (currentTask.isCompleted && !currentTask.isTaskCompletedTriggered)
+            if (Input.GetKeyUp(KeyCode.Alpha1))
             {
-                currentTask.isTaskCompletedTriggered = true;
-                CompleteCurrentTask();
+                OnHealthPillUsed(1);    
+            }
+            
+            if (currentTask is not null)
+            {
+                if(currentTask.keyCodes.Count == 0) return;
+                
+                currentTask.CheckIfAnyKeysPressed();
+                if (currentTask.isCompleted && !currentTask.isTaskCompletedTriggered)
+                {
+                    currentTask.isTaskCompletedTriggered = true;
+                    CompleteCurrentTask();
+                }
             }
         }
 
@@ -90,33 +188,54 @@ namespace Runtime.Controllers.UI
             if (currentTaskIndex < tutorialTasks.Count)
             {
                 // Fade out animation
-                tutorialImage.DOFade(.01f, 2f);
-                tutorialProgress.DOFade(0.01f, 2f).OnComplete(() =>
+                tutorialImage.DOFade(.01f, 1.5f);
+                tutorialProgress.DOFade(0.01f, 1.5f).OnComplete(() =>
                 {
-                    currentTask = tutorialTasks[currentTaskIndex];
-                    tutorialImage.sprite = currentTask.tutorialSprite;
+                    tutorialImage.sprite = tutorialTasks[currentTaskIndex].tutorialSprite;
                     tutorialProgress.sprite = tutorialProgressNotDone;
-                    tutorialImage.DOFade(1, 0.5f);
-                    tutorialProgress.DOFade(1, 0.5f);
+                    tutorialImage.DOFade(1, 1f);
+                    tutorialProgress.DOFade(1, 1f).OnComplete((() =>
+                            {
+                                currentTask = tutorialTasks[currentTaskIndex];
+                            }
+                    ));
                 });
             }
             else
             {
-                AllTasksCompleted();
+                AllTasksCompleted(false);
             }
         }
 
-        void AllTasksCompleted()
+        void AllTasksCompleted(bool value)
         {
             currentTask = null;
-            tutorialPart.SetActive(false);
+            if(value) return;
+            tutorialImage.DOFade(.01f, 1.5f);
+            tutorialProgress.DOFade(.01f, 1.5f);
+            tutorialPart.GetComponent<Image>().DOFade(0.01f, 1.5f).OnComplete(() =>
+            {
+                tutorialPart.SetActive(false);
+            });
         }
         
         private void OnHealthPillUsed(int used)
         {
             int healthPill = GameDataManager.LoadData<int>(GameDataEnums.HealthPill.ToString(), 0);
-            healthPill -= used;
-            GameDataManager.SaveData(GameDataEnums.HealthPill.ToString(), healthPill);
+            if(healthPill <= 0) return;
+
+            if (used != 0)
+            {
+                healthPill -= used;
+                _currentHealth = 100;
+                UpdateHealthBar(_currentHealth);
+                _currentHappiness = 0;
+                UpdateHappinessBar(_currentHappiness);
+                PlayerSignals.Instance.onSetHealthValue?.Invoke(_currentHealth);
+                InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
+                GameDataManager.SaveData(GameDataEnums.HealthPill.ToString(), healthPill);
+            }
+            
             healthText.text = healthPill.ToString();
         }
     }
