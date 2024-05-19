@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 6247427346470011841}
   - component: {fileID: 4077746183328620078}
   - component: {fileID: 3484143996716950510}
-  - component: {fileID: 4028613560312751380}
   - component: {fileID: 2373389259562861798}
-  - component: {fileID: 4548090140789664404}
+  - component: {fileID: 4604898631727331529}
   m_Layer: 7
   m_Name: HandRed
   m_TagString: HandRed
@@ -64,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9e3005d5ee35fd04cb2a584077921daa, type: 2}
+  - {fileID: 2100000, guid: eb93b645d6b9d0a439f54ae0d513a94d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,28 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4028613560312751380
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7400068391635411329}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2628482395200241503, guid: 3f0d001751dc74265b98e33867be8653, type: 3}
 --- !u!54 &2373389259562861798
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -127,7 +104,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -135,19 +112,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 90
   m_CollisionDetection: 0
---- !u!114 &4548090140789664404
-MonoBehaviour:
+--- !u!65 &4604898631727331529
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7400068391635411329}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4df51671e8814d08b95245c97a55e9a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  meshRenderer: {fileID: 3484143996716950510}
-  rigidbody: {fileID: 2373389259562861798}
-  animator: {fileID: 0}
+  serializedVersion: 3
+  m_Size: {x: 30.752977, y: 136.1391, z: 4.1981945}
+  m_Center: {x: -3.312894, y: 5.432751, z: -0.00000023841852}

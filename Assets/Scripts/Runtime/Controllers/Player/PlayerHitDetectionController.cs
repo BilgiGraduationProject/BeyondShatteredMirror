@@ -109,7 +109,7 @@ namespace Runtime.Controllers.Player
                 switch (layerToName)
                 {
                     case "Interectable":
-                        InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(true,collidedObject);
+                        ChangeColorOfInteractableObject(true,collidedObject);
                        
                         break;
                     case "Puzzle":
@@ -117,7 +117,7 @@ namespace Runtime.Controllers.Player
                         break;
                     
                     case "Openable":
-                        InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(true,collidedObject);
+                        ChangeColorOfInteractableObject(true,collidedObject);
                         break;
                     case "DetectiveBoard":
                         collidedObject.GetComponent<MeshRenderer>().material.DOFloat(1.8f, "_OutlineWidth", 1);
@@ -130,7 +130,7 @@ namespace Runtime.Controllers.Player
                 switch (layerToName)
                 {
                     case "Interectable":
-                        InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(false,collidedObject);
+                        ChangeColorOfInteractableObject(false,collidedObject);
                         _collidedObject = null;
                        
                         break;
@@ -140,7 +140,7 @@ namespace Runtime.Controllers.Player
                         break;
                     
                     case "Openable":
-                        InteractableSignals.Instance.onChangeColorOfInteractableObject?.Invoke(false,collidedObject);
+                        ChangeColorOfInteractableObject(false,collidedObject);
                         _collidedObject = null;
                         break;
                     case "DetectiveBoard":
@@ -149,6 +149,18 @@ namespace Runtime.Controllers.Player
                     
                 }
                 
+            }
+        }
+
+        private void ChangeColorOfInteractableObject(bool condition, GameObject collidedObject)
+        {
+            if (condition)
+            {
+                collidedObject.GetComponent<MeshRenderer>().material.DOFloat(1, "_OutlineWidth", 1);
+            }
+            else
+            {
+                collidedObject.GetComponent<MeshRenderer>().material.DOFloat(0, "_OutlineWidth", 1);
             }
         }
 
@@ -166,19 +178,19 @@ namespace Runtime.Controllers.Player
             switch (layerName)
             {
                 case "Openable":
-                    InteractableSignals.Instance.onInteractableOpenDoor?.Invoke(_collidedObject);
+                    Openable();
                     break;
                 case "Interectable":
                     var child = playerHandTransform.childCount > 0;
                     if (child)
                     {
                         Debug.LogWarning("Drop the object first");
-                        InteractableSignals.Instance.onDropandPickUpTheInteractableObject?.Invoke(playerHandTransform.GetChild(0).gameObject,_collidedObject,playerHandTransform);
+                        DropTheObjectFirst();
                     }
                     else
                     {
                         Debug.LogWarning("Pick up the object");
-                        InteractableSignals.Instance.onPickUpTheInteractableObject?.Invoke(_collidedObject,playerHandTransform);
+                        PickUpTheObject();
                     }
                     break;
                 case "Puzzle":
@@ -203,6 +215,36 @@ namespace Runtime.Controllers.Player
             }
            
             
+        }
+
+        private void Openable()
+        {
+            var openableAnim = _collidedObject.GetComponent<Animator>();
+            openableAnim.SetBool("Open",!openableAnim.GetBool("Open"));
+        }
+
+        private void PickUpTheObject()
+        {
+            var objRb = _collidedObject.GetComponent<Rigidbody>();
+            objRb.useGravity = false;
+            objRb.isKinematic = true;
+            _collidedObject.transform.parent = playerHandTransform;
+            _collidedObject.transform.localRotation = Quaternion.identity;
+            _collidedObject.transform.localPosition = playerHandTransform.localPosition;
+        }
+
+        private void DropTheObjectFirst()
+        {
+            var playerHandObj = playerHandTransform.GetChild(0).gameObject;
+            playerHandObj.transform.parent = null;
+            var rb = playerHandObj.GetComponent<Rigidbody>();
+            rb.useGravity = true;
+            rb.isKinematic = false;
+            var newObj = _collidedObject.GetComponent<Rigidbody>();
+            newObj.useGravity = false;
+            newObj.isKinematic = true;
+            _collidedObject.transform.parent = playerHandTransform;
+            _collidedObject.transform.localPosition = Vector3.zero;
         }
 
         public void OnPlayerPressedDropItemButton()

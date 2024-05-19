@@ -16,7 +16,6 @@ namespace Runtime.Controllers.Player
         #region Serialized Variables
 
         [SerializeField] private Animator _playerAnimator;
-       
 
         
 
@@ -79,13 +78,16 @@ namespace Runtime.Controllers.Player
 
         public void AnimEventOnPlayerRolling()
         {
+            InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
             PlayerSignals.Instance.onPlayerIsRolling?.Invoke(true);
         }
 
         public void AnimEventOnPlayIsNotRolling()
         {
+            InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(true);
             PlayerSignals.Instance.onPlayerIsRolling?.Invoke(false);
             PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Roll,false);
+           
         }
 
 

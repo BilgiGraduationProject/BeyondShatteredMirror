@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9081562319476351246}
   - component: {fileID: 5107426794982011585}
   - component: {fileID: 178797371079567787}
-  - component: {fileID: 3129391932284938287}
+  - component: {fileID: 6281662141627983294}
   m_Layer: 7
   m_Name: HandWhite
   m_TagString: HandWhite
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d4b67ae16225ba4dbe40d64db5c176c, type: 2}
+  - {fileID: 2100000, guid: 4bfd59f30ec17e6489b7e04cee169499, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,7 +127,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -135,19 +135,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 90
   m_CollisionDetection: 0
---- !u!114 &3129391932284938287
-MonoBehaviour:
+--- !u!65 &6281662141627983294
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8524322606610606632}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4df51671e8814d08b95245c97a55e9a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  meshRenderer: {fileID: 9081562319476351246}
-  rigidbody: {fileID: 178797371079567787}
-  animator: {fileID: 0}
+  serializedVersion: 3
+  m_Size: {x: 58.71928, y: 124.98514, z: 4.19648}
+  m_Center: {x: -5.742459, y: -1.7948813, z: 0.000017166138}

@@ -30,6 +30,10 @@ namespace Runtime.Controllers.Player
                 controller.TakeDamage(UnityEngine.Random.Range(25f,45f));
                 print("Aslan hit Shadow".ColoredText(Color.Lerp(Color.yellow, Color.cyan, 0.5f)));
             }
+
+            
+               
+            
         }
     }
 }

@@ -1,4 +1,8 @@
 ﻿ using System.Collections;
+ using DG.Tweening;
+ using DG.Tweening.Core;
+ using DG.Tweening.Plugins.Options;
+ using Runtime.Enums.Player;
  using Runtime.Signals;
  using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
@@ -92,29 +96,22 @@ namespace StarterAssets
         private bool _isRunning;
 
         // timeout deltatime
-        private float _jumpTimeoutDelta;
+        private float _jumpTimeoutDelta; 
         private float _fallTimeoutDelta;
 
-        // animation IDs
-        private int _animIDSpeed;
-        private int _animIDGrounded;
-        private int _animIDJump;
-        private int _animIDFreeFall;
-        private int _animIDMotionSpeed;
-
+        // Rigidbody
+        [SerializeField] private Rigidbody playerRb;
+       
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
-        private Animator _animator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
 
         private const float _threshold = 0.01f;
 
-        private bool _hasAnimator;
-
-
+      
         private bool _isPlayerReadyToMove = true;
 
         private bool IsCurrentDeviceMouse
@@ -142,8 +139,6 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
-            _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM 
@@ -151,8 +146,7 @@ namespace StarterAssets
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
-
-            AssignAnimationIDs();
+            
 
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
@@ -161,8 +155,8 @@ namespace StarterAssets
 
         private void Update()
         {
-            _hasAnimator = TryGetComponent(out _animator);
-
+           
+            
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -173,11 +167,7 @@ namespace StarterAssets
             CameraRotation();
         }
 
-        private void AssignAnimationIDs()
-        {
-            _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-        }
+       
 
         private void GroundedCheck()
         {
@@ -384,18 +374,26 @@ namespace StarterAssets
 
         public void OnPlayerIsRolling(bool condition)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public void OnPlayerPressedSpaceButton()
         {
-            throw new System.NotImplementedException();
+            var newPos = new Vector3(0, _mainCamera.transform.eulerAngles.y, 0);
+            
+          transform.DORotate(newPos, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
+           {
+                PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Roll, true);
+                
+           });
+               
         }
 
         public void OnIsPlayerReadyToMove(bool condition)
         {
             _isPlayerReadyToMove = condition;
         }
+
 
         
     }

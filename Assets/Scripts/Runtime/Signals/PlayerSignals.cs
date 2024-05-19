@@ -28,6 +28,8 @@ namespace Runtime.Signals
        
        public UnityAction<float> onSendPlayerSpeedToSlider = delegate {  };
        
+       
+       
 
 
 

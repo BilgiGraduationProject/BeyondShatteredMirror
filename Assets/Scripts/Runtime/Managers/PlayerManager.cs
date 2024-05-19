@@ -79,7 +79,7 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onPlayerIsRolling += playerThirdPersonController.OnPlayerIsRolling;
             PlayerSignals.Instance.onPlayerReadyToKillTheEnemy += playerHitDetectionController.OnPlayerReadyToKillTheEnemy;
             PlayerSignals.Instance.onSetAnimationPlayerSpeed += playerAnimationController.OnSetAnimationPlayerSpeed;
-
+         
 
 
 
