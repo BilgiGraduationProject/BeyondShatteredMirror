@@ -210,7 +210,11 @@ namespace Runtime.Controllers.UI
         void AllTasksCompleted(bool value)
         {
             currentTask = null;
-            if(value) return;
+            if (value)
+            {
+                tutorialPart.SetActive(false);
+                return;
+            }
             tutorialImage.DOFade(.01f, 1.5f);
             tutorialProgress.DOFade(.01f, 1.5f);
             tutorialPart.GetComponent<Image>().DOFade(0.01f, 1.5f).OnComplete(() =>
