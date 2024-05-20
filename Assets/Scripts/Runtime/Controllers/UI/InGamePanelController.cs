@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
 using Runtime.Enums;
-using Runtime.Enums.UI;
 using Runtime.Managers;
 using Runtime.Signals;
 using TMPro;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.UI;
 
