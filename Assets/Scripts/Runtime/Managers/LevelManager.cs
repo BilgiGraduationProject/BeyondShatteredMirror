@@ -25,6 +25,10 @@ namespace Runtime.Signals
         [SerializeField] private Transform mansion;
 
 
+        [Header("SpawnEnemy")] [SerializeField]
+        private Transform spawn;
+        
+        
         [Header("Camera Position")] 
         [SerializeField] private Transform seizingCameraPos;
         [SerializeField] private Transform mirrorCameraPos;
@@ -34,6 +38,10 @@ namespace Runtime.Signals
         [SerializeField] private Transform mansionCameraPos;
         #endregion
 
+        #region Private Variables
+        
+
+        #endregion
         #endregion
 
 
@@ -47,6 +55,7 @@ namespace Runtime.Signals
             PlayerSignals.Instance.onGetLevelCutScenePosition += OnGetLevelCutScenePosition;
            CoreGameSignals.Instance.onGetCameraCutScenePosition += OnGetCameraCutScenePosition;
         }
+        
 
         private Transform OnGetCameraCutScenePosition(PlayableEnum type)
         {
@@ -56,24 +65,26 @@ namespace Runtime.Signals
                 
                case PlayableEnum.BathroomLayingSeize:
                    return seizingCameraPos;
-                   break;
+           
                case PlayableEnum.StandFrontOfMirror:
                    return mirrorCameraPos;
-                   break;
+   
                case PlayableEnum.EnteredFactory:
                    return factoryEntryCameraPos;
-                   break;
+
                case PlayableEnum.SecretWall:
                    return secretRoomCameraPos;
-                   break;
+
                case PlayableEnum.EnteredHouse:
                    return layingBedCameraPos;
-                   break;
+             
                case PlayableEnum.Mansion:
                    return mansionCameraPos;
-                   break;
+  
+               case PlayableEnum.SpawnPoint:
+                   return null;
                default:
-                   return seizingCameraPos;
+                   return null;
                
                 
                 
@@ -82,6 +93,8 @@ namespace Runtime.Signals
 
         private Transform OnGetLevelCutScenePosition(PlayableEnum cutscene)
         {
+            
+            
             switch (cutscene)
             {
                 case PlayableEnum.BathroomLayingSeize:
@@ -94,7 +107,8 @@ namespace Runtime.Signals
                     return factoryStart;
                 case PlayableEnum.Mansion:
                     return mansion;
-                
+                case PlayableEnum.SpawnPoint:
+                    return spawn;
                 default:
                     return null;
             }

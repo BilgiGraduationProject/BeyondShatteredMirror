@@ -1,7 +1,9 @@
 ﻿using DG.Tweening;
+using Runtime.Enums.Playable;
 using Runtime.Enums.Pool;
 using Runtime.Managers;
 using Runtime.Signals;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Runtime.Controllers.Enemy
@@ -105,10 +107,12 @@ namespace Runtime.Controllers.Enemy
             }
         }
 
+        [Button]
         void Complete()
         {
             //uiManager.ShowCompleteMessage(); // Show the complete message
             print("All stages complete!");
+            CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.PlayerReturnSpawnPoint);
         }
     }
 }

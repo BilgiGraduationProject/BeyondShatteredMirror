@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Runtime.Controllers.Player;
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
 using Runtime.Enums.Camera;
@@ -94,6 +95,15 @@ namespace Runtime.Managers
                             var getWallAnim = GameObject.FindWithTag("SecretWall").GetComponent<Animator>();
                             playableDirector.SetGenericBinding(track, getWallAnim);
                             break;
+                        case "Player":
+                            var getPlayer = FindObjectOfType<PlayerAnimationController>().gameObject
+                                .GetComponent<Animator>();
+                            playableDirector.SetGenericBinding(track, getPlayer);
+                            break;
+                        case "Cutscene":
+                            var cutscene = GameObject.FindWithTag("Cutscene").GetComponent<Animator>();
+                            playableDirector.SetGenericBinding(track, cutscene);
+                            break;
 
                     }
                 }
@@ -113,6 +123,8 @@ namespace Runtime.Managers
                 : OnCutSceneFinished((float)playableDirector.duration));
         }
 
+        
+
         private IEnumerator OnHoldCutScene(float playableDirectorDuration, PlayableEnum playableEnum)
             {
                 yield return new WaitForSeconds(playableDirectorDuration);
@@ -122,7 +134,7 @@ namespace Runtime.Managers
                         PlayableSignals.Instance.onSendInputManagerToReadyForInput?.Invoke(true, playableEnum);
                         break;
                     case PlayableEnum.StandFrontOfMirror:
-                        CoreUISignals.Instance.onOpenUnCutScene?.Invoke();
+                        CoreUISignals.Instance.onOpenUnCutScene?.Invoke(playableEnum);
                         CoreUISignals.Instance.onStopMusic?.Invoke();
                         break;
                     case PlayableEnum.EnteredHouse:

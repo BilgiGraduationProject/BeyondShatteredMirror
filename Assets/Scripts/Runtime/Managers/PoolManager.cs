@@ -22,7 +22,7 @@ namespace Runtime.Managers
         [SerializeField] private GameObject levelHolder;
         [SerializeField] private Transform poolHolder;
         [SerializeField] private Transform houseHolder;
-
+        [SerializeField] private Transform fightHolder;
         #endregion
         
         #region Private Variables
@@ -79,6 +79,23 @@ namespace Runtime.Managers
             PoolSignals.Instance.onLoadLevel += OnLoadLevel;
             PoolSignals.Instance.onDestroyTheCurrentLevel += OnDestroyTheCurrentLevel;
             PoolSignals.Instance.onSetAslanHouseVisible += OnSetAslanHouseVisible;
+            PoolSignals.Instance.onSetCurrentLevelToVisible += OnSetCurrentLevelToVisible;
+            PoolSignals.Instance.onDestroyFightLevel += OnDestroyFightLevel;
+        }
+
+        private void OnDestroyFightLevel()
+        {
+            PlayerSignals.Instance.onPlayerLoadTransform?.Invoke();
+            Destroy(fightHolder.transform.GetChild(0).gameObject);
+           
+        }
+
+        private void OnSetCurrentLevelToVisible(bool condition)
+        {
+            levelHolder.transform.GetChild(0).gameObject.SetActive(condition);
+
+            if (!condition) return;
+            CoreUISignals.Instance.onCloseUnCutScene?.Invoke(_currentPlayableEnum);
         }
 
         private void OnSetAslanHouseVisible(bool condition)
@@ -129,6 +146,11 @@ namespace Runtime.Managers
                     case PlayableEnum.Mansion:
                         Instantiate(obj.Result, levelHolder.transform);
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
+                        break;
+                    case PlayableEnum.SpawnPoint:
+                        Instantiate(obj.Result, fightHolder.transform);
+                        PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
+                        CoreUISignals.Instance.onCloseUnCutScene?.Invoke(_currentPlayableEnum);
                         break;
                     
                 }
@@ -202,6 +224,8 @@ namespace Runtime.Managers
             PoolSignals.Instance.onLoadLevel -= OnLoadLevel;
             PoolSignals.Instance.onDestroyTheCurrentLevel -= OnDestroyTheCurrentLevel;
             PoolSignals.Instance.onSetAslanHouseVisible -= OnSetAslanHouseVisible;
+            PoolSignals.Instance.onSetCurrentLevelToVisible -= OnSetCurrentLevelToVisible;
+            PoolSignals.Instance.onDestroyFightLevel -= OnDestroyFightLevel;
         }
 
         private void OnDisable()

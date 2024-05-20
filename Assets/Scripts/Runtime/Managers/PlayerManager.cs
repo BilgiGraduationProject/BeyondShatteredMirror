@@ -26,7 +26,7 @@ namespace Runtime.Managers
         [SerializeField] private PlayerAnimationController playerAnimationController;
         [SerializeField] private PlayerHitDetectionController playerHitDetectionController;
         
-        [SerializeField] private Transform playerTransform;
+        [SerializeField] private Vector3 playerTransform;
         
         
         #endregion
@@ -34,6 +34,7 @@ namespace Runtime.Managers
         #region Private Variables
         private Camera _camera;
         private CD_CutScenePositionHolder _cutScenePositionHolderData;
+        private Vector3 _playerSavedPosition;
         #endregion
 
         #endregion
@@ -79,23 +80,38 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onPlayerIsRolling += playerThirdPersonController.OnPlayerIsRolling;
             PlayerSignals.Instance.onPlayerReadyToKillTheEnemy += playerHitDetectionController.OnPlayerReadyToKillTheEnemy;
             PlayerSignals.Instance.onSetAnimationPlayerSpeed += playerAnimationController.OnSetAnimationPlayerSpeed;
-         
+            PlayerSignals.Instance.onPlayerSaveTransform += OnPlayerSaveTransform;
+            PlayerSignals.Instance.onPlayerLoadTransform += OnPlayerLoadTransform;
+          
+
 
 
 
 
         }
 
-      
+        private void OnPlayerLoadTransform()
+        {
+            Debug.LogWarning(_playerSavedPosition);
+            transform.position = _playerSavedPosition;
+           
+           
+        }
+
+        private void OnPlayerSaveTransform()
+        {
+            Debug.LogWarning(_playerSavedPosition);
+            _playerSavedPosition = this.transform.position;
+        }
+
 
         private void OnSetPlayerToCutScenePosition(PlayableEnum playableEnum)
         {
             CameraSignals.Instance.onSetCameraPositionForCutScene(playableEnum);
-            Debug.LogWarning("SetUppedPosition");
             var position = PlayerSignals.Instance.onGetLevelCutScenePosition(playableEnum);
-            var rotation = _cutScenePositionHolderData.cutSceneHolders[(int)playableEnum].cutSceneRotation;
+            var rotation = PlayerSignals.Instance.onGetLevelCutScenePosition(playableEnum);
             transform.position = position.position;
-            playerTransform.DORotate(rotation, 1f);
+            transform.rotation = rotation.rotation;
             
            
 

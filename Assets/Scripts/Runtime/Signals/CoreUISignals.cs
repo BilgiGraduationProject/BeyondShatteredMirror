@@ -21,7 +21,7 @@ namespace Runtime.Signals
         public UnityAction<float> onSetMusicVolume = delegate {  };
         public UnityAction<float> onSetSoundVolume = delegate {  };
         
-        public UnityAction onOpenUnCutScene = delegate {  };
+        public UnityAction<PlayableEnum> onOpenUnCutScene = delegate {  };
         public UnityAction<PlayableEnum> onCloseUnCutScene = delegate {  };
         
         public UnityAction<float> onSetHealthSlider = delegate {  };

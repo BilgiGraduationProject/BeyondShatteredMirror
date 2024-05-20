@@ -10,6 +10,7 @@ using Runtime.Data.ValueObject;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Pool;
 using Runtime.Enums.UI;
+using Runtime.Managers;
 using Runtime.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine.Playables;
@@ -213,16 +214,34 @@ namespace Runtime.Controllers
         
         
         [Button("Open Cutscene")]
-        private void OnOpenUnCutScene()
+        private void OnOpenUnCutScene(PlayableEnum playableEnum)
         {
             blackwBG.GetComponent<CanvasGroup>().alpha = 0;
             blackwBG.SetActive(true);
             blackwBG.GetComponent<CanvasGroup>().DOFade(1f, 1f).SetEase(Ease.OutQuad).OnComplete(() =>
             {
-                PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelFactory,PlayableEnum.EnteredFactory);
-                CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredFactory);
-                PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
-                CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
+                switch (playableEnum)
+                {
+                    case PlayableEnum.StandFrontOfMirror:
+                        PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelFactory,PlayableEnum.EnteredFactory);
+                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredFactory);
+                        PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
+                        CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
+                        break;
+                    case PlayableEnum.SpawnPoint:
+                        PlayerSignals.Instance.onPlayerSaveTransform?.Invoke();
+                        PoolSignals.Instance.onSetCurrentLevelToVisible?.Invoke(false);
+                        PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelShadow,PlayableEnum.SpawnPoint);
+                        break;
+                    case PlayableEnum.PlayerReturnSpawnPoint:
+                        PoolSignals.Instance.onSetCurrentLevelToVisible?.Invoke(true);
+                        PoolSignals.Instance.onDestroyFightLevel?.Invoke();
+                        
+                            
+                        break;
+                    
+                }
+                
             });
         }
 
@@ -230,8 +249,21 @@ namespace Runtime.Controllers
 
         private void OnCloseUnCutScene(PlayableEnum playableEnum)
         {
-            CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
-            PlayableSignals.Instance.onSetUpCutScene?.Invoke(playableEnum);
+            switch (playableEnum)
+            {
+                case PlayableEnum.EnteredFactory:
+                    CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
+                    PlayableSignals.Instance.onSetUpCutScene?.Invoke(playableEnum);
+                    break;
+                
+                case PlayableEnum.SpawnPoint:
+                    break;
+                
+                case PlayableEnum.PlayerReturnSpawnPoint:
+                    break;
+                
+            }
+            
             blackwBG.GetComponent<CanvasGroup>().DOFade(0f, 2f).SetEase(Ease.OutQuad).OnComplete(() =>
             {
                 blackwBG.SetActive(false);

@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using Runtime.Enums.Playable;
 using Runtime.Enums.Player;
 using Runtime.Signals;
 using Unity.Collections;
@@ -58,7 +59,7 @@ namespace Runtime.Controllers.Player
             CheckForPickUpRay(pickUpDidHitYa,pickUpRay);
             
             var newRay =  _camera.transform.forward;
-            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Interectable","Openable","Puzzle","SearchingEnemy","Wall","DetectiveBoard"));
+            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Interectable","Openable","Puzzle","SearchingEnemy","Wall","DetectiveBoard","MemoryCard"));
             Debug.DrawRay(_camera.transform.position,newRay * maxDistance , Color.cyan);
             _jobHandle = RaycastCommand.ScheduleBatch(_raycastCommands, _raycastHits, 1);
         }
@@ -122,6 +123,9 @@ namespace Runtime.Controllers.Player
                     case "DetectiveBoard":
                         collidedObject.GetComponent<MeshRenderer>().material.DOFloat(1.8f, "_OutlineWidth", 1);
                         break;
+                    case "MemoryCard":
+                        ChangeColorOfInteractableObject(true,collidedObject);
+                        break;
                 }
                
             }
@@ -145,6 +149,9 @@ namespace Runtime.Controllers.Player
                         break;
                     case "DetectiveBoard":
                         collidedObject.GetComponent<MeshRenderer>().material.DOFloat(0, "_OutlineWidth", 1);
+                        break;
+                    case "MemoryCard":
+                        ChangeColorOfInteractableObject(false,collidedObject);
                         break;
                     
                 }
@@ -210,6 +217,10 @@ namespace Runtime.Controllers.Player
                 case "DetectiveBoard":
                     CoreUISignals.Instance.onOpenCutscene?.Invoke(3);
                     _collidedObject.layer = 0;
+                    break;
+                
+                case "MemoryCard":
+                    CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.SpawnPoint);
                     break;
                 
             }

@@ -11,6 +11,8 @@
         SecretWall,
         Mansion,
         DetectiveBoard,
+        SpawnPoint,
+        PlayerReturnSpawnPoint,
         
     }
 }

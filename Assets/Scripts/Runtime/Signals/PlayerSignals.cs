@@ -20,5 +20,9 @@ namespace Runtime.Signals
        public UnityAction<float> onSendPlayerSpeedToSlider = delegate {  };
        public UnityAction<float> onTakeDamage = delegate {  };
        public UnityAction<float> onSetHealthValue = delegate {  };
+       
+       public UnityAction onPlayerSaveTransform = delegate {  };
+       public UnityAction onPlayerLoadTransform = delegate {  };
+       
     }
 }
