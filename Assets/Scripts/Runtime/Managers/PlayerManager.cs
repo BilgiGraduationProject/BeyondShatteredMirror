@@ -92,26 +92,32 @@ namespace Runtime.Managers
 
         private void OnPlayerLoadTransform()
         {
-            Debug.LogWarning(_playerSavedPosition);
             transform.position = _playerSavedPosition;
-           
+            DOVirtual.DelayedCall(1.5f, () =>
+            {
+                CoreUISignals.Instance.onCloseUnCutScene?.Invoke(PlayableEnum.PlayerReturnSpawnPoint);
+            });
            
         }
 
         private void OnPlayerSaveTransform()
         {
-            Debug.LogWarning(_playerSavedPosition);
-            _playerSavedPosition = this.transform.position;
+           
+            _playerSavedPosition = this.transform.localPosition;
         }
 
 
         private void OnSetPlayerToCutScenePosition(PlayableEnum playableEnum)
         {
+            
+            Debug.LogWarning("Enemy took which playable" + playableEnum);
+            Debug.LogWarning("Enemy transform position is what" + PlayerSignals.Instance.onGetLevelCutScenePosition(playableEnum).position);
             CameraSignals.Instance.onSetCameraPositionForCutScene(playableEnum);
             var position = PlayerSignals.Instance.onGetLevelCutScenePosition(playableEnum);
             var rotation = PlayerSignals.Instance.onGetLevelCutScenePosition(playableEnum);
             transform.position = position.position;
             transform.rotation = rotation.rotation;
+            
             
            
 
@@ -150,6 +156,8 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onPlayerIsRolling -= playerThirdPersonController.OnPlayerIsRolling;
             PlayerSignals.Instance.onPlayerReadyToKillTheEnemy -= playerHitDetectionController.OnPlayerReadyToKillTheEnemy;
             PlayerSignals.Instance.onSetAnimationPlayerSpeed -= playerAnimationController.OnSetAnimationPlayerSpeed;
+            PlayerSignals.Instance.onPlayerSaveTransform -= OnPlayerSaveTransform;
+            PlayerSignals.Instance.onPlayerLoadTransform -= OnPlayerLoadTransform;
            
             
         }

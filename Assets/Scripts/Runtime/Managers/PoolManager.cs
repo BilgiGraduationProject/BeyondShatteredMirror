@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DG.Tweening;
 using Runtime.Commands.Pool;
 using Runtime.Data.UnityObject;
+using Runtime.Enums.GameManager;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Pool;
 using Runtime.Signals;
@@ -87,15 +89,18 @@ namespace Runtime.Managers
         {
             PlayerSignals.Instance.onPlayerLoadTransform?.Invoke();
             Destroy(fightHolder.transform.GetChild(0).gameObject);
-           
+            
         }
 
         private void OnSetCurrentLevelToVisible(bool condition)
         {
+           
             levelHolder.transform.GetChild(0).gameObject.SetActive(condition);
-
-            if (!condition) return;
-            CoreUISignals.Instance.onCloseUnCutScene?.Invoke(_currentPlayableEnum);
+           
+            
+            
+            
+           
         }
 
         private void OnSetAslanHouseVisible(bool condition)
@@ -150,7 +155,12 @@ namespace Runtime.Managers
                     case PlayableEnum.SpawnPoint:
                         Instantiate(obj.Result, fightHolder.transform);
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
+                        DOVirtual.DelayedCall(1.5f, () =>
+                    {
                         CoreUISignals.Instance.onCloseUnCutScene?.Invoke(_currentPlayableEnum);
+                    });
+                        
+                       
                         break;
                     
                 }

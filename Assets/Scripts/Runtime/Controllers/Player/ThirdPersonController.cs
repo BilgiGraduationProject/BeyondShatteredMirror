@@ -94,6 +94,7 @@ namespace StarterAssets
         private float _terminalVelocity = 53.0f;
         private float _speedTimer = 100f;
         private bool _isRunning;
+        [SerializeField] private bool _testing;
 
         // timeout deltatime
         private float _jumpTimeoutDelta; 
@@ -112,7 +113,7 @@ namespace StarterAssets
         private const float _threshold = 0.01f;
 
       
-        private bool _isPlayerReadyToMove = true;
+        private bool _isPlayerReadyToMove;
 
         private bool IsCurrentDeviceMouse
         {
@@ -155,11 +156,18 @@ namespace StarterAssets
 
         private void Update()
         {
-           
+            if (!_isPlayerReadyToMove)
+            {
+                PlayerSignals.Instance.onSetAnimationPlayerSpeed?.Invoke(0);
+                return;
+            }
             
             JumpAndGravity();
             GroundedCheck();
             Move();
+            
+            
+            
         }
 
         private void LateUpdate()
@@ -171,6 +179,7 @@ namespace StarterAssets
 
         private void GroundedCheck()
         {
+            if(!_isPlayerReadyToMove) return;
             // set sphere position, with offset
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
                 transform.position.z);
@@ -182,7 +191,7 @@ namespace StarterAssets
 
         private void CameraRotation()
         {
-            if (!_isPlayerReadyToMove) return;
+            if(!_isPlayerReadyToMove) return;
             // if there is an input and camera position is not fixed
             if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
@@ -204,6 +213,7 @@ namespace StarterAssets
 
         private void Move()
         {
+            if(!_isPlayerReadyToMove) return;
             
             // set target speed based on move speed, sprint speed and if sprint is pressed
             
@@ -265,11 +275,6 @@ namespace StarterAssets
 
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;
-            if (!_isPlayerReadyToMove)
-            {
-                PlayerSignals.Instance.onSetAnimationPlayerSpeed?.Invoke(0);
-                return;
-            }
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
@@ -300,7 +305,9 @@ namespace StarterAssets
      
 
         private void JumpAndGravity()
-        {
+        { 
+            if(!_isPlayerReadyToMove) return;
+           
             if (Grounded)
             {
                 // reset the fall timeout timer

@@ -146,6 +146,7 @@ namespace Runtime.Managers
                             puzzleObj.layer = 0;
                         }
                         GameObject.FindWithTag("BackDoor").GetComponent<Animator>().SetTrigger("Open");
+                        puzzleEnum = PuzzleEnum.HandPuzzle;
                     }
                     break;
                 

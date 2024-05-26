@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using Runtime.Enums.GameManager;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Player;
 using Runtime.Signals;
@@ -152,6 +153,7 @@ namespace Runtime.Controllers.Player
                         break;
                     case "MemoryCard":
                         ChangeColorOfInteractableObject(false,collidedObject);
+                        _collidedObject = null;
                         break;
                     
                 }

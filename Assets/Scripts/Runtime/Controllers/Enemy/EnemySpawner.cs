@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Runtime.Enums.GameManager;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Pool;
 using Runtime.Managers;
@@ -112,7 +113,12 @@ namespace Runtime.Controllers.Enemy
         {
             //uiManager.ShowCompleteMessage(); // Show the complete message
             print("All stages complete!");
-            CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.PlayerReturnSpawnPoint);
+            DOVirtual.DelayedCall(2f, () =>
+            {
+                
+                CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.PlayerReturnSpawnPoint);
+            });
+            
         }
     }
 }

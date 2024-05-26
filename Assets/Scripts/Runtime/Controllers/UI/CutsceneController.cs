@@ -229,17 +229,21 @@ namespace Runtime.Controllers
                         CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
                         break;
                     case PlayableEnum.SpawnPoint:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
                         PlayerSignals.Instance.onPlayerSaveTransform?.Invoke();
                         PoolSignals.Instance.onSetCurrentLevelToVisible?.Invoke(false);
                         PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelShadow,PlayableEnum.SpawnPoint);
                         break;
                     case PlayableEnum.PlayerReturnSpawnPoint:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
                         PoolSignals.Instance.onSetCurrentLevelToVisible?.Invoke(true);
                         PoolSignals.Instance.onDestroyFightLevel?.Invoke();
                         
+                        
                             
                         break;
-                    
+                       
+
                 }
                 
             });
@@ -255,11 +259,13 @@ namespace Runtime.Controllers
                     CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
                     PlayableSignals.Instance.onSetUpCutScene?.Invoke(playableEnum);
                     break;
-                
+
                 case PlayableEnum.SpawnPoint:
+                   CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                     break;
                 
                 case PlayableEnum.PlayerReturnSpawnPoint:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                     break;
                 
             }
