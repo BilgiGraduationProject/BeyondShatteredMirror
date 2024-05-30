@@ -6,5 +6,6 @@
         TypeB,
         TypeC,
         TypeD,
+        TypeE,
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Runtime.Enums.Enemy;
 using Runtime.Signals;
@@ -14,11 +15,13 @@ namespace Runtime.Controllers.Enemy
         [SerializeField] private WanderinEnemy wanderingEnemies;
         
         [SerializeField] private NavMeshAgent agent;
-        [SerializeField] private int wayPointIndex = 1;
+        [SerializeField] private int wayPointIndex;
+        [SerializeField] private Animator animator;
 
         #region Private Variables
-        private List<Transform> checkPointList;
+       [SerializeField] private List<Transform> checkPointList;
         private Vector3 target;
+        private float elapsedTime;
         
 
         #endregion
@@ -28,13 +31,18 @@ namespace Runtime.Controllers.Enemy
 
         private void Update()
         {
-            if (Vector3.Distance(transform.position, target) < 1)
+            if (!(Vector3.Distance(transform.position, target) < 0.6f)) return;
+            if(elapsedTime < 4)
             {
-                Debug.LogWarning("New Target Destination");
-                IterateWayPointIndex();
+                animator.SetBool("Walking",false);
+                elapsedTime += 1 * Time.deltaTime;
+            }
+            else
+            {
+               
+                elapsedTime = 0;
                 UpdateDestination();
             }
-            
         }
 
         private void Start()
@@ -45,24 +53,30 @@ namespace Runtime.Controllers.Enemy
             transform.position = pointList[0].position;
             target = pointList[0].position;
             checkPointList = pointList;
-           
+            UpdateDestination();
+
         }
 
 
         private void UpdateDestination()
         {
-            Debug.LogWarning("New Target Destination");
+            animator.SetBool("Walking",true);
+            wayPointIndex++;
+            IterateWayPointIndex();
             target = checkPointList[wayPointIndex].position;
             agent.SetDestination(target);
+            
         }
 
 
         private void IterateWayPointIndex()
         {
-            wayPointIndex++;
             if(wayPointIndex == checkPointList.Count)
                 wayPointIndex = 0;
             
         }
+
+
+        
     }
 }
