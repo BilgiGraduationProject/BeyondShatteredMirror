@@ -1,11 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Runtime.Enums.GameManager;
 using Runtime.Enums.Player;
-using Runtime.Keys.Input;
 using Runtime.Signals;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Runtime.Controllers.Player
 {
@@ -105,20 +101,30 @@ namespace Runtime.Controllers.Player
             _playerAnimator.SetFloat("Speed",speed);
         }
         
-        public void StartDealDamage()
+        public void StartDealDamage(int damageType)
         {
             foreach (var controller in GetComponentsInChildren<PlayerDamageController>())
             {
-                AnimatorStateInfo stateInfo = _playerAnimator.GetCurrentAnimatorStateInfo(0);
-                print(stateInfo);
-                controller.StartDealDamage();
+                if (controller.DamageType == damageType)
+                {
+                    print(_playerAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+                    AnimatorStateInfo stateInfo = _playerAnimator.GetCurrentAnimatorStateInfo(0);
+                    print(stateInfo);
+                    controller.StartDealDamage();
+                    DOVirtual.DelayedCall(.8f, () => EndDealDamage(damageType));
+                }
+                else
+                {
+                    controller.EndDealDamage();
+                }
             }
         }
         
-        public void EndDealDamage()
+        public void EndDealDamage(int damageType)
         {
             foreach (var controller in GetComponentsInChildren<PlayerDamageController>())
             {
+                if (controller.DamageType != damageType) continue;
                 controller.EndDealDamage();
             }
         }

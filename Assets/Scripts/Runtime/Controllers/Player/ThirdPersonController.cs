@@ -27,6 +27,9 @@ namespace StarterAssets
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
 
+        [Tooltip("Look Sensitivity of the character")] 
+        public float LookSensitivity;
+        
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
@@ -126,8 +129,7 @@ namespace StarterAssets
 #endif
             }
         }
-
-
+        
         private void Awake()
         {
             // get a reference to our main camera
@@ -147,11 +149,14 @@ namespace StarterAssets
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
-            
-
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+        }
+        
+        public void OnSetSensivity(float sensitivity)
+        {
+            LookSensitivity = sensitivity;
         }
 
         private void Update()
@@ -161,22 +166,16 @@ namespace StarterAssets
                 PlayerSignals.Instance.onSetAnimationPlayerSpeed?.Invoke(0);
                 return;
             }
-            
             JumpAndGravity();
             GroundedCheck();
             Move();
-            
-            
-            
         }
 
         private void LateUpdate()
         {
             CameraRotation();
         }
-
-       
-
+        
         private void GroundedCheck()
         {
             if(!_isPlayerReadyToMove) return;
@@ -198,8 +197,8 @@ namespace StarterAssets
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
+                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier * LookSensitivity;
+                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier * LookSensitivity;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -241,7 +240,6 @@ namespace StarterAssets
 
                 // round speed to 3 decimal places
                 _speed = Mathf.Round(_speed * 1000f) / 1000f;
-                
             }
             else
             {
@@ -290,19 +288,15 @@ namespace StarterAssets
                 // rotate to face input direction relative to camera position
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
-
-
+            
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
             // move the player
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-
             // update animator if using character
             PlayerSignals.Instance.onSetAnimationPlayerSpeed?.Invoke(_animationBlend);
         }
-
-     
 
         private void JumpAndGravity()
         { 
@@ -387,21 +381,15 @@ namespace StarterAssets
         public void OnPlayerPressedSpaceButton()
         {
             var newPos = new Vector3(0, _mainCamera.transform.eulerAngles.y, 0);
-            
-          transform.DORotate(newPos, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
-           {
+            transform.DORotate(newPos, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
+            {
                 PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Roll, true);
-                
-           });
-               
+            });
         }
 
         public void OnIsPlayerReadyToMove(bool condition)
         {
             _isPlayerReadyToMove = condition;
         }
-
-
-        
     }
 }

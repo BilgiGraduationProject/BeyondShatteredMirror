@@ -56,7 +56,15 @@ namespace Runtime.Handler.UI
                     GameDataManager.SaveData<bool>(gameData.ToString(), toggle.isOn);
                     break;
                 case Slider slider:
-                    GameDataManager.SaveData<float>(gameData.ToString(), slider.value);
+                    switch (gameData)
+                    {
+                        case GameDataEnums.Sensitivity:
+                            GameDataManager.SaveData<float>(gameData.ToString(), slider.value);
+                            break;
+                        default:
+                            GameDataManager.SaveData<float>(gameData.ToString(), slider.value);
+                            break;
+                    }
                     break;
                 case TMP_Dropdown tmpDropdown:
                     switch (gameData)

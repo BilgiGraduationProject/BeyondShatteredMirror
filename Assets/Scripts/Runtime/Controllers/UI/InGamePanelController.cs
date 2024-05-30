@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
 using Runtime.Enums;
+using Runtime.Enums.Camera;
+using Runtime.Enums.GameManager;
 using Runtime.Managers;
 using Runtime.Signals;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Runtime.Controllers.UI
@@ -30,6 +33,7 @@ namespace Runtime.Controllers.UI
         }
     }
     
+    [RequireComponent(typeof(PlayerInput))]
     public class InGamePanelController : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI healthText;
@@ -38,6 +42,12 @@ namespace Runtime.Controllers.UI
         [SerializeField] private Slider happinessBar;
         [SerializeField] private Gradient happinessGradient;
         [SerializeField] private GameObject healthInfo;
+
+        [SerializeField] private GameObject pillsArea;
+        [SerializeField] private TextMeshProUGUI pillInfoText;
+        
+        private PlayerInput _playerInput;
+        private InputAction _pillsAction;
         
         private float _currentHealth = 100;
         private float _currentHappiness = 0;
@@ -53,6 +63,13 @@ namespace Runtime.Controllers.UI
         private TutorialTask currentTask;
         private int currentTaskIndex = 0;
 
+        private void Awake()
+        {
+            _playerInput = GetComponent<PlayerInput>();
+            _pillsAction = _playerInput.actions.FindAction("Pills");
+            pillsArea.SetActive(false);
+        }
+
         private void OnEnable()
         {
             SubscribeEvents();
@@ -66,17 +83,59 @@ namespace Runtime.Controllers.UI
         {
             CoreUISignals.Instance.onSetHealthSlider += UpdateHealthBar;
             CoreUISignals.Instance.onSetHappinesSlider += UpdateHappinessBar;
+            UITextSignals.Instance.onSetPillDescription += OnSetPillDescription;
+            _pillsAction.Enable();
+            _pillsAction.performed += PillsActionOn;
+            _pillsAction.canceled += PillsActionOff;
         }
         
         void UnsubscribeEvents()
         {
             CoreUISignals.Instance.onSetHealthSlider -= UpdateHealthBar;
             CoreUISignals.Instance.onSetHappinesSlider -= UpdateHappinessBar;
+            UITextSignals.Instance.onSetPillDescription -= OnSetPillDescription;
+            _pillsAction.performed -= PillsActionOn;
+            _pillsAction.canceled -= PillsActionOff;
+            _pillsAction.Disable();
         }
         
         private void OnDisable()
         {
             UnsubscribeEvents();
+        }
+        
+        void PillsActionOn(InputAction.CallbackContext context)
+        {
+            InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
+            InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
+            InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
+            DOVirtual.Float(1f,0.1f,0.25f, (value) => Time.timeScale = value);
+            pillsArea.SetActive(true);
+        }
+        
+        void PillsActionOff(InputAction.CallbackContext context)
+        {
+            DOVirtual.Float(0.1f,1f,0.25f, (value) => Time.timeScale = value);
+            InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
+            InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
+            InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(true);
+            OnSetPillDescription("");
+            pillsArea.SetActive(false);
+        }
+        
+        public void ClosePillsArea()
+        {
+            DOVirtual.Float(0.1f,1f,0.25f, (value) => Time.timeScale = value);
+            InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
+            InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
+            InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(true);
+            OnSetPillDescription("");
+            pillsArea.SetActive(false);
+        }
+        
+        void OnSetPillDescription(string description)
+        {
+            pillInfoText.text = description;
         }
         
         void GetHealthAndHappiness()
@@ -155,11 +214,6 @@ namespace Runtime.Controllers.UI
 
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.Alpha1))
-            {
-                OnHealthPillUsed(1);    
-            }
-            
             if (currentTask is not null)
             {
                 if(currentTask.keyCodes.Count == 0) return;

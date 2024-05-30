@@ -82,7 +82,7 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onSetAnimationPlayerSpeed += playerAnimationController.OnSetAnimationPlayerSpeed;
             PlayerSignals.Instance.onPlayerSaveTransform += OnPlayerSaveTransform;
             PlayerSignals.Instance.onPlayerLoadTransform += OnPlayerLoadTransform;
-          
+            PlayerSignals.Instance.onSetSensivity += playerThirdPersonController.OnSetSensivity;
 
 
 
@@ -158,7 +158,7 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onSetAnimationPlayerSpeed -= playerAnimationController.OnSetAnimationPlayerSpeed;
             PlayerSignals.Instance.onPlayerSaveTransform -= OnPlayerSaveTransform;
             PlayerSignals.Instance.onPlayerLoadTransform -= OnPlayerLoadTransform;
-           
+            PlayerSignals.Instance.onSetSensivity -= playerThirdPersonController.OnSetSensivity;
             
         }
 

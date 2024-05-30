@@ -8,6 +8,6 @@ namespace Runtime.Signals
     public class UITextSignals : MonoSingleton<UITextSignals>
     {
         public UnityAction onChangeMissionText = delegate { };
-
+        public UnityAction<string> onSetPillDescription = delegate { };
     }
 }

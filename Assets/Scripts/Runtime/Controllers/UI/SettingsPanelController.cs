@@ -164,7 +164,9 @@ namespace Runtime.Controllers.UI
         
         public void SetSensitivity(float sensitivity)
         {
-            // TODO: Change sensitivity using Signal
+            // Sensitivity ayarını güncelle
+            PlayerSignals.Instance.onSetSensivity?.Invoke(sensitivity);
+            // Sensitivity bilgisini ekranda göster
             sensitivityInfoText.text = sensitivity.ToString("F2");
         }
     }
