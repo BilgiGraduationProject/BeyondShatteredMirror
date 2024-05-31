@@ -31,7 +31,7 @@ namespace Runtime.Controllers.Enemy
 
         private void Update()
         {
-            if (!(Vector3.Distance(transform.position, target) < 0.6f)) return;
+            if (!(Vector3.Distance(transform.position, target) < 1f)) return;
             if(elapsedTime < 4)
             {
                 animator.SetBool("Walking",false);
@@ -64,7 +64,8 @@ namespace Runtime.Controllers.Enemy
             wayPointIndex++;
             IterateWayPointIndex();
             target = checkPointList[wayPointIndex].position;
-            agent.SetDestination(target);
+            var newPos = new Vector3(target.x, transform.position.y, target.z);
+            agent.SetDestination(newPos);
             
         }
 
