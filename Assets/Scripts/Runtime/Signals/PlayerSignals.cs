@@ -1,4 +1,5 @@
 using System;
+using Runtime.Enums;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Player;
 using Runtime.Extentions;
@@ -19,8 +20,11 @@ namespace Runtime.Signals
        public Func<PlayableEnum,Transform> onGetLevelCutScenePosition = delegate { return null; };
        public UnityAction<float> onSendPlayerSpeedToSlider = delegate {  };
        public UnityAction<float> onTakeDamage = delegate {  };
+       public UnityAction<float> onHitDamage = delegate {  };
        public UnityAction<float> onSetHealthValue = delegate {  };
+       public UnityAction<float> onSetHappinessValue = delegate {  };
        public UnityAction<float> onSetSensivity = delegate {  }; 
+       public UnityAction<PillTypes> onSetPillEffect = delegate {  };
        
        public UnityAction onPlayerSaveTransform = delegate {  };
        public UnityAction onPlayerLoadTransform = delegate {  };

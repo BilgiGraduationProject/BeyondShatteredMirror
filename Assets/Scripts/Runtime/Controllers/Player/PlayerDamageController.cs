@@ -12,6 +12,8 @@ namespace Runtime.Controllers.Player
         #region Public Variables
 
         public int DamageType;
+        [HideInInspector] 
+        public float DamageAmount = 20f;
 
         #endregion
         
@@ -57,7 +59,7 @@ namespace Runtime.Controllers.Player
             if (_canDealDamage && other.gameObject.TryGetComponent<EnemyAIController>(out var controller))
             {
                 if (!InputSignals.Instance.onGetCombatState()) return;
-                controller.TakeDamage(Random.Range(20f,30f));
+                controller.TakeDamage(DamageAmount);
                 print("Aslan hit Shadow".ColoredText(Color.Lerp(Color.yellow, Color.cyan, 0.5f)));
                 _hasDealtDamage = true;
             }

@@ -246,7 +246,7 @@ namespace StarterAssets
                 _speed = targetSpeed;
             }
 
-            if (_speed > 3)
+            if (_speed > 4)
             {
                 _speedTimer -= 10f * Time.deltaTime;
                 PlayerSignals.Instance.onSendPlayerSpeedToSlider?.Invoke(_speedTimer);

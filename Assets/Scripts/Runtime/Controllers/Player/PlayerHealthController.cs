@@ -1,6 +1,4 @@
-﻿using MoreMountains.Tools;
-using Runtime.Signals;
-using UnityEditor;
+﻿using Runtime.Signals;
 using UnityEngine;
 
 namespace Runtime.Controllers.Player
@@ -11,7 +9,8 @@ namespace Runtime.Controllers.Player
 
         #region Public  Variables
 
-        //
+        public float Health = 100f;
+        public float DamageDealthAmount = 1f;
 
         #endregion
 
@@ -23,8 +22,8 @@ namespace Runtime.Controllers.Player
 
         #region Private Variables
 
-        private float _health = 100f;
-
+        //
+        
         #endregion
 
         #endregion
@@ -37,13 +36,18 @@ namespace Runtime.Controllers.Player
         private void SubscribeEvents()
         {
             PlayerSignals.Instance.onTakeDamage += TakeDamage;
-            PlayerSignals.Instance.onSetHealthValue += x => { _health = x;};
+            PlayerSignals.Instance.onSetHealthValue += UpdateHealth;
         }
 
         private void UnsubscribeEvents()
         {
             PlayerSignals.Instance.onTakeDamage -= TakeDamage;
-            PlayerSignals.Instance.onSetHealthValue -= x => { _health = x;};
+            PlayerSignals.Instance.onSetHealthValue -= UpdateHealth;
+        }
+
+        private void Start()
+        {
+            CoreUISignals.Instance.onSetHealthSlider?.Invoke(Health);
         }
 
         private void OnDisable()
@@ -53,17 +57,24 @@ namespace Runtime.Controllers.Player
         
         void TakeDamage(float damage)
         {
-            if(_health <= 0) return;
-            _health -= damage;
-            CoreUISignals.Instance.onSetHealthSlider?.Invoke(_health);
+            if(Health <= 0) return;
+            damage *= DamageDealthAmount;
+            Health -= damage;
+            CoreUISignals.Instance.onSetHealthSlider?.Invoke(Health);
             print("Player took damage: " + damage);
 
             if (CheckDie()) Die();
         }
         
+        void UpdateHealth(float health)
+        {
+            Health = health;
+            CoreUISignals.Instance.onSetHealthSlider?.Invoke(Health);
+        }
+        
         bool CheckDie()
         {
-            if(_health <= 0) return true;
+            if(Health <= 0) return true;
             return false;
         }
         

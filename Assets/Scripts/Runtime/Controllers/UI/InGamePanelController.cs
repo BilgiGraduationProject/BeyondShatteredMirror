@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
+using Runtime.Controllers.Player;
 using Runtime.Enums;
-using Runtime.Enums.Camera;
-using Runtime.Enums.GameManager;
 using Runtime.Managers;
 using Runtime.Signals;
 using TMPro;
@@ -43,6 +42,7 @@ namespace Runtime.Controllers.UI
         [SerializeField] private Gradient happinessGradient;
         [SerializeField] private GameObject healthInfo;
 
+        [SerializeField] private GameObject crossImage;
         [SerializeField] private GameObject pillsArea;
         [SerializeField] private TextMeshProUGUI pillInfoText;
         
@@ -50,7 +50,7 @@ namespace Runtime.Controllers.UI
         private InputAction _pillsAction;
         
         private float _currentHealth = 100;
-        private float _currentHappiness = 0;
+        private float _currentHappiness = 100;
         
         [Space(10)]
         [Header("Tutorial Part")]
@@ -74,7 +74,6 @@ namespace Runtime.Controllers.UI
         {
             SubscribeEvents();
             
-            OnHealthPillUsed(0);
             TaskUpdate();
             GetHealthAndHappiness();
         }
@@ -106,6 +105,7 @@ namespace Runtime.Controllers.UI
         
         void PillsActionOn(InputAction.CallbackContext context)
         {
+            crossImage.SetActive(false);
             InputSignals.Instance.onChangeMouseVisibility?.Invoke(true);
             InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
             InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
@@ -115,6 +115,7 @@ namespace Runtime.Controllers.UI
         
         void PillsActionOff(InputAction.CallbackContext context)
         {
+            crossImage.SetActive(true);
             DOVirtual.Float(0.1f,1f,0.25f, (value) => Time.timeScale = value);
             InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
             InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
@@ -125,6 +126,7 @@ namespace Runtime.Controllers.UI
         
         public void ClosePillsArea()
         {
+            crossImage.SetActive(true);
             DOVirtual.Float(0.1f,1f,0.25f, (value) => Time.timeScale = value);
             InputSignals.Instance.onChangeMouseVisibility?.Invoke(false);
             InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
@@ -147,7 +149,7 @@ namespace Runtime.Controllers.UI
             happinessBar.value = _currentHappiness / 100f;
             happinessBar.fillRect.GetComponent<Image>().color = happinessGradient.Evaluate(happinessBar.normalizedValue);
             
-            if (_currentHappiness >= 100)
+            if (_currentHappiness <= 0)
             {
                 // TODO: Pill kullan diye güzel bir uyarı vermek lazım
                 //CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
@@ -167,6 +169,7 @@ namespace Runtime.Controllers.UI
         
         void UpdateHealthBar(float health)
         {
+            _currentHealth = FindObjectOfType<PlayerHealthController>().Health;
             _currentHealth = health;
             healthBar.DOValue(health / 100f, 0.5f);
             healthBar.value = health / 100f;
@@ -175,12 +178,13 @@ namespace Runtime.Controllers.UI
         
         void UpdateHappinessBar(float happiness)
         {
-            _currentHappiness += happiness;
+            _currentHappiness = FindObjectOfType<PlayerHappinessController>().Happiness;
+            _currentHappiness -= happiness;
             happinessBar.DOValue(_currentHappiness / 100f, 0.5f);
             happinessBar.value = _currentHappiness / 100f;
             happinessBar.fillRect.GetComponent<Image>().color = happinessGradient.Evaluate(happinessBar.normalizedValue);
             
-            if (_currentHappiness >= 100)
+            if (_currentHappiness <= 0)
             {
                 // TODO: Pill kullan diye güzel bir uyarı vermek lazım
                 //CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
@@ -273,26 +277,6 @@ namespace Runtime.Controllers.UI
             {
                 tutorialPart.SetActive(false);
             });
-        }
-        
-        private void OnHealthPillUsed(int used)
-        {
-            int healthPill = GameDataManager.LoadData<int>(GameDataEnums.HealthPill.ToString(), 0);
-            if(healthPill <= 0) return;
-
-            if (used != 0)
-            {
-                healthPill -= used;
-                _currentHealth = 100;
-                UpdateHealthBar(_currentHealth);
-                _currentHappiness = 0;
-                UpdateHappinessBar(_currentHappiness);
-                PlayerSignals.Instance.onSetHealthValue?.Invoke(_currentHealth);
-                InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
-                GameDataManager.SaveData(GameDataEnums.HealthPill.ToString(), healthPill);
-            }
-            
-            healthText.text = healthPill.ToString();
         }
     }
 }

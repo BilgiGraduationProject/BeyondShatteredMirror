@@ -9,6 +9,12 @@ namespace Runtime.Controllers.Player
     {
         #region Self Variables
 
+        #region Public Variables
+        
+        [HideInInspector] public float DamageAmountMain = 20f;
+        
+        #endregion
+        
         #region Serialized Variables
 
         [SerializeField] private Animator _playerAnimator;
@@ -110,6 +116,7 @@ namespace Runtime.Controllers.Player
                     print(_playerAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
                     AnimatorStateInfo stateInfo = _playerAnimator.GetCurrentAnimatorStateInfo(0);
                     print(stateInfo);
+                    controller.DamageAmount = DamageAmountMain;
                     controller.StartDealDamage();
                     DOVirtual.DelayedCall(.8f, () => EndDealDamage(damageType));
                 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.05005321, g: 0.04268328, b: 0.045109548, a: 1}
+  m_IndirectSpecularColor: {r: 0.049752492, g: 0.042418897, b: 0.044768933, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5663,6 +5663,7 @@ Transform:
   - {fileID: 748801253}
   - {fileID: 34095113}
   - {fileID: 664046748}
+  - {fileID: 1820920935}
   m_Father: {fileID: 1182941662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1043178793
@@ -10797,6 +10798,147 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800db87317604586bf2a2a4ea399fd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1820920934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1820920935}
+  - component: {fileID: 1820920937}
+  - component: {fileID: 1820920936}
+  - component: {fileID: 1820920939}
+  - component: {fileID: 1820920938}
+  - component: {fileID: 1820920941}
+  - component: {fileID: 1820920940}
+  - component: {fileID: 1820920942}
+  m_Layer: 0
+  m_Name: PillManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1820920935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820920934}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1041685379}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1820920936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820920934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bf429c254a4897a7e6a339b1ca1693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pillType: 6
+  duration: 10
+  speedMultiplier: 1.5
+  sprintMultiplier: 1.5
+--- !u!114 &1820920937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820920934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3574ef1b97445fbba9ae593aac3f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1820920938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820920934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242cdcf132074868921cc2551fe0da2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pillType: 2
+  duration: 10
+  damageMultiplier: 2
+--- !u!114 &1820920939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820920934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f961b8dea454966b51c5ca5b15d132f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pillType: 1
+  duration: 0
+  health: 100
+--- !u!114 &1820920940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820920934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b6c26d7227481b8644baa06f0c6911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pillType: 3
+  duration: 10
+  blockMultiplier: 0
+--- !u!114 &1820920941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820920934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0245133450414e30b21bbdd06bb4a840, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pillType: 5
+  duration: 20
+  shieldMultiplier: 0.6
+--- !u!114 &1820920942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820920934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 955ac658fd514071808aa281527c046c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pillType: 0
+  duration: 0
+  happiness: 0
 --- !u!1 &1825519061
 GameObject:
   m_ObjectHideFlags: 0

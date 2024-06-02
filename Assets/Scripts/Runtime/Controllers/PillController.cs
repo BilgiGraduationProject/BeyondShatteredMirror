@@ -3,6 +3,7 @@ using Runtime.Data.ValueObject;
 using Runtime.Enums;
 using Runtime.Managers;
 using Runtime.Signals;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,8 @@ namespace Runtime.Controllers
         #region Public  Variables
 
         public PillTypes PillType;
+        public TextMeshProUGUI PillCountText;
+        public Image PillBGImage;
         public Image PillImage;
 
         #endregion
@@ -33,53 +36,47 @@ namespace Runtime.Controllers
         #endregion
 
         #endregion
-
-        private void Awake()
+        
+        private void OnEnable()
         {
             Initialize();
+            PillImage.sprite = _itemData.Find(item => item.DataType.ToString() == PillType.ToString()).Thumbnail; 
+            //PillManager.Instance.Skills.Find(item => item.PillType == PillType);
+            int currentPill = GameDataManager.LoadData<int>(PillType.ToString(), 0);
+            PillCountText.text = currentPill.ToString();
+            if (currentPill == 0)
+                PillBGImage.color = Color.black;
+            else if (PillManager.Instance.Skills.Find(item => item.PillType == PillType).IsActive)
+                PillBGImage.color = Color.Lerp(Color.red, Color.yellow, .5f);
+            else
+                PillBGImage.color = Color.white;
         }
-
+        
         private void Initialize()
         {
             _itemData = ShopManager.Instance.SendItemDatasToControllers();
         }
 
-        private void Start()
-        {
-            PillImage.sprite = _itemData.Find(item => item.DataType.ToString() == PillType.ToString()).Thumbnail;
-        }
-
         public void ConsumePill()
         {
-            int currentPill = GameDataManager.LoadData<int>(PillType.ToString(), 0);
-            if(currentPill == 0) return;
-            GameDataManager.SaveData<int>(PillType.ToString(), currentPill - 1);
+            
         }
         
         public void EffectPill()
         {
-            switch (PillType)
-            {
-                case PillTypes.AntiDepressantPill:
-                    //PlayerSignals.Instance.onTakeHealth?.Invoke(1);
-                    break;
-                case PillTypes.HealthPill:
-                    //PlayerSignals.Instance.onIncreaseDamage?.Invoke(1);
-                    break;
-                case PillTypes.PsychoPill:
-                    //PlayerSignals.Instance.onIncreaseSpeed?.Invoke(1);
-                    break;
-                case PillTypes.PulseofImmortalityPerk:
-                    break;
-                case PillTypes.SalvageSavior:
-                    break;
-                case PillTypes.Shield:
-                    break;
-                case PillTypes.SonicPerk:
-                    break;
-                case PillTypes.SoulHarvestAmplifier:
-                    break;
-            }
+            if (PillManager.Instance.Skills.Find(item => item.PillType == PillType).IsActive) return;
+            
+            int currentPill = GameDataManager.LoadData<int>(PillType.ToString(), 0);
+            
+            print(GameDataManager.LoadData<int>(PillType.ToString(), 0));
+            
+            if(currentPill == 0) return;
+            GameDataManager.SaveData<int>(PillType.ToString(), currentPill - 1);
+            
+            print(GameDataManager.LoadData<int>(PillType.ToString(), 0));
+            
+            PlayerSignals.Instance.onSetPillEffect?.Invoke(PillType);
+            
         }
         
         public void OnMousePill()

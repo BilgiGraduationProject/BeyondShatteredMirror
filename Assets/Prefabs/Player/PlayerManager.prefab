@@ -172,6 +172,52 @@ Transform:
   - {fileID: 397077698288197263}
   m_Father: {fileID: 6298894546162989179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &782009165457906502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1932017154956160390}
+  - component: {fileID: 7283553002035702482}
+  m_Layer: 10
+  m_Name: HappinessSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1932017154956160390
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782009165457906502}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6120057657864115787}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7283553002035702482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782009165457906502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a648cd4b957408391d4f46bda31bf63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Happiness: 0
+  DamageDealthAmount: 1
 --- !u!1 &795585703638774365
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageType: 2
+  DamageAmount: 20
   collider: {fileID: 2042779477434195562}
 --- !u!65 &2042779477434195562
 BoxCollider:
@@ -793,6 +840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageType: 0
+  DamageAmount: 20
   collider: {fileID: 1203894393795152341}
 --- !u!65 &1203894393795152341
 BoxCollider:
@@ -957,6 +1005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984aaa95e6144428a6d6e29eb43c74d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamageAmountMain: 20
   _playerAnimator: {fileID: 1676216661221160248}
 --- !u!95 &1676216661221160248
 Animator:
@@ -1839,6 +1888,7 @@ Transform:
   - {fileID: 1466674324339510492}
   - {fileID: 2365909899178905816}
   - {fileID: 3912688041150463828}
+  - {fileID: 1932017154956160390}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!143 &4590174561453526722
@@ -2268,6 +2318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageType: 3
+  DamageAmount: 20
   collider: {fileID: 7947052581350842354}
 --- !u!65 &7947052581350842354
 BoxCollider:
@@ -2848,6 +2899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1f9e0e6ed040a6bac379f90690ead7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  DamageDealthAmount: 1
 --- !u!1 &6677572582405469056
 GameObject:
   m_ObjectHideFlags: 0
@@ -2926,6 +2979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageType: 4
+  DamageAmount: 20
   collider: {fileID: 6926683735622274008}
 --- !u!65 &6926683735622274008
 BoxCollider:
@@ -3000,6 +3054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageType: 1
+  DamageAmount: 20
   collider: {fileID: 4468510220716550477}
 --- !u!65 &4468510220716550477
 BoxCollider:
