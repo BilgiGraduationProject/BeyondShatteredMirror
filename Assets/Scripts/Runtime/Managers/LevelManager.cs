@@ -24,6 +24,8 @@ namespace Runtime.Signals
         [Header("Mansion")] 
         [SerializeField] private Transform mansion;
 
+        [Header("Hakan")] 
+        [SerializeField] private Transform hakanHousePos;
 
         [Header("SpawnEnemy")] [SerializeField]
         private Transform spawn;
@@ -36,6 +38,7 @@ namespace Runtime.Signals
         [SerializeField] private Transform secretRoomCameraPos;
         [SerializeField] private Transform layingBedCameraPos;
         [SerializeField] private Transform mansionCameraPos;
+        [SerializeField] private Transform hakanCameraPos;
         #endregion
 
         #region Private Variables
@@ -83,6 +86,8 @@ namespace Runtime.Signals
   
                case PlayableEnum.SpawnPoint:
                    return null;
+               case PlayableEnum.HakanPos:
+                   return hakanCameraPos;
                default:
                    return null;
                
@@ -109,6 +114,8 @@ namespace Runtime.Signals
                     return mansion;
                 case PlayableEnum.SpawnPoint:
                     return spawn;
+                case PlayableEnum.HakanPos:
+                    return hakanHousePos;
                 default:
                     return null;
             }

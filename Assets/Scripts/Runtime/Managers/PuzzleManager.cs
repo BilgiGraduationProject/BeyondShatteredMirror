@@ -154,13 +154,13 @@ namespace Runtime.Managers
                     if (intereact.CompareTag(puzzlePieces.tag))
                     {
                         intereact.layer = 0;
-                        intereact.GetComponent<MeshRenderer>().material.DOFade(0f, "_BaseColor", 0f);
+                        intereact.GetComponent<MeshRenderer>().material.DOFade(0f, "_BaseColor", 1f);
                         puzzlePieces.layer = 0;
                         puzzlePieces.transform.parent = null;
                         puzzlePieces.transform.position = intereact.transform.position;
                         puzzlePieces.transform.rotation = intereact.transform.rotation;
                         puzzlePieces.transform.localScale = intereact.transform.localScale;
-                        
+                       
                         
                     }
                     break;

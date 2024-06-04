@@ -123,6 +123,7 @@ namespace Runtime.Managers
         [Button("Load Level")]
         private void OnLoadLevel(LevelEnum levelEnum,PlayableEnum playableEnum)
         {
+            Debug.LogWarning("Loading Level");
             _currentPlayableEnum = playableEnum;
             AsyncOperationHandle<GameObject> asyncOperationHandle =
                 Addressables.LoadAssetAsync<GameObject>($"Assets/Levels/{levelEnum.ToString()}.prefab");
@@ -137,6 +138,11 @@ namespace Runtime.Managers
             {
                 switch (_currentPlayableEnum)
                 {
+                    case PlayableEnum.HakanPos:
+                        Debug.LogWarning("Hakan Pos instaisted");
+                        Instantiate(obj.Result, levelHolder.transform);
+                        PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
+                        break;
                     case PlayableEnum.BathroomLayingSeize:
                         Instantiate(obj.Result, houseHolder.transform);
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
@@ -159,8 +165,6 @@ namespace Runtime.Managers
                     {
                         CoreUISignals.Instance.onCloseUnCutScene?.Invoke(_currentPlayableEnum);
                     });
-                        
-                       
                         break;
                     
                 }

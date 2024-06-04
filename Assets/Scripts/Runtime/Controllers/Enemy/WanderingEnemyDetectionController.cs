@@ -75,16 +75,11 @@ namespace Runtime.Controllers.Enemy
                     }
                     else if(pickUpRay.collider.gameObject.CompareTag("Grass"))
                     {
-                        Debug.LogWarning("Grass Detected");
+                        
                         enemyObj = pickUpRay.collider.gameObject;
                         
                     }
-                    else
-                    {
-                        Debug.LogWarning("Unknown Object Detected");
-                   
-                 
-                    }
+                    
                 
 
             }

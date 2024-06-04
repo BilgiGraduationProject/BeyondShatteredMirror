@@ -61,28 +61,36 @@ namespace Runtime.Controllers
             CoreUISignals.Instance.onOpenUnCutScene += OnOpenUnCutScene;
             CoreUISignals.Instance.onCloseUnCutScene += OnCloseUnCutScene;
             videoPlayer.started += OnVideoPlayerStarted;
+            
         }
 
         private void OnVideoPlayerStarted(VideoPlayer source)
         {
-            switch (_index)
+            DOVirtual.DelayedCall(1f, () =>
             {
-                case 0:
-                    PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelAslanHouse,PlayableEnum.BathroomLayingSeize);
-                    CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.BathroomLayingSeize);
-                    break;
+                switch (_index)
+                {
+                    case 0:
+                        PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelAslanHouse,PlayableEnum.BathroomLayingSeize);
+                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.BathroomLayingSeize);
+                        break;
                 
-                case 1:
-                    PoolSignals.Instance.onDestroyTheCurrentLevel?.Invoke();
-                    PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(false);
-                    PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredHouse);
-                    break;
-                case 2:
-                    PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelMansion,PlayableEnum.Mansion);
-                    PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
-                    break;
+                    case 1:
+                        PoolSignals.Instance.onDestroyTheCurrentLevel?.Invoke();
+                        PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(false);
+                        PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.EnteredHouse);
+                        break;
+                    case 2:
+                        PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelMansion,PlayableEnum.Mansion);
+                        PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
+                        break;
+                    case 3:
+                        PoolSignals.Instance.onLoadLevel?.Invoke(LevelEnum.LevelHakan,PlayableEnum.HakanPos);
+                        break;
                 
-            }
+                }
+            });
+            
         }
 
         private void UnsubscribeEvents()
@@ -193,7 +201,7 @@ namespace Runtime.Controllers
                         CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.Mansion);
                         break;
                     case 3: // After House, Go to Mansion
-                       
+                       CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                         break;
                 }
                 videoPlayer.GetComponent<CanvasGroup>().alpha = 1;

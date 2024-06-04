@@ -100,6 +100,13 @@ namespace Runtime.Managers
                     _stateDrivenCamera.transform.position = mansion.position; 
                     _stateDrivenCamera.transform.rotation = mansion.rotation;
                     break;
+                case PlayableEnum.HakanPos:
+                    var hakanPos = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
+                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
+                    if(hakanPos is null) return;
+                    _stateDrivenCamera.transform.position = hakanPos.position; 
+                    _stateDrivenCamera.transform.rotation = hakanPos.rotation;
+                    break;
                             
             }
         

@@ -59,13 +59,15 @@ namespace Runtime.Controllers.Player
             CheckForPickUpRay(pickUpDidHitYa,pickUpRay);
             
             var newRay =  _camera.transform.forward;
-            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Interectable","Openable","Puzzle","SearchingEnemy","Wall","DetectiveBoard","MemoryCard"));
+            _raycastCommands[0] = new RaycastCommand(_camera.transform.position, newRay, maxDistance,LayerMask.GetMask("Interectable","Openable","Puzzle","SearchingEnemy","Wall","DetectiveBoard","MemoryCard","MansionTel"));
             Debug.DrawRay(_camera.transform.position,newRay * maxDistance , Color.cyan);
             _jobHandle = RaycastCommand.ScheduleBatch(_raycastCommands, _raycastHits, 1);
         }
 
         private void CheckForPickUpRay(bool pickUpDidHitYa, RaycastHit pickUpRay)
         {
+           
+            
             if (pickUpDidHitYa)
             {
                 if ( _collidedObject is not null &&_collidedObject != pickUpRay.collider.gameObject)
@@ -83,14 +85,20 @@ namespace Runtime.Controllers.Player
                         _didHit = true;
                     }
                 }
+
+                if (_collidedObject is null)
+                {
+                    _didHit = false;
+                }
                 
                
 
             }
             else
             {
-                if (_didHit)
+                if (_didHit )
                 {
+                   
                     ChangeColorOfObject(_collidedObject,false,LayerMask.LayerToName(_collidedObject.layer));
                     _didHit = false;
                 }
@@ -103,8 +111,8 @@ namespace Runtime.Controllers.Player
 
         private void ChangeColorOfObject(GameObject collidedObject, bool condition, string layerToName)
         {
-            if(_collidedObject is null) return;
             
+            if(collidedObject is null) return;
             if (condition)
             {
                 switch (layerToName)
@@ -125,6 +133,11 @@ namespace Runtime.Controllers.Player
                         break;
                     case "MemoryCard":
                         ChangeColorOfInteractableObject(true,collidedObject);
+                        break;
+                    case "MansionTel":
+                        ChangeColorOfInteractableObject(true,collidedObject);
+                        break;
+                    default:
                         break;
                 }
                
@@ -153,6 +166,12 @@ namespace Runtime.Controllers.Player
                     case "MemoryCard":
                         ChangeColorOfInteractableObject(false,collidedObject);
                         _collidedObject = null;
+                        break;
+                    case "MansionTel":
+                        ChangeColorOfInteractableObject(false,collidedObject);
+                        _collidedObject = null;
+                        break;
+                    default:
                         break;
                     
                 }
@@ -222,6 +241,9 @@ namespace Runtime.Controllers.Player
                 
                 case "MemoryCard":
                     CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.SpawnPoint);
+                    break;
+                case "MansionTel":
+                    CoreUISignals.Instance.onOpenCutscene?.Invoke(4);
                     break;
                 
             }

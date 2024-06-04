@@ -13,6 +13,7 @@
         DetectiveBoard,
         SpawnPoint,
         PlayerReturnSpawnPoint,
+        HakanPos,
         
     }
 }

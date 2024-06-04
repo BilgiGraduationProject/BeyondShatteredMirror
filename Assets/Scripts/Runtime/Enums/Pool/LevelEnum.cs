@@ -5,6 +5,7 @@
         LevelAslanHouse,
         LevelMansion,
         LevelFactory,
-        LevelShadow
+        LevelShadow,
+        LevelHakan
     }
 }
