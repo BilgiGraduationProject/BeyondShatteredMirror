@@ -25,6 +25,7 @@ namespace Runtime.Managers
         [SerializeField] private ThirdPersonController playerThirdPersonController;
         [SerializeField] private PlayerAnimationController playerAnimationController;
         [SerializeField] private PlayerHitDetectionController playerHitDetectionController;
+        [SerializeField] private PlayerPhysicController playerPhysicController;
         
         [SerializeField] private Vector3 playerTransform;
         
@@ -137,6 +138,8 @@ namespace Runtime.Managers
         private void OnPlayerPressedLeftControlButton(bool condition)
         {
             PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Crouch, condition);
+            playerPhysicController.OnPlayerCrouch(condition);
+
         }
         
 

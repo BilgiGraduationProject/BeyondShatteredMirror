@@ -10,6 +10,8 @@ namespace Runtime.Controllers.Player
 {
     public class PlayerPhysicController : MonoBehaviour
     {
+        [SerializeField] private CapsuleCollider _crouchCollider;
+        [SerializeField] private CapsuleCollider _standCollider;
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Mirror"))
@@ -30,6 +32,20 @@ namespace Runtime.Controllers.Player
             //     controller.TakeDamage(UnityEngine.Random.Range(25f,45f));
             //     print("Aslan hit Shadow".ColoredText(Color.Lerp(Color.yellow, Color.cyan, 0.5f)));
             // }
+        }
+
+        public void OnPlayerCrouch(bool condition)
+        {
+            if (condition)
+            {
+                _crouchCollider.enabled = true;
+                _standCollider.enabled = false;
+            }
+            else
+            {
+                _standCollider.enabled = true;
+                _crouchCollider.enabled = false;
+            }
         }
     }
 }

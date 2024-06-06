@@ -69,6 +69,7 @@ namespace Runtime.Controllers.Player
         {
             InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
             InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
+            InputSignals.Instance.onChangeCrouchState?.Invoke(false);
         }
 
         public void AnimEventActivatePlayerCombat()

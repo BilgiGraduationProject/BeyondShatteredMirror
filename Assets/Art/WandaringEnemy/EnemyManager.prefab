@@ -374,7 +374,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4087678097150744746}
-  - component: {fileID: 876588851159724671}
+  - component: {fileID: 6885156923666678474}
   m_Layer: 0
   m_Name: PlayerDetection
   m_TagString: Untagged
@@ -391,13 +391,13 @@ Transform:
   m_GameObject: {fileID: 1327787326147852620}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.187, z: 0}
+  m_LocalPosition: {x: 0, y: 1.088, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7242730047504649181}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &876588851159724671
+--- !u!114 &6885156923666678474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -406,13 +406,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1327787326147852620}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fca85172be7045a4a335f40117552eeb, type: 3}
+  m_Script: {fileID: 11500000, guid: c74a9049b86441af88c4883a3e971567, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 20
-  playerTransform: {fileID: 0}
-  playerHandTransform: {fileID: 0}
-  playerKillTransform: {fileID: 0}
+  radius: 6.79
+  angle: 74.2
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 524288
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 131072
+  canSeePlayer: 0
+  player: {fileID: 0}
 --- !u!1 &1342512106881028886
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,7 +1132,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.679, y: 0.693, z: -1.68}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8240467101050129990}

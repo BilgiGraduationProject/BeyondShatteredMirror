@@ -84,9 +84,16 @@ namespace Runtime.Managers
         private void SubscribeEvents()
         {
             InputSignals.Instance.onChangeMouseVisibility += OnChangeMouseVisibility;
+            InputSignals.Instance.onChangeCrouchState += OnChangeCrouchState;
             InputSignals.Instance.onIsReadyForCombat += OnIsReadyForCombat;
             PlayableSignals.Instance.onSendInputManagerToReadyForInput += OnSendInputManagerToReadyForInput;
             InputSignals.Instance.onGetCombatState += () => _isCombat;
+        }
+
+        private void OnChangeCrouchState(bool condiiton)
+        {
+            _isCrouch = condiiton;
+            InputSignals.Instance.onPlayerPressedLeftControlButton?.Invoke(condiiton);
         }
 
         private void OnIsReadyForCombat(bool condition) => _isCombat = condition;
@@ -125,6 +132,7 @@ namespace Runtime.Managers
         {
             InputSignals.Instance.onChangeMouseVisibility -= OnChangeMouseVisibility;
             InputSignals.Instance.onIsReadyForCombat -= OnIsReadyForCombat;
+            InputSignals.Instance.onChangeCrouchState -= OnChangeCrouchState;
             PlayableSignals.Instance.onSendInputManagerToReadyForInput -= OnSendInputManagerToReadyForInput;
             InputSignals.Instance.onGetCombatState -= () => _isCombat;
         }

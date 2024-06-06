@@ -2095,6 +2095,7 @@ MonoBehaviour:
   playerThirdPersonController: {fileID: 6165609514134109702}
   playerAnimationController: {fileID: 3431629996205681526}
   playerHitDetectionController: {fileID: 7773702303842806725}
+  playerPhysicController: {fileID: 3275049690154893568}
   playerTransform: {x: 0, y: 0, z: 0}
 --- !u!114 &8320775434196517713
 MonoBehaviour:
@@ -3295,9 +3296,10 @@ GameObject:
   - component: {fileID: 8012451049023121416}
   - component: {fileID: 3398090511723300017}
   - component: {fileID: 3275049690154893568}
-  m_Layer: 10
+  - component: {fileID: 5506373202146632317}
+  m_Layer: 19
   m_Name: PhysicController
-  m_TagString: Untagged
+  m_TagString: PlayerPhysicController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3352,6 +3354,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e24209cadf489fad71bd858496840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _crouchCollider: {fileID: 5506373202146632317}
+  _standCollider: {fileID: 3398090511723300017}
+--- !u!136 &5506373202146632317
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7851963247857689119}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.8344058
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.41720277, z: 0}
 --- !u!1 &7915604380166659273
 GameObject:
   m_ObjectHideFlags: 0
