@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Runtime.Controllers.Enemy
 {
@@ -19,7 +20,10 @@ namespace Runtime.Controllers.Enemy
         [SerializeField] private LayerMask obstructionMask;
 
         [SerializeField] public bool canSeePlayer;
+        [SerializeField] private Transform enemyTransform;
 
+        [SerializeField] private Animator enemyAnimator;
+        [SerializeField] private NavMeshAgent navMeshAgent;
         #endregion
 
         #region Private Variables
@@ -65,6 +69,10 @@ namespace Runtime.Controllers.Enemy
                     if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                     {
                         Debug.LogWarning("Enemy catch the player");
+                        
+                        navMeshAgent.isStopped = true;
+                        enemyTransform.LookAt(player.transform);
+                        enemyAnimator.SetTrigger("Shoot");
                         canSeePlayer = true;
                     }
                     else

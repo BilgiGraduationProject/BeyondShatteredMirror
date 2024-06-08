@@ -20,6 +20,6 @@ namespace Runtime.Signals
         
         
         
-        public Func<WanderinEnemy,List<Transform>> onGetCheckPointsList = delegate { return null; };
+        public UnityAction<Transform,Transform,Transform,Transform> onGetCheckPointsList = delegate { };
     }
 }

@@ -5,6 +5,7 @@ using Runtime.Enums.Enemy;
 using Runtime.Signals;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Controllers.Enemy
 {
@@ -18,6 +19,15 @@ namespace Runtime.Controllers.Enemy
         [SerializeField] private int wayPointIndex;
         [SerializeField] private Animator animator;
 
+
+
+        [Header("Limiters")] 
+        private   Transform _maxZ;
+        private Transform _minZ;
+        private Transform _maxX;
+        private Transform _minX;
+        
+
         #region Private Variables
        [SerializeField] private List<Transform> checkPointList;
         private Vector3 target;
@@ -29,9 +39,27 @@ namespace Runtime.Controllers.Enemy
         #endregion
 
 
+        private void OnEnable()
+        {
+            CoreGameSignals.Instance.onGetCheckPointsList += GetCheckPointsList;
+        }
+
+        private void GetCheckPointsList(Transform arg0, Transform arg1, Transform arg2, Transform arg3)
+        {
+            _maxX = arg0;
+            _minX = arg1;
+            _maxZ = arg2;
+            _minZ = arg3;
+        }
+
+        private void OnDisable()
+        {
+            CoreGameSignals.Instance.onGetCheckPointsList -= GetCheckPointsList;
+        }
+
         private void Update()
         {
-            if (!(Vector3.Distance(transform.position, target) < 1f)) return;
+            if (!(Vector3.Distance(transform.position, target) < 0.3f)) return;
             if(elapsedTime < 4)
             {
                 animator.SetBool("Walking",false);
@@ -47,12 +75,9 @@ namespace Runtime.Controllers.Enemy
 
         private void Start()
         {
-            var pointList = CoreGameSignals.Instance.onGetCheckPointsList?.Invoke(wanderingEnemies);
-            if (pointList == null) return;
-            Debug.LogWarning(pointList.Count);
-            transform.position = pointList[0].position;
-            target = pointList[0].position;
-            checkPointList = pointList;
+            
+            var newPos = new Vector3(Random.Range(_maxX.position.x,_minX.position.x), transform.position.y, Random.Range(_maxZ.position.z,_minZ.position.z));
+            transform.position = newPos;
             UpdateDestination();
 
         }
@@ -60,24 +85,38 @@ namespace Runtime.Controllers.Enemy
 
         private void UpdateDestination()
         {
-            animator.SetBool("Walking",true);
-            wayPointIndex++;
-            IterateWayPointIndex();
-            target = checkPointList[wayPointIndex].position;
-            var newPos = new Vector3(target.x, transform.position.y, target.z);
-            agent.SetDestination(newPos);
+            animator.SetBool("Walking", true);
+            Vector3 newPos;
+            bool foundValidPosition = false;
+
+            while (!foundValidPosition)
+            {
+                newPos = new Vector3(Random.Range(_maxX.position.x, _minX.position.x), transform.position.y, Random.Range(_maxZ.position.z, _minZ.position.z));
+                if (IsPositionOnNavMesh(newPos, 20f))
+                {
+                    target = newPos;
+                    agent.SetDestination(newPos);
+                    foundValidPosition = true;
+                }
+            }
+
+                
             
         }
 
 
-        private void IterateWayPointIndex()
+        bool IsPositionOnNavMesh(Vector3 position, float maxDistance)
         {
-            if(wayPointIndex == checkPointList.Count)
-                wayPointIndex = 0;
-            
+            NavMeshHit hit;
+            bool isOnNavMesh = NavMesh.SamplePosition(position, out hit, maxDistance, NavMesh.AllAreas);
+            return isOnNavMesh;
         }
-
-
-        
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("WanderEnemy"))
+            {
+                UpdateDestination();
+            }
+        }
     }
 }
