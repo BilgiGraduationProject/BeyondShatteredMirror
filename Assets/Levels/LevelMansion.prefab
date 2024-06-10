@@ -521,42 +521,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &39444516400709877
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2485841467458911575}
-  m_Layer: 0
-  m_Name: CheckPointLists
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2485841467458911575
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 39444516400709877}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3793268698825203773}
-  - {fileID: 8279402485855373507}
-  - {fileID: 8469832788220252242}
-  - {fileID: 9061826669458124921}
-  - {fileID: 249881728905284745}
-  m_Father: {fileID: 8167970529081820275}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &43285662493268418
 GameObject:
   m_ObjectHideFlags: 0
@@ -6589,39 +6553,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &475600341203773470
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8469832788220252242}
-  m_Layer: 0
-  m_Name: Third
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8469832788220252242
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 475600341203773470}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.68, y: 0, z: -8.55}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5335884492777002559}
-  - {fileID: 1082006767237999709}
-  m_Father: {fileID: 2485841467458911575}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &480372467210441698
 GameObject:
   m_ObjectHideFlags: 0
@@ -8483,37 +8414,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &597124513373746133
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2838500404571109433}
-  m_Layer: 0
-  m_Name: A
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2838500404571109433
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 597124513373746133}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9061826669458124921}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &615572404933706890
 GameObject:
   m_ObjectHideFlags: 0
@@ -11075,7 +10975,7 @@ GameObject:
   - component: {fileID: 1648930673439669373}
   m_Layer: 17
   m_Name: Cube (68)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11556,7 +11456,7 @@ GameObject:
   - component: {fileID: 7018605348234906534}
   m_Layer: 17
   m_Name: Cube (63)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12351,7 +12251,7 @@ GameObject:
   - component: {fileID: 1236356970870590849}
   m_Layer: 17
   m_Name: Cube (38)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14000,7 +13900,7 @@ GameObject:
   - component: {fileID: 537139417879653486}
   m_Layer: 17
   m_Name: Cube (43)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14957,7 +14857,7 @@ GameObject:
   - component: {fileID: 737677200041420711}
   m_Layer: 17
   m_Name: Cube (28)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16130,7 +16030,7 @@ GameObject:
   - component: {fileID: 7302134075896238726}
   m_Layer: 17
   m_Name: Cube (41)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18661,7 +18561,7 @@ GameObject:
   - component: {fileID: 2584536179042561264}
   m_Layer: 17
   m_Name: Cube (15)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26584,37 +26484,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &1889235650462970598
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4540507745609513489}
-  m_Layer: 0
-  m_Name: A
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4540507745609513489
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889235650462970598}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.15, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 249881728905284745}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1894289494928484984
 GameObject:
   m_ObjectHideFlags: 0
@@ -27302,7 +27171,7 @@ GameObject:
   - component: {fileID: 5914122026847347344}
   m_Layer: 17
   m_Name: Cube (31)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29181,7 +29050,7 @@ GameObject:
   - component: {fileID: 5688618601353339324}
   m_Layer: 17
   m_Name: Cube (61)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32220,7 +32089,7 @@ GameObject:
   - component: {fileID: 8287813976095650361}
   m_Layer: 17
   m_Name: Cube (51)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33835,7 +33704,7 @@ GameObject:
   - component: {fileID: 4785813692847073532}
   m_Layer: 17
   m_Name: Cube (24)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35420,7 +35289,7 @@ GameObject:
   - component: {fileID: 4020393560379032472}
   m_Layer: 17
   m_Name: Cube (29)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35630,7 +35499,7 @@ GameObject:
   - component: {fileID: 5634796882747007669}
   m_Layer: 17
   m_Name: Cube (54)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36272,39 +36141,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &2588407718615586265
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8279402485855373507}
-  m_Layer: 0
-  m_Name: Second
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8279402485855373507
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2588407718615586265}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.56, y: 0, z: 6.34}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 9018777930615611016}
-  - {fileID: 3434374002005790230}
-  m_Father: {fileID: 2485841467458911575}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2593441412896209118
 GameObject:
   m_ObjectHideFlags: 0
@@ -37039,37 +36875,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &2633277448439649910
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9018777930615611016}
-  m_Layer: 0
-  m_Name: A
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9018777930615611016
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2633277448439649910}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.45, y: 0, z: 3.46}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8279402485855373507}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2644197609541476588
 GameObject:
   m_ObjectHideFlags: 0
@@ -38233,37 +38038,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.2050214, y: 2.4305985, z: 0.14305836}
   m_Center: {x: -5.2192826, y: -1.1437703, z: -0.0000038138908}
---- !u!1 &2700432155579574630
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6201926544636278424}
-  m_Layer: 0
-  m_Name: C
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6201926544636278424
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2700432155579574630}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.83, y: 0, z: -5.28}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3793268698825203773}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2709054013666400129
 GameObject:
   m_ObjectHideFlags: 0
@@ -40221,7 +39995,7 @@ GameObject:
   - component: {fileID: 6257284243934093740}
   m_Layer: 17
   m_Name: Cube (40)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41541,7 +41315,7 @@ GameObject:
   - component: {fileID: 2960802413295169416}
   m_Layer: 17
   m_Name: Cube (1)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42476,7 +42250,7 @@ GameObject:
   - component: {fileID: 3077835368258639956}
   m_Layer: 17
   m_Name: Cube (13)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42782,7 +42556,7 @@ GameObject:
   - component: {fileID: 360676207323990878}
   m_Layer: 17
   m_Name: Cube (36)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43956,7 +43730,7 @@ GameObject:
   - component: {fileID: 8278160730251129586}
   m_Layer: 17
   m_Name: Cube (53)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46014,7 +45788,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.13333334
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: e3dde0a8c3a8e8f439d88a3947dded1f, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: c6b5a6f2e8476cf498b59b93e107757d, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &3321002915851877574
 GameObject:
@@ -46878,7 +46652,7 @@ GameObject:
   - component: {fileID: 4271505046266406583}
   m_Layer: 17
   m_Name: Cube (69)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48716,7 +48490,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2734391927588036481}
   m_Layer: 0
-  m_Name: MaxZ
+  m_Name: MinX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48731,7 +48505,7 @@ Transform:
   m_GameObject: {fileID: 3547743628991562146}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.18, y: 0, z: 64.83}
+  m_LocalPosition: {x: -19.32, y: 0, z: 35.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -52790,7 +52564,7 @@ GameObject:
   - component: {fileID: 165169562240201252}
   m_Layer: 17
   m_Name: Cube (67)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55135,7 +54909,7 @@ GameObject:
   - component: {fileID: 7481663891436461863}
   m_Layer: 17
   m_Name: Cube (27)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55605,7 +55379,7 @@ GameObject:
   - component: {fileID: 6523980857774296213}
   m_Layer: 17
   m_Name: Cube (56)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57518,37 +57292,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &4130308644435428409
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7384673795903163483}
-  m_Layer: 0
-  m_Name: B
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7384673795903163483
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4130308644435428409}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.43, y: 0, z: -26.81}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3793268698825203773}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4138953627749426912
 GameObject:
   m_ObjectHideFlags: 0
@@ -57563,7 +57306,7 @@ GameObject:
   - component: {fileID: 1941291335815435019}
   m_Layer: 17
   m_Name: Cube (44)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60458,7 +60201,7 @@ GameObject:
   - component: {fileID: 253279614122438246}
   m_Layer: 17
   m_Name: Cube (46)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62047,7 +61790,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2485841467458911575}
   - {fileID: 952677354903951113}
   m_Father: {fileID: 2367691594470551781}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -62063,23 +61805,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8bd3ddc62945c393c1c1697d3898ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkPointsList:
-  - checkPoints:
-    - {fileID: 5986196348507332458}
-    - {fileID: 7384673795903163483}
-    - {fileID: 6201926544636278424}
-  - checkPoints:
-    - {fileID: 9018777930615611016}
-    - {fileID: 3434374002005790230}
-  - checkPoints:
-    - {fileID: 5335884492777002559}
-    - {fileID: 1082006767237999709}
-  - checkPoints:
-    - {fileID: 2838500404571109433}
-    - {fileID: 3992303796499490627}
-  - checkPoints:
-    - {fileID: 4540507745609513489}
-    - {fileID: 2879194280298652524}
+  maxX: {fileID: 203193629791429261}
+  minX: {fileID: 2734391927588036481}
+  maxZ: {fileID: 455061700388880665}
+  minZ: {fileID: 6369185045681539358}
 --- !u!1 &4397767557302642400
 GameObject:
   m_ObjectHideFlags: 0
@@ -67049,7 +66778,7 @@ GameObject:
   - component: {fileID: 2577631043795424434}
   m_Layer: 17
   m_Name: Cube (21)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67551,39 +67280,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &4756915443569139358
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 249881728905284745}
-  m_Layer: 0
-  m_Name: Five
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &249881728905284745
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4756915443569139358}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4540507745609513489}
-  - {fileID: 2879194280298652524}
-  m_Father: {fileID: 2485841467458911575}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4759870099412067010
 GameObject:
   m_ObjectHideFlags: 0
@@ -75072,37 +74768,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &5272298125093892791
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2879194280298652524}
-  m_Layer: 0
-  m_Name: B
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2879194280298652524
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5272298125093892791}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.53, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 249881728905284745}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5295412583660489278
 GameObject:
   m_ObjectHideFlags: 0
@@ -75941,7 +75606,7 @@ GameObject:
   - component: {fileID: 2405013246973050004}
   m_Layer: 17
   m_Name: Cube (4)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76487,7 +76152,7 @@ GameObject:
   - component: {fileID: 6378373023342095049}
   m_Layer: 17
   m_Name: Cube (49)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79099,7 +78764,7 @@ GameObject:
   - component: {fileID: 7938221864244578897}
   m_Layer: 17
   m_Name: Cube (48)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79785,7 +79450,7 @@ GameObject:
   - component: {fileID: 4243833176163426862}
   m_Layer: 17
   m_Name: Cube (32)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82207,7 +81872,7 @@ GameObject:
   - component: {fileID: 4825356946952937024}
   m_Layer: 17
   m_Name: Cube (42)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82312,7 +81977,7 @@ GameObject:
   - component: {fileID: 3025624464142277518}
   m_Layer: 17
   m_Name: Cube
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82784,7 +82449,7 @@ GameObject:
   - component: {fileID: 2624838071686140319}
   m_Layer: 17
   m_Name: Cube (30)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83706,7 +83371,7 @@ GameObject:
   - component: {fileID: 5778171299513215721}
   m_Layer: 17
   m_Name: Cube (33)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83811,7 +83476,7 @@ GameObject:
   - component: {fileID: 488678832728227330}
   m_Layer: 17
   m_Name: Cube (64)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84629,7 +84294,7 @@ GameObject:
   - component: {fileID: 18302829530234303}
   m_Layer: 17
   m_Name: Cube (62)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86943,7 +86608,7 @@ GameObject:
   - component: {fileID: 3867735354534794962}
   m_Layer: 17
   m_Name: Cube (58)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87576,40 +87241,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7277543, y: 2.7439008, z: 0.7277543}
   m_Center: {x: 2.535154e-24, y: 1.0052227, z: 0.0000076293945}
---- !u!1 &6163956005698545932
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3793268698825203773}
-  m_Layer: 0
-  m_Name: First
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3793268698825203773
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6163956005698545932}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.64, y: 0, z: 11.36}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5986196348507332458}
-  - {fileID: 7384673795903163483}
-  - {fileID: 6201926544636278424}
-  m_Father: {fileID: 2485841467458911575}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6166805193582500800
 GameObject:
   m_ObjectHideFlags: 0
@@ -88429,7 +88060,7 @@ GameObject:
   - component: {fileID: 6949506290069051075}
   m_Layer: 17
   m_Name: Cube (2)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89255,7 +88886,7 @@ GameObject:
   - component: {fileID: 2003448748625504538}
   m_Layer: 17
   m_Name: Cube (12)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -89963,7 +89594,7 @@ GameObject:
   - component: {fileID: 4881920118108520346}
   m_Layer: 17
   m_Name: Cube (22)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94173,7 +93804,7 @@ GameObject:
   - component: {fileID: 4550414028977699367}
   m_Layer: 17
   m_Name: Cube (35)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94361,7 +93992,7 @@ GameObject:
   - component: {fileID: 5263580268967773515}
   m_Layer: 17
   m_Name: Cube (34)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95187,7 +94818,7 @@ GameObject:
   - component: {fileID: 8442332062981246837}
   m_Layer: 17
   m_Name: Cube (23)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95375,7 +95006,7 @@ GameObject:
   - component: {fileID: 4344283813103164089}
   m_Layer: 17
   m_Name: Cube (11)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96424,7 +96055,7 @@ GameObject:
   - component: {fileID: 4248616489208340587}
   m_Layer: 17
   m_Name: Cube (47)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97544,7 +97175,7 @@ GameObject:
   - component: {fileID: 331581957187511416}
   m_Layer: 17
   m_Name: Cube (71)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98116,7 +97747,7 @@ GameObject:
   - component: {fileID: 5106457631700576648}
   m_Layer: 17
   m_Name: Cube (6)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99824,37 +99455,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &6879047043944042113
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5986196348507332458}
-  m_Layer: 0
-  m_Name: A
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5986196348507332458
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6879047043944042113}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3793268698825203773}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6886294972754356002
 GameObject:
   m_ObjectHideFlags: 0
@@ -100861,7 +100461,7 @@ GameObject:
   - component: {fileID: 4833188891281273246}
   m_Layer: 17
   m_Name: Cube (39)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101137,7 +100737,7 @@ GameObject:
   - component: {fileID: 2600882443931721374}
   m_Layer: 17
   m_Name: Cube (37)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101657,7 +101257,7 @@ GameObject:
   - component: {fileID: 1256187394058006761}
   m_Layer: 17
   m_Name: Cube (72)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101773,7 +101373,7 @@ Transform:
   m_GameObject: {fileID: 7062902658546501169}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.97, z: 1.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -103309,7 +102909,7 @@ Transform:
   m_GameObject: {fileID: 7136474668577527427}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.33, y: 0, z: 64.83}
+  m_LocalPosition: {x: 16.16, y: 0, z: 35.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -104177,7 +103777,7 @@ GameObject:
   - component: {fileID: 9192151612997485488}
   m_Layer: 17
   m_Name: Cube (9)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105073,7 +104673,7 @@ GameObject:
   - component: {fileID: 651752919110840632}
   m_Layer: 17
   m_Name: Cube (57)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108294,7 +107894,7 @@ GameObject:
   - component: {fileID: 2352698438963261158}
   m_Layer: 17
   m_Name: Cube (8)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108674,7 +108274,7 @@ GameObject:
   - component: {fileID: 4960178504597363116}
   m_Layer: 17
   m_Name: Cube (50)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108862,7 +108462,7 @@ GameObject:
   - component: {fileID: 2497081002338262202}
   m_Layer: 17
   m_Name: Cube (5)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109216,7 +108816,7 @@ GameObject:
   - component: {fileID: 8464325353101370966}
   m_Layer: 17
   m_Name: Cube (14)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109572,7 +109172,7 @@ GameObject:
   - component: {fileID: 1694907435809614564}
   m_Layer: 17
   m_Name: Cube (7)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109677,7 +109277,7 @@ GameObject:
   - component: {fileID: 5031880802933483427}
   m_Layer: 17
   m_Name: Cube (73)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110468,7 +110068,7 @@ GameObject:
   - component: {fileID: 4427176822531114200}
   m_Layer: 17
   m_Name: Cube (59)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111181,7 +110781,7 @@ GameObject:
   - component: {fileID: 2408748101541801983}
   m_Layer: 17
   m_Name: Cube (3)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111286,7 +110886,7 @@ GameObject:
   - component: {fileID: 2065961052072878846}
   m_Layer: 17
   m_Name: Cube (26)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113558,37 +113158,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &7868756895082830868
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1082006767237999709}
-  m_Layer: 0
-  m_Name: B
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1082006767237999709
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7868756895082830868}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -7.68}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8469832788220252242}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7878775808607313298
 GameObject:
   m_ObjectHideFlags: 0
@@ -114908,7 +114477,7 @@ GameObject:
   - component: {fileID: 7310433878403552533}
   m_Layer: 17
   m_Name: Cube (55)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115494,7 +115063,7 @@ GameObject:
   - component: {fileID: 8878971490114172159}
   m_Layer: 17
   m_Name: Cube (60)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116412,37 +115981,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &8084846416979146221
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3434374002005790230}
-  m_Layer: 0
-  m_Name: B
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3434374002005790230
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8084846416979146221}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.18, y: 0, z: -8.97}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8279402485855373507}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8085621400479074503
 GameObject:
   m_ObjectHideFlags: 0
@@ -118279,7 +117817,7 @@ GameObject:
   - component: {fileID: 8117076457863442666}
   m_Layer: 17
   m_Name: Cube (19)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118762,7 +118300,7 @@ GameObject:
   - component: {fileID: 4803777993628206240}
   m_Layer: 17
   m_Name: Cube (16)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120312,7 +119850,7 @@ GameObject:
   - component: {fileID: 217470278189981539}
   m_Layer: 17
   m_Name: Cube (65)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120417,7 +119955,7 @@ GameObject:
   - component: {fileID: 2690891736651590273}
   m_Layer: 17
   m_Name: Cube (20)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120801,37 +120339,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.18338953, y: 0.21491323, z: 0.90475535}
   m_Center: {x: 0, y: 0.015761374, z: -0.86016124}
---- !u!1 &8313225956991223067
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5335884492777002559}
-  m_Layer: 0
-  m_Name: A
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5335884492777002559
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8313225956991223067}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8469832788220252242}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8322878055187611513
 GameObject:
   m_ObjectHideFlags: 0
@@ -122874,7 +122381,7 @@ GameObject:
   - component: {fileID: 476036455815659967}
   m_Layer: 17
   m_Name: Cube (66)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124123,37 +123630,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &8504400061467142274
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3992303796499490627}
-  m_Layer: 0
-  m_Name: B
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3992303796499490627
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8504400061467142274}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.67, y: 0, z: -9.14}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9061826669458124921}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8532827239341955213
 GameObject:
   m_ObjectHideFlags: 0
@@ -125185,7 +124661,7 @@ GameObject:
   - component: {fileID: 8573597138257359464}
   m_Layer: 17
   m_Name: Cube (18)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127858,7 +127334,7 @@ GameObject:
   - component: {fileID: 9034887107899452025}
   m_Layer: 17
   m_Name: Cube (10)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128917,39 +128393,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &8865981830945442057
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9061826669458124921}
-  m_Layer: 0
-  m_Name: Four
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9061826669458124921
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8865981830945442057}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.16, y: 0, z: -8.05}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2838500404571109433}
-  - {fileID: 3992303796499490627}
-  m_Father: {fileID: 2485841467458911575}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8896085169359636489
 GameObject:
   m_ObjectHideFlags: 0
@@ -130354,7 +129797,7 @@ GameObject:
   - component: {fileID: 1035480744843725675}
   m_Layer: 17
   m_Name: Cube (52)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131040,7 +130483,7 @@ GameObject:
   - component: {fileID: 354095394924564010}
   m_Layer: 17
   m_Name: Cube (70)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132419,7 +131862,7 @@ GameObject:
   - component: {fileID: 684659117396859575}
   m_Layer: 17
   m_Name: Cube (17)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133639,7 +133082,7 @@ GameObject:
   - component: {fileID: 7413898905889444450}
   m_Layer: 17
   m_Name: Cube (45)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134076,7 +133519,7 @@ GameObject:
   - component: {fileID: 5493567031767312759}
   m_Layer: 17
   m_Name: Cube (25)
-  m_TagString: Grass
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135032,7 +134475,7 @@ PrefabInstance:
     - target: {fileID: 2836229027422404851, guid: f424c1888c62c2047b9b6f0f684e4c07,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 53.97
+      value: 55.15
       objectReference: {fileID: 0}
     - target: {fileID: 2836229027422404851, guid: f424c1888c62c2047b9b6f0f684e4c07,
         type: 3}
@@ -135069,10 +134512,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4034685478550536797, guid: f424c1888c62c2047b9b6f0f684e4c07,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 9.810029
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034685478550536797, guid: f424c1888c62c2047b9b6f0f684e4c07,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 9.366591
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034685478550536797, guid: f424c1888c62c2047b9b6f0f684e4c07,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.04788
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034685478550536797, guid: f424c1888c62c2047b9b6f0f684e4c07,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.2528477
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034685478550536797, guid: f424c1888c62c2047b9b6f0f684e4c07,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.26097798
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034685478550536797, guid: f424c1888c62c2047b9b6f0f684e4c07,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 1.0932251
+      objectReference: {fileID: 0}
     - target: {fileID: 5640907029305320833, guid: f424c1888c62c2047b9b6f0f684e4c07,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -1.633
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414227013740867684, guid: f424c1888c62c2047b9b6f0f684e4c07,
+        type: 3}
+      propertyPath: m_TagString
+      value: WanderEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -135193,6 +134671,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 952677354903951113}
     m_Modifications:
+    - target: {fileID: 1584517725055826944, guid: da77196a492be9244a608a9df4266f13,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.29
+      objectReference: {fileID: 0}
     - target: {fileID: 5019381045238912459, guid: da77196a492be9244a608a9df4266f13,
         type: 3}
       propertyPath: m_Name
@@ -135739,7 +135222,7 @@ PrefabInstance:
     - target: {fileID: 5123857918154787772, guid: da77196a492be9244a608a9df4266f13,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.19000244
+      value: 2.67
       objectReference: {fileID: 0}
     - target: {fileID: 5123857918154787772, guid: da77196a492be9244a608a9df4266f13,
         type: 3}

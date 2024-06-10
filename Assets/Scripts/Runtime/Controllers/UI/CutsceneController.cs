@@ -8,6 +8,7 @@ using DG.Tweening;
 using Runtime.Data.UnityObject;
 using Runtime.Data.ValueObject;
 using Runtime.Enums.Playable;
+using Runtime.Enums.Player;
 using Runtime.Enums.Pool;
 using Runtime.Enums.UI;
 using Runtime.Managers;
@@ -246,9 +247,14 @@ namespace Runtime.Controllers
                         CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
                         PoolSignals.Instance.onSetCurrentLevelToVisible?.Invoke(true);
                         PoolSignals.Instance.onDestroyFightLevel?.Invoke();
-                        
-                        
-                            
+                        break;
+                    case PlayableEnum.PlayerDiedbyWanderEnemy:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
+                        PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.Mansion);
+                        DOVirtual.DelayedCall(2f, () =>
+                        {
+                            CoreUISignals.Instance.onCloseUnCutScene?.Invoke(PlayableEnum.PlayerDiedbyWanderEnemy);
+                        });
                         break;
                        
 
@@ -274,6 +280,11 @@ namespace Runtime.Controllers
                 
                 case PlayableEnum.PlayerReturnSpawnPoint:
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                    break;
+                case PlayableEnum.PlayerDiedbyWanderEnemy:
+                    PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Live);
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                    
                     break;
                 
             }

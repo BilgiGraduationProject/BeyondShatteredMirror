@@ -294,5 +294,10 @@ namespace Runtime.Controllers.Player
             enemyObj.transform.parent = playerKillTransform;
             enemyObj.transform.position = playerKillTransform.position;
         }
+
+        public void EmptyThePlayerHand()
+        {
+            OnPlayerPressedDropItemButton();
+        }
     }
 }

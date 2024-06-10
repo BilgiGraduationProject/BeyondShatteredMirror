@@ -115,6 +115,13 @@ namespace Runtime.Controllers.Enemy
         {
             if (other.CompareTag("WanderEnemy"))
             {
+                Debug.LogWarning("Enemy  collided with enemy");
+                UpdateDestination();
+            }
+
+            if (other.CompareTag("Obstacle"))
+            {
+                Debug.LogWarning("Enemy collied with obstalce");
                 UpdateDestination();
             }
         }

@@ -84,11 +84,23 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onPlayerSaveTransform += OnPlayerSaveTransform;
             PlayerSignals.Instance.onPlayerLoadTransform += OnPlayerLoadTransform;
             PlayerSignals.Instance.onSetSensivity += playerThirdPersonController.OnSetSensivity;
+            PlayerSignals.Instance.onPlayerDiedOnWanderingEnemy += OnPlayerDiedOnWanderingEnemy;
 
 
 
 
 
+        }
+
+        private void OnPlayerDiedOnWanderingEnemy()
+        {
+            PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Die);
+            playerHitDetectionController.EmptyThePlayerHand();
+DOVirtual.DelayedCall(1.5f, () =>
+            {
+                CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.PlayerDiedbyWanderEnemy);
+            });
+            
         }
 
         private void OnPlayerLoadTransform()
@@ -162,6 +174,7 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onPlayerSaveTransform -= OnPlayerSaveTransform;
             PlayerSignals.Instance.onPlayerLoadTransform -= OnPlayerLoadTransform;
             PlayerSignals.Instance.onSetSensivity -= playerThirdPersonController.OnSetSensivity;
+            PlayerSignals.Instance.onPlayerDiedOnWanderingEnemy -= OnPlayerDiedOnWanderingEnemy;
             
         }
 

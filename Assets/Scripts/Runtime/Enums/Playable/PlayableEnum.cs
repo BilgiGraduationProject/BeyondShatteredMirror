@@ -14,6 +14,7 @@
         SpawnPoint,
         PlayerReturnSpawnPoint,
         HakanPos,
+        PlayerDiedbyWanderEnemy
         
     }
 }

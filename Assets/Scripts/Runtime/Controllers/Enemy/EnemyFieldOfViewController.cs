@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Runtime.Signals;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -29,6 +30,7 @@ namespace Runtime.Controllers.Enemy
         #region Private Variables
 
         public GameObject player;
+        private bool _isPlayerDead;
 
         #endregion
 
@@ -56,6 +58,7 @@ namespace Runtime.Controllers.Enemy
         {
             Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
 
+            if (_isPlayerDead) return;
             if (rangeChecks.Length != 0)
             {
                 Transform target = rangeChecks[0].transform;
@@ -73,7 +76,9 @@ namespace Runtime.Controllers.Enemy
                         navMeshAgent.isStopped = true;
                         enemyTransform.LookAt(player.transform);
                         enemyAnimator.SetTrigger("Shoot");
+                        PlayerSignals.Instance.onPlayerDiedOnWanderingEnemy?.Invoke();
                         canSeePlayer = true;
+                        _isPlayerDead = true;
                     }
                     else
                     {

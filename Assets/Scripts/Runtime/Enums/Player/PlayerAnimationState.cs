@@ -11,7 +11,9 @@ namespace Runtime.Enums.Player
        OpenDoor,
        isWalking,
        StealthKill,
-       Damage
+       Damage,
+       Die,
+       Live
         
         
     }

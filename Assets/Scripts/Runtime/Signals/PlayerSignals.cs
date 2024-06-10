@@ -29,5 +29,8 @@ namespace Runtime.Signals
        public UnityAction onPlayerSaveTransform = delegate {  };
        public UnityAction onPlayerLoadTransform = delegate {  };
        
+       
+       public UnityAction onPlayerDiedOnWanderingEnemy = delegate {  };
+       
     }
 }
