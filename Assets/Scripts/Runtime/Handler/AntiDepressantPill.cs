@@ -5,7 +5,7 @@ namespace Runtime.Handler
 {
     public class AntiDepressantPill : BaseSkill
     {
-        public float happiness = 0f;
+        public float happiness = 100f;
 
         public override void Activate()
         {

@@ -181,13 +181,29 @@ namespace Runtime.Controllers.Player
 
         private void ChangeColorOfInteractableObject(bool condition, GameObject collidedObject)
         {
-            if (condition)
+            // if (condition)
+            // {
+            //     collidedObject.GetComponent<MeshRenderer>().material.DOFloat(1, "_OutlineWidth", 1);
+            // }
+            // else
+            // {
+            //     collidedObject.GetComponent<MeshRenderer>().material.DOFloat(0, "_OutlineWidth", 1);
+            // }
+            
+            var meshRenderer = collidedObject.GetComponent<MeshRenderer>();
+
+            var childMeshRenderers = collidedObject.GetComponentsInChildren<MeshRenderer>();
+            
+            if (meshRenderer)
             {
-                collidedObject.GetComponent<MeshRenderer>().material.DOFloat(1, "_OutlineWidth", 1);
+                meshRenderer.material.DOFloat(condition ? 1 : 0, "_OutlineWidth", 1);
             }
             else
             {
-                collidedObject.GetComponent<MeshRenderer>().material.DOFloat(0, "_OutlineWidth", 1);
+                foreach (var childMeshRenderer in childMeshRenderers)
+                {
+                    childMeshRenderer.material.DOFloat(condition ? 1 : 0, "_OutlineWidth", 1);
+                }
             }
         }
 
@@ -208,6 +224,12 @@ namespace Runtime.Controllers.Player
                     Openable();
                     break;
                 case "Interectable":
+                    if(_collidedObject.TryGetComponent(out PillCollectable pillCollectable))
+                    {
+                        pillCollectable.CollectPill();
+                        return;
+                    }
+                    
                     var child = playerHandTransform.childCount > 0;
                     if (child)
                     {
@@ -245,10 +267,7 @@ namespace Runtime.Controllers.Player
                 case "MansionTel":
                     CoreUISignals.Instance.onOpenCutscene?.Invoke(4);
                     break;
-                
             }
-           
-            
         }
 
         private void Openable()
@@ -294,6 +313,7 @@ namespace Runtime.Controllers.Player
             enemyObj.transform.parent = playerKillTransform;
             enemyObj.transform.position = playerKillTransform.position;
         }
+
 
         public void EmptyThePlayerHand()
         {

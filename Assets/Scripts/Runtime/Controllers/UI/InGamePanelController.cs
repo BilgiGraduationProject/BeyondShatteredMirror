@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Runtime.Controllers.Player;
 using Runtime.Enums;
@@ -45,6 +46,11 @@ namespace Runtime.Controllers.UI
         [SerializeField] private GameObject crossImage;
         [SerializeField] private GameObject pillsArea;
         [SerializeField] private TextMeshProUGUI pillInfoText;
+
+        [SerializeField] private GameObject pillUsedArea;
+        [SerializeField] private GameObject pillActivated;
+        [SerializeField] private GameObject pillCollectedArea;
+        [SerializeField] private GameObject pillCollected;
         
         private PlayerInput _playerInput;
         private InputAction _pillsAction;
@@ -83,6 +89,8 @@ namespace Runtime.Controllers.UI
             CoreUISignals.Instance.onSetHealthSlider += UpdateHealthBar;
             CoreUISignals.Instance.onSetHappinesSlider += UpdateHappinessBar;
             UITextSignals.Instance.onSetPillDescription += OnSetPillDescription;
+            CoreUISignals.Instance.onActivatePill += ActivatePill;
+            CoreUISignals.Instance.onPillCollected += PillCollected;
             _pillsAction.Enable();
             _pillsAction.performed += PillsActionOn;
             _pillsAction.canceled += PillsActionOff;
@@ -93,6 +101,8 @@ namespace Runtime.Controllers.UI
             CoreUISignals.Instance.onSetHealthSlider -= UpdateHealthBar;
             CoreUISignals.Instance.onSetHappinesSlider -= UpdateHappinessBar;
             UITextSignals.Instance.onSetPillDescription -= OnSetPillDescription;
+            CoreUISignals.Instance.onActivatePill -= ActivatePill;
+            CoreUISignals.Instance.onPillCollected -= PillCollected;
             _pillsAction.performed -= PillsActionOn;
             _pillsAction.canceled -= PillsActionOff;
             _pillsAction.Disable();
@@ -171,37 +181,88 @@ namespace Runtime.Controllers.UI
         {
             _currentHealth = FindObjectOfType<PlayerHealthController>().Health;
             _currentHealth = health;
-            healthBar.DOValue(health / 100f, 0.5f);
-            healthBar.value = health / 100f;
+            healthBar.DOValue(_currentHealth / 100f, 0.5f);
+            healthBar.value = _currentHealth / 100f;
             healthBar.fillRect.GetComponent<Image>().color = healthGradient.Evaluate(healthBar.normalizedValue);
         }
         
         void UpdateHappinessBar(float happiness)
         {
             _currentHappiness = FindObjectOfType<PlayerHappinessController>().Happiness;
-            _currentHappiness -= happiness;
+            _currentHappiness = happiness;
             happinessBar.DOValue(_currentHappiness / 100f, 0.5f);
             happinessBar.value = _currentHappiness / 100f;
             happinessBar.fillRect.GetComponent<Image>().color = happinessGradient.Evaluate(happinessBar.normalizedValue);
+
+            if (_currentHappiness > 0) return;
             
-            if (_currentHappiness <= 0)
+            // TODO: Pill kullan diye güzel bir uyarı vermek lazım
+            //CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
+            InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
+                
+            print("You need to use");
+            var mySequence = DOTween.Sequence();
+            mySequence.Append(healthInfo.transform.DOScale(1.2f, 0.5f));
+            mySequence.Append(healthInfo.transform.DOScale(0.9f, 0.5f));
+            mySequence.SetLoops(3);
+            mySequence.Append(healthInfo.transform.DOScale(1f, 0.5f));
+                
+            print("You need to use Happiness Pill");
+        }
+        
+        private void ActivatePill(float pillDuration, PillTypes pillType)
+        {
+            var pillInstance = Instantiate(pillActivated, pillUsedArea.transform);
+            var pillText = pillInstance.GetComponentInChildren<TextMeshProUGUI>();
+            pillInstance.GetComponentsInChildren<Image>().LastOrDefault()!.sprite = ShopManager.Instance.SendItemDatasToControllers()
+                .Find(item => item.DataType.ToString() == pillType.ToString()).Thumbnail; 
+            pillInstance.SetActive(true);
+
+            if (pillDuration == 0)
             {
-                // TODO: Pill kullan diye güzel bir uyarı vermek lazım
-                //CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Inventory, 1);
-                InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
-                
-                print("You need to use");
-                Sequence mySequence = DOTween.Sequence();
-                mySequence.Append(healthInfo.transform.DOScale(1.2f, 0.5f));
-                mySequence.Append(healthInfo.transform.DOScale(0.9f, 0.5f));
-                mySequence.SetLoops(3);
-                mySequence.Append(healthInfo.transform.DOScale(1f, 0.5f));
-                
-                print("You need to use Happiness Pill");
-                return;
+                pillText.text = "1 used";
+                Destroy(pillInstance, 3f);
+            }
+            else
+            {
+                var sequence = DOTween.Sequence();
+                sequence.AppendInterval(pillDuration);
+                sequence.OnUpdate(() =>
+                {
+                    var remainingTime = pillDuration - sequence.Elapsed();
+                    pillText.text = remainingTime.ToString("F2"); // F2 ile saniyeyi iki ondalık basamakla sınırlarız
+                });
+                sequence.OnComplete(() =>
+                {
+                    Destroy(pillInstance);
+                });
             }
         }
 
+        private void PillCollected(PillTypes pillType)
+        {
+            var pillInstance = Instantiate(pillCollected, pillCollectedArea.transform);
+
+            var pillImage = pillInstance.GetComponentsInChildren<Image>().LastOrDefault();
+            pillImage!.sprite = ShopManager.Instance.SendItemDatasToControllers()
+                .Find(item => item.DataType.ToString() == pillType.ToString()).Thumbnail;
+
+            var pillText = pillInstance.GetComponentInChildren<TextMeshProUGUI>();
+            pillText.text = "+1";
+
+            pillInstance.SetActive(true);
+
+            var canvasGroup = pillInstance.GetComponent<CanvasGroup>();
+
+            var sequence = DOTween.Sequence();
+            sequence.AppendInterval(1.5f);
+            sequence.Append(canvasGroup.DOFade(0f, .5f));
+            sequence.OnComplete(() =>
+            {
+                Destroy(pillInstance);
+            });
+        }
+        
         private void TaskUpdate()
         {
             currentTaskIndex = GameDataManager.LoadData<int>("TutorialTask", 0);

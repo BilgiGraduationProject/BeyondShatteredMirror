@@ -4,5 +4,6 @@
     {
         Pickable,
         Door,
+        Pill
     }
 }

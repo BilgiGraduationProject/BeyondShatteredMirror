@@ -19,7 +19,8 @@ namespace Runtime.Controllers.Player
 
         [SerializeField] private Animator _playerAnimator;
 
-        
+        [SerializeField] private AudioClip[] FootstepAudioClips;
+        [Range(0, 1)] [SerializeField] private float FootstepAudioVolume = 0.5f;
 
         #endregion
 
@@ -28,15 +29,18 @@ namespace Runtime.Controllers.Player
         private readonly string _speed = "Speed";
         private readonly string _crouch = "Crouch";
         private readonly string _roll = "Roll";
-
+        private CharacterController _characterController;
+        
         #endregion
 
         #endregion
 
-        
-        
-        
-        
+        private void Awake()
+        {
+            _characterController = GetComponentInParent<CharacterController>();
+        }
+
+
         internal void OnSetBoolAnimation(PlayerAnimationState playerEnum, bool condition)
         {
             _playerAnimator.SetBool(playerEnum.ToString(), condition);
@@ -102,7 +106,19 @@ namespace Runtime.Controllers.Player
 
         #endregion
 
-
+        private void OnFootstep(AnimationEvent animationEvent)
+        {
+            print(animationEvent.animatorClipInfo.weight);
+            if (animationEvent.animatorClipInfo.weight > 0.5f)
+            {
+                if (FootstepAudioClips.Length > 0)
+                {
+                    var index = Random.Range(0, FootstepAudioClips.Length);
+                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_characterController.center), FootstepAudioVolume);
+                }
+            }
+        }
+        
         public void OnSetAnimationPlayerSpeed(float speed)
         {
             _playerAnimator.SetFloat("Speed",speed);

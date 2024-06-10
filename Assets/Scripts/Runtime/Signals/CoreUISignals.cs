@@ -1,3 +1,4 @@
+using Runtime.Enums;
 using Runtime.Enums.Playable;
 using Runtime.Enums.UI;
 using Runtime.Extentions;
@@ -26,5 +27,7 @@ namespace Runtime.Signals
         
         public UnityAction<float> onSetHealthSlider = delegate {  };
         public UnityAction<float> onSetHappinesSlider = delegate {  };
+        public UnityAction<float, PillTypes> onActivatePill = delegate {  };
+        public UnityAction<PillTypes> onPillCollected = delegate {  };
     }
 }
