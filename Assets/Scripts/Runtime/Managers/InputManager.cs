@@ -32,7 +32,7 @@ namespace Runtime.Managers
         [Header(("Combat"))]
         private int _combatCount;
         private Coroutine _combatCoroutine;
-        private bool _isCombat = true;
+        private bool _isCombat;
         [Header("Actions")]
         
         private bool _isCrouch;
@@ -88,6 +88,7 @@ namespace Runtime.Managers
             InputSignals.Instance.onIsReadyForCombat += OnIsReadyForCombat;
             PlayableSignals.Instance.onSendInputManagerToReadyForInput += OnSendInputManagerToReadyForInput;
             InputSignals.Instance.onGetCombatState += () => _isCombat;
+            InputSignals.Instance.onIsPlayerReadyToMove += (condition) => _isMovementInputIsReadyToUse = condition;
         }
 
         private void OnChangeCrouchState(bool condiiton)
@@ -135,6 +136,7 @@ namespace Runtime.Managers
             InputSignals.Instance.onChangeCrouchState -= OnChangeCrouchState;
             PlayableSignals.Instance.onSendInputManagerToReadyForInput -= OnSendInputManagerToReadyForInput;
             InputSignals.Instance.onGetCombatState -= () => _isCombat;
+            InputSignals.Instance.onIsPlayerReadyToMove -= (condition) => _isMovementInputIsReadyToUse = condition;
         }
 
        
@@ -165,17 +167,20 @@ namespace Runtime.Managers
                 }
                     
             }
-            
+
+            if (!_isMovementInputIsReadyToUse) return;
+            if (Input.GetKeyDown(KeyCode.E) )
+            {
+                Debug.LogWarning("Pressing Pick up");
+                InputSignals.Instance.onPlayerPressedPickUpButton?.Invoke();
+            }
             _crouchInputCommand.Execute(ref _isCrouch,_isMovementInputIsReadyToUse);
             _spaceInputCommand.Execute(_isCrouch,_isMovementInputIsReadyToUse);
             // -------------------------------------------------
             
             _meeleCombatCommand.Execute(ref _combatCount,_isCombat,_isMovementInputIsReadyToUse);
 
-            if (Input.GetKeyDown(KeyCode.E) && !_isPickingUp)
-            {
-                InputSignals.Instance.onPlayerPressedPickUpButton?.Invoke();
-            }
+            
 
             if (Input.GetKeyDown(KeyCode.X))
             {

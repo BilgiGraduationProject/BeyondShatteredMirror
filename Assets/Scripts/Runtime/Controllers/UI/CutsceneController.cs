@@ -195,6 +195,7 @@ namespace Runtime.Controllers
                         PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.EnteredHouse);
                         CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.AslanHouse);
                         CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredHouse);
+                   
                         break;
                     case 2: // This is mansion
                         PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.Mansion);
@@ -236,6 +237,7 @@ namespace Runtime.Controllers
                         CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredFactory);
                         PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
                         CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
+                        PlayerSignals.Instance.onCanPlayerCheckItems?.Invoke();
                         break;
                     case PlayableEnum.SpawnPoint:
                         CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
@@ -247,14 +249,24 @@ namespace Runtime.Controllers
                         CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
                         PoolSignals.Instance.onSetCurrentLevelToVisible?.Invoke(true);
                         PoolSignals.Instance.onDestroyFightLevel?.Invoke();
+                        PlayerSignals.Instance.onIncreaseMemoryCount?.Invoke();
+                        Destroy(GameObject.FindWithTag($"MemoryCard{PlayerSignals.Instance.onGetMemoryCardCount?.Invoke()}"));
+                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredFactory);
                         break;
                     case PlayableEnum.PlayerDiedbyWanderEnemy:
                         CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.Mansion);
+                        PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Live);
                         DOVirtual.DelayedCall(2f, () =>
                         {
                             CoreUISignals.Instance.onCloseUnCutScene?.Invoke(PlayableEnum.PlayerDiedbyWanderEnemy);
                         });
+                        break;
+                    case PlayableEnum.PlayerDiedReturnSpawnPoint:
+                        CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
+                        PoolSignals.Instance.onSetCurrentLevelToVisible?.Invoke(true);
+                        PoolSignals.Instance.onDestroyFightLevel?.Invoke();
+                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredHouse);
                         break;
                        
 
@@ -276,15 +288,21 @@ namespace Runtime.Controllers
 
                 case PlayableEnum.SpawnPoint:
                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                     InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
                     break;
                 
                 case PlayableEnum.PlayerReturnSpawnPoint:
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                    InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
                     break;
                 case PlayableEnum.PlayerDiedbyWanderEnemy:
-                    PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Live);
+                    EnemySignals.Instance.onResetEnemy?.Invoke();
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                     
+                    break;
+                case PlayableEnum.PlayerDiedReturnSpawnPoint:
+                    CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                    InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
                     break;
                 
             }

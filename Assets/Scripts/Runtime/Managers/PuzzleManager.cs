@@ -70,7 +70,7 @@ namespace Runtime.Managers
                         puzzlePieces.layer = 0;
                         intereact.layer = 0;
                         puzzleParams.tablePictureCount++;
-                        UITextSignals.Instance.onChangeMissionText?.Invoke();
+                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredHouse);
                         
                     }
                     if (puzzleParams.tablePictureCount == 2)
@@ -154,14 +154,16 @@ namespace Runtime.Managers
                     if (intereact.CompareTag(puzzlePieces.tag))
                     {
                         intereact.layer = 0;
-                        intereact.GetComponent<MeshRenderer>().material.DOFade(0f, "_BaseColor", 1f);
+                        intereact.GetComponent<MeshRenderer>().material.DOFade(0f, "_BaseColor", 0.1f);
                         puzzlePieces.layer = 0;
                         puzzlePieces.transform.parent = null;
                         puzzlePieces.transform.position = intereact.transform.position;
                         puzzlePieces.transform.rotation = intereact.transform.rotation;
                         puzzlePieces.transform.localScale = intereact.transform.localScale;
-                       
-                        
+                        var hakanDoor = GameObject.FindWithTag("HakanRoom");
+                        hakanDoor.layer = 9;
+
+
                     }
                     break;
                 

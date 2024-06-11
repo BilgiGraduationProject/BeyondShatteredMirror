@@ -116,7 +116,8 @@ namespace StarterAssets
         private const float _threshold = 0.01f;
 
       
-        private bool _isPlayerReadyToMove;
+        private bool _isPlayerReadyToMove = true;
+        private bool _isPlayerRolling;
 
         private bool IsCurrentDeviceMouse
         {
@@ -375,11 +376,12 @@ namespace StarterAssets
 
         public void OnPlayerIsRolling(bool condition)
         {
-            
+            _isPlayerRolling = condition;
         }
 
         public void OnPlayerPressedSpaceButton()
         {
+            if(_isPlayerRolling) return;
             var newPos = new Vector3(0, _mainCamera.transform.eulerAngles.y, 0);
             transform.DORotate(newPos, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
             {

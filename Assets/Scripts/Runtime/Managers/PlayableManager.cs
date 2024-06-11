@@ -104,6 +104,14 @@ namespace Runtime.Managers
                             var cutscene = GameObject.FindWithTag("Cutscene").GetComponent<Animator>();
                             playableDirector.SetGenericBinding(track, cutscene);
                             break;
+                        case "Hakan":
+                            var hakan = GameObject.FindWithTag("Hakan").GetComponent<Animator>();
+                            playableDirector.SetGenericBinding(track, hakan);
+                            break;
+                        case "Sound":
+                            var sound = Camera.main.GetComponent<AudioSource>();
+                            playableDirector.SetGenericBinding(track, sound);
+                            break;
 
                     }
                 }
@@ -120,7 +128,7 @@ namespace Runtime.Managers
            
             StartCoroutine(directorMode is DirectorWrapMode.Hold
                 ? OnHoldCutScene((float)playableDirector.duration, playableEnum)
-                : OnCutSceneFinished((float)playableDirector.duration));
+                : OnCutSceneFinished((float)playableDirector.duration,playableEnum));
         }
 
         
@@ -148,12 +156,19 @@ namespace Runtime.Managers
 
             }
 
-            private IEnumerator OnCutSceneFinished(float playableDirectorDuration)
+            private IEnumerator OnCutSceneFinished(float playableDirectorDuration, PlayableEnum playableEnum)
             {
                 yield return new WaitForSeconds(playableDirectorDuration);
                 CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
                 CoreUISignals.Instance.onEnableAllPanels?.Invoke();
-                
+                switch (playableEnum)
+                {
+                    case PlayableEnum.ShowHakan:
+                        InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
+                        EnemySignals.Instance.onStartHakanRun?.Invoke();
+                        break;
+                    
+                }
 
             }
 

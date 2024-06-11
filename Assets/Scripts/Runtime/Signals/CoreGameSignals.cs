@@ -17,9 +17,7 @@ namespace Runtime.Signals
         public UnityAction<PlayableEnum> onGameManagerGetCurrentGameState = delegate {  };
         public Func<PlayableEnum> onSendCurrentGameStateToUIText = () => PlayableEnum.BathroomLayingSeize;
         
-        
-        
-        
         public UnityAction<Transform,Transform,Transform,Transform> onGetCheckPointsList = delegate { };
+        
     }
 }

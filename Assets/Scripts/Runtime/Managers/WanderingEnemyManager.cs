@@ -23,7 +23,7 @@ namespace Runtime.Managers
         #endregion
 
 
-        private void Awake()
+        private void OnEnable()
         {
             CoreGameSignals.Instance.onGetCheckPointsList?.Invoke(maxX,minX,maxZ,minZ);
         }

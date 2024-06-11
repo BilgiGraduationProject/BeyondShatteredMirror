@@ -28,8 +28,8 @@ namespace Runtime.Managers
         [SerializeField] private PlayerPhysicController playerPhysicController;
         
         [SerializeField] private Vector3 playerTransform;
-        
-        
+
+        [SerializeField] private int memoryCardCount;
         #endregion
 
         #region Private Variables
@@ -85,11 +85,29 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onPlayerLoadTransform += OnPlayerLoadTransform;
             PlayerSignals.Instance.onSetSensivity += playerThirdPersonController.OnSetSensivity;
             PlayerSignals.Instance.onPlayerDiedOnWanderingEnemy += OnPlayerDiedOnWanderingEnemy;
+            PlayerSignals.Instance.onIncreaseMemoryCount += OnIncreaseMemoryCount;
+            PlayerSignals.Instance.onGetMemoryCardCount += () => memoryCardCount;
+            PlayerSignals.Instance.onCanPlayerCheckItems += playerHitDetectionController.OnCanPlayerCheckItems;
 
 
 
 
 
+        }
+
+        private void OnIncreaseMemoryCount()
+        {
+            memoryCardCount++;
+            switch (memoryCardCount)
+            {
+                case 1:
+                   Destroy(GameObject.FindWithTag("FactoryObstacle1").gameObject); 
+                    break;
+                case 2:
+                    Destroy(GameObject.FindWithTag("FactoryObstacle2").gameObject); 
+                    break;
+                
+            }
         }
 
         private void OnPlayerDiedOnWanderingEnemy()
@@ -175,6 +193,9 @@ DOVirtual.DelayedCall(1.5f, () =>
             PlayerSignals.Instance.onPlayerLoadTransform -= OnPlayerLoadTransform;
             PlayerSignals.Instance.onSetSensivity -= playerThirdPersonController.OnSetSensivity;
             PlayerSignals.Instance.onPlayerDiedOnWanderingEnemy -= OnPlayerDiedOnWanderingEnemy;
+            PlayerSignals.Instance.onIncreaseMemoryCount -= OnIncreaseMemoryCount;
+            PlayerSignals.Instance.onGetMemoryCardCount -= () => memoryCardCount;
+            PlayerSignals.Instance.onCanPlayerCheckItems -= playerHitDetectionController.OnCanPlayerCheckItems;
             
         }
 

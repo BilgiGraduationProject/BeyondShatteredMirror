@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Runtime.Signals;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,6 +27,9 @@ namespace Runtime.Controllers.Enemy
 
         [SerializeField] private Animator enemyAnimator;
         [SerializeField] private NavMeshAgent navMeshAgent;
+        [SerializeField] private AudioClip enemyTalkSound;
+        [SerializeField] private AudioClip shootSound;
+        [SerializeField] private AudioSource audioSource;
         #endregion
 
         #region Private Variables
@@ -36,6 +41,27 @@ namespace Runtime.Controllers.Enemy
 
         #endregion
 
+
+        private void OnEnable()
+        {
+            EnemySignals.Instance.onResetEnemy += () =>
+            {
+                _isPlayerDead = false;
+                navMeshAgent.isStopped = false;
+            };
+        }
+
+       
+
+        private void OnDisable()
+        {
+            
+            EnemySignals.Instance.onResetEnemy += () =>
+            {
+                _isPlayerDead = false;
+                navMeshAgent.isStopped = false;
+            };
+        }
 
         private void Start()
         {
@@ -57,25 +83,29 @@ namespace Runtime.Controllers.Enemy
         private void FieldOfViewCheck()
         {
             Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
-
+            
             if (_isPlayerDead) return;
             if (rangeChecks.Length != 0)
             {
                 Transform target = rangeChecks[0].transform;
                 player = target.gameObject;
-                Vector3 directionToTarget = (target.position - transform.position).normalized;
+                var newDirectionTarget = new Vector3(target.position.x - transform.position.x, target.position.y, target.position.z - transform.position.z);
 
-                if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)
+                Debug.LogWarning("Enemy catch the player2");
+                if (Vector3.Angle(transform.forward, newDirectionTarget) < angle / 2)
                 {
                     float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-                    if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
+                    Debug.DrawRay(transform.position, newDirectionTarget * distanceToTarget, Color.green);
+                    if (!Physics.Raycast(transform.position, newDirectionTarget, distanceToTarget, obstructionMask))
                     {
-                        Debug.LogWarning("Enemy catch the player");
                         
                         navMeshAgent.isStopped = true;
                         enemyTransform.LookAt(player.transform);
+                        audioSource.clip = shootSound;
+                        audioSource.Play();
                         enemyAnimator.SetTrigger("Shoot");
+                        AudioSource.PlayClipAtPoint(shootSound, transform.TransformPoint(target.position), 0.5f);
                         PlayerSignals.Instance.onPlayerDiedOnWanderingEnemy?.Invoke();
                         canSeePlayer = true;
                         _isPlayerDead = true;
@@ -95,5 +125,15 @@ namespace Runtime.Controllers.Enemy
                 canSeePlayer = false;
             }
         }
+
+
+        
+        [Button("Try Sound")]
+        private void TrySound()
+        {AudioSource.PlayClipAtPoint(shootSound, transform.TransformPoint(enemyTransform.position), 0.5f);
+            
+        }
+
+       
     }
 }

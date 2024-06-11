@@ -32,5 +32,10 @@ namespace Runtime.Signals
        
        public UnityAction onPlayerDiedOnWanderingEnemy = delegate {  };
        
+       
+       public Func<int> onGetMemoryCardCount = delegate { return 0; };
+       
+       public UnityAction onIncreaseMemoryCount = delegate {  };
+       public UnityAction onCanPlayerCheckItems = delegate {  };
     }
 }

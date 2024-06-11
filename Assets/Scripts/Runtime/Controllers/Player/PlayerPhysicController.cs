@@ -1,6 +1,7 @@
 ﻿using System;
 using Runtime.Controllers.Enemy;
 using Runtime.Enums.Playable;
+using Runtime.Enums.Player;
 using Runtime.Enums.UI;
 using Runtime.Signals;
 using Runtime.Utilities;
@@ -32,6 +33,21 @@ namespace Runtime.Controllers.Player
             //     controller.TakeDamage(UnityEngine.Random.Range(25f,45f));
             //     print("Aslan hit Shadow".ColoredText(Color.Lerp(Color.yellow, Color.cyan, 0.5f)));
             // }
+
+            if (other.CompareTag("HakanEntry"))
+            {
+                PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.ShowHakan);
+                Destroy(other.gameObject);
+                PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.ShowHakan);
+            }
+
+
+            if (other.CompareTag("HakanLeftHand"))
+            {
+                Debug.LogWarning("Hakan attacked aslan");
+                // PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Damage);
+                // PlayerSignals.Instance.onTakeDamage?.Invoke(10);
+            }
         }
 
         public void OnPlayerCrouch(bool condition)

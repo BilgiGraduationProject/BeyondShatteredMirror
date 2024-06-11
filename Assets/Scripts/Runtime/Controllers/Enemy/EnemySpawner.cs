@@ -29,7 +29,7 @@ namespace Runtime.Controllers.Enemy
         #region Private Variables
 
         private int stage = 1;
-        private int totalStages = 5;
+        private int totalStages = 2;
         private int enemiesKilled = 0;
         private int enemiesToSpawn;
 
@@ -115,7 +115,6 @@ namespace Runtime.Controllers.Enemy
             print("All stages complete!");
             DOVirtual.DelayedCall(2f, () =>
             {
-                
                 CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.PlayerReturnSpawnPoint);
             });
             

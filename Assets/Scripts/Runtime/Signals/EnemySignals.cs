@@ -11,8 +11,21 @@ namespace Runtime.Signals
     public class EnemySignals : MonoSingleton<EnemySignals>
     {
         public UnityAction onEnemyDied = delegate {  };
-        
+        public UnityAction onResetEnemy = delegate {  };
        
         
+        public UnityAction onStartHakanRun = delegate {  };
+        
+        public UnityAction<bool> onHakanIsAttacking = delegate {  };
+        public UnityAction<bool> onHakanIsReadyToAttack = delegate {  };
+        public UnityAction<bool> onHakanIsRoaring = delegate {  };
+        public UnityAction<float> onSetHakanHealth = delegate {  };
+        
+        public UnityAction<bool> onIsTakingDamage = delegate {  };
+        
+        
+        public UnityAction onSetSecondStageForHakan = delegate  {  };
+        public UnityAction onFirstDieOfHakanForSlider = delegate {  };
+        public UnityAction<bool> onHakanFirstDie = delegate {  };
     }
 }

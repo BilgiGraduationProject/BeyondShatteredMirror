@@ -47,6 +47,7 @@ namespace Runtime.Managers
         private void OnGameManagerGetCurrentGameState(PlayableEnum condition)
         {
             currentGameState = condition;
+            UITextSignals.Instance.onChangeMissionText?.Invoke();
         }
 
 

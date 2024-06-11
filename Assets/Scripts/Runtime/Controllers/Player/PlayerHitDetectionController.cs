@@ -34,6 +34,8 @@ namespace Runtime.Controllers.Player
         [SerializeField] private Transform playerKillTransform;
 
 
+        private bool _isCanControl;
+
         private void Awake()
         {
             _raycastCommands = new NativeArray<RaycastCommand>(1, Allocator.Persistent);
@@ -66,47 +68,51 @@ namespace Runtime.Controllers.Player
 
         private void CheckForPickUpRay(bool pickUpDidHitYa, RaycastHit pickUpRay)
         {
-           
-            
-            if (pickUpDidHitYa)
+
+            if (_isCanControl)
             {
-                if ( _collidedObject is not null &&_collidedObject != pickUpRay.collider.gameObject)
+                if (pickUpDidHitYa)
                 {
-                    ChangeColorOfObject(_collidedObject,false,LayerMask.LayerToName(_collidedObject.layer));
-                    _didHit = false;
-                }
-                
-                if (!_didHit)
-                {
-                    if(Vector3.Distance(playerTransform.position,pickUpRay.collider.transform.position) < 3f)
+                    if ( _collidedObject is not null &&_collidedObject != pickUpRay.collider.gameObject)
                     {
-                        _collidedObject = pickUpRay.collider.gameObject;
-                        ChangeColorOfObject(_collidedObject,true,LayerMask.LayerToName(_collidedObject.layer));
-                        _didHit = true;
+                        ChangeColorOfObject(_collidedObject,false,LayerMask.LayerToName(_collidedObject.layer));
+                        _didHit = false;
                     }
-                }
+                
+                    if (!_didHit)
+                    {
+                        if(Vector3.Distance(playerTransform.position,pickUpRay.collider.transform.position) < 3f)
+                        {
+                            _collidedObject = pickUpRay.collider.gameObject;
+                            ChangeColorOfObject(_collidedObject,true,LayerMask.LayerToName(_collidedObject.layer));
+                            _didHit = true;
+                        }
+                    }
 
-                if (_collidedObject is null)
-                {
-                    _didHit = false;
-                }
+                    if (_collidedObject is null)
+                    {
+                        _didHit = false;
+                    }
                 
                
 
-            }
-            else
-            {
-                if (_didHit )
+                }
+                else
                 {
+                    if (_didHit )
+                    {
                    
-                    ChangeColorOfObject(_collidedObject,false,LayerMask.LayerToName(_collidedObject.layer));
-                    _didHit = false;
-                }
+                        ChangeColorOfObject(_collidedObject,false,LayerMask.LayerToName(_collidedObject.layer));
+                        _didHit = false;
+                    }
                
                 
 
 
+                }
             }
+            
+            
         }
 
         private void ChangeColorOfObject(GameObject collidedObject, bool condition, string layerToName)
@@ -189,6 +195,7 @@ namespace Runtime.Controllers.Player
             // {
             //     collidedObject.GetComponent<MeshRenderer>().material.DOFloat(0, "_OutlineWidth", 1);
             // }
+            if (collidedObject is null) return;
             
             var meshRenderer = collidedObject.GetComponent<MeshRenderer>();
 
@@ -304,7 +311,11 @@ namespace Runtime.Controllers.Player
         {
             if (playerHandTransform.childCount < 1) return;
             Debug.LogWarning("Drop the object");
-            InteractableSignals.Instance.onDropTheInteractableObject?.Invoke(playerHandTransform.GetChild(0).gameObject,playerHandTransform);
+            var dropObj = playerHandTransform.GetChild(0).gameObject;
+            var rb  =dropObj.GetComponent<Rigidbody>();
+            dropObj.transform.parent = null;
+            rb.useGravity = true;
+            rb.isKinematic = false;
         }
 
 
@@ -318,6 +329,11 @@ namespace Runtime.Controllers.Player
         public void EmptyThePlayerHand()
         {
             OnPlayerPressedDropItemButton();
+        }
+
+        public void OnCanPlayerCheckItems()
+        {
+            _isCanControl = true;
         }
     }
 }

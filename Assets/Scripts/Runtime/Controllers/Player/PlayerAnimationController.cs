@@ -86,13 +86,15 @@ namespace Runtime.Controllers.Player
         public void AnimEventOnPlayerRolling()
         {
             InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
+            _playerAnimator.applyRootMotion = true;
             PlayerSignals.Instance.onPlayerIsRolling?.Invoke(true);
         }
 
         public void AnimEventOnPlayIsNotRolling()
         {
+            _playerAnimator.applyRootMotion = false;
             InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(true);
-            PlayerSignals.Instance.onPlayerIsRolling?.Invoke(false);
+            PlayerSignals.Instance.onPlayerIsRolling?.Invoke(false); 
             PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Roll,false);
            
         }
@@ -152,5 +154,8 @@ namespace Runtime.Controllers.Player
                 controller.EndDealDamage();
             }
         }
+        
+        
+        
     }
 }

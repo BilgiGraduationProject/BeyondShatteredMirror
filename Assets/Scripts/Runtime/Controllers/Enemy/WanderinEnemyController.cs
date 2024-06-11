@@ -22,10 +22,10 @@ namespace Runtime.Controllers.Enemy
 
 
         [Header("Limiters")] 
-        private   Transform _maxZ;
-        private Transform _minZ;
-        private Transform _maxX;
-        private Transform _minX;
+        [SerializeField]private   Transform _maxZ;
+        [SerializeField] private Transform _minZ;
+        [SerializeField] private Transform _maxX;
+        [SerializeField] private Transform _minX;
         
 
         #region Private Variables
@@ -38,24 +38,7 @@ namespace Runtime.Controllers.Enemy
 
         #endregion
 
-
-        private void OnEnable()
-        {
-            CoreGameSignals.Instance.onGetCheckPointsList += GetCheckPointsList;
-        }
-
-        private void GetCheckPointsList(Transform arg0, Transform arg1, Transform arg2, Transform arg3)
-        {
-            _maxX = arg0;
-            _minX = arg1;
-            _maxZ = arg2;
-            _minZ = arg3;
-        }
-
-        private void OnDisable()
-        {
-            CoreGameSignals.Instance.onGetCheckPointsList -= GetCheckPointsList;
-        }
+        
 
         private void Update()
         {

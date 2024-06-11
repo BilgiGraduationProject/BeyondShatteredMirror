@@ -43,7 +43,7 @@ namespace Runtime.Controllers.UI
                     break;
                 case PlayableEnum.EnteredFactory:
                     var text1 =_missionData.data[(int)UITextEnum.FindMemoryCards].text;
-                    missionText.text = text1;
+                    missionText.text =$"{text1} {PlayerSignals.Instance.onGetMemoryCardCount?.Invoke()}/2";;
                     break;
                 case PlayableEnum.EnteredHouse:
                     var text2 =_missionData.data[(int)UITextEnum.LookAtCatEyes].text;

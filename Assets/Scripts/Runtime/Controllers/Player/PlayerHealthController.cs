@@ -1,4 +1,7 @@
-﻿using Runtime.Signals;
+﻿using DG.Tweening;
+using Runtime.Enums.Playable;
+using Runtime.Enums.Player;
+using Runtime.Signals;
 using UnityEngine;
 
 namespace Runtime.Controllers.Player
@@ -81,7 +84,20 @@ namespace Runtime.Controllers.Player
         void Die()
         {
             print("Player died");
-            //PlayerSignals.Instance.onPlayerDied?.Invoke();
+            PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Die);
+            DOVirtual.DelayedCall(2f, () =>
+            {
+                CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.PlayerDiedReturnSpawnPoint);
+                PlayerSignals.Instance.onSetHealthValue?.Invoke(100f);
+                Health = 100f;
+                CoreUISignals.Instance.onSetHealthSlider?.Invoke(Health);
+                CoreUISignals.Instance.onSetHappinesSlider?.Invoke(0f);
+                
+                InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
+                PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Live);
+               
+            });
+            
         }
     }
 }

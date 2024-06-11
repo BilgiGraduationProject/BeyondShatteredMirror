@@ -42,9 +42,12 @@ namespace Runtime.Controllers.UI
         [SerializeField] private Slider happinessBar;
         [SerializeField] private Gradient happinessGradient;
         [SerializeField] private GameObject healthInfo;
-
+        [SerializeField] private Slider hakanHealthSlider;
+        [SerializeField] private Image hakanFirstHealth;
+        [SerializeField] private Image hakanSecondHealth;
         [SerializeField] private GameObject crossImage;
         [SerializeField] private GameObject pillsArea;
+        [SerializeField] private GameObject hakanHealthArea;
         [SerializeField] private TextMeshProUGUI pillInfoText;
 
         [SerializeField] private GameObject pillUsedArea;
@@ -91,11 +94,32 @@ namespace Runtime.Controllers.UI
             UITextSignals.Instance.onSetPillDescription += OnSetPillDescription;
             CoreUISignals.Instance.onActivatePill += ActivatePill;
             CoreUISignals.Instance.onPillCollected += PillCollected;
+            EnemySignals.Instance.onSetHakanHealth += OnSetHakanHealth;
+            EnemySignals.Instance.onFirstDieOfHakanForSlider += OnFirstDieOfHakanForSlider;
             _pillsAction.Enable();
             _pillsAction.performed += PillsActionOn;
             _pillsAction.canceled += PillsActionOff;
         }
-        
+
+        private void OnFirstDieOfHakanForSlider()
+        {
+            hakanFirstHealth.DOColor(Color.black, 1f).onComplete += () =>
+            {
+                hakanFirstHealth.gameObject.SetActive(false);
+                DOVirtual.DelayedCall(2f, () =>
+                {
+                    EnemySignals.Instance.onSetSecondStageForHakan?.Invoke();
+
+                });
+            };
+            
+        }
+
+        private void OnSetHakanHealth(float health)
+        {
+            hakanHealthSlider.value = health;
+        }
+
         void UnsubscribeEvents()
         {
             CoreUISignals.Instance.onSetHealthSlider -= UpdateHealthBar;
@@ -105,6 +129,8 @@ namespace Runtime.Controllers.UI
             CoreUISignals.Instance.onPillCollected -= PillCollected;
             _pillsAction.performed -= PillsActionOn;
             _pillsAction.canceled -= PillsActionOff;
+            EnemySignals.Instance.onSetHakanHealth -= OnSetHakanHealth;
+            EnemySignals.Instance.onFirstDieOfHakanForSlider -= OnFirstDieOfHakanForSlider;
             _pillsAction.Disable();
         }
         
