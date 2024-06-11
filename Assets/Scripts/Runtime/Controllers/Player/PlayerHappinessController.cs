@@ -35,13 +35,13 @@ namespace Runtime.Controllers.Player
 
         private void SubscribeEvents()
         {
-            PlayerSignals.Instance.onHitDamage += HitDamage;
+            PlayerSignals.Instance.onKillDamage += KillDamage;
             PlayerSignals.Instance.onSetHappinessValue += UpdateHappiness;
         }
 
         private void UnsubscribeEvents()
         {
-            PlayerSignals.Instance.onHitDamage -= HitDamage;
+            PlayerSignals.Instance.onKillDamage -= KillDamage;
             PlayerSignals.Instance.onSetHappinessValue -= UpdateHappiness;
         }
 
@@ -54,31 +54,30 @@ namespace Runtime.Controllers.Player
         {
             CoreUISignals.Instance.onSetHappinesSlider?.Invoke(Happiness);
         }
-        
-        void HitDamage(float hitDamage)
+
+        private void KillDamage(float hitDamage)
         {
             if(Happiness <= 0) return;
             hitDamage *= DamageDealthAmount;
             Happiness -= hitDamage;
             CoreUISignals.Instance.onSetHappinesSlider?.Invoke(Happiness);
-            print("Player killed by hit: " + hitDamage);
+            print("Player killed by hit: " + hitDamage * DamageDealthAmount);
 
             if (CheckZero()) Event();
         }
-        
-        void UpdateHappiness(float happiness)
+
+        private void UpdateHappiness(float happiness)
         {
             Happiness = happiness;
             CoreUISignals.Instance.onSetHappinesSlider?.Invoke(Happiness);
         }
-        
-        bool CheckZero()
+
+        private bool CheckZero()
         {
-            if(Happiness <= 0) return true;
-            return false;
+            return Happiness <= 0;
         }
-        
-        void Event()
+
+        private static void Event()
         {
             
         }

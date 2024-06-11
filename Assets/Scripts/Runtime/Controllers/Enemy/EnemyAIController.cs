@@ -53,8 +53,8 @@ namespace Runtime.Controllers.Enemy
                GetReferences();
                RandomizeStats();
           }
-          
-          void GetReferences()
+
+          private void GetReferences()
           {
                animator = GetComponent<Animator>();
                agent = GetComponent<NavMeshAgent>();
@@ -84,7 +84,7 @@ namespace Runtime.Controllers.Enemy
                     Die();
           }
 
-          void Update()
+          private void Update()
           {
                if(CheckDie()) return;
                if (CoreGameSignals.Instance.onGetGameState() == GameStateEnum.UI)
@@ -115,17 +115,17 @@ namespace Runtime.Controllers.Enemy
                transform.LookAt(player.transform);
           }
 
-          bool CheckDie()
+          private bool CheckDie()
           {
                if(health <= 0) return true;
                return false;
           }
 
-          void Die()
+          private void Die()
           {
                float happiness = 12;
                print("Enemy Died".ColoredText(Color.Lerp(Color.gray, Color.red, 0.5f)));
-               CoreUISignals.Instance.onSetHappinesSlider?.Invoke(happiness);
+               PlayerSignals.Instance.onKillDamage?.Invoke(happiness);
                animator.SetTrigger("Die");
                collider.enabled = false;
                Destroy(hitCollider);
@@ -149,8 +149,8 @@ namespace Runtime.Controllers.Enemy
           {
                GetComponentInChildren<EnemyDamageController>().EndDealDamage();
           }
-          
-          void OnDrawGizmos()
+
+          private void OnDrawGizmos()
           {
                Gizmos.color = Color.Lerp(Color.red, Color.yellow, 0.5f);
                Gizmos.DrawWireSphere(transform.position, attackRange);

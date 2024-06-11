@@ -29,5 +29,7 @@ namespace Runtime.Signals
         public UnityAction<float> onSetHappinesSlider = delegate {  };
         public UnityAction<float, PillTypes> onActivatePill = delegate {  };
         public UnityAction<PillTypes> onPillCollected = delegate {  };
+        
+        public UnityAction onUpdateSoulCount = delegate {  };
     }
 }

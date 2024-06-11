@@ -1,7 +1,9 @@
 ﻿using Runtime.Data.ValueObject;
 using System.Collections.Generic;
 using Runtime.Enums;
+using Runtime.Keys;
 using Runtime.Managers;
+using Runtime.Signals;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +19,8 @@ namespace Runtime.Controllers.UI
         [SerializeField] private GameObject shopItemPrefab;
         [SerializeField] private Transform shopItemParent;
 
+        [SerializeField] private TextMeshProUGUI soulCountText;
+        
         #endregion
 
         #region Private Variables
@@ -42,7 +46,7 @@ namespace Runtime.Controllers.UI
         
         private void CreateShopItems()
         {
-            int index = 0;
+            var index = 0;
             foreach (var item in _itemData)
             {
                 if(item.DataType is GameDataEnums.Soul)
@@ -55,6 +59,22 @@ namespace Runtime.Controllers.UI
                 // itemObject.transform.GetChild(2).GetComponent<Image>().sprite = item.Thumbnail;
                 // itemObject.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = item.Price.ToString();
             }
+        }
+
+        private void OnEnable()
+        {
+            UpdateSoulCount();
+            CoreUISignals.Instance.onUpdateSoulCount += UpdateSoulCount;
+        }
+        
+        private void UpdateSoulCount()
+        {
+            soulCountText.text = GameDataManager.LoadData<int>(GameDataKeys.Soul).ToString();
+        }
+
+        private void OnDisable()
+        {
+            CoreUISignals.Instance.onUpdateSoulCount -= UpdateSoulCount;
         }
     }
 }

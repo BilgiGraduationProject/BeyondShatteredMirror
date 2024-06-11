@@ -98,7 +98,7 @@ namespace Runtime.Managers
         
         private bool CanAfford(int itemPrice)
         {
-            int currentSoul = GameDataManager.LoadData<int>(GameDataEnums.Soul.ToString());
+            var currentSoul = GameDataManager.LoadData<int>(GameDataEnums.Soul.ToString());
             return itemPrice <= currentSoul;
         }
         
@@ -107,11 +107,12 @@ namespace Runtime.Managers
             //SaveLoadManager.Instance.ArithmeticalData(GameDataKeys.Soul, -_itemDatas[itemIndex].Price);
             //SaveLoadManager.Instance.ArithmeticalData(_itemDatas[itemIndex].Name, +1);
             
-            int currentSoul = GameDataManager.LoadData<int>(GameDataEnums.Soul.ToString());
+            var currentSoul = GameDataManager.LoadData<int>(GameDataEnums.Soul.ToString());
             GameDataManager.SaveData(GameDataEnums.Soul.ToString(), currentSoul - _itemDatas[itemIndex].Price);
 
-            int currentItemQuantity = GameDataManager.LoadData<int>(_itemDatas[itemIndex].DataType.ToString());
+            var currentItemQuantity = GameDataManager.LoadData<int>(_itemDatas[itemIndex].DataType.ToString());
             GameDataManager.SaveData(_itemDatas[itemIndex].DataType.ToString(), currentItemQuantity + 1);
+            CoreUISignals.Instance.onUpdateSoulCount?.Invoke();
             itemObject.transform.DOScale(new Vector3().SetFloat(1.25f), 0.5f)
                 .SetEase(Ease.InOutBack)
                 .OnComplete(() =>

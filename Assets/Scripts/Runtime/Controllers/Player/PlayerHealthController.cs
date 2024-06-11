@@ -57,8 +57,8 @@ namespace Runtime.Controllers.Player
         {
             UnsubscribeEvents();
         }
-        
-        void TakeDamage(float damage)
+
+        private void TakeDamage(float damage)
         {
             if(Health <= 0) return;
             damage *= DamageDealthAmount;
@@ -68,30 +68,28 @@ namespace Runtime.Controllers.Player
 
             if (CheckDie()) Die();
         }
-        
-        void UpdateHealth(float health)
+
+        private void UpdateHealth(float health)
         {
             Health = health;
             CoreUISignals.Instance.onSetHealthSlider?.Invoke(Health);
         }
-        
-        bool CheckDie()
+
+        private bool CheckDie()
         {
-            if(Health <= 0) return true;
-            return false;
+            return Health <= 0;
         }
-        
-        void Die()
+
+        private void Die()
         {
             print("Player died");
             PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Die);
             DOVirtual.DelayedCall(2f, () =>
             {
                 CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.PlayerDiedReturnSpawnPoint);
-                PlayerSignals.Instance.onSetHealthValue?.Invoke(100f);
                 Health = 100f;
-                CoreUISignals.Instance.onSetHealthSlider?.Invoke(Health);
-                CoreUISignals.Instance.onSetHappinesSlider?.Invoke(0f);
+                PlayerSignals.Instance.onSetHealthValue?.Invoke(Health);
+                PlayerSignals.Instance.onSetHappinessValue?.Invoke(80);
                 
                 InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
                 PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Live);

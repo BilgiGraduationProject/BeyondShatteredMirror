@@ -20,7 +20,7 @@ namespace Runtime.Signals
        public Func<PlayableEnum,Transform> onGetLevelCutScenePosition = delegate { return null; };
        public UnityAction<float> onSendPlayerSpeedToSlider = delegate {  };
        public UnityAction<float> onTakeDamage = delegate {  };
-       public UnityAction<float> onHitDamage = delegate {  };
+       public UnityAction<float> onKillDamage = delegate {  };
        public UnityAction<float> onSetHealthValue = delegate {  };
        public UnityAction<float> onSetHappinessValue = delegate {  };
        public UnityAction<float> onSetSensivity = delegate {  }; 

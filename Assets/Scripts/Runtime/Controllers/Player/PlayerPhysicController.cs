@@ -45,8 +45,9 @@ namespace Runtime.Controllers.Player
             if (other.CompareTag("HakanLeftHand"))
             {
                 Debug.LogWarning("Hakan attacked aslan");
-                // PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Damage);
-                // PlayerSignals.Instance.onTakeDamage?.Invoke(10);
+                PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Damage);
+                PlayerSignals.Instance.onTakeDamage?.Invoke(18f);
+
             }
         }
 

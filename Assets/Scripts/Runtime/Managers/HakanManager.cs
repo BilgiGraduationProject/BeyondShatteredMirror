@@ -2,6 +2,7 @@
 using DG.Tweening;
 using ES3Types;
 using Runtime.Controllers;
+using Runtime.Controllers.Player;
 using Runtime.Signals;
 using UnityEngine;
 using UnityEngine.AI;
@@ -189,7 +190,10 @@ namespace Runtime.Managers
                 if (stage == 2) return;
                 TakeDamage();
             }
-            
+            if(other.TryGetComponent(out PlayerPhysicController playerPhysicController))
+            {
+                print("sa");
+            }
             
         }
 
@@ -206,7 +210,7 @@ namespace Runtime.Managers
             switch (stage)
             {
                 case 1:
-                    hakanHealth -= 10;
+                    hakanHealth -= 4;
                     EnemySignals.Instance.onSetHakanHealth?.Invoke(hakanHealth);
                     if (hakanHealth <= 0)
                     {
@@ -221,7 +225,7 @@ namespace Runtime.Managers
                     }
                     break;
                 case 2:
-                    hakanHealth -= 10;
+                    hakanHealth -= 4;
                     EnemySignals.Instance.onSetHakanHealth?.Invoke(hakanHealth);
                     if (hakanHealth <= 0)
                     {

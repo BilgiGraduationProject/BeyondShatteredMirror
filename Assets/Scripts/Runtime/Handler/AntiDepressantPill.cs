@@ -10,12 +10,11 @@ namespace Runtime.Handler
         public override void Activate()
         {
             base.Activate();
-            PlayerHappinessController controller = FindFirstObjectByType<PlayerHappinessController>();
-            if (controller != null)
-            {
-                PlayerSignals.Instance.onSetHappinessValue?.Invoke(happiness);
-                Deactivate();
-            }
+            var controller = FindFirstObjectByType<PlayerHappinessController>();
+            if (controller == null) return;
+            
+            PlayerSignals.Instance.onSetHappinessValue?.Invoke(happiness);
+            Deactivate();
         }
     }
 }

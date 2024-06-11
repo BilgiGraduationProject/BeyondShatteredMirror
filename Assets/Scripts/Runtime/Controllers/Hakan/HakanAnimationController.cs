@@ -9,10 +9,13 @@ namespace Runtime.Controllers.Hakan
     public class HakanAnimationController : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
+        [SerializeField] private BoxCollider leftHandHakan;
         public void OnAttack()
         {
             EnemySignals.Instance.onHakanIsReadyToAttack?.Invoke(false);
             EnemySignals.Instance.onHakanIsAttacking?.Invoke(true);
+            print("Hakan Attack");
+            leftHandHakan.enabled = true;
         }
 
         public void OnEndAttack()
@@ -23,7 +26,7 @@ namespace Runtime.Controllers.Hakan
             {
                 EnemySignals.Instance.onHakanIsReadyToAttack?.Invoke(true);
             });
-          
+            leftHandHakan.enabled = false;
             
         }
 
