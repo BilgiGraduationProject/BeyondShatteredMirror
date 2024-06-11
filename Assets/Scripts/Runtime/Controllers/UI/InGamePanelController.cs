@@ -96,9 +96,23 @@ namespace Runtime.Controllers.UI
             CoreUISignals.Instance.onPillCollected += PillCollected;
             EnemySignals.Instance.onSetHakanHealth += OnSetHakanHealth;
             EnemySignals.Instance.onFirstDieOfHakanForSlider += OnFirstDieOfHakanForSlider;
+            EnemySignals.Instance.onSecondDieOfHakanForSlider += OnSecondDieOfHakanForSlider;
             _pillsAction.Enable();
             _pillsAction.performed += PillsActionOn;
             _pillsAction.canceled += PillsActionOff;
+        }
+
+        private void OnSecondDieOfHakanForSlider()
+        {
+            hakanSecondHealth.DOColor(Color.black, 1f).onComplete += () =>
+            {
+                hakanSecondHealth.gameObject.SetActive(false);
+                Destroy(hakanHealthSlider);
+                DOVirtual.DelayedCall(2f, () =>
+                {
+                    EnemySignals.Instance.onDeathOfHakan?.Invoke();
+                });
+            };
         }
 
         private void OnFirstDieOfHakanForSlider()
@@ -131,6 +145,7 @@ namespace Runtime.Controllers.UI
             _pillsAction.canceled -= PillsActionOff;
             EnemySignals.Instance.onSetHakanHealth -= OnSetHakanHealth;
             EnemySignals.Instance.onFirstDieOfHakanForSlider -= OnFirstDieOfHakanForSlider;
+            EnemySignals.Instance.onSecondDieOfHakanForSlider -= OnSecondDieOfHakanForSlider;
             _pillsAction.Disable();
         }
         

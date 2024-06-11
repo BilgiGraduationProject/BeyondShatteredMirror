@@ -53,6 +53,7 @@ namespace Runtime.Controllers.Hakan
             DOVirtual.DelayedCall(2f, () =>
             {
                 EnemySignals.Instance.onHakanFirstDie?.Invoke(false);
+                EnemySignals.Instance.onIsTakingDamage?.Invoke(false);
             });
         }
 

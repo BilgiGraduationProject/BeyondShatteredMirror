@@ -27,5 +27,9 @@ namespace Runtime.Signals
         public UnityAction onSetSecondStageForHakan = delegate  {  };
         public UnityAction onFirstDieOfHakanForSlider = delegate {  };
         public UnityAction<bool> onHakanFirstDie = delegate {  };
+        
+        public UnityAction onSecondDieOfHakanForSlider = delegate {  };
+        
+        public UnityAction onDeathOfHakan = delegate {  };
     }
 }

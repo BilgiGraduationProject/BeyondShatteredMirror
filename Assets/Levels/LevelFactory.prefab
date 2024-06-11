@@ -16624,6 +16624,7 @@ MonoBehaviour:
   factoryStart: {fileID: 4736916794737271472}
   mansion: {fileID: 0}
   hakanHousePos: {fileID: 0}
+  showHakanPos: {fileID: 0}
   spawn: {fileID: 0}
   seizingCameraPos: {fileID: 0}
   mirrorCameraPos: {fileID: 0}
@@ -16632,6 +16633,7 @@ MonoBehaviour:
   layingBedCameraPos: {fileID: 0}
   mansionCameraPos: {fileID: 0}
   hakanCameraPos: {fileID: 0}
+  showHakanCameraPos: {fileID: 0}
 --- !u!95 &2860549046371933585
 Animator:
   serializedVersion: 5
@@ -27445,7 +27447,7 @@ GameObject:
   - component: {fileID: 7818961978089162295}
   m_Layer: 16
   m_Name: MemoryCard (1)
-  m_TagString: Untagged
+  m_TagString: MemoryCard2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

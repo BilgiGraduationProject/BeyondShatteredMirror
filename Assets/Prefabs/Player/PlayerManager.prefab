@@ -968,6 +968,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 234487174184336714}
+  - component: {fileID: 6879031223439834176}
+  - component: {fileID: 4840194082424587612}
   m_Layer: 10
   m_Name: Mesh Controller
   m_TagString: Untagged
@@ -991,6 +993,43 @@ Transform:
   - {fileID: 5286925393666938094}
   m_Father: {fileID: 6120057657864115787}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6879031223439834176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2445710990362854531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984aaa95e6144428a6d6e29eb43c74d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageAmountMain: 20
+  _playerAnimator: {fileID: 4840194082424587612}
+  FootstepAudioClips: []
+  FootstepAudioVolume: 0.5
+--- !u!95 &4840194082424587612
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2445710990362854531}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 5600435a63fe7a84f9686046290e606c, type: 3}
+  m_Controller: {fileID: 9100000, guid: ad00fa7b5a15b4d7089ca865910a082a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2473298743265562273
 GameObject:
   m_ObjectHideFlags: 0
@@ -1825,8 +1864,6 @@ GameObject:
   - component: {fileID: 464679386793198287}
   - component: {fileID: 8320775434196517713}
   - component: {fileID: 79833159052251717}
-  - component: {fileID: 2995068171055281287}
-  - component: {fileID: 1672624108179628910}
   m_Layer: 10
   m_Name: PlayerManager
   m_TagString: Player
@@ -2058,7 +2095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerThirdPersonController: {fileID: 6165609514134109702}
-  playerAnimationController: {fileID: 2995068171055281287}
+  playerAnimationController: {fileID: 6879031223439834176}
   playerHitDetectionController: {fileID: 7773702303842806725}
   playerPhysicController: {fileID: 3275049690154893568}
   playerTransform: {x: 0, y: 0, z: 0}
@@ -2076,7 +2113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
-  look: {x: 0, y: 0}
+  look: {x: -2.6, y: -2.6}
   jump: 0
   sprint: 0
   analogMovement: 0
@@ -2109,43 +2146,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &2995068171055281287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3940699747217703670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 984aaa95e6144428a6d6e29eb43c74d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DamageAmountMain: 20
-  _playerAnimator: {fileID: 1672624108179628910}
-  FootstepAudioClips: []
-  FootstepAudioVolume: 0.5
---- !u!95 &1672624108179628910
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3940699747217703670}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 5600435a63fe7a84f9686046290e606c, type: 3}
-  m_Controller: {fileID: 9100000, guid: ad00fa7b5a15b4d7089ca865910a082a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4273940900381112960
 GameObject:
   m_ObjectHideFlags: 0

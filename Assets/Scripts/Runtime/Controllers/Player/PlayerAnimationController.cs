@@ -1,7 +1,9 @@
+using System;
 using Runtime.Enums.Player;
 using Runtime.Signals;
 using UnityEngine;
 using DG.Tweening;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Controllers.Player
 {
@@ -30,6 +32,7 @@ namespace Runtime.Controllers.Player
         private readonly string _crouch = "Crouch";
         private readonly string _roll = "Roll";
         private CharacterController _characterController;
+        private bool _isRolling;
         
         #endregion
 
@@ -85,6 +88,7 @@ namespace Runtime.Controllers.Player
 
         public void AnimEventOnPlayerRolling()
         {
+            _isRolling = true;
             InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
             _playerAnimator.applyRootMotion = true;
             PlayerSignals.Instance.onPlayerIsRolling?.Invoke(true);
@@ -93,9 +97,11 @@ namespace Runtime.Controllers.Player
         public void AnimEventOnPlayIsNotRolling()
         {
             _playerAnimator.applyRootMotion = false;
+            _isRolling = false;
             InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(true);
             PlayerSignals.Instance.onPlayerIsRolling?.Invoke(false); 
             PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Roll,false);
+            
            
         }
 
@@ -154,8 +160,11 @@ namespace Runtime.Controllers.Player
                 controller.EndDealDamage();
             }
         }
-        
-        
-        
+
+        public void OnAnimatorMove()
+        {
+            if (!_isRolling) return;
+            _characterController.Move(_playerAnimator.deltaPosition);
+        }
     }
 }

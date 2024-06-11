@@ -1,6 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 using ES3Types;
+using Runtime.Controllers;
 using Runtime.Signals;
 using UnityEngine;
 using UnityEngine.AI;
@@ -31,13 +32,13 @@ namespace Runtime.Managers
         private bool _isTakingDamage;
         private int stage = 1;
         private bool _isFirstDie;
-        private bool _startedToChase;
+        #endregion
+        
+
         #endregion
 
-        #endregion
 
-
-        private void FixedUpdate()
+        private void Update()
         {
             ChaseThePlayer();
         }
@@ -45,30 +46,21 @@ namespace Runtime.Managers
         private void ChaseThePlayer()
         {
             if (!_chaseThePlayer || _isTakingDamage || _isFirstDie) return;
-            switch (stage)
+
+            if (stage == 1)
             {
-                case 1:
-                    AttackThePlayer();
-                    break;
-                case 2:
-                    CaseThePlayer();
-                    break;
+                AttackThePlayer();
+            }
+            else
+            {
+                AttackThePlayer();
             }
            
 
             
             
         }
-
-        private void CaseThePlayer()
-        {
-            if (_startedToChase) return;
-            _startedToChase = true;
-            animator.SetBool("Run",true);
-            transform.LookAt(player.transform);
-            hakanAgent.SetDestination(transform.forward);
-
-        }
+        
 
         private void AttackThePlayer()
         {
@@ -102,7 +94,7 @@ namespace Runtime.Managers
                     hakanAgent.isStopped = true;
                     animator.SetTrigger("Roar");
                 }
-                else if (Vector3.Distance(player.transform.position, hakanAgent.transform.position) < 7f)
+                else if (Vector3.Distance(player.transform.position, hakanAgent.transform.position) < 10f)
                 {
                     animator.SetBool("Run",true);
                     hakanAgent.isStopped = false;
@@ -129,6 +121,7 @@ namespace Runtime.Managers
             EnemySignals.Instance.onHakanIsRoaring += OnHakanIsRoaring;
             EnemySignals.Instance.onSetSecondStageForHakan += OnSetSecondStageForHakan;
             EnemySignals.Instance.onHakanFirstDie += OnHakanFirstDie;
+            EnemySignals.Instance.onDeathOfHakan += OnDeathOfHakan;
         }
 
         private void OnHakanIsRoaring(bool arg0) => _isRoaring = arg0;
@@ -158,13 +151,24 @@ namespace Runtime.Managers
             EnemySignals.Instance.onHakanIsRoaring -= OnHakanIsRoaring;
             EnemySignals.Instance.onSetSecondStageForHakan -= OnSetSecondStageForHakan;
             EnemySignals.Instance.onHakanFirstDie -= OnHakanFirstDie;
+            EnemySignals.Instance.onDeathOfHakan -= OnDeathOfHakan;
 
+        }
+
+        private void OnDeathOfHakan()
+        {
+            animator.SetTrigger("Death");
+            DOVirtual.DelayedCall(2f, () =>
+            {
+               CoreUISignals.Instance.onOpenCutscene?.Invoke(5);
+            });
         }
 
         private void OnHakanFirstDie(bool condition) => _isFirstDie = condition;
         
         private void OnSetSecondStageForHakan()
         {
+            
             stage = 2;
             hakanHealth = 100;
             EnemySignals.Instance.onSetHakanHealth?.Invoke(hakanHealth);
@@ -182,14 +186,8 @@ namespace Runtime.Managers
         {
             if (other.CompareTag("AslanLeftHand"))
             {
+                if (stage == 2) return;
                 TakeDamage();
-            }
-            
-            if(other.CompareTag("Wall"))
-            {
-                hakanAgent.velocity = Vector3.zero;
-                hakanAgent.isStopped = true;
-                _startedToChase = false;
             }
             
             
@@ -204,30 +202,42 @@ namespace Runtime.Managers
             {
                 animator.SetTrigger("Dodge");
             }
-            else
+           
+            switch (stage)
             {
-                switch (stage)
-                {
-                    case 1:
-                        hakanHealth -= 10;
-                        EnemySignals.Instance.onSetHakanHealth?.Invoke(hakanHealth);
-                        if (hakanHealth <= 0)
-                        {
-                            animator.SetTrigger("FirstDie");
-                            _isFirstDie = true;
-                            EnemySignals.Instance.onFirstDieOfHakanForSlider?.Invoke();
-                        }
-                        else
-                        {
-                            animator.SetFloat("Reaction",randomReaction);
-                            animator.SetTrigger("Damage");
-                        }
-                        break;
-                    case 2:
-                        break;
+                case 1:
+                    hakanHealth -= 10;
+                    EnemySignals.Instance.onSetHakanHealth?.Invoke(hakanHealth);
+                    if (hakanHealth <= 0)
+                    {
+                        animator.SetTrigger("FirstDie");
+                        _isFirstDie = true;
+                        EnemySignals.Instance.onFirstDieOfHakanForSlider?.Invoke();
+                    }
+                    else
+                    {
+                        animator.SetFloat("Reaction",randomReaction);
+                        animator.SetTrigger("Damage");
+                    }
+                    break;
+                case 2:
+                    hakanHealth -= 10;
+                    EnemySignals.Instance.onSetHakanHealth?.Invoke(hakanHealth);
+                    if (hakanHealth <= 0)
+                    {
+                        animator.SetTrigger("FirstDie");
+                        _isFirstDie = true;
+                        EnemySignals.Instance.onSecondDieOfHakanForSlider?.Invoke();
+                    }
+                    else
+                    {
+                        animator.SetFloat("Reaction",randomReaction);
+                        animator.SetTrigger("Damage");
+                    }
+                    break;
                     
-                }
             }
+            
         }
             
             
