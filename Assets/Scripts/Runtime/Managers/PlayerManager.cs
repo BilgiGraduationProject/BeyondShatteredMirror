@@ -29,7 +29,9 @@ namespace Runtime.Managers
         
         [SerializeField] private Vector3 playerTransform;
 
-        [SerializeField] private int memoryCardCount;
+        private int memoryCardCount = 0;
+
+        private bool _isDied;
         #endregion
 
         #region Private Variables
@@ -89,6 +91,7 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onGetMemoryCardCount += () => memoryCardCount;
             PlayerSignals.Instance.onCanPlayerCheckItems += playerHitDetectionController.OnCanPlayerCheckItems;
             PlayerSignals.Instance.onSetCollidedObjectNull += playerHitDetectionController.OnSetCollidedObjectNull;
+            PlayerSignals.Instance.onDoesPlayerDied += DoesPlayerDied;
 
 
 
@@ -96,6 +99,12 @@ namespace Runtime.Managers
 
         }
 
+        private void DoesPlayerDied(bool condition) 
+        {
+            _isDied = true;
+
+        }
+ 
         private void OnIncreaseMemoryCount()
         {
             memoryCardCount++;
@@ -125,10 +134,22 @@ DOVirtual.DelayedCall(1.5f, () =>
         private void OnPlayerLoadTransform()
         {
             transform.position = _playerSavedPosition;
-            DOVirtual.DelayedCall(1.5f, () =>
+            if(_isDied) 
+            {
+                DOVirtual.DelayedCall(1.5f, () =>
+            {
+                CoreUISignals.Instance.onCloseUnCutScene?.Invoke(PlayableEnum.PlayerDiedReturnSpawnPoint);
+            });
+
+            }
+            else 
+            {
+DOVirtual.DelayedCall(1.5f, () =>
             {
                 CoreUISignals.Instance.onCloseUnCutScene?.Invoke(PlayableEnum.PlayerReturnSpawnPoint);
             });
+            }
+            
            
         }
 
@@ -199,6 +220,7 @@ DOVirtual.DelayedCall(1.5f, () =>
             PlayerSignals.Instance.onGetMemoryCardCount -= () => memoryCardCount;
             PlayerSignals.Instance.onCanPlayerCheckItems -= playerHitDetectionController.OnCanPlayerCheckItems;
             PlayerSignals.Instance.onSetCollidedObjectNull -= playerHitDetectionController.OnSetCollidedObjectNull;
+            PlayerSignals.Instance.onDoesPlayerDied -= DoesPlayerDied;
             
         }
 

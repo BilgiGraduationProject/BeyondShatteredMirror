@@ -35,7 +35,7 @@ namespace Runtime.Controllers.Player
         [SerializeField] private Transform playerKillTransform;
 
 
-        private bool _isCanControl = true;
+        private bool _isCanControl = false;
 
         private void Awake()
         {
@@ -120,29 +120,35 @@ namespace Runtime.Controllers.Player
         private void ChangeColorOfObject(GameObject collidedObject, bool condition, string layerToName)
         {
             
-            if(collidedObject is null) return;
+            if(_collidedObject is null) return;
             if (condition)
             {
                 switch (layerToName)
                 {
                     case "Interectable":
+                    if(_collidedObject is null) return;
                         ChangeColorOfInteractableObject(true,collidedObject);
                        
                         break;
                     case "Puzzle":
+                    if(_collidedObject is null) return;
                         PuzzleSignals.Instance.onChangePuzzleColor?.Invoke(collidedObject,true);
                         break;
                     
                     case "Openable":
+                    if(_collidedObject is null) return;
                         ChangeColorOfInteractableObject(true,collidedObject);
                         break;
                     case "DetectiveBoard":
-                        collidedObject.GetComponent<MeshRenderer>().material.DOFloat(1.8f, "_OutlineWidth", 1);
+                    if(_collidedObject is null) return;
+                        _collidedObject.GetComponent<MeshRenderer>().material.DOFloat(1.8f, "_OutlineWidth", 1);
                         break;
                     case "MemoryCard":
+                    if(_collidedObject is null) return;
                         ChangeColorOfInteractableObject(true,collidedObject);
                         break;
                     case "MansionTel":
+                    if(_collidedObject is null) return;
                         ChangeColorOfInteractableObject(true,collidedObject);
                         break;
                     default:
@@ -155,27 +161,33 @@ namespace Runtime.Controllers.Player
                 switch (layerToName)
                 {
                     case "Interectable":
+                    if(_collidedObject is null) return;
                         ChangeColorOfInteractableObject(false,collidedObject);
                         _collidedObject = null;
                        
                         break;
                     case "Puzzle":
+                    if(_collidedObject is null) return;
                         PuzzleSignals.Instance.onChangePuzzleColor?.Invoke(collidedObject,false);
                         _collidedObject = null;
                         break;
                     
                     case "Openable":
+                    if(_collidedObject is null) return;
                         ChangeColorOfInteractableObject(false,collidedObject);
                         _collidedObject = null;
                         break;
                     case "DetectiveBoard":
+                    if(_collidedObject is null) return;
                         collidedObject.GetComponent<MeshRenderer>().material.DOFloat(0, "_OutlineWidth", 1);
                         break;
                     case "MemoryCard":
+                    if(_collidedObject is null) return;
                         ChangeColorOfInteractableObject(false,collidedObject);
                         _collidedObject = null;
                         break;
                     case "MansionTel":
+                    if(_collidedObject is null) return;
                         ChangeColorOfInteractableObject(false,collidedObject);
                         _collidedObject = null;
                         break;
@@ -198,10 +210,11 @@ namespace Runtime.Controllers.Player
             //     collidedObject.GetComponent<MeshRenderer>().material.DOFloat(0, "_OutlineWidth", 1);
             // }
             if (collidedObject is null) return;
+            if(_collidedObject is null) return;
             
-            var meshRenderer = collidedObject.GetComponent<MeshRenderer>();
+            var meshRenderer = _collidedObject.GetComponent<MeshRenderer>();
 
-            var childMeshRenderers = collidedObject.GetComponentsInChildren<MeshRenderer>();
+            var childMeshRenderers = _collidedObject.GetComponentsInChildren<MeshRenderer>();
             
             if (meshRenderer)
             {
@@ -345,9 +358,9 @@ namespace Runtime.Controllers.Player
             OnPlayerPressedDropItemButton();
         }
 
-        public void OnCanPlayerCheckItems()
+        public void OnCanPlayerCheckItems(bool condition)
         {
-            _isCanControl = true;
+            _isCanControl = condition;
         }
 
         public void OnSetCollidedObjectNull()

@@ -101,6 +101,7 @@ namespace Runtime.Controllers.Player
             else
             {
                 PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Die);
+                PlayerSignals.Instance.onDoesPlayerDied?.Invoke(true);
                 DOVirtual.DelayedCall(2f, () =>
                 {
                     CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.PlayerDiedReturnSpawnPoint);
@@ -110,6 +111,7 @@ namespace Runtime.Controllers.Player
                 
                     InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
                     PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Live);
+                    PlayerSignals.Instance.onDoesPlayerDied?.Invoke(false);
                
                 });
             }

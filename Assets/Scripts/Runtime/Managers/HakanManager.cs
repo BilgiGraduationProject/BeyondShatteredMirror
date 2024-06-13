@@ -49,15 +49,7 @@ namespace Runtime.Managers
         {
             if (!_chaseThePlayer || _isTakingDamage || _isFirstDie) return;
 
-            if (stage == 1)
-            {
-                AttackThePlayer();
-            }
-            else
-            {
-                Debug.LogWarning("Stage 2 attack ");
-                AttackThePlayer();
-            }
+            AttackThePlayer();
            
 
             
@@ -178,6 +170,14 @@ namespace Runtime.Managers
             hakanHealth = 100;
             EnemySignals.Instance.onSetHakanHealth?.Invoke(hakanHealth);
             animator.SetTrigger("GetUp");
+            DOVirtual.DelayedCall(4f, () =>
+            {
+               hakanAgent.isStopped = false;
+               _chaseThePlayer = true;
+               _isTakingDamage = false;
+               _isFirstDie = false;
+
+            });
             
             
         }

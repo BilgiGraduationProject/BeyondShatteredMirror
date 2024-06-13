@@ -47,6 +47,11 @@ namespace Runtime.Managers
             PuzzleSignals.Instance.onInteractWithPuzzlePieces += OnInteractWithPuzzlePieces;
             PuzzleSignals.Instance.onGetPuzzleCatEyeValues += OnGetPuzzleCatEye;
             PuzzleSignals.Instance.onGetPuzzleEnum += OnGetPuzzleEnum;
+            EnemySignals.Instance.onDeathOfHakan += OnDeathOfHakan;
+        }
+
+        private void OnDeathOfHakan() {
+            puzzleEnum = PuzzleEnum.PictureTable;
         }
 
         private PuzzleEnum OnGetPuzzleEnum()
@@ -205,6 +210,7 @@ namespace Runtime.Managers
             PuzzleSignals.Instance.onInteractWithPuzzlePieces -= OnInteractWithPuzzlePieces;
             PuzzleSignals.Instance.onGetPuzzleCatEyeValues -= OnGetPuzzleCatEye;
             PuzzleSignals.Instance.onGetPuzzleEnum -= OnGetPuzzleEnum;
+             EnemySignals.Instance.onDeathOfHakan -= OnDeathOfHakan;
         }
 
         private void OnDisable()

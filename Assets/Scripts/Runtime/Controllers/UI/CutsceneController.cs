@@ -203,6 +203,7 @@ namespace Runtime.Controllers
                         PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.EnteredHouse);
                         CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.AslanHouse);
                         CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredHouse);
+                        PlayerSignals.Instance.onCanPlayerCheckItems?.Invoke(true);
                    
                         break;
                     case 2: // This is mansion
@@ -211,6 +212,7 @@ namespace Runtime.Controllers
                         CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.Mansion);
                         CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.Mansion);
                         InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
+                        PlayerSignals.Instance.onCanPlayerCheckItems?.Invoke(true);
                         break;
                     case 3: // Go LevelHakan
                         CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Ingame,0);
@@ -254,7 +256,7 @@ namespace Runtime.Controllers
                         CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredFactory);
                         PoolSignals.Instance.onSetAslanHouseVisible?.Invoke(true);
                         CoreUISignals.Instance.onPlayMusic?.Invoke(SFXTypes.FactoryWhispers);
-                        PlayerSignals.Instance.onCanPlayerCheckItems?.Invoke();
+                        PlayerSignals.Instance.onCanPlayerCheckItems?.Invoke(true);
                         break;
                     case PlayableEnum.SpawnPoint:
                         CoreUISignals.Instance.onClosePanel.Invoke(0);
@@ -267,8 +269,9 @@ namespace Runtime.Controllers
                         CoreUISignals.Instance.onClosePanel.Invoke(0);
                         CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
                         PoolSignals.Instance.onSetCurrentLevelToVisible?.Invoke(true);
-                        PoolSignals.Instance.onDestroyFightLevel?.Invoke();
                         PlayerSignals.Instance.onIncreaseMemoryCount?.Invoke();
+                        PoolSignals.Instance.onDestroyFightLevel?.Invoke();
+            
                         PlayerSignals.Instance.onSetCollidedObjectNull?.Invoke();
                         CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredFactory);
                         break;
@@ -287,7 +290,7 @@ namespace Runtime.Controllers
                         CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Cutscene);
                         PoolSignals.Instance.onSetCurrentLevelToVisible?.Invoke(true);
                         PoolSignals.Instance.onDestroyFightLevel?.Invoke();
-                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredHouse);
+                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.EnteredFactory);
                         break;
                     case PlayableEnum.ShowHakan:
                         CoreUISignals.Instance.onClosePanel.Invoke(0);
@@ -329,9 +332,10 @@ namespace Runtime.Controllers
                 
                 case PlayableEnum.PlayerReturnSpawnPoint:
                     InputSignals.Instance.onSetPickUpButton?.Invoke(false);
-                    GameObject.FindWithTag($"MemoryCard{PlayerSignals.Instance.onGetMemoryCardCount?.Invoke()}").SetActive(false);
+                    PlayerSignals.Instance.onSetCollidedObjectNull?.Invoke();
                     CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Ingame,0);
                     CoreGameSignals.Instance.onGameStatusChanged?.Invoke(GameStateEnum.Game);
+                     GameObject.FindWithTag($"MemoryCard{PlayerSignals.Instance.onGetMemoryCardCount?.Invoke()}").SetActive(false);
                     InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
                     break;
                 case PlayableEnum.PlayerDiedbyWanderEnemy:
