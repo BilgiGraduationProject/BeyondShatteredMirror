@@ -83,6 +83,26 @@ namespace Runtime.Managers
             PoolSignals.Instance.onSetAslanHouseVisible += OnSetAslanHouseVisible;
             PoolSignals.Instance.onSetCurrentLevelToVisible += OnSetCurrentLevelToVisible;
             PoolSignals.Instance.onDestroyFightLevel += OnDestroyFightLevel;
+            CoreGameSignals.Instance.onGameEnded += OnGameEnded;
+        }
+
+        private void OnGameEnded()
+        {
+            for (int i = 0; i < levelHolder.transform.childCount; i++)
+            {
+                Destroy(levelHolder.transform.GetChild(i).gameObject);
+            }
+
+            for (int i = 0; i < houseHolder.transform.childCount; i++)
+            {
+                Destroy(houseHolder.transform.GetChild(i).gameObject);
+            }
+
+            for (int i = 0; i < fightHolder.transform.childCount; i++)
+            {
+                Destroy(fightHolder.transform.GetChild(i).gameObject);
+                
+            }
         }
 
         private void OnDestroyFightLevel()
@@ -139,26 +159,31 @@ namespace Runtime.Managers
                 switch (_currentPlayableEnum)
                 {
                     case PlayableEnum.HakanPos:
+                        if (levelHolder.transform.childCount > 0) return;
                         Debug.LogWarning("Hakan Pos instaisted");
                         Instantiate(obj.Result, levelHolder.transform);
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
                         break;
                     case PlayableEnum.BathroomLayingSeize:
+                        if(houseHolder.transform.childCount > 0) return;
                         Instantiate(obj.Result, houseHolder.transform);
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
                         break;
                     
                     case PlayableEnum.EnteredFactory:
+                        if (levelHolder.transform.childCount > 0) return;
                         Debug.LogWarning("Entered Factory instaisted");
                         Instantiate(obj.Result, levelHolder.transform);
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
                         CoreUISignals.Instance.onCloseUnCutScene?.Invoke(_currentPlayableEnum);
                         break;
                     case PlayableEnum.Mansion:
+                        if (levelHolder.transform.childCount > 0) return;
                         Instantiate(obj.Result, levelHolder.transform);
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
                         break;
                     case PlayableEnum.SpawnPoint:
+                        if (fightHolder.transform.childCount > 0) return;
                         Instantiate(obj.Result, fightHolder.transform);
                         PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(_currentPlayableEnum);
                         DOVirtual.DelayedCall(1.5f, () =>
@@ -240,6 +265,7 @@ namespace Runtime.Managers
             PoolSignals.Instance.onSetAslanHouseVisible -= OnSetAslanHouseVisible;
             PoolSignals.Instance.onSetCurrentLevelToVisible -= OnSetCurrentLevelToVisible;
             PoolSignals.Instance.onDestroyFightLevel -= OnDestroyFightLevel;
+            CoreGameSignals.Instance.onGameEnded -= OnGameEnded;
         }
 
         private void OnDisable()

@@ -39,6 +39,7 @@ namespace Runtime.Controllers.Player
                 PlayerSignals.Instance.onSetPlayerToCutScenePosition?.Invoke(PlayableEnum.ShowHakan);
                 Destroy(other.gameObject);
                 PlayableSignals.Instance.onSetUpCutScene?.Invoke(PlayableEnum.ShowHakan);
+                CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.ShowHakan);
             }
 
 

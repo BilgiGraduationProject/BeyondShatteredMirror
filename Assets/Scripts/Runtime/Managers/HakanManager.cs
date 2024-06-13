@@ -4,6 +4,7 @@ using ES3Types;
 using Runtime.Controllers;
 using Runtime.Controllers.Player;
 using Runtime.Signals;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -54,6 +55,7 @@ namespace Runtime.Managers
             }
             else
             {
+                Debug.LogWarning("Stage 2 attack ");
                 AttackThePlayer();
             }
            
@@ -156,9 +158,11 @@ namespace Runtime.Managers
 
         }
 
+        [Button("Death Of Hakan")]
         private void OnDeathOfHakan()
         {
-            animator.SetTrigger("Death");
+            _isAttacking = true;
+            _isFirstDie = true;
             DOVirtual.DelayedCall(2f, () =>
             {
                CoreUISignals.Instance.onOpenCutscene?.Invoke(5);
@@ -175,6 +179,7 @@ namespace Runtime.Managers
             EnemySignals.Instance.onSetHakanHealth?.Invoke(hakanHealth);
             animator.SetTrigger("GetUp");
             
+            
         }
 
         private void OnDisable()
@@ -187,7 +192,6 @@ namespace Runtime.Managers
         {
             if (other.CompareTag("AslanLeftHand"))
             {
-                if (stage == 2) return;
                 TakeDamage();
             }
             if(other.TryGetComponent(out PlayerPhysicController playerPhysicController))
@@ -205,12 +209,13 @@ namespace Runtime.Managers
             if (randomChange == 1)
             {
                 animator.SetTrigger("Dodge");
+                animator.SetBool("isDodge",true);
             }
            
             switch (stage)
             {
                 case 1:
-                    hakanHealth -= 4;
+                    hakanHealth -= 10;
                     EnemySignals.Instance.onSetHakanHealth?.Invoke(hakanHealth);
                     if (hakanHealth <= 0)
                     {
@@ -225,11 +230,11 @@ namespace Runtime.Managers
                     }
                     break;
                 case 2:
-                    hakanHealth -= 4;
+                    hakanHealth -= 10;
                     EnemySignals.Instance.onSetHakanHealth?.Invoke(hakanHealth);
                     if (hakanHealth <= 0)
                     {
-                        animator.SetTrigger("FirstDie");
+                        animator.SetTrigger("Death");
                         _isFirstDie = true;
                         EnemySignals.Instance.onSecondDieOfHakanForSlider?.Invoke();
                     }

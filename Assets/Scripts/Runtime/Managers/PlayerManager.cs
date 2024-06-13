@@ -88,6 +88,7 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onIncreaseMemoryCount += OnIncreaseMemoryCount;
             PlayerSignals.Instance.onGetMemoryCardCount += () => memoryCardCount;
             PlayerSignals.Instance.onCanPlayerCheckItems += playerHitDetectionController.OnCanPlayerCheckItems;
+            PlayerSignals.Instance.onSetCollidedObjectNull += playerHitDetectionController.OnSetCollidedObjectNull;
 
 
 
@@ -167,6 +168,7 @@ DOVirtual.DelayedCall(1.5f, () =>
 
         private void OnPlayerPressedLeftControlButton(bool condition)
         {
+            playerThirdPersonController.OnPlayerPressedLeftControlButton(condition);
             PlayerSignals.Instance.onSetAnimationBool?.Invoke(PlayerAnimationState.Crouch, condition);
             playerPhysicController.OnPlayerCrouch(condition);
 
@@ -196,6 +198,7 @@ DOVirtual.DelayedCall(1.5f, () =>
             PlayerSignals.Instance.onIncreaseMemoryCount -= OnIncreaseMemoryCount;
             PlayerSignals.Instance.onGetMemoryCardCount -= () => memoryCardCount;
             PlayerSignals.Instance.onCanPlayerCheckItems -= playerHitDetectionController.OnCanPlayerCheckItems;
+            PlayerSignals.Instance.onSetCollidedObjectNull -= playerHitDetectionController.OnSetCollidedObjectNull;
             
         }
 

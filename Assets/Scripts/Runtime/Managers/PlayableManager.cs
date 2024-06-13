@@ -166,6 +166,7 @@ namespace Runtime.Managers
                     case PlayableEnum.ShowHakan:
                         InputSignals.Instance.onIsReadyForCombat?.Invoke(true);
                         EnemySignals.Instance.onStartHakanRun?.Invoke();
+                        EnemySignals.Instance.onOpenHakanUI?.Invoke();
                         break;
                     
                 }

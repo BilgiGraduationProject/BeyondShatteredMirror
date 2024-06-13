@@ -7,6 +7,8 @@
         LookAtCatEyes,
         TakeBook,
         LookAtTheDetectiveBoard,
-        FindLanterns
+        FindLanterns,
+        FindHand,
+        ShowHakan
     }
 }

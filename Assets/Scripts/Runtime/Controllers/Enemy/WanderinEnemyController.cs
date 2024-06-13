@@ -21,15 +21,10 @@ namespace Runtime.Controllers.Enemy
 
 
 
-        [Header("Limiters")] 
-        [SerializeField]private   Transform _maxZ;
-        [SerializeField] private Transform _minZ;
-        [SerializeField] private Transform _maxX;
-        [SerializeField] private Transform _minX;
+        [Header("Limiters")] [SerializeField] private List<Transform> wayPoints;
         
 
-        #region Private Variables
-       [SerializeField] private List<Transform> checkPointList;
+        #region Private Variables;
         private Vector3 target;
         private float elapsedTime;
         
@@ -42,9 +37,10 @@ namespace Runtime.Controllers.Enemy
 
         private void Update()
         {
-            if (!(Vector3.Distance(transform.position, target) < 0.3f)) return;
+            if (!(Vector3.Distance(transform.position, target) < 1f)) return;
             if(elapsedTime < 4)
             {
+                agent.velocity = Vector3.zero;
                 animator.SetBool("Walking",false);
                 elapsedTime += 1 * Time.deltaTime;
             }
@@ -58,8 +54,8 @@ namespace Runtime.Controllers.Enemy
 
         private void Start()
         {
-            
-            var newPos = new Vector3(Random.Range(_maxX.position.x,_minX.position.x), transform.position.y, Random.Range(_maxZ.position.z,_minZ.position.z));
+            var randomIndex = Random.Range(0, wayPoints.Count);
+            var newPos = new Vector3( wayPoints[randomIndex].position.x, transform.position.y, wayPoints[randomIndex].position.z);
             transform.position = newPos;
             UpdateDestination();
 
@@ -70,18 +66,13 @@ namespace Runtime.Controllers.Enemy
         {
             animator.SetBool("Walking", true);
             Vector3 newPos;
-            bool foundValidPosition = false;
-
-            while (!foundValidPosition)
-            {
-                newPos = new Vector3(Random.Range(_maxX.position.x, _minX.position.x), transform.position.y, Random.Range(_maxZ.position.z, _minZ.position.z));
-                if (IsPositionOnNavMesh(newPos, 20f))
-                {
-                    target = newPos;
-                    agent.SetDestination(newPos);
-                    foundValidPosition = true;
-                }
-            }
+               var randomIndex = Random.Range(0, wayPoints.Count);
+                 newPos = new Vector3( wayPoints[randomIndex].position.x, transform.position.y, wayPoints[randomIndex].position.z);
+                 target = newPos;
+                 agent.SetDestination(newPos);
+               
+                
+           
 
                 
             

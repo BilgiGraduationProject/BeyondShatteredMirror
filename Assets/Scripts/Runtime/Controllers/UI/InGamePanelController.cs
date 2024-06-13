@@ -97,9 +97,15 @@ namespace Runtime.Controllers.UI
             EnemySignals.Instance.onSetHakanHealth += OnSetHakanHealth;
             EnemySignals.Instance.onFirstDieOfHakanForSlider += OnFirstDieOfHakanForSlider;
             EnemySignals.Instance.onSecondDieOfHakanForSlider += OnSecondDieOfHakanForSlider;
+            EnemySignals.Instance.onOpenHakanUI += OnOpenHakanUI;
             _pillsAction.Enable();
             _pillsAction.performed += PillsActionOn;
             _pillsAction.canceled += PillsActionOff;
+        }
+
+        private void OnOpenHakanUI()
+        {
+            hakanHealthSlider.gameObject.SetActive(true);
         }
 
         private void OnSecondDieOfHakanForSlider()
@@ -146,6 +152,7 @@ namespace Runtime.Controllers.UI
             EnemySignals.Instance.onSetHakanHealth -= OnSetHakanHealth;
             EnemySignals.Instance.onFirstDieOfHakanForSlider -= OnFirstDieOfHakanForSlider;
             EnemySignals.Instance.onSecondDieOfHakanForSlider -= OnSecondDieOfHakanForSlider;
+            EnemySignals.Instance.onOpenHakanUI -= OnOpenHakanUI;
             _pillsAction.Disable();
         }
         

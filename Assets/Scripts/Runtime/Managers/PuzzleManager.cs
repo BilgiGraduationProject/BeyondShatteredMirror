@@ -46,6 +46,12 @@ namespace Runtime.Managers
             PuzzleSignals.Instance.onChangePuzzleColor += OnChangePuzzleColor;
             PuzzleSignals.Instance.onInteractWithPuzzlePieces += OnInteractWithPuzzlePieces;
             PuzzleSignals.Instance.onGetPuzzleCatEyeValues += OnGetPuzzleCatEye;
+            PuzzleSignals.Instance.onGetPuzzleEnum += OnGetPuzzleEnum;
+        }
+
+        private PuzzleEnum OnGetPuzzleEnum()
+        {
+            return puzzleEnum;
         }
 
         private int OnGetPuzzleCatEye()
@@ -147,6 +153,7 @@ namespace Runtime.Managers
                         }
                         GameObject.FindWithTag("BackDoor").GetComponent<Animator>().SetTrigger("Open");
                         puzzleEnum = PuzzleEnum.HandPuzzle;
+                        CoreGameSignals.Instance.onGameManagerGetCurrentGameState?.Invoke(PlayableEnum.HandPuzzle);
                     }
                     break;
                 
@@ -154,15 +161,22 @@ namespace Runtime.Managers
                     if (intereact.CompareTag(puzzlePieces.tag))
                     {
                         intereact.layer = 0;
-                        intereact.GetComponent<MeshRenderer>().material.DOFade(0f, "_BaseColor", 0.1f);
+                        intereact.GetComponent<MeshRenderer>().material.DOFade(0f, "_BaseColor", 0.5f);
                         puzzlePieces.layer = 0;
                         puzzlePieces.transform.parent = null;
-                        puzzlePieces.transform.position = intereact.transform.position;
+                        var newPos = new Vector3(intereact.transform.position.x, intereact.transform.position.y , intereact.transform.position.z + 0.002f);
+                        puzzlePieces.transform.position = newPos;
                         puzzlePieces.transform.rotation = intereact.transform.rotation;
                         puzzlePieces.transform.localScale = intereact.transform.localScale;
-                        var hakanDoor = GameObject.FindWithTag("HakanRoom");
-                        hakanDoor.layer = 9;
+                        puzzleParams.handPuzzleCount++;
+                 
 
+
+                    }
+                    if (puzzleParams.handPuzzleCount == 6)
+                    {
+                        var door = GameObject.FindWithTag("HakanRoom");
+                        door.layer = 9;
 
                     }
                     break;
@@ -190,6 +204,7 @@ namespace Runtime.Managers
             PuzzleSignals.Instance.onChangePuzzleColor -= OnChangePuzzleColor;
             PuzzleSignals.Instance.onInteractWithPuzzlePieces -= OnInteractWithPuzzlePieces;
             PuzzleSignals.Instance.onGetPuzzleCatEyeValues -= OnGetPuzzleCatEye;
+            PuzzleSignals.Instance.onGetPuzzleEnum -= OnGetPuzzleEnum;
         }
 
         private void OnDisable()

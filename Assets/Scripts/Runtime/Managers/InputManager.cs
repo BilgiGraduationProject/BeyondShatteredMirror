@@ -89,6 +89,12 @@ namespace Runtime.Managers
             PlayableSignals.Instance.onSendInputManagerToReadyForInput += OnSendInputManagerToReadyForInput;
             InputSignals.Instance.onGetCombatState += () => _isCombat;
             InputSignals.Instance.onIsPlayerReadyToMove += (condition) => _isMovementInputIsReadyToUse = condition;
+            InputSignals.Instance.onSetPickUpButton += OnSetPickUpButton;
+        }
+
+        private void OnSetPickUpButton(bool condition)
+        {
+            _isPickingUp = condition;
         }
 
         private void OnChangeCrouchState(bool condiiton)
@@ -100,10 +106,7 @@ namespace Runtime.Managers
         private void OnIsReadyForCombat(bool condition) => _isCombat = condition;
         
         
-        private void OnIsPlayerPickingItem(bool condition)
-        {
-            _isPickingUp = condition;
-        }
+      
         
 
         private void OnSendInputManagerToReadyForInput(bool condition, PlayableEnum playableEnum)
@@ -169,7 +172,7 @@ namespace Runtime.Managers
             }
 
             if (!_isMovementInputIsReadyToUse) return;
-            if (Input.GetKeyDown(KeyCode.E) )
+            if (Input.GetKeyDown(KeyCode.E) && !_isPickingUp)
             {
                 Debug.LogWarning("Pressing Pick up");
                 InputSignals.Instance.onPlayerPressedPickUpButton?.Invoke();

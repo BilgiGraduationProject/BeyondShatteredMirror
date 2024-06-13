@@ -29,7 +29,7 @@ namespace Runtime.Controllers.Enemy
         #region Private Variables
 
         private int stage = 1;
-        private int totalStages = 2;
+        private int totalStages = 3;
         private int enemiesKilled = 0;
         private int enemiesToSpawn;
 

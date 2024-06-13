@@ -37,5 +37,7 @@ namespace Runtime.Signals
        
        public UnityAction onIncreaseMemoryCount = delegate {  };
        public UnityAction onCanPlayerCheckItems = delegate {  };
+       
+       public UnityAction onSetCollidedObjectNull = delegate {  };
     }
 }

@@ -31,5 +31,11 @@ namespace Runtime.Signals
         public UnityAction onSecondDieOfHakanForSlider = delegate {  };
         
         public UnityAction onDeathOfHakan = delegate {  };
+        
+        
+        public UnityAction onResetHakan = delegate {  };
+        
+        
+        public UnityAction onOpenHakanUI = delegate {  };
     }
 }

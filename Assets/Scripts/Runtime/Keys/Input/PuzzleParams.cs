@@ -4,5 +4,6 @@
     {
         public int tablePictureCount;
         public int lantern;
+        public int handPuzzleCount;
     }
 }

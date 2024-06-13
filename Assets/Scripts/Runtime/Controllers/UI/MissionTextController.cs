@@ -61,6 +61,18 @@ namespace Runtime.Controllers.UI
                     var text5 =_missionData.data[(int)UITextEnum.FindLanterns].text;
                     missionText.text = text5;
                     break;
+                case PlayableEnum.HandPuzzle:
+                    var text6 =_missionData.data[(int)UITextEnum.FindHand].text;
+                    missionText.text = text6;
+                    break;
+                case PlayableEnum.ShowHakan:
+                    var text7 =_missionData.data[(int)UITextEnum.ShowHakan].text;
+                    missionText.text = text7;
+                    break;
+                case PlayableEnum.HakanPos:
+                    var text8 = "";
+                    missionText.text = text8;
+                    break;
             }
         }
 

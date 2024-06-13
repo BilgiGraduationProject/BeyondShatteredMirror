@@ -83,18 +83,37 @@ namespace Runtime.Controllers.Player
         private void Die()
         {
             print("Player died");
-            PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Die);
-            DOVirtual.DelayedCall(2f, () =>
+            if (CoreGameSignals.Instance.onSendCurrentGameStateToUIText?.Invoke() == PlayableEnum.ShowHakan)
             {
-                CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.PlayerDiedReturnSpawnPoint);
-                Health = 100f;
-                PlayerSignals.Instance.onSetHealthValue?.Invoke(Health);
-                PlayerSignals.Instance.onSetHappinessValue?.Invoke(80);
+                PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Die);
+                DOVirtual.DelayedCall(2f, () =>
+                {
+                    CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.ShowHakan);
+                    Health = 100f;
+                    PlayerSignals.Instance.onSetHealthValue?.Invoke(Health);
+                    PlayerSignals.Instance.onSetHappinessValue?.Invoke(80);
                 
-                InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
-                PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Live);
+                    InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
+                    PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Live);
                
-            });
+                });
+            }
+            else
+            {
+                PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Die);
+                DOVirtual.DelayedCall(2f, () =>
+                {
+                    CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.PlayerDiedReturnSpawnPoint);
+                    Health = 100f;
+                    PlayerSignals.Instance.onSetHealthValue?.Invoke(Health);
+                    PlayerSignals.Instance.onSetHappinessValue?.Invoke(80);
+                
+                    InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
+                    PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.Live);
+               
+                });
+            }
+            
             
         }
     }

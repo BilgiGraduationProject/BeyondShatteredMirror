@@ -53,8 +53,9 @@ namespace Runtime.Controllers.Hakan
 
         public void OnGetUp()
         {
-            DOVirtual.DelayedCall(2f, () =>
+            DOVirtual.DelayedCall(1.5f, () =>
             {
+                Debug.LogWarning("Hakan stage 2 is started");
                 EnemySignals.Instance.onHakanFirstDie?.Invoke(false);
                 EnemySignals.Instance.onIsTakingDamage?.Invoke(false);
             });
@@ -63,7 +64,9 @@ namespace Runtime.Controllers.Hakan
 
         public void OnDodge()
         {
-           _animator.SetTrigger("Attack");
+            EnemySignals.Instance.onHakanIsAttacking?.Invoke(true);
+            _animator.SetTrigger("Attack");
+           _animator.SetBool("isDodge",false);
         }
     }
 }

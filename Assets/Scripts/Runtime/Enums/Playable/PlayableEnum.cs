@@ -16,7 +16,9 @@
         HakanPos,
         PlayerDiedbyWanderEnemy,
         PlayerDiedReturnSpawnPoint,
-        ShowHakan
+        ShowHakan,
+        HandPuzzle,
+        GoToAnotherScreen
         
     }
 }

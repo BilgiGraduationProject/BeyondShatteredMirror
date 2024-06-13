@@ -68,6 +68,7 @@ namespace Runtime.Managers
                     InputSignals.Instance.onIsPlayerReadyToMove?.Invoke(false);
                     CameraSignals.Instance.onChangeCameraState?.Invoke(CameraStateEnum.CutScene);
                     InputSignals.Instance.onIsReadyForCombat?.Invoke(false);
+                   
                  
                     break;
                 case GameStateEnum.Quit:

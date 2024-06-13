@@ -97,6 +97,7 @@ namespace StarterAssets
         private float _terminalVelocity = 53.0f;
         private float _speedTimer = 100f;
         private bool _isRunning;
+        private bool _isCrouch;
         [SerializeField] private bool _testing;
 
         // timeout deltatime
@@ -217,7 +218,7 @@ namespace StarterAssets
             
             // set target speed based on move speed, sprint speed and if sprint is pressed
             
-            float targetSpeed = _input.sprint && !_isRunning ? SprintSpeed : MoveSpeed;
+            float targetSpeed = _input.sprint && !_isRunning  && !_isCrouch ? SprintSpeed : MoveSpeed;
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
@@ -392,6 +393,11 @@ namespace StarterAssets
         public void OnIsPlayerReadyToMove(bool condition)
         {
             _isPlayerReadyToMove = condition;
+        }
+
+        public void OnPlayerPressedLeftControlButton(bool condition)
+        {
+            _isCrouch = condition;
         }
     }
 }

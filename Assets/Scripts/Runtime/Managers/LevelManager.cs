@@ -42,6 +42,7 @@ namespace Runtime.Signals
         [SerializeField] private Transform mansionCameraPos;
         [SerializeField] private Transform hakanCameraPos;
         [SerializeField] private Transform showHakanCameraPos;
+        [SerializeField] private Transform handCameraPos;
         #endregion
 
         #region Private Variables
@@ -95,6 +96,9 @@ namespace Runtime.Signals
                    return showHakanCameraPos;
                default:
                    return null;
+               case PlayableEnum.HandPuzzle:
+                   return null;
+                   break;
                
                 
                 
@@ -122,8 +126,9 @@ namespace Runtime.Signals
                 case PlayableEnum.HakanPos:
                     return hakanHousePos;
                 case PlayableEnum.ShowHakan:
-                    return hakanHousePos;
-                    break;
+                    return showHakanPos;
+                case PlayableEnum.HandPuzzle:
+                    return handCameraPos;
                 default:
                     return null;
             }

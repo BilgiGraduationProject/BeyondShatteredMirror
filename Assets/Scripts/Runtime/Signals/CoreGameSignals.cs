@@ -19,5 +19,9 @@ namespace Runtime.Signals
         
         public UnityAction<Transform,Transform,Transform,Transform> onGetCheckPointsList = delegate { };
         
+        
+        
+        public UnityAction onGameEnded = delegate {  };
+        
     }
 }

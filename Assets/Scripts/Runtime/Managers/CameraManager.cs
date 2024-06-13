@@ -107,6 +107,13 @@ namespace Runtime.Managers
                     _stateDrivenCamera.transform.position = hakanPos.position; 
                     _stateDrivenCamera.transform.rotation = hakanPos.rotation;
                     break;
+                case PlayableEnum.ShowHakan:
+                    var showHakan = CoreGameSignals.Instance.onGetCameraCutScenePosition?.Invoke(playable);
+                    cutsSceneCamera.transform.position = new Vector3(0, 0, 0);
+                    if(showHakan is null) return;
+                    _stateDrivenCamera.transform.position = showHakan.position; 
+                    _stateDrivenCamera.transform.rotation = showHakan.rotation;
+                    break;
                             
             }
         

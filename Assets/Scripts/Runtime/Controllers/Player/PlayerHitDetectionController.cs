@@ -2,6 +2,7 @@
 using DG.Tweening;
 using Runtime.Enums.Playable;
 using Runtime.Enums.Player;
+using Runtime.Enums.Puzzle;
 using Runtime.Signals;
 using Unity.Collections;
 using Unity.Jobs;
@@ -34,7 +35,7 @@ namespace Runtime.Controllers.Player
         [SerializeField] private Transform playerKillTransform;
 
 
-        private bool _isCanControl;
+        private bool _isCanControl = true;
 
         private void Awake()
         {
@@ -68,12 +69,13 @@ namespace Runtime.Controllers.Player
 
         private void CheckForPickUpRay(bool pickUpDidHitYa, RaycastHit pickUpRay)
         {
+            
 
             if (_isCanControl)
             {
                 if (pickUpDidHitYa)
                 {
-                    if ( _collidedObject is not null &&_collidedObject != pickUpRay.collider.gameObject)
+                    if ( _collidedObject is not null && _collidedObject != pickUpRay.collider.gameObject)
                     {
                         ChangeColorOfObject(_collidedObject,false,LayerMask.LayerToName(_collidedObject.layer));
                         _didHit = false;
@@ -224,6 +226,7 @@ namespace Runtime.Controllers.Player
         public void OnPlayerPressedPickUpButton()
         {
             if (_collidedObject is null) return;
+            
             var layerName = LayerMask.LayerToName(_collidedObject.layer);
             switch (layerName)
             {
@@ -255,11 +258,6 @@ namespace Runtime.Controllers.Player
                     break;
                 
                 case "SearchingEnemy":
-                    if (Vector3.Distance(playerTransform.position, _collidedObject.transform.position) > 2f) return;
-                    enemyObj = _collidedObject;
-                    Debug.LogWarning("Ready to assassinate");
-                    PlayerSignals.Instance.onSetAnimationTrigger?.Invoke(PlayerAnimationState.StealthKill);
-                    playerTransform.LookAt(enemyObj.transform.position);
                     
                     break;
                 
@@ -269,6 +267,7 @@ namespace Runtime.Controllers.Player
                     break;
                 
                 case "MemoryCard":
+                    InputSignals.Instance.onSetPickUpButton?.Invoke(true);
                     CoreUISignals.Instance.onOpenUnCutScene?.Invoke(PlayableEnum.SpawnPoint);
                     break;
                 case "MansionTel":
@@ -285,12 +284,27 @@ namespace Runtime.Controllers.Player
 
         private void PickUpTheObject()
         {
-            var objRb = _collidedObject.GetComponent<Rigidbody>();
-            objRb.useGravity = false;
-            objRb.isKinematic = true;
-            _collidedObject.transform.parent = playerHandTransform;
-            _collidedObject.transform.localRotation = Quaternion.identity;
-            _collidedObject.transform.localPosition = playerHandTransform.localPosition;
+            if (PuzzleSignals.Instance.onGetPuzzleEnum?.Invoke() == PuzzleEnum.Lantern)
+            {
+                var objRb = _collidedObject.GetComponent<Rigidbody>();
+                objRb.useGravity = false;
+                objRb.isKinematic = true;
+                _collidedObject.transform.parent = playerHandTransform;
+                var newPos = new Vector3(0.08f, 0.17f, 0.38f);
+                    
+                _collidedObject.transform.localRotation = Quaternion.Euler(28,-180,9);
+                _collidedObject.transform.localPosition = newPos;
+            }
+            else
+            {
+                var objRb = _collidedObject.GetComponent<Rigidbody>();
+                objRb.useGravity = false;
+                objRb.isKinematic = true;
+                _collidedObject.transform.parent = playerHandTransform;
+                _collidedObject.transform.localRotation = Quaternion.identity;
+                _collidedObject.transform.localPosition = playerHandTransform.localPosition;
+            }
+            
         }
 
         private void DropTheObjectFirst()
@@ -334,6 +348,11 @@ namespace Runtime.Controllers.Player
         public void OnCanPlayerCheckItems()
         {
             _isCanControl = true;
+        }
+
+        public void OnSetCollidedObjectNull()
+        {
+            _collidedObject = null;
         }
     }
 }
