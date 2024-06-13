@@ -92,11 +92,16 @@ namespace Runtime.Managers
             PlayerSignals.Instance.onCanPlayerCheckItems += playerHitDetectionController.OnCanPlayerCheckItems;
             PlayerSignals.Instance.onSetCollidedObjectNull += playerHitDetectionController.OnSetCollidedObjectNull;
             PlayerSignals.Instance.onDoesPlayerDied += DoesPlayerDied;
+            EnemySignals.Instance.OnDeathOfHakan += OnDeathOfHakan;
 
 
 
 
 
+        }
+
+        private void OnDeathOfHakan() {
+            memoryCardCount = 0;
         }
 
         private void DoesPlayerDied(bool condition) 
@@ -221,6 +226,8 @@ DOVirtual.DelayedCall(1.5f, () =>
             PlayerSignals.Instance.onCanPlayerCheckItems -= playerHitDetectionController.OnCanPlayerCheckItems;
             PlayerSignals.Instance.onSetCollidedObjectNull -= playerHitDetectionController.OnSetCollidedObjectNull;
             PlayerSignals.Instance.onDoesPlayerDied -= DoesPlayerDied;
+
+            EnemySignals.Instance.OnDeathOfHakan -= OnDeathOfHakan;
             
         }
 
